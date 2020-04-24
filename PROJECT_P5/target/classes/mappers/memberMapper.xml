@@ -26,6 +26,12 @@
 			SYSDATE
 								)
 	</insert>
+	
+	<select id="selectMember" parameterType="String" resultType="Member">
+		SELECT *
+		FROM member
+		WHERE email = #{email}
+	</select>
 		
 
 

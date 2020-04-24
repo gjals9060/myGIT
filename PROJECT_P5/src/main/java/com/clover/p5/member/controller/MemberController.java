@@ -1,5 +1,8 @@
 package com.clover.p5.member.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -63,6 +66,19 @@ public class MemberController {
 			}
 		}
 		return false;
+	}
+	
+	@RequestMapping("/ajax/logIn")
+	@ResponseBody
+	public int logIn(String userEmail, String userPassword, HttpSession session) {
+		return memberService.logIn(userEmail, userPassword, session);
+	}
+	
+	@RequestMapping("/ajax/logOut")
+	@ResponseBody
+	public void logOut(HttpSession session) {
+		session.invalidate(); // 세션 초기화
+		return;
 	}
 	
 	

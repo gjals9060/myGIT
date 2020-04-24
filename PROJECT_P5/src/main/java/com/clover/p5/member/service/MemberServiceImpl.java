@@ -4,6 +4,7 @@ import java.util.Random;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -76,6 +77,26 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public boolean checkEmailCode(String inputCode, String authenticationCode) {
 		return passwordEncoder.matches(inputCode, authenticationCode);
+	}
+
+
+
+
+
+
+
+
+	@Override
+	public int logIn(String email, String password, HttpSession session) {
+		Member member = memberMapper.selectMember(email);
+		if(member == null) {
+			return 0; // 없는 아이디
+		}
+		if(!passwordEncoder.matches(password, member.getPassword())) {
+			return 1; // 비밀번호 불일치
+		}
+		session.setAttribute("user", member); // 세션에 정보 저장
+		return 2; // 로그인 성공
 	}
 	
 	

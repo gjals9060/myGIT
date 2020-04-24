@@ -19,6 +19,8 @@
 <body>
 <header>
 P5
+<div>${user.firstName } ${user.lastName } <button id="btnLogOut">로그아웃</button></div>
+<button id="btnRegisterHost">호스트 등록</button>
 </header>
 <nav>
 <ul>
@@ -43,13 +45,13 @@ P5
 
          <div class="loginTitle">이메일</div>
          <div class="loginInput">
-            <input type="text" />
+            <input type="text" id="userEmail" />
          </div>
          <div class="loginCheck"></div>
 
          <div class="loginTitle">비밀번호</div>
          <div class="loginInput">
-            <input type="password" />
+            <input type="password" id="userPassword" />
          </div>
          <div class="loginCheck"></div>
 
@@ -365,8 +367,8 @@ $("#completeSignUp").on("click", function() {
 		authenticationCode : $('#authenticationCode').val(), // 인증번호(해시)
 		inputCode : $('#inputCode').val().trim() // 입력값
 	}
-	alert($('#authenticationCode').val());
-	alert($('#inputCode').val().trim());
+//	alert($('#authenticationCode').val());
+//	alert($('#inputCode').val().trim());
     $.ajax({
        type: "POST",
        url: "ajax/completeSignUp",
@@ -392,6 +394,60 @@ $("#completeSignUp").on("click", function() {
        }
    });
 });
+
+
+$('#userLoginBtn').on('click', function(){
+	var params = {
+			userEmail : $('#userEmail').val(),
+			userPassword : $('#userPassword').val()
+	}
+	$.ajax({
+		type : "POST",
+		url : "ajax/logIn",
+		data : params,
+		success : function(result){
+			if(result == 0){
+				alert("없는 아이디");
+				// 이후 로직
+				
+				
+				
+			} else if(result == 1){
+				alert("비밀번호 불일치");
+				// 이후 로직
+				
+				
+				
+			} else if(result == 2){
+				alert("로그인 성공");
+				location.reload(true); // 페이지 새로고침
+				// 이후 로직
+				
+				
+			}
+		},
+		error : function(){
+			alert("통신 실패..");
+		}
+	});
+});
+
+$('#btnLogOut').on('click', function(){
+	$.ajax({
+		type : "POST",
+		url : "ajax/logOut",
+		success : function(){
+			alert("로그아웃 했다");
+			location.reload(true); // 페이지 새로고침
+		},	
+		error : function(){
+			alert("통신 실패..");
+		}
+	});
+});
+
+
+
 
 
 /*    
