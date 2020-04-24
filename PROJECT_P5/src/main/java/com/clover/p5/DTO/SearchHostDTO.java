@@ -1,6 +1,6 @@
 package com.clover.p5.DTO;
 
-public class SearchPlaceDTO {
+public class SearchHostDTO {
 	
 	private String sStartDate;
 	private String sEndDate;
@@ -10,11 +10,11 @@ public class SearchPlaceDTO {
 	private double neLongitude;
 	private int capacity;
 	
-	public SearchPlaceDTO() {
+	public SearchHostDTO() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public SearchPlaceDTO(String sStartDate, String sEndDate, double swLatitude, double neLatitude, double swLongitude,
+	public SearchHostDTO(String sStartDate, String sEndDate, double swLatitude, double neLatitude, double swLongitude,
 			double neLongitude, int capacity) {
 		super();
 		this.sStartDate = sStartDate;

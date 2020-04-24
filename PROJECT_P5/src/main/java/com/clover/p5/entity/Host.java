@@ -2,7 +2,7 @@ package com.clover.p5.entity;
 
 import java.sql.Date;
 
-public class Place {
+public class Host {
 	
 	private int id;
 	private int MemberId;

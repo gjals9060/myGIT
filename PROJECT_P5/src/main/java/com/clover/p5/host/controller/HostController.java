@@ -1,4 +1,4 @@
-package com.clover.p5.place.controller;
+package com.clover.p5.host.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,22 +14,20 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.clover.p5.DTO.SearchPlaceDTO;
-import com.clover.p5.entity.Place;
-import com.clover.p5.member.service.MemberService;
-import com.clover.p5.place.service.PlaceService;
-import com.google.gson.Gson;
+import com.clover.p5.DTO.SearchHostDTO;
+import com.clover.p5.entity.Host;
+import com.clover.p5.host.service.HostService;
 
 
 @Controller
-public class PlaceController {
+public class HostController {
 	
 	@Autowired
-	private PlaceService placeService;
+	private HostService hostService;
 	
 	@ResponseBody
 	@RequestMapping("/ajaxMap")
-	public List<Place> ajaxMap(HttpServletRequest request, HttpServletResponse response, Model model) {
+	public List<Host> ajaxMap(HttpServletRequest request, HttpServletResponse response, Model model) {
 		
 		System.out.println("리스트 AJAXMAP 요청");
 		
@@ -61,15 +59,15 @@ public class PlaceController {
 		System.out.println("sStartDate : " + sStartDate);
 		System.out.println("sEndDate : " + sEndDate);
 		
-		SearchPlaceDTO dto = new SearchPlaceDTO(sStartDate, sEndDate, swLatitude, neLatitude, swLongitude, neLongitude, capacity);
+		SearchHostDTO dto = new SearchHostDTO(sStartDate, sEndDate, swLatitude, neLatitude, swLongitude, neLongitude, capacity);
 		
-		List<Place> placeList =  placeService.selectPlaceList(dto);
+		List<Host> HostList =  hostService.selectHostList(dto);
 		
-//		String result = new Gson().toJson(placeList);
+//		String result = new Gson().toJson(HostList);
 		
 		System.out.println("응답!");
 //		System.out.println(result);
-		return placeList;
+		return HostList;
 		
 		// ajax로 전송부
 //		response.setContentType("application/json; charset=utf-8");
@@ -96,7 +94,7 @@ public class PlaceController {
 	@RequestMapping("/reservation0")
 	public String reservation0(HttpServletRequest request, Model model) {
 		
-		String name = placeService.selectPlace();
+		String name = HostService.selectHost();
 		
 		if(name != null) {
 			model.addAttribute("name", name);
