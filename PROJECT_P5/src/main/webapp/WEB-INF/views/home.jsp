@@ -147,12 +147,12 @@ P5
 
 
 
-<form action="">
+<form action="reservation1">
 <!--지역 입력  -->
 <div class="wrap" id="idWrap">
 <div class="reservation">
 
-<span class="input-text">지역</span><input type="text" name="address" id="" />
+<span class="input-text">지역</span><input type="text" name="address" id="address" placeholder="Add city, landmark, or address"/>
 <!--달력에 필요할 jquery plugin  -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
