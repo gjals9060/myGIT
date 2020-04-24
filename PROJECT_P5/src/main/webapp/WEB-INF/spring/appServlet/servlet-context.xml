@@ -25,6 +25,7 @@
 	
 	<context:component-scan base-package="com.clover.p5" />
 	
+	
  	<!-- 메일보내기 -->
    <!-- <beans:bean id="mailSender" class = "org.springframework.mail.javamail.JavaMailSenderImpl">
       <property name="host" value="smtp.gmail.com" />
