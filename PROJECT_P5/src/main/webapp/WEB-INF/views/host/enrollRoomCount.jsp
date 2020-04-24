@@ -121,7 +121,7 @@
 		<input type="submit" value="다음" />
 	</form>
 	<!--페이지 넘어가기(임시방안)  -->
-<a href="host_enroll_room_type.jsp">이전</a>
-<a href="host_enroll_address.jsp">다음</a>
+<a href="enrollRoomType.jsp">이전</a>
+<a href="enrollAddress.jsp">다음</a>
 </body>
 </html>

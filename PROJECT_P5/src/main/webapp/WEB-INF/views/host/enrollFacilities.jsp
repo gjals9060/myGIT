@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
@@ -23,7 +23,7 @@
 
 <input type="submit" value="다음" />
 </form>
-<a href="host_enroll_address.jsp">이전</a>
-<a href="host_enroll_photo.jsp">다음</a>
+<a href="enrollAddress.jsp">이전</a>
+<a href="enrollPhoto.jsp">다음</a>
 </body>
 </html>

@@ -29,8 +29,8 @@ display:block;
 	<div id="maximum-warning"></div>
 <input type="submit" value="다음" />
 </form>
-<a href="host_enroll_description.jsp">이전</a>
-<a href="host_enroll_calendar.jsp">다음</a>
+<a href="enrollDescription.jsp">이전</a>
+<a href="enrollCalendar.jsp">다음</a>
 </body>
 <script>
 

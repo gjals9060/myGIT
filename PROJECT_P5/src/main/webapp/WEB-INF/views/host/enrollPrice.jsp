@@ -24,8 +24,8 @@
  <div id="warning"></div>
  <input type="submit" value="다음" />
 </form>
-<a href="host_enroll_calendar.jsp">이전</a>
-<a href="host_enroll_finish.jsp">다음</a>
+<a href="enrollCalendar.jsp">이전</a>
+<a href="enrollFinish.jsp">다음</a>
  </body>
  
 </html>

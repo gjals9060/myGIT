@@ -17,8 +17,8 @@
 <textarea name="description_etc" rows="10" cols="50"></textarea>
 <input type="submit" value="다음" />
 </form>
- <a href="host_enroll_photo.jsp">이전</a>
- <a href="host_enroll_stay_date.jsp">다음</a>
+ <a href="enrollPhoto.jsp">이전</a>
+ <a href="enrollStaydate.jsp">다음</a>
 </body>
 
 </html>
