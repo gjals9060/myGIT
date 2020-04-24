@@ -370,7 +370,7 @@ $("#emailCheckBtn").on("click", function() {
 	 	dataType : "text",
 	 	success:function(){
 		 alert(userInputEmail+"으로 인증번호가 전송되었습니다.");
-		 $("emailAuthenticationId").val(); // 인증번호 값 추가
+		 $("emailAuthenticationId").val(); // 인증번호 값
 	 	}
 	})
 })
