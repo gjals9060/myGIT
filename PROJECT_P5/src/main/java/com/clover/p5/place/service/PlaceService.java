@@ -1,11 +1,11 @@
-package com.clover.p5.place.mapper;
+package com.clover.p5.place.service;
 
 import java.util.List;
 
 import com.clover.p5.DTO.SearchPlaceDTO;
 import com.clover.p5.entity.Place;
 
-public interface PlaceMapper {
+public interface PlaceService {
 
 	String selectPlace();
 	
