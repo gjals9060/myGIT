@@ -20,7 +20,7 @@
 <header>
 P5
 <div>${user.firstName } ${user.lastName } <button id="btnLogOut">로그아웃</button></div>
-<button id="btnRegisterHost">호스트 등록</button>
+<a href="host/registration/roomType">호스트 등록</a>
 </header>
 <nav>
 <ul>
@@ -445,8 +445,6 @@ $('#btnLogOut').on('click', function(){
 		}
 	});
 });
-
-
 
 
 

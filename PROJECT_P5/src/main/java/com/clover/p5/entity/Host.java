@@ -114,13 +114,13 @@ public class Host {
 	public double getLatitude() {
 		return latitude;
 	}
-	public void setLatitude(float latitude) {
+	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
 	public double getLongitude() {
 		return longitude;
 	}
-	public void setLongitude(float longitude) {
+	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
 	public char getIsTv() {
@@ -215,7 +215,7 @@ public class Host {
 	}
 	@Override
 	public String toString() {
-		return "Place [id=" + id + ", MemberId=" + MemberId + ", name=" + name + ", description=" + description
+		return "Host [id=" + id + ", MemberId=" + MemberId + ", name=" + name + ", description=" + description
 				+ ", descriptionEtc=" + descriptionEtc + ", type=" + type + ", roomType=" + roomType + ", capacity="
 				+ capacity + ", roomCount=" + roomCount + ", bedCount=" + bedCount + ", bathroomCount=" + bathroomCount
 				+ ", address=" + address + ", latitude=" + latitude + ", longitude=" + longitude + ", isTv=" + isTv
@@ -225,6 +225,7 @@ public class Host {
 				+ isParkingLot + ", minimumStay=" + minimumStay + ", maximumStay=" + maximumStay + ", price=" + price
 				+ ", creationDate=" + creationDate + ", modificationDate=" + modificationDate + "]";
 	}
+	
 	
 	
 	
