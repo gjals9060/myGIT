@@ -15,7 +15,7 @@
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	
-	<context:property-placeholder location="classpath:config/config.properties" />
+	<context:property-placeholder location="classpath:config/db.properties" />
 	
 	<!-- 데이터베이스 연결 -->	
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
