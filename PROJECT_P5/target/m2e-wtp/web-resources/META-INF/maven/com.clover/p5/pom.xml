@@ -200,23 +200,13 @@
 			<version>${org.springframework-version}</version>
 		</dependency>
 		
+ 				
 		<!-- Spring Security -->
 		<dependency>
 		    <groupId>org.springframework.security</groupId>
 		    <artifactId>spring-security-web</artifactId>
 		    <version>${org.springframework-version}</version>
 		</dependency>
-		<dependency>
-		    <groupId>org.springframework.security</groupId>
-		    <artifactId>spring-security-core</artifactId>
-		       <version>${org.springframework-version}</version>
-		</dependency>
-		<dependency>
-		    <groupId>org.springframework.security</groupId>
-		    <artifactId>spring-security-config</artifactId>
-		    <version>${org.springframework-version}</version>
-		</dependency>
-
 		
 		<dependency>
 		    <groupId>com.fasterxml.jackson.core</groupId>
@@ -224,9 +214,6 @@
 		    <version>2.10.3</version>
 		</dependency>
 				
-				
-		
-		
 	</dependencies>
     <build>
         <plugins>

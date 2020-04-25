@@ -62,53 +62,19 @@ public class HostController {
 		
 		List<Host> HostList =  hostService.selectHostList(dto);
 		
-//		String result = new Gson().toJson(HostList);
-		
 		System.out.println("응답!");
-//		System.out.println(result);
+		
 		return HostList;
-		
-		// ajax로 전송부
-//		response.setContentType("application/json; charset=utf-8");
-//		PrintWriter pw = null;
-//		
-//		try {
-//			pw = response.getWriter();
-//			pw.write(result);
-//			pw.flush();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} finally {
-//			if(pw != null) pw.close();
-//		}
 
-
-			
 
 		
 	}
+
 	
-/*	
-	@RequestMapping("/reservation0")
-	public String reservation0(HttpServletRequest request, Model model) {
-		
-		String name = HostService.selectHost();
-		
-		if(name != null) {
-			model.addAttribute("name", name);
-		}
-		
-		return "reservation0";
-	}
-*/
-	
-	
-	
-	@RequestMapping("/reservation1")
+	@RequestMapping("/reservationList")
 	public String reservation1(HttpServletRequest request, Model model) {
 		
-		System.out.println("reservation1 이동");
+		System.out.println("reservationList 이동");
 		
 		String address = request.getParameter("address");
 		
@@ -134,16 +100,23 @@ public class HostController {
 		model.addAttribute("startDate", startDate);
 		model.addAttribute("endDate", endDate);
 		
-		return "reservation1";
+		return "reservationList";
 		
 	}
 	
-	@RequestMapping("/reservation2")
-	public String reservation() {
+	@RequestMapping("/postPage")
+	public String postPage(HttpServletRequest request, Model model) {
 		
-		System.out.println("");
+		String id = request.getParameter("id");
 		
-		return "reservation2";
+		System.out.println("호출된 id :" + id);
+		
+		
+		
+		System.out.println("postPage.jsp gogo");
+		model.addAttribute("id", id);
+
+		return "postPage";
 		
 	}
 	

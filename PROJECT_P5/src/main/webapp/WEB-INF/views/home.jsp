@@ -149,7 +149,7 @@ P5
 
 
 
-<form action="">
+<form action="reservationList">
 <!--지역 입력  -->
 <div class="wrap" id="idWrap">
 <div class="reservation">

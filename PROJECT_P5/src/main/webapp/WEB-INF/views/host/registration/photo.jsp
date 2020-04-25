@@ -165,6 +165,28 @@ function submitAction() {
 </script>
  </head>
 <body>
+<<<<<<< HEAD
+<form action="" >
+               
+               <div class="upload_List_Block">
+                  
+                  <div class="upload_List_Title">사진</div>
+                  
+                  <div class="upload_List_Input">
+                     <div class="input_wrap">
+                        <div class="imgs_wrap">
+                           <img id="img" />
+                        </div>
+                        <a href="javascript:" onclick="fileUploadAction();" class="my_button"></a>  
+                        <input type="file" id="picture" multiple="multiple"/>
+                     </div>
+                  </div>
+               </div>
+               <input type="submit" value="다음" />
+               </form>
+               <a href="enrollFacilities.jsp">이전</a>
+               <a href="enrollDescription.jsp">다음</a>
+=======
 <form action="description" method="post">
                
                <div class="upload_List_Block">
@@ -185,6 +207,7 @@ function submitAction() {
                </form>
                <a href="facilities">이전</a>
                <!-- <a href="description">다음</a> -->
+>>>>>>> branch 'back' of https://github.com/rmsgud0421/final.git
 </body>
 
 </html>

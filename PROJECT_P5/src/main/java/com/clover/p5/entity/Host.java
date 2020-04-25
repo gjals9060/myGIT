@@ -39,6 +39,8 @@ public class Host {
 	
 	private Date creationDate;
 	private Date modificationDate;
+
+	
 	public int getId() {
 		return id;
 	}
@@ -213,6 +215,7 @@ public class Host {
 	public void setModificationDate(Date modificationDate) {
 		this.modificationDate = modificationDate;
 	}
+	
 	@Override
 	public String toString() {
 		return "Host [id=" + id + ", MemberId=" + MemberId + ", name=" + name + ", description=" + description
@@ -225,11 +228,5 @@ public class Host {
 				+ isParkingLot + ", minimumStay=" + minimumStay + ", maximumStay=" + maximumStay + ", price=" + price
 				+ ", creationDate=" + creationDate + ", modificationDate=" + modificationDate + "]";
 	}
-	
-	
-	
-	
-	
-	
-	
+
 }

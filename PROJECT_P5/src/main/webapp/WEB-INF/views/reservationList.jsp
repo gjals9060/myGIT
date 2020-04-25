@@ -35,7 +35,7 @@ button {
 
 	<main>
 
-	<form action="reservation1" method="post">
+	<form action="reservationList" method="post">
 		<!--지역 입력  -->
 		지역 <input type="text" name="address" id="address" style="width:200px;" value="${address}" />
 		<!--달력에 필요할 jquery plugin  -->
@@ -299,8 +299,8 @@ button {
 			
 		}	//end-searchPlace
 		
-		function gogo() {
-			/* location.href = 'reservation3.jsp'; */
+		function gogo(id) {
+			location.href = "postPage?id=" + id;
 		}
 		
 		function mapInfo() {
@@ -382,7 +382,7 @@ button {
 										var ss = '';
 							
 										ss += '=================================================='
-											+ '<article onclick="gogo()" id="place'+ index +'">'
+											+ '<article onclick="gogo(' + item.id + ')" id="place'+ index +'">'
 											+ '<div>'
 												+ '<table border="1">'
 											+ 	'<tr>'
