@@ -10,28 +10,49 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>지도 정보 얻어오기</title>
+<title>p5 메인 홈페이지</title>
 <link rel="stylesheet" href="css/reset.css" />
 <link rel="stylesheet" href="css/home.css" />
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+<script src="js/swiper.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="js/daterangepicker.js"></script>
+<link rel="stylesheet" href="css/daterangepicker.css" />
+<!-- Link Swiper's CSS -->
+<link rel="stylesheet" href="css/swiper.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 </head>
 <body>
-	<header> P5 </header>
-	<nav>
-		<ul>
-			<li>
-				<!--클릭시 로그인  modal pop-up -->
-				<button id="login-btn" class="btn">로그인</button>
-			</li>
+	<span class="square">
 
-			<li>
-				<!--클릭시 회원가입 modal pop-up -->
-				<button id="useradd-btn" class="btn">회원가입</button>
-			</li>
-		</ul>
-	</nav>
+		<nav>
+			<header> P5 </header>
+			<ul>
+				<li>
+					<!--클릭시 로그인  modal pop-up -->
+					<button id="login-btn" class="btn">로그인</button>
+				</li>
+
+				<li>
+					<!--클릭시 회원가입 modal pop-up -->
+					<button id="useradd-btn" class="btn">회원가입</button>
+				</li>
+			</ul>
+
+			<span id="stickyReservation">
+				<ul>
+					<li><span class="input-text">지역</span><input type="text" name="address" id="" /></li>
+					<li><span class="input-text">날짜</span><input type="text" name="checkInDatecheckOutDate" value="01/01/2018 - 01/15/2018" /></li>
+					
+					<li><span class="input-text">인원</span> <input type='text' name='personnel' class="personnel_input" value="0">
+						<button id="increaseQuantity">▲</button>
+						<button id="decreaseQuantity">▼</button></li>
+				</ul>
+			</span>
+		</nav>
+		
+	</span>
 
 	<div id="modalLogin" class="modal">
 
@@ -56,9 +77,11 @@
 			</div>
 			<div class="loginCheck"></div>
 
-			<br> <input type="button" value="로그인" id="userLoginBtn" /> <br>
-			<input type="button" value="카카오톡으로 로그인하기" /> <br> <br> <input
-				type="button" value="이메일로 가입하기" />
+			<br> <input type="button" value="로그인" id="userLoginBtn" /> 
+			<br>
+			<input type="button" value="카카오톡으로 로그인하기" />
+			 <br> <br>
+			  <input type="button" value="이메일로 가입하기" />
 		</div>
 	</div>
 
@@ -144,8 +167,7 @@
 				value="회원가입" onclick="useraddTest.submit()" />
 		</div>
 	</div>
-	</div>
-	</form>
+	
 
 	<!-- 회원가입 2단계 ( 이메일 인증 )  -->
 	<div id="modalEmailCheck" class="modal">
@@ -164,49 +186,49 @@
 
 	</div>
 
-	<main>
-
 	<form action="reservation1">
-		<!--지역 입력  -->
+		
+		
+		
+			<!--지역 입력  -->
 		<div class="wrap" id="idWrap">
-
 			<div class="reservation">
 
-				<span class="input-text">지역</span><input type="text" name="address" id="address" placeholder="Add city, landmark, or address" />
+				<span class="input-text">지역</span><input type="text" name="address" id="" />
 				<!--달력에 필요할 jquery plugin  -->
-				<script type="text/javascript"
-					src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-				<script type="text/javascript"
-					src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-				<script type="text/javascript"
-					src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-				<link rel="stylesheet" href="css/daterangepicker.css" />
-				<!--  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" /> -->
-				<span class="input-text">날짜</span><input type="text"
-					name="checkInDatecheckOutDate" value="01/01/2018 - 01/15/2018" />
 
+				<!--  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" /> -->
+				<span class="input-text">날짜</span><input type="text" name="checkInDatecheckOutDate" value="01/01/2018 - 01/15/2018" />
+
+	
 				<script type="text/javascript">
-					$(function() {
-						$('input[name="checkInDatecheckOutDate"]')
-								.daterangepicker(
-										{
-											"autoApply" : true,
-											"startDate" : "04/17/2020",
-											"endDate" : "05/30/2020",
-											"minDate" : "04/17/2020"
-										},
-										function(start, end, label) {
-											console
-													.log('New date range selected: '
-															+ start
-																	.format('YYYY-MM-DD')
-															+ ' to '
-															+ end
-																	.format('YYYY-MM-DD')
-															+ ' (predefined range: '
-															+ label + ')');
-										});
-					});
+					var date=new Date();
+					var date2=new Date();
+					date2.setMonth(date.getMonth()+3);
+						$(function() {
+							$('input[name="checkInDatecheckOutDate"]')
+									.daterangepicker(
+											{
+												"autoApply" : true,
+												"startDate" : date,
+												"endDate" : "05/30/2020",
+												"minDate" : date,
+												"maxDate" : date2,
+											
+											},
+											function(start, end, label) {
+												console.log('New date range selected: '
+																+ start
+																		.format('YYYY-MM-DD')
+																+ ' to '
+																+ end
+																		.format('YYYY-MM-DD')
+																+ ' (predefined range: '
+																+ label + ')');
+												
+											});
+						});
+					console.log($(".off disabled").val());
 				</script>
 				<!--인원  -->
 
@@ -323,6 +345,9 @@
 		$("#inputEmail").on.keyup(function() {
 			alert("aa");
 		})
+		
+		
+		/////////
 
 		// json으로 넘겨줄 변수
 		var userValue = {

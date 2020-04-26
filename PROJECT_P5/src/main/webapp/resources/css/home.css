@@ -2,14 +2,20 @@
 
 /*로그인과 회원가입  */
 .btn {
-   width:100px;
-   height: 70px;
-   	padding:14px 16px;
-   	border: 0;
-   	background-color: white;
+ width: 100px;
+    height: 50px;
+    padding: 14px 16px;
+    border: 0;
+    background-color: white;
+
+    transform: translate(1120px,-40px);
  
 }
-
+#idWrap{
+	   width: 1100px;
+   margin: auto;
+    
+}
 .modal {
    display: none;
    position: fixed;
@@ -86,7 +92,21 @@ html {
 button{
 display: inline;
 }
+header{
+	position: fixed;
+	z-index: 3;
+}
+
 /*메뉴  */
+.square{
+	height:80px;
+	width:100%;
+	background-color:crimson;
+}
+nav{
+	position: fixed;  
+
+}
 ul {
 list-style-type: none;
 margin: 0;
@@ -114,12 +134,34 @@ li a:hover:not(.active){
 .active {
 	background: #4CAF50;
 }
+#stickyReservation  {
+list-style-type: none;
+    margin: 0;
+    padding: 0;
+  
+     transition: top 0.3s;
+    position: fixed;
+      display: none;
+
+}
+#stickyReservation  li{
+float:left;
+transform:translateX(400px);
+}
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+.scroll_01{
+	display:none;
+}
 /* 예약 */
 .reservation{
-
 	    margin-top: 50px;
-    position: relative;
+   position: relative; 
     left: 20%;
+
 }
 input[type="text"]{
 	border-radius: 25px;
@@ -163,18 +205,25 @@ article img {
 
 /*인기숙소*/
 section{
+
 	display: inline;
 	position: relative;
 	left:35%;
 	
 }
 .popular{
-margin-bottom: 10px;	
+     position: absolute;
+    margin-bottom: 10px;
+    margin-top: 50px;
+    margin-left: -130px;
+    width: 500px;
+    z-index: -4;
 	}
 	
-.popular-img{
+.popular-img img{
 	float:left;
 	margin-left: 10px;
+	width:300px;
 	
 }
 .popular-description{
@@ -188,7 +237,24 @@ margin-bottom: 10px;
 .checked {
   color: orange;
 }
+.star{
+margin-top: 20px;
+}
+   .swiper-slide {
 
-.star {
-	margin-top: 20px;
+      text-align: center;
+      font-size: 18px;
+      background: #fff;
+   }
+/*footer*/
+
+.footer-text {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 20% 20% 20%  ;
+text-align:center;
+    height: 300px;
+}
+.footer-inline-text ul{
+	float:left;
 }
