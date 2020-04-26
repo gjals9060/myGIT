@@ -10,7 +10,7 @@ public class Member {
 	private String firstName;
 	private String lastName;
 	private Date birthDate;
-	private String phoneNumber;
+	private String mobilePhone;
 	private Date registrationDate;
 	private String profilePhotoPath;
 	
@@ -51,11 +51,11 @@ public class Member {
 	public void setBirthDate(Date birthDate) {
 		this.birthDate = birthDate;
 	}
-	public String getPhoneNumber() {
-		return phoneNumber;
+	public String getMobilePhone() {
+		return mobilePhone;
 	}
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
+	public void setMobilePhone(String mobilePhone) {
+		this.mobilePhone = mobilePhone;
 	}
 	public Date getRegistrationDate() {
 		return registrationDate;
@@ -72,9 +72,11 @@ public class Member {
 	@Override
 	public String toString() {
 		return "Member [id=" + id + ", email=" + email + ", password=" + password + ", firstName=" + firstName
-				+ ", lastName=" + lastName + ", birthDate=" + birthDate + ", phoneNumber=" + phoneNumber
+				+ ", lastName=" + lastName + ", birthDate=" + birthDate + ", mobilePhone=" + mobilePhone
 				+ ", registrationDate=" + registrationDate + ", profilePhotoPath=" + profilePhotoPath + "]";
 	}
+	
+	
 	
 	
 

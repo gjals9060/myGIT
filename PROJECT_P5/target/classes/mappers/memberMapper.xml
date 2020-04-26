@@ -12,7 +12,7 @@
 			first_name,
 			last_name,
 			birth_date,
-			phone_number,
+			mobile_phone,
 			registration_date
 								)
 		VALUES
@@ -22,10 +22,16 @@
 			#{firstName},
 			#{lastName},
 			#{birthDate},
-			#{phoneNumber},
+			#{mobilePhone},
 			SYSDATE
 								)
 	</insert>
+	
+	<select id="selectMember" parameterType="String" resultType="Member">
+		SELECT *
+		FROM member
+		WHERE email = #{email}
+	</select>
 		
 
 

@@ -6,6 +6,6 @@ public interface MemberMapper {
 
 	int insertMember(Member member);
 	
-	
+	Member selectMember(String email);
 	
 }

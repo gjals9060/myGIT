@@ -2,7 +2,7 @@ package com.clover.p5.entity;
 
 import java.sql.Date;
 
-public class Place {
+public class Host {
 	
 	private int id;
 	private int MemberId;
@@ -39,6 +39,8 @@ public class Place {
 	
 	private Date creationDate;
 	private Date modificationDate;
+	
+	
 	public int getId() {
 		return id;
 	}
@@ -114,13 +116,13 @@ public class Place {
 	public double getLatitude() {
 		return latitude;
 	}
-	public void setLatitude(float latitude) {
+	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
 	public double getLongitude() {
 		return longitude;
 	}
-	public void setLongitude(float longitude) {
+	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
 	public char getIsTv() {
@@ -213,9 +215,10 @@ public class Place {
 	public void setModificationDate(Date modificationDate) {
 		this.modificationDate = modificationDate;
 	}
+	
 	@Override
 	public String toString() {
-		return "Place [id=" + id + ", MemberId=" + MemberId + ", name=" + name + ", description=" + description
+		return "Host [id=" + id + ", MemberId=" + MemberId + ", name=" + name + ", description=" + description
 				+ ", descriptionEtc=" + descriptionEtc + ", type=" + type + ", roomType=" + roomType + ", capacity="
 				+ capacity + ", roomCount=" + roomCount + ", bedCount=" + bedCount + ", bathroomCount=" + bathroomCount
 				+ ", address=" + address + ", latitude=" + latitude + ", longitude=" + longitude + ", isTv=" + isTv
@@ -225,10 +228,5 @@ public class Place {
 				+ isParkingLot + ", minimumStay=" + minimumStay + ", maximumStay=" + maximumStay + ", price=" + price
 				+ ", creationDate=" + creationDate + ", modificationDate=" + modificationDate + "]";
 	}
-	
-	
-	
-	
-	
-	
+
 }

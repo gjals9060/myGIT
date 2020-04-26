@@ -3,6 +3,9 @@
 
 DROP TRIGGER TRI_blocking_id;
 DROP TRIGGER TRI_booking_id;
+DROP TRIGGER TRI_email_authentication_id;
+DROP TRIGGER TRI_host_id;
+DROP TRIGGER TRI_host_photo_id;
 DROP TRIGGER TRI_member_id;
 DROP TRIGGER TRI_place_id;
 DROP TRIGGER TRI_place_photo_id;
@@ -14,8 +17,8 @@ DROP TRIGGER TRI_place_photo_id;
 DROP TABLE blocking CASCADE CONSTRAINTS;
 DROP TABLE review CASCADE CONSTRAINTS;
 DROP TABLE booking CASCADE CONSTRAINTS;
-DROP TABLE place_photo CASCADE CONSTRAINTS;
-DROP TABLE place CASCADE CONSTRAINTS;
+DROP TABLE host_photo CASCADE CONSTRAINTS;
+DROP TABLE host CASCADE CONSTRAINTS;
 DROP TABLE member CASCADE CONSTRAINTS;
 
 
@@ -24,6 +27,9 @@ DROP TABLE member CASCADE CONSTRAINTS;
 
 DROP SEQUENCE SEQ_blocking_id;
 DROP SEQUENCE SEQ_booking_id;
+DROP SEQUENCE SEQ_email_authentication_id;
+DROP SEQUENCE SEQ_host_id;
+DROP SEQUENCE SEQ_host_photo_id;
 DROP SEQUENCE SEQ_member_id;
 DROP SEQUENCE SEQ_place_id;
 DROP SEQUENCE SEQ_place_photo_id;
@@ -35,9 +41,9 @@ DROP SEQUENCE SEQ_place_photo_id;
 
 CREATE SEQUENCE SEQ_blocking_id INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE SEQ_booking_id INCREMENT BY 1 START WITH 1;
+CREATE SEQUENCE SEQ_host_id INCREMENT BY 1 START WITH 1;
+CREATE SEQUENCE SEQ_host_photo_id INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE SEQ_member_id INCREMENT BY 1 START WITH 1;
-CREATE SEQUENCE SEQ_place_id INCREMENT BY 1 START WITH 1;
-CREATE SEQUENCE SEQ_place_photo_id INCREMENT BY 1 START WITH 1;
 
 
 
@@ -46,7 +52,7 @@ CREATE SEQUENCE SEQ_place_photo_id INCREMENT BY 1 START WITH 1;
 CREATE TABLE blocking
 (
 	id number NOT NULL,
-	place_id number,
+	host_id number,
 	blocking_date date,
 	PRIMARY KEY (id)
 );
@@ -55,7 +61,7 @@ CREATE TABLE blocking
 CREATE TABLE booking
 (
 	id number NOT NULL,
-	place_id number,
+	host_id number,
 	member_id number,
 	check_in_date date,
 	check_out_date date,
@@ -67,22 +73,7 @@ CREATE TABLE booking
 );
 
 
-CREATE TABLE member
-(
-	id number NOT NULL,
-	email varchar2(50) UNIQUE,
-	password varchar2(100),
-	first_name varchar2(60),
-	last_name varchar2(30),
-	birth_date date,
-	phone_number varchar2(20),
-	registration_date date,
-	profile_photo_path varchar2(100),
-	PRIMARY KEY (id)
-);
-
-
-CREATE TABLE place
+CREATE TABLE host
 (
 	id number NOT NULL,
 	member_id number,
@@ -117,11 +108,26 @@ CREATE TABLE place
 );
 
 
-CREATE TABLE place_photo
+CREATE TABLE host_photo
 (
 	id number NOT NULL,
-	place_id number,
-	place_photo_path varchar2(100),
+	host_id number,
+	host_photo_path varchar2(100),
+	PRIMARY KEY (id)
+);
+
+
+CREATE TABLE member
+(
+	id number NOT NULL,
+	email varchar2(70) UNIQUE,
+	password varchar2(100),
+	first_name varchar2(60),
+	last_name varchar2(30),
+	birth_date date,
+	mobile_phone varchar2(16),
+	registration_date date,
+	profile_photo_path varchar2(100),
 	PRIMARY KEY (id)
 );
 
@@ -145,33 +151,33 @@ ALTER TABLE review
 ;
 
 
-ALTER TABLE booking
-	ADD FOREIGN KEY (member_id)
-	REFERENCES member (id)
-;
-
-
-ALTER TABLE place
-	ADD FOREIGN KEY (member_id)
-	REFERENCES member (id)
-;
-
-
 ALTER TABLE blocking
-	ADD FOREIGN KEY (place_id)
-	REFERENCES place (id)
+	ADD FOREIGN KEY (host_id)
+	REFERENCES host (id)
 ;
 
 
 ALTER TABLE booking
-	ADD FOREIGN KEY (place_id)
-	REFERENCES place (id)
+	ADD FOREIGN KEY (host_id)
+	REFERENCES host (id)
 ;
 
 
-ALTER TABLE place_photo
-	ADD FOREIGN KEY (place_id)
-	REFERENCES place (id)
+ALTER TABLE host_photo
+	ADD FOREIGN KEY (host_id)
+	REFERENCES host (id)
+;
+
+
+ALTER TABLE booking
+	ADD FOREIGN KEY (member_id)
+	REFERENCES member (id)
+;
+
+
+ALTER TABLE host
+	ADD FOREIGN KEY (member_id)
+	REFERENCES member (id)
 ;
 
 
@@ -198,6 +204,27 @@ END;
 
 /
 
+
+CREATE OR REPLACE TRIGGER TRI_host_id BEFORE INSERT ON host
+FOR EACH ROW
+BEGIN
+	SELECT SEQ_host_id.nextval
+	INTO :new.id
+	FROM dual;
+END;
+
+/
+
+CREATE OR REPLACE TRIGGER TRI_host_photo_id BEFORE INSERT ON host_photo
+FOR EACH ROW
+BEGIN
+	SELECT SEQ_host_photo_id.nextval
+	INTO :new.id
+	FROM dual;
+END;
+
+/
+
 CREATE OR REPLACE TRIGGER TRI_member_id BEFORE INSERT ON member
 FOR EACH ROW
 BEGIN
@@ -208,25 +235,6 @@ END;
 
 /
 
-CREATE OR REPLACE TRIGGER TRI_place_id BEFORE INSERT ON place
-FOR EACH ROW
-BEGIN
-	SELECT SEQ_place_id.nextval
-	INTO :new.id
-	FROM dual;
-END;
-
-/
-
-CREATE OR REPLACE TRIGGER TRI_place_photo_id BEFORE INSERT ON place_photo
-FOR EACH ROW
-BEGIN
-	SELECT SEQ_place_photo_id.nextval
-	INTO :new.id
-	FROM dual;
-END;
-
-/
 
 
 

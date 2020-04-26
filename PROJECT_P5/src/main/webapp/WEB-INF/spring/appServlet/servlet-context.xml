@@ -3,7 +3,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-5.2.xsd
+		http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
@@ -25,25 +27,27 @@
 	
 	<context:component-scan base-package="com.clover.p5" />
 	
-	
+	<context:property-placeholder location="classpath:config/email.properties" />
  	<!-- 메일보내기 -->
-   <!-- <beans:bean id="mailSender" class = "org.springframework.mail.javamail.JavaMailSenderImpl">
-      <property name="host" value="smtp.gmail.com" />
-      <property name="port" value="587" />
-      <property name="username" value="구글메일아이디" />
-      <property name="password" value="구글메일비밀번호" />
+   <beans:bean id="javaMailSender" class = "org.springframework.mail.javamail.JavaMailSenderImpl">
+      <beans:property name="host" value="smtp.gmail.com" />
+      <beans:property name="port" value="587" />
+      <beans:property name="username" value="${email.account}" />
+      <beans:property name="password" value="${email.password}" />
    
-      <property name="javaMailProperties">
-         <props>
-               <prop key="mail.transport.protocol">smtp</prop>
-               <prop key="mail.smtp.auth">true</prop>
-               <prop key="mail.smtp.starttls.enable">true</prop>
-               <prop key="mail.debug">true</prop>
-         </props>
-      </property>
-    </beans:bean> -->
+      <beans:property name="javaMailProperties">
+         <beans:props>
+               <!-- <beans:prop key="mail.transport.protocol">smtp</beans:prop> -->
+               <beans:prop key="mail.smtp.auth">true</beans:prop>
+               <beans:prop key="mail.smtp.starttls.enable">true</beans:prop>
+               <!-- <beans:prop key="mail.debug">true</beans:prop> -->
+         </beans:props>
+      </beans:property>
+    </beans:bean>
 	
-	
+		<!-- 암호 해시화 -->
+	 <beans:bean id="bcryptPasswordEncoder"
+	  class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 	
 	
 </beans:beans>
