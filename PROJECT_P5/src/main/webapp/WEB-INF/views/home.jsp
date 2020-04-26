@@ -149,12 +149,12 @@ P5
 
 
 
-<form action="reservationList">
+<form action="reservationList" method="post">
 <!--지역 입력  -->
 <div class="wrap" id="idWrap">
 <div class="reservation">
 
-<span class="input-text">지역</span><input type="text" name="address" id="" />
+<span class="input-text">지역</span><input type="text" name="address" id="adress" placeholder="Add city, landmark, or address" />
 <!--달력에 필요할 jquery plugin  -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
@@ -181,33 +181,33 @@ $(function() {
 <!--인원  -->
 
  
-<span class="input-text">인원</span> <input type='text' name='personnel' class="personnel_input" value="0" >
+<span class="input-text">인원</span> <input type='text' id="capacity" name='capacity' class="capacity_input" value="0" >
       
         <button id="increaseQuantity">▲</button>
         <button id="decreaseQuantity">▼</button>
         <!--인원 카운트 다운 0미만은 줄일수 없게함  -->
 
-<script >
+<script>
 $(function(){
    $('#decreaseQuantity').click(function(e){
    e.preventDefault();
-   var stat = $('.personnel_input').val();
+   var stat = $('.capacity_input').val();
    var num = parseInt(stat,10);
    num--;
    if(num<0){
    alert('더이상 줄일수 없습니다.');
    num =1;
    }
-   $('.personnel_input').val(num);
+   $('.capacity_input').val(num);
    });
    $('#increaseQuantity').click(function(e){
    e.preventDefault();
-   var stat = $('.personnel_input').val();
+   var stat = $('.capacity_input').val();
    var num = parseInt(stat,10);
    num++;
 
 
-   $('.personnel_input').val(num);
+   $('.capacity_input').val(num);
    });
    });
  </script>
