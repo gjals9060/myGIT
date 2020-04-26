@@ -102,6 +102,7 @@ header{
 	height:80px;
 	width:100%;
 	background-color:crimson;
+	display: inline;
 }
 nav{
 	position: fixed;  
@@ -134,20 +135,22 @@ li a:hover:not(.active){
 .active {
 	background: #4CAF50;
 }
+
 #stickyReservation  {
-list-style-type: none;
+	list-style-type: none;
     margin: 0;
     padding: 0;
-  
-     transition: top 0.3s;
+    transition: top 0.3s;
     position: fixed;
-      display: none;
+    display: none;
 
 }
+
 #stickyReservation  li{
 float:left;
 transform:translateX(400px);
 }
+
 .sticky {
   position: fixed;
   top: 0;
