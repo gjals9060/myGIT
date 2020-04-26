@@ -20,13 +20,8 @@
 		<div id="mdp-demo"></div>
 		<input type="text" id="altField" value="">
 		<input type="text" id="check" />
-<<<<<<< HEAD
-		<a href="enrollPrice.jsp">다음</a>
-	<a href="enrollStayDate.jsp">이전</a>
-=======
 		<a href="price">다음</a>
 	<a href="stayDate">이전</a>
->>>>>>> branch 'back' of https://github.com/rmsgud0421/final.git
 	</body>
 	<script >
 	

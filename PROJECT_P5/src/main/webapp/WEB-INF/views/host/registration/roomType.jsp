@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="../css/enrollType.css" />
 </head>
 <body>
-<form action="">
+<form action="roomCount" method="post">
 <h4>기본사항을 입력하세요</h4>
 <progress value="10" max="100" ></progress>
 <div id="wrap">
@@ -32,7 +32,7 @@ value를 0부터 2까지 설정 0이면 전체 1이면 개인실 2이면 다인�
 <input type="submit" value="다음" />
 </form>
 <!--페이지 넘어가기(임시방안)  -->
-<a href="enrollRoomCount.jsp">다음</a>
+<!-- <a href="roomCount">다음</a> -->
 </div>
 </body>
 </html>

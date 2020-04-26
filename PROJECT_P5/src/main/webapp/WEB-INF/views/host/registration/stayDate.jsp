@@ -12,25 +12,25 @@ display:block;
 }
 </style>
 <body>
-<form>
+<form action="calendar" method="post">
 	<h1>최대,최소 숙박일을 정해주세요</h1>
 	최소 숙박
-	<input type="number" name="minimumStay" class="minimum-date" disabled value="1" />
+	<input type="number" name="minimumStay" class="minimum-date" readonly value="1" />
 	<button id="minimum-date-increase-quantity">▲</button>
 	<button id="minimum-date-decrease-quantity">▼</button>
 	<br>
 	<div id="minium-warning"></div>
 	
 	최대 숙박
-	<input type="number" name="maximumStay" class="maximum-date" disabled value="1" />
+	<input type="number" name="maximumStay" class="maximum-date" readonly value="1" />
 	<button id="maximum-date-increase-quantity">▲</button>
 	<button id="maximum-date-decrease-quantity">▼</button>
 	<br>
 	<div id="maximum-warning"></div>
 <input type="submit" value="다음" />
 </form>
-<a href="enrollDescription.jsp">이전</a>
-<a href="enrollCalendar.jsp">다음</a>
+<a href="description">이전</a>
+<!-- <a href="calendar">다음</a> -->
 </body>
 <script>
 

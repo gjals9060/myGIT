@@ -24,7 +24,7 @@
    <div id="result"></div>
 
 
-   <form action="">
+   <form action="facilities" method="post">
       <input type="submit" value="다음" /><input type="hidden"
          name="langtitude" /><input type="hidden" name="longtitude" />
    </form>
@@ -32,8 +32,8 @@
    <div id="addressInfo"></div>
    
    <!--임시 이동  -->
-   <a href="host_enroll_facilities.jsp">다음</a>
-   <a href="host_enroll_room_count.jsp">이전</a>
+  <!--  <a href="facilities">다음</a> -->
+   <a href="roomCount">이전</a>
 </body>
 
 
