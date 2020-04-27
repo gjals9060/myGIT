@@ -134,8 +134,7 @@
 }
 
 .postContent td:nth-child(2) {
-	min-width: 200px;
-	text-align: end;
+	text-align: right;
 }
 
 .contentTitle {
@@ -148,7 +147,7 @@
 }
 
 .contentIntro table td:first-child {
-	width: 100%;
+	vertical-align: middle;
 	min-height: 400px;
 }
 
@@ -484,16 +483,16 @@
 								<span class="starNumber" id="starNum">0</span>
 							</div> <input type="text" id="commentReview" placeholder="내용을 입력해주세요." />
 						</td>
-						<td><input type="button" value="등록" onclick="commentUp()" /></td>
+						<td><input type="button" value="등록" id="commentUpButton" onclick="commentUp()" /></td>
 					</tr>
 				</table>
 				<br> <br>
 				<table class="contentReviewList" id="reviewList">
-				<tr>
-					<td></td>
-					<td></td>
-				</tr>
-					<!-- 					<tr>
+					<tr>
+						<td></td>
+						<td></td>
+					</tr>
+<!-- 					<tr>
 						<td><img src="img/rose.jpg" alt="" /><br>가나다</td>
 						<td>★★★★★<br>숙소가 굉장히 좋아요! 주변에 관광지도 많고 무엇보다 Host분이 굉장히
 							친절하세요!!
@@ -505,6 +504,7 @@
 						</td>
 					</tr> -->
 				</table>
+				<input type="button" value="더보기" onclick="commentMore()" />
 			</div>
 			<!-- contentReview end -->
 
@@ -647,9 +647,14 @@
 	var commentStar = 0;
 
 	function commentLoad() {
-
+		$("#reviewList").children("tbody").after('<tr>'+'<td><img src="img/rose.jpg" alt="" /><br>가나다</td>'
+				+ '<td>★4<br>숙소가 굉장히 좋아요! 주변에 관광지도 많고 무엇보다 Host분이 굉장히 친절하세요!!</td>'
+				+ '</tr>');
+		$("#reviewList").children("tbody").after('<tr>'+
+		'<td><img src="img/flower.jpg" alt="" /><br>라마바</td><td>★1<br>별로입니다.</td></tr>');
 	}
-
+	commentLoad();
+	
 	function commentUp() {
 		var reviewList = document.getElementById("reviewList");
 		var contentReviewStar = document
@@ -657,7 +662,7 @@
 		var contentReviewInput = document
 				.getElementsByClassName("contentReviewInput");
 		
-		$("#reviewList").children("tbody").after('<tr><td><img src="'
+		$("#reviewList").children("tbody").before('<tr><td><img src="'
 		+ contentReviewInput[0].getElementsByTagName("img")[0].src
 		+ '" /><br>' + '닉네임' + '</td><td>' +
 		'<img src="img/star1.png" class="reviewStar" />' +
@@ -667,11 +672,25 @@
 		
 		commentCount++;
 		commentStar = (commentStar + Number($(".starNumber").text())) / 2;
-
 		contentReviewStar[0].innerHTML = '★' + commentStar + ' ('
 				+ commentCount + ')';
+		
+		/* 후기 등록 후 입력 막기 */
+		$("#commentUpButton").attr('onclick', "");
+		$("#commentUpButton").val("등록완료");
+		$(".star").off('click'); 
+ 		$("#commentReview").val("");
+		$("#commentReview").attr('placeholder', '후기를 입력한 숙소입니다.');
+		$("#commentReview").attr('disabled', 'disabled');
 	}
-
+	
+	function commentMore() {
+		$("#reviewList").children("tr:last").after('<tr>'+'<td><img src="img/berry.jpg" alt="" /><br>가나다</td>'
+				+ '<td>★5<br>숙소가 굉장히 좋아요! 주변에 관광지도 많고 무엇보다 Host분이 굉장히 친절하세요!!</td>'
+				+ '</tr>');
+		$("#reviewList").children("tr:last").after('<tr>'+
+		'<td><img src="img/away.jpg" alt="" /><br>라마바</td><td>★2<br>별로입니다.</td></tr>');		
+	}
 	/* 별점 */
 
 	$(".star").on('click', function() {
