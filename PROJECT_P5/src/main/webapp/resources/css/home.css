@@ -34,8 +34,6 @@ header{
     background-color: white;
 }
 
-
-
  /* modal 화면 */
 .modal {
    display: none;
@@ -58,6 +56,22 @@ header{
    background: white;
    text-align: center;
 }
+
+/* login 경고문  */
+.loginCheck {
+	width: 30%;
+    height: 25px;
+    text-align: center;
+    margin: 0 auto;
+}
+
+/* 회원가입 경고문 */
+.form-input-check {
+	height: 10px;
+    text-align: center;
+    padding-top: 10px;
+}
+
 
 /* 애니메이션  */
 
@@ -138,7 +152,6 @@ article img {
    width: 100%;
   
 }
-
 
 .home-img2 {
     display: grid;

@@ -197,16 +197,16 @@
 	            
 	            <div class="formTitle">이름</div>
 	            <div class="formInput">
-	               <input type="text" class="input-value" id="inputLastName" name="firstName" />
+	               <input type="text" class="input-value" id="inputFirstName" name="firstName" />
 	            </div>
-	            <div class="form-input-check" id="lastNameCheck"></div>
+	            <div class="form-input-check" id="firstNameCheck"></div>
 	            <br>
 	            
 	            <div class="formTitle">성</div>
 	            <div class="formInput">
-	               <input type="text" class="input-value" id="inputFristName" name="lastName" />
+	               <input type="text" class="input-value" id="inputLastName" name="lastName" />
 	            </div>
-	            <div class="form-input-check" id="FristNameCheck"></div>
+	            <div class="form-input-check" id="lastNameCheck"></div>
 	            <br>
 	            
 	            <div class="formTitle">생년월일</div>
@@ -382,11 +382,13 @@
 			var email = $("#inputEmail").val();
 			var emailCheck = new RegExp
 			(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+			
 
 			if(email != 0 ){
 				if(emailCheck.test(email)){
 					$('#idCheck').css({
-						"color": "blue"
+						"color": "blue",
+						"border" : "1px solid"
 					});
 					$('#idCheck').html("통과");
 					
@@ -407,7 +409,7 @@
 	$(document).ready(function(){
 		$('#inputPassword').on('keyup', function() {
 			var password = $('#inputPassword').val();
-			var passwordCheck = new RegExp(/^[A-Za-z0-9~!@#$%^&*()_+|<>?:{}]{8,16}$/);
+			var passwordCheck = RegExp(/^[A-Za-z0-9~!@#$%^&*()_+|<>?:{}]{8,16}$/);
 			
 			if(password != 0){
 				if(passwordCheck.test(password)){
@@ -435,10 +437,9 @@
 
 	/////////////////////////// 비밀번호 확인 유효성
 	$(document).ready(function(){
-		$('#inputPasswordCheck').on('keyup',function(){
+		$('#inputPasswordCheck').blur(function(){
 			var password = $('#inputPassword').val(); /// 비빌번호
 			var passwordReCheck = $('#inputPasswordCheck').val(); // 비밀번호 확인
-			
 			
 			if(passwordReCheck != 0){ /// 빈값이 아니라면
 				if(password == passwordReCheck){
@@ -450,31 +451,80 @@
 					$('#passwordReCheck').css({
 						"color": "rgb(255,0,0)"
 					});
-					
 					$('#passwordReCheck').html('안됌');
 				}
-				
 			}else {
 				$('#passwordReCheck').empty();
 			}
-			
 		});
-		
 	});
 	
 	
 	
 	/////////////////////////// 이름
-	
-	
+	$(function(){
+		$('#inputFirstName').on('keyup',function(){
+			var firstName = $('#inputFirstName').val();
+			var firstNameCheck =  RegExp(/^[가-힣A-Za-z]+$/); // 한글, 영문 대 소문자만 사용
+			
+			if(firstName != 0 ){
+				if(firstNameCheck.test(firstName)){
+					$('#firstNameCheck').css({
+						"color":"rgb(0,0,255)"
+					});
+					$('#firstNameCheck').html('ㅇㅋ');
+				}else{
+					$('#firstNameCheck').css({
+						"color":"rgb(255,0,0)"
+					});
+					$('#firstNameCheck').html('안됌');
+				}
+			}else{
+				$('#firstNameCheck').empty();
+			}
+		});
+	});
 	
 	
 	/////////////////////////// 성
 	
+	$(function(){
+		$('#inputLastName').on('keyup',function(){
+			var firstName = $('#inputLastName').val();
+			var firstNameCheck =  RegExp(/^[가-힣A-Za-z]+$/); // 한글, 영문 대 소문자만 사용
+			
+			if(firstName != 0 ){
+				if(firstNameCheck.test(firstName)){
+					$('#lastNameCheck').css({
+						"color":"rgb(0,0,255)"
+					});
+					$('#lastNameCheck').html('ㅇㅋ');
+				}else{
+					$('#lastNameCheck').css({
+						"color":"rgb(255,0,0)"
+					});
+					$('#lastNameCheck').html('안됌');
+				}
+			}else{
+				$('#lastNameCheck').empty();
+			}
+		});
+	});
 	
 	
 	
 	/////////////////////////// 생년월일
+	
+	$(document).ready(function(){
+		$('#inputPasswordCheck').blur(function(){
+			var inputDate = $('#inputDate').val();
+			var inputDateCheck = RegExp(/^\d{4}-?\d{2}-?\d{2}$/);
+			var by = parseInt(inputDateCheck.substring(0,4));
+			
+		});
+	});
+		
+	
 	
 	
 	
@@ -491,9 +541,7 @@
 		
 		////////////// 유효성 검사 이후 처리
 		
-		/// 유효성 검사 color 로 조건문 blue라면 통과
-	if($('.form-input-check').css("color")=== "rgb(0,0,255)"){
-		
+		/// 유효성 검사 조건문
 	   var params = $('form[name="newMember"]').serialize();
 	
 	   $.ajax({
@@ -519,13 +567,7 @@
 	          alert("통신 실패..");
 	      }
 	   }); // ajax-end
-	   
-	}else {
-		alert($('#idCheck').css("color"));
-		
-		
-		
-	}
+
 	   
 	});
 	   
@@ -644,14 +686,25 @@
 					
 					$('.loginCheck').empty();
 					
+					$('.loginCheck').css({
+						"color":"red"
+					});
+					
 					$('.loginCheck').append(
 						'아이디가 존재하지 않습니다.'		
 					);
+					
+					
 					
 				} else if(result == 1){
 					alert("비밀번호 불일치");
 					// 이후 로직
 					$('.loginCheck').empty();
+					
+					$('.loginCheck').css({
+						"color":"red"
+					});
+					
 					$('.loginCheck').append(
 						'비밀번호가 일치하지 않습니다.'		
 					);
