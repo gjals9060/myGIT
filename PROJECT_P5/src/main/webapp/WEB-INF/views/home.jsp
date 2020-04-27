@@ -387,8 +387,7 @@
 			if(email != 0 ){
 				if(emailCheck.test(email)){
 					$('#idCheck').css({
-						"color": "blue",
-						"border" : "1px solid"
+						"color": "blue"
 					});
 					$('#idCheck').html("통과");
 					
@@ -516,28 +515,88 @@
 	/////////////////////////// 생년월일
 	
 	$(document).ready(function(){
-		$('#inputPasswordCheck').blur(function(){
+		$('#inputDate').change(function(){ //// 변경할 때마다 유효성 검사 
 			var inputDate = $('#inputDate').val();
 			var inputDateCheck = RegExp(/^\d{4}-?\d{2}-?\d{2}$/);
-			var by = parseInt(inputDateCheck.substring(0,4));
+			var by = parseInt(inputDate.substring(0,4));
 			
+			
+			if(inputDate != 0){ ///// inputDate가 0 이 아니라면,
+			
+				
+				if(inputDateCheck.test(inputDate)){ //// 정규식에 맞춰서 잘 되어 있다면
+					
+					if(by > 2001 || by < 1900){ // 미성년자는 안됌
+						$('#dateCheck').css({
+							"color":"rgb(255,0,0)"
+						});
+						$('#dateCheck').html("안돼");
+					}else{ /// 그렇지 않다면 
+						
+						$('#dateCheck').css({
+							"color":"rgb(0,0,255)"
+						});
+						$('#dateCheck').html("확인");
+					}
+					
+				}else { //// 정규식대로 되어있지 않다면
+					$('#dateCheck').css({
+						"color":"rgb(255,0,0)"
+					});
+					$('#dateCheck').html("안돼");
+				}
+				
+			}else{//// inputDate가 0이라면
+				$('#dateCheck').empty(); /// 경고문을 비움. ( 자리는 남아 있음.)
+			}
 		});
 	});
 		
 	
-	
-	
-	
-	
 	/////////////////////////// 전화번호
-	
-	
+	$(document).ready(function(){
+		$('#inputTel').blur(function(){
+			var inputTel = $('#inputTel').val();
+			var inputTelCheck = RegExp(/^01[016789]-?([1-9][0-9]{2,3})-?([0-9]{4})$/);
+			
+			if(inputTel != 0 ){ /////// 전화번호가 비어있지 않다면.
+				if(inputTelCheck.test(inputTel)){
+					$('#telCheck').css({
+						"color":"rgb(0,0,255)"
+					});
+					$('#telCheck').html("확인");
+				}else {
+					$('#telCheck').html("안돼");
+					$('#telCheck').css({
+						"color":"rgb(255,0,0)"
+					});
+					
+					
+					
+				}
+			}else { // 전화번호가 비어있다면.
+				$('#telCheck').empty();
+			}
+			
+		
+			/////// 정규 표현식을 통과했다면 -과 공백을 replace
+			var inputTelCheckValue = inputTel.replace(/\-/g, '');
+			$('#inputTel').val(inputTelCheckValue);
+		});
+	});
 	
 	
 	
 	/// [다음] 클릭시 이벤트 // 유효성 검사를 하고 이상이 없다면 이메일 인증 modal로 넘어가기
 	$("#btnSendEmail").on("click", function() {
 		
+		
+		//// 확인용
+		alert($('#inputEmail').val()+""+$('#inputPassword').val()
+				+$('#inputFirstName').val()+""+$('#inputLastName').val()+
+				""+$('#inputDate').val()+""+$("#inputTel").val()
+				);
+				
 		
 		////////////// 유효성 검사 이후 처리
 		
