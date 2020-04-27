@@ -7,7 +7,7 @@ import com.clover.p5.entity.Host;
 
 public interface HostMapper {
 
-	Host selectHost(String id);
+	String selectHost();
 	
 	List<Host> selectHostList(SearchHostDTO dto);
 	
