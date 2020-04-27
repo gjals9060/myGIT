@@ -590,42 +590,61 @@
 	/// [다음] 클릭시 이벤트 // 유효성 검사를 하고 이상이 없다면 이메일 인증 modal로 넘어가기
 	$("#btnSendEmail").on("click", function() {
 		
-		
+	/* 	
+	데이터 확인	
 		//// 확인용
 		alert($('#inputEmail').val()+""+$('#inputPassword').val()
 				+$('#inputFirstName').val()+""+$('#inputLastName').val()+
 				""+$('#inputDate').val()+""+$("#inputTel").val()
-				);
-				
+				); 
+	*/
 		
-		////////////// 유효성 검사 이후 처리
-		
-		/// 유효성 검사 조건문
-	   var params = $('form[name="newMember"]').serialize();
+		/// 유효성 검사 조건문 - 변경해야함
+		if($(".form-input-check").css("color")==="rgb(0,0,255)"){
+			
+	  		var params = $('form[name="newMember"]').serialize();
 	
-	   $.ajax({
-	      type : "POST",
-	      url : "ajax/emailAuthentication", // 요청보낼주소 
-	      data : params,
-	//      async : "false",
-	//      dataType: 'json', // json으로 받으려면 안됨
-	      success : function(data) {
-	    	  if(!data){ /// 인증번호 전송에 실패했을 때 
-	    		  alert("인증번호 전송에 실패했습니다..");
-	    	  } else{ // 인증번호 전송에 성공했을 때 
-	    		  alert(data); // 인증번호 확인
-	    		  $("#authenticationCode").val(data); /// 인증번호를 넣어야함
-	    		 
-	    		  /// 통신을 한 이후에 이메일 인증 modal을 띄움.
-	    		  modalUseradd.css("display", "none");
-	    		   modalEmailCheck.css("display", "block");
-	    		   $('#toEmail').text($('input[name="email"]').val()+"으로 인증번호가 전송되었습니다.");
-	    	  }	
-	      },
-	      error: function() {
-	          alert("통신 실패..");
-	      }
-	   }); // ajax-end
+		   $.ajax({
+		      type : "POST",
+		      url : "ajax/emailAuthentication", // 요청보낼주소 
+		      data : params,
+		//      async : "false",
+		//      dataType: 'json', // json으로 받으려면 안됨
+		      success : function(data) {
+		    	  if(!data){ /// 인증번호 전송에 실패했을 때 
+		    		  alert("인증번호 전송에 실패했습니다..");
+		    	  } else{ // 인증번호 전송에 성공했을 때 
+		    		  alert(data); // 인증번호 확인
+		    		  $("#authenticationCode").val(data); /// 인증번호를 넣어야함
+		    		 
+		    		  /// 통신을 한 이후에 이메일 인증 modal을 띄움.
+		    		  modalUseradd.css("display", "none");
+		    		   modalEmailCheck.css("display", "block");
+		    		   $('#toEmail').text($('input[name="email"]').val()+"으로 인증번호가 전송되었습니다.");
+		    	  }	
+		      },
+		      error: function() {
+		          alert("통신 실패..");
+		      }
+		   }); // ajax-end
+	   
+		}else{ //////// 유효성 검사가 안됐을 때
+			
+			/////// 수정중..... 
+			var result =true;
+			
+			alert($('#idCheck').val());
+			alert("빈칸없이 작성해주세요");
+			
+			
+			if($("#idCheck").val()== "통과"){
+				result = true;
+			}else{
+				result = false;
+			}
+			
+			alert(result);
+		}
 
 	   
 	});
@@ -690,7 +709,6 @@
 	            alert("통신 실패..");
 	       }
 	   });
-	    
 	    alert("인증번호를 재전송했습니다. 이전 번호는 사용 못함");
 	});
 	
