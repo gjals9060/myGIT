@@ -37,20 +37,8 @@ public class HostController {
 	}
 	
 	@RequestMapping("/postPage")
-	public String postPage(HttpServletRequest request, Model model) {
-		
-		String id = request.getParameter("id");
-		
-		System.out.println("호출된 id :" + id);
-		
-		// db 가자
-		
-		
-		System.out.println("postPage.jsp gogo");
-		model.addAttribute("id", id);
-
-		return "postPage";
-		
+	public String postPage(HttpServletRequest request, Model model) {	
+		return hostService.selectHost(request, model);
 	}
 	
 	

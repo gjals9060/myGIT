@@ -21,11 +21,17 @@ public class HostServiceImpl implements HostService {
 	
 	
 	@Override
-	public String selectHost() {
+	public String selectHost(HttpServletRequest request, Model model) {
 		
-		String str = hostMapper.selectHost();	
-		return str;
+		System.out.println("postPage 페이지 이동");
 		
+		String id = request.getParameter("id");
+		System.out.println("호출된 id :" + id);
+
+		Host host = hostMapper.selectHost(id);
+		model.addAttribute("host", host);
+		
+		return "postPage";	
 	}
 
 

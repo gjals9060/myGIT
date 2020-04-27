@@ -3,12 +3,14 @@
 
 <mapper namespace="com.clover.p5.host.mapper.HostMapper">
 
-	<select id="selectHost" resultType="String">
+	<select id="selectHost" parameterType="String" resultType="Host">
 		<![CDATA[
 			SELECT
 				*
 			FROM
 				host
+			WHERE
+				id = #{id}	
 		]]>	
 	
 	</select>
