@@ -11,8 +11,8 @@ import com.clover.p5.entity.Host;
 
 public interface HostService {
 	
-	// service - mapper 예시
-	String selectHost();
+	// postPage이동(id로 host 검색)
+	String selectHost(HttpServletRequest request, Model model);
 	
 	// 지도 반응형 리스트
 	List<Host> selectHostList(HostParamVO vo);

@@ -8,6 +8,9 @@
 <!-- services와 clusterer, drawing 라이브러리 불러오기 -->
 <script type="text/javascript"
    src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c9d8461122e464c2883b7e5ce3c5eedf&libraries=services,clusterer,drawing"></script>
+<<<<<<< HEAD
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+=======
 
 </head>
 <body>
@@ -40,6 +43,7 @@
 
 <script
    src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+>>>>>>> branch 'back' of https://github.com/rmsgud0421/final.git
 <script src="js/jquery-3.4.1.js"></script>
 
 <script>
@@ -194,4 +198,31 @@
 
 
 </script>
+</head>
+<body>
+
+
+
+   <input type="text" id="sample5_address" placeholder="주소">
+   <input type="button" onclick="sample5_execDaumPostcode()" value="주소 검색">
+   <br>
+   <div id="map"
+      style="width: 300px; height: 300px; margin-top: 10px; display: none"></div>
+   <button id="map-set-btn">조정하기</button>
+   <button id="map-save-btn">저장하기</button>
+   <div id="result"></div>
+
+
+   <form action="facilities">
+      <input type="submit" value="다음" /><input type="hidden"
+         name="langtitude" /><input type="hidden" name="longtitude" />
+   </form>
+   
+   <div id="addressInfo"></div>
+   
+   <!--임시 이동  -->
+   <a href="host_enroll_facilities.jsp">다음</a>
+   <a href="host_enroll_room_count.jsp">이전</a>
+</body>
+
 </html>

@@ -19,9 +19,17 @@
 	<body>
 		<div id="mdp-demo"></div>
 		<input type="text" id="altField" value="">
+<<<<<<< HEAD
 		<input type="text" id="check" />
+=======
+		<input type="text" id="check" />
+>>>>>>> branch 'back' of https://github.com/rmsgud0421/final.git
 		<a href="price">다음</a>
+<<<<<<< HEAD
+		<a href="stayDate">이전</a>
+=======
 	<a href="stayDate">이전</a>
+>>>>>>> branch 'back' of https://github.com/rmsgud0421/final.git
 	</body>
 	<script >
 	

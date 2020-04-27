@@ -7,6 +7,10 @@
 <title>Insert title here</title>
 </head>
 <body>
+<<<<<<< HEAD
+
+=======
+>>>>>>> branch 'back' of https://github.com/rmsgud0421/final.git
 <form action="photo" method="post">
 <h1>편의시설이 어떤게 있나요?</h1>
 <input type="checkbox" name="isTv" value="Y" />TV<br>
