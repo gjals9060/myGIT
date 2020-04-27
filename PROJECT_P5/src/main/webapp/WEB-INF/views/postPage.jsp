@@ -432,7 +432,7 @@ word-break: break-all;
                      <br> <br> <br> <br> <br> <br> <br>
                      <br> <br> <br> <br> <br> <br> <br> -->
 					 <div id="map" style="width: 500px; height: 400px; margin-top: 10px; z-index: 3;">
-					 	<button style="width: 35px; height: 33px; margin-right: 2px; position: absolute; top: 110px; right: 0; z-index: 5; border: none; border-radius: 10px;" onclick="panTo()">
+					 	<button style="background-color: #FFFFFF; width: 33px; height: 35px; margin-right: 2px; position: absolute; top: 105px; right: 0; z-index: 5; border: none; border-radius: 10px;" onclick="panTo()">
 					 		<img alt="focus" src="./img/focus.png" style="width: 100%; height: 100%;">
 					 	</button>
 					 </div>
@@ -442,7 +442,7 @@ word-break: break-all;
 						<script>
 							var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 							    mapOption = { 
-							        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+							        center: new kakao.maps.LatLng(37.240910457871784, 131.86707687050958), // 지도의 중심좌표
 							        level: 3 // 지도의 확대 레벨
 							    };
 							
@@ -451,16 +451,15 @@ word-break: break-all;
 							map.setMinLevel(2);
 							map.setMaxLevel(4);
 							
-							map.setCenter(new kakao.maps.LatLng(37.537183, 127.005454));
+							var latitude = ${host.latitude};
+							var longitude = ${host.longitude};
+							
+							map.setCenter(new kakao.maps.LatLng(latitude, longitude));
 						
 							// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
 							var zoomControl = new kakao.maps.ZoomControl();
 							map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 							
-							var item = {};
-							item.name = "이름";
-							item.latitude = 37.537183;
-							item.longitude = 127.005454;
 							
 							// center 좌표에 마커 생성
 							var imageSrc = './img/marker2.png', // 마커이미지의 주소입니다    
@@ -468,13 +467,13 @@ word-break: break-all;
 							    imageOption = {offset: new kakao.maps.Point(30, 60)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
 							
 							var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
-							    markerPosition = new kakao.maps.LatLng(item.latitude, item.longitude); // 마커가 표시될 위치입니다
+							    markerPosition = new kakao.maps.LatLng(latitude, longitude); // 마커가 표시될 위치입니다
 							    
 							// 마커를 생성합니다
 							var marker = new kakao.maps.Marker({
 								position: markerPosition,
 								image: markerImage, // 마커이미지 설정
-								title: item.name,
+								title: "${host.name}",
 								zIndex: 4
 							
 							});
