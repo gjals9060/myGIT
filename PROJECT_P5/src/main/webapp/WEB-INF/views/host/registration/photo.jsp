@@ -165,10 +165,6 @@ function submitAction() {
 </script>
  </head>
 <body>
-<<<<<<< HEAD
-
-=======
->>>>>>> branch 'back' of https://github.com/rmsgud0421/final.git
 <form action="description" method="post">
                
                <div class="upload_List_Block">

@@ -6,11 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-<<<<<<< HEAD
 <body>
-=======
-<body>
->>>>>>> branch 'back' of https://github.com/rmsgud0421/final.git
 <form action="stayDate" method="post">
 <h1>숙소의 이름과 설명을 적어주세요!</h1>
 <h3>숙소명</h3>

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.clover.p5.VO.HostParamVO;
+import com.clover.p5.host.model.HostParamVO;
 import com.clover.p5.entity.Host;
 import com.clover.p5.host.service.HostService;
 

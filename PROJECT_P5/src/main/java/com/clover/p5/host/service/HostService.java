@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.ui.Model;
 
-import com.clover.p5.VO.HostParamVO;
+import com.clover.p5.host.model.HostParamVO;
 import com.clover.p5.entity.Host;
 
 public interface HostService {

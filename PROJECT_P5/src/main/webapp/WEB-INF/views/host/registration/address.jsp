@@ -8,9 +8,6 @@
 <!-- services와 clusterer, drawing 라이브러리 불러오기 -->
 <script type="text/javascript"
    src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c9d8461122e464c2883b7e5ce3c5eedf&libraries=services,clusterer,drawing"></script>
-<<<<<<< HEAD
-<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-=======
 
 </head>
 <body>
@@ -27,9 +24,10 @@
    <div id="result"></div>
 
 
-   <form action="facilities" method="post">
-      <input type="submit" value="다음" /><input type="hidden"
-         name="langtitude" /><input type="hidden" name="longtitude" />
+   <form action="facilities" method="post" name="formAddress">
+      <input type="hidden" name="address" />
+      <input type="hidden" name="latitude" />
+      <input type="hidden" name="longitude" />
    </form>
    
    <div id="addressInfo"></div>
@@ -37,14 +35,14 @@
    <!--임시 이동  -->
   <!--  <a href="facilities">다음</a> -->
    <a href="roomCount">이전</a>
+   <button onclick="inputAddress();">다음</button>
 </body>
 
 
 
 <script
    src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
->>>>>>> branch 'back' of https://github.com/rmsgud0421/final.git
-<script src="js/jquery-3.4.1.js"></script>
+<script src="../../js/jquery-3.4.1.js"></script>
 
 <script>
    var toggle = false;   //버튼 활성화
@@ -123,9 +121,11 @@
                   circle.setMap(map);
  
                   $('#addressInfo').empty();
-                  $('#addressInfo').append('<div>도로명주소 : ' + result.road_address.address_name + '</div>');
+                  $('#addressInfo').append('도로명주소 : <span id="address1">' + result.address.address_name + '</span><br />');
+                  $('#addressInfo').append('상세주소 : <input id="address2" type="text" />');
+                  $('input[name="latitude"]').val(result.y);
+                  $('input[name="longitude"]').val(result.x);
                   
-                     
                }
             });
          }
@@ -185,44 +185,31 @@
              if (status === kakao.maps.services.Status.OK) {
                  console.log('도로명 : ' + result[0].address.address_name);
                $('#addressInfo').empty();
-               $('#addressInfo').append('<div>도로명주소 : ' + result[0].address.address_name + '</div>');
-               
+               $('#addressInfo').append('도로명 주소 : <span id="address1">' + result[0].address.address_name + '</span><br />');
+               $('#addressInfo').append('상세주소 : <input id="address2" type="text" />');
+               $('input[name="latitude"]').val(latlng.getLat());
+               $('input[name="longitude"]').val(latlng.getLng());
              }
          };
-
+         
          geocoder0.coord2Address(coord.getLng(), coord.getLat(), callback);
 
           
        }
    });
+   
+   function inputAddress(){
+	   var address2 = $('#address2').val().trim();
+	   if(!address2){ // 상세주소가 없으면
+		   $('input[name="address"]').val($('#address1').text()); // 입력된 도로명 주소만
+	   } else{ // 있으면
+		   $('input[name="address"]').val($('#address1').text() + " " + address2); // 그 뒤에 붙여서
+	   } // input hidden에 넣어주고
+	   
+	   $('form[name="formAddress"]').submit() // 폼 제출 
+   }
+  
 
 
 </script>
-</head>
-<body>
-
-
-
-   <input type="text" id="sample5_address" placeholder="주소">
-   <input type="button" onclick="sample5_execDaumPostcode()" value="주소 검색">
-   <br>
-   <div id="map"
-      style="width: 300px; height: 300px; margin-top: 10px; display: none"></div>
-   <button id="map-set-btn">조정하기</button>
-   <button id="map-save-btn">저장하기</button>
-   <div id="result"></div>
-
-
-   <form action="facilities">
-      <input type="submit" value="다음" /><input type="hidden"
-         name="langtitude" /><input type="hidden" name="longtitude" />
-   </form>
-   
-   <div id="addressInfo"></div>
-   
-   <!--임시 이동  -->
-   <a href="host_enroll_facilities.jsp">다음</a>
-   <a href="host_enroll_room_count.jsp">이전</a>
-</body>
-
 </html>

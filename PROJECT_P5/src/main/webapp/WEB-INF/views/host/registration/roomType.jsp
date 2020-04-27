@@ -8,11 +8,7 @@
 <link rel="stylesheet" href="../css/enrollType.css" />
 </head>
 <body>
-<<<<<<< HEAD
-<form action="roomCount">
-=======
 <form action="roomCount" method="post">
->>>>>>> branch 'back' of https://github.com/rmsgud0421/final.git
 <h4>기본사항을 입력하세요</h4>
 <progress value="10" max="100" ></progress>
 <div id="wrap">

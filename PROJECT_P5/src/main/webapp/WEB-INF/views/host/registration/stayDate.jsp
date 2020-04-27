@@ -12,11 +12,7 @@ display:block;
 }
 </style>
 <body>
-<<<<<<< HEAD
-<form action="calendar"  method="post">
-=======
 <form action="calendar" method="post">
->>>>>>> branch 'back' of https://github.com/rmsgud0421/final.git
 	<h1>최대,최소 숙박일을 정해주세요</h1>
 	최소 숙박
 	<input type="number" name="minimumStay" class="minimum-date" readonly value="1" />

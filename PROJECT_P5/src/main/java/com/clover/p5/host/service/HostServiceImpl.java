@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-import com.clover.p5.VO.HostParamVO;
-import com.clover.p5.DTO.SearchHostDTO;
+import com.clover.p5.host.model.HostParamVO;
+import com.clover.p5.host.model.SearchHostDTO;
 import com.clover.p5.entity.Host;
 import com.clover.p5.host.mapper.HostMapper;
 

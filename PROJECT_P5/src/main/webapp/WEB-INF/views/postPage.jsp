@@ -386,7 +386,7 @@
 						<div class="contentIntro">
 							<table>
 								<tr>
-									<td><div class="contentTitle">${host.name}</div></td>
+									<td><div class="contentTitle">경복궁 아름다운 한옥집</div></td>
 									<td rowspan="2"><div class="contentProfile">
 											<!-- 프로필 사진 경로 넣기 -->
 											<img src="img/fox.jpg" alt="" />

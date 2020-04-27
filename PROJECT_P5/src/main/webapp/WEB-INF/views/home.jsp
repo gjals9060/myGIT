@@ -288,16 +288,18 @@ $("#btnSendEmail").on("click", function() {
     	  if(!data){
     		  alert("인증번호 전송에 실패했습니다..");
     	  } else{
+    		  alert(data);
     		  $("#authenticationCode").val(data); /// 인증번호를 넣어야함
-              modalUseradd.css("display", "none");
-              modalEmailCheck.css("display", "block");
-              $('#toEmail').text($('input[name="email"]').val()+"으로 인증번호가 전송되었습니다.");  
     	  }	
       },
       error: function() {
           alert("통신 실패..");
       }
    }); // ajax-end
+   
+   modalUseradd.css("display", "none");
+   modalEmailCheck.css("display", "block");
+   $('#toEmail').text($('input[name="email"]').val()+"으로 인증번호가 전송되었습니다.");
 });
    
 
@@ -350,14 +352,16 @@ $("#rerequest").on("click", function() {
     	   if(!data){
     		   alert("인증번호 재전송에 실패했습니다..");
     	   } else{
+    		   alert(data);
     		   $("#authenticationCode").val(data); // 인증번호 값
-          		alert("인증번호를 재전송했습니다. 이전 번호는 사용 못함");
     	   }
        },
        error: function() {
             alert("통신 실패..");
        }
    });
+    
+    alert("인증번호를 재전송했습니다. 이전 번호는 사용 못함");
 });
 
 
