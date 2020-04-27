@@ -1,12 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+	
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>숙소 상세보기</title>
 
+
 <link rel="stylesheet" href="reset.css" />
+<link rel="stylesheet" href="daterangepicker.css" />
 <style type="text/css">
 #wrap {
 	width: 100%;
@@ -389,61 +393,37 @@ word-break: break-all;
 						<div class="contentIntro">
 							<table>
 								<tr>
-									<td><div class="contentTitle">경복궁 아름다운 한옥집</div></td>
+									<td><div class="contentTitle">${host.title }</div></td>
 									<td rowspan="2"><div class="contentProfile">
 											<!-- 프로필 사진 경로 넣기 -->
 											<img src="img/fox.jpg" alt="" />
-										</div> <br>가나다</td>
+										</div> <br>${host.writer }님</td>
 								</tr>
 								<tr>
-									<td><div class="contentLocation">서울특별시 종로구</div></td>
+									<td colspan="2">작성일 ${host.creationDate } | 수정일${host.modificationDate }</td>
 								</tr>
 								<tr>
-									<td colspan="2">인원 3명 방 2개 침대 2개</td>
+									<td><div class="contentLocation">${host.address }</div></td>
+								</tr>
+								<tr>
+									<td colspan="2">${host.type }${host.roomType } | 인원 ${host.capacity }명 방 ${host.roomCount }개 침대 ${host.bedCount }개 욕실 ${host.bathroomCount }개</td>
+								</tr>
 							</table>
 						</div> <!-- postContentIntro end --> <br>
 						<hr> <br>
-
-						<div class="contentConven">
+						<div class="contentConven" id="contentConven">
 							<div class="contentConven Title">편의시설</div>
-							<!-- if문으로 해당하는 것만 나오도록 -->
-							<span class="convenTv"><img src="img/tv.png" alt="" /> TV</span>
-							<span class="convenWifi"><img src="img/wifi.png" alt="" />
-								WiFi</span> <span class="convenAirconditioner"><img
-								src="img/airconditioner.png" alt="" /> 에어컨</span> <span
-								class="convenAirpurifier"><img src="img/airpurifier.png"
-								alt="" /> 공기청정기</span> <span class="convenHairdryer"><img
-								src="img/hairdryer.png" alt="" /> 헤어드라이어</span> <span
-								class="convenIron"><img src="img/iron.png" alt="" /> 다리미</span>
-							<span class="convenKitchen"><img src="img/kitchen.png"
-								alt="" /> 주방</span> <span class="convenWashingmachine"><img
-								src="img/washingmachine.png" alt="" /> 세탁기</span> <span
-								class="convenElevator"><img src="img/elevator.png" alt="" />
-								엘리베이터</span> <span class="convenParking"><img
-								src="img/parking.png" alt="" /> 주차장</span>
 						</div> <br>
 						<hr> <br>
-
 						<div class="contentExplain">
 							<div class="contentExplain Title">숙소 설명</div>
-							경복궁 근처에 있는 한옥집입니다. 집 주변에 많은 관광지가 있기 때문에 관광하기 정말 좋고 주차장도 있습니다. 가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하
-							경복궁 근처에 있는 한옥집입니다. 집 주변에 많은 관광지가 있기 때문에 관광하기 정말 좋고 주차장도 있습니다.
-							경복궁 근처에 있는 한옥집입니다. 집 주변에 많은 관광지가 있기 때문에 관광하기 정말 좋고 주차장도 있습니다.
-							경복궁 근처에 있는 한옥집입니다. 집 주변에 많은 관광지가 있기 때문에 관광하기 정말 좋고 주차장도 있습니다.
-							경복궁 근처에 있는 한옥집입니다. 집 주변에 많은 관광지가 있기 때문에 관광하기 정말 좋고 주차장도 있습니다.
+							${host.description }
 						</div> <br>
 						<hr> <br>
 
 						<div class="contentEct">
 							<div class="contentEct Title">기타 사항</div>
-							기타 설명 사항 <br> <br> <br> <br> <br> <br>
-							<br> <br> <br> <br> <br> <br> <br>
-							<br> <br> <br> <br> <br> <br> <br>
-							<br> <br> <br> <br> <br> <br> <br>
-							<br> <br> <br> <br> <br> <br> <br>
-							<br> <br> <br> <br> <br> <br> <br>
-							<br> <br> <br> <br> <br> <br> <br>
-
+							${host.descriptionEct }
 						</div> <br>
 						<hr> <br>
 						<div class="contentMap">
@@ -451,21 +431,15 @@ word-break: break-all;
 							(지도 들어갈 자리) <br> <br> <br> <br> <br> <br>
 							<br> <br> <br> <br> <br> <br> <br>
 							<br> <br> <br> <br> <br> <br> <br>
-							<br> <br> <br> <br> <br> <br> <br>
-							<br> <br> <br> <br> <br> <br> <br>
-							<br> <br> <br> <br> <br> <br> <br>
-							<br> <br> <br> <br> <br> <br> <br>
-
 						</div> <br>
 						<hr> <br>
 					</td>
 					<td>
-
 						<div class="contentReserv">
 							<div class="contentReservTitle">예약</div>
-							35,000 / 1박<br>
+							${host.price }/1박<br>
 							<div class="contentReservTitle">날짜</div>
-							(date~캘린더)<br>
+							<input type="text" name="checkInDatecheckOutDate" value="01/01/2018 - 01/15/2018" /><br>
 							<div class="contentReservTitle">인원</div>
 							(암튼 따서 복붙하기)<br> <br> <br> <br> <br> <br>
 							<input type="button" value="예약하기" />
@@ -477,8 +451,7 @@ word-break: break-all;
 			<div class="contentReview">
 				<div class="contentReview Title">후기</div>
 				<div class="contentReviewStar">★ 4.5 (21)</div>
-				<br> <br>
-				<table class="contentReviewInput">
+<!-- 				<table class="contentReviewInput">
 					<tr>
 						<td><img src="img/fox.jpg" /><br> 내닉네임</td>
 						<td>
@@ -494,7 +467,8 @@ word-break: break-all;
 						<td><input type="button" value="등록" id="commentUpButton" onclick="commentUp()" /></td>
 					</tr>
 				</table>
-				<br> <br>
+ -->
+ 				<br> <br>
 				<table class="contentReviewList" id="reviewList">
 					<tr>
 						<td></td>
@@ -523,30 +497,21 @@ word-break: break-all;
 				<div class="contentRefund Title">환불정책</div>
 				체크인 30일 전까지는 전액환불 가능합니다.
 			</div>
-
-			<br> <br> <br> <br> <br> <br> <br>
-			<br> <br> <br> <br> <br> <br> <br>
-			<br> <br> <br> <br> <br> <br> <br>
-			<br> <br> <br> <br> <br> <br> <br>
-			<br> <br> <br> <br> <br> <br> <br>
-			<br> <br> <br> <br> <br> <br> <br>
-			<br> <br> <br> <br> <br> <br>
-
 		</div>
 		<!-- postContent end-->
-
-
-
-
 	</div>
 	<!-- wrap end -->
 
 </body>
 
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="jquery-3.4.1.js"></script>
-<script type="text/javascript">
-	/* 이미지 슬라이드 */
+<script type="text/javascript" src="daterangepicker.js"></script>
 
+<script type="text/javascript">
+
+	/* 이미지 슬라이드 */
 	var slideIndex = 1;
 	showSildes(slideIndex);
 
@@ -625,7 +590,6 @@ word-break: break-all;
 						+ ')" /></div>';
 			}
 		}
-
 		thumb[2].className += " active";
 		Mthumb[2].className += " active";
 	}
@@ -650,6 +614,64 @@ word-break: break-all;
 		modalImgSlide[0].style.display = "none";
 	}
 
+	function spanOnoff() {
+		var conventCount = 0;
+		var convenList = [${host.isTv }, ${host.isWifi }, ${host.isAirConditioner }, ${host.isAirPurifier }, ${host.isHairdryer }, ${host.isIron }, ${host.isKitchen }, ${host.isWashingMachine }, ${host.isElevator }, ${host.isParkingLot }];
+/* 		var convenList = ["N","Y","N","N","N","N","N","Y","Y","Y"]; */
+		for (var i = 0; i < convenList.length; i++) {
+			if(convenList[i] == "Y") {
+				switch (i) {
+				case 0:
+					$("#contentConven").append('<span class="convenTv"><img src="img/tv.png" alt="" /> TV </span>');
+					conventCount++;
+					break;
+				case 1:
+					$("#contentConven").append('<span class="convenWifi"><img src="img/wifi.png" alt="" /> WiFi </span>');
+					conventCount++;
+					break;
+				case 2:
+					$("#contentConven").append('<span class="convenAirconditioner"><img src="img/airconditioner.png" alt="" /> 에어컨 </span>');
+					conventCount++;
+					break;
+				case 3:
+					$("#contentConven").append('<span class="convenAirpurifier"><img src="img/airpurifier.png" alt="" /> 공기청정기 </span>');
+					conventCount++;
+					break;
+				case 4:
+					$("#contentConven").append('<span class="convenHairdryer"><imgsrc="img/hairdryer.png" alt="" /> 헤어드라이어 </span>');
+					conventCount++;
+					break;
+				case 5:
+					$("#contentConven").append('<span class="convenIron"><img src="img/iron.png" alt="" /> 다리미 </span>');
+					conventCount++;
+					break;
+				case 6:
+					$("#contentConven").append('<span class="convenKitchen"><img src="img/kitchen.png" alt="" /> 주방 </span>');
+					conventCount++;
+					break;
+				case 7:
+					$("#contentConven").append('<span class="convenWashingmachine"><img	src="img/washingmachine.png" alt="" /> 세탁기 </span>');
+					conventCount++;
+					break;
+				case 8:
+					$("#contentConven").append('<span class="convenElevator"><img src="img/elevator.png" alt="" /> 엘리베이터 </span>');
+					conventCount++;
+					break;
+				case 9:
+					$("#contentConven").append('<span class="convenParking"><img src="img/parking.png" alt="" /> 주차장 </span>');
+					conventCount++;
+					break;
+				default:
+					break;
+				}
+			}
+		/*  	if(conventCount == 5) $("#contentConven").append('<br>');  */
+
+		}
+	}
+	spanOnoff();
+	
+	
 	/* 댓글 작성 */
 	var commentCount = 0;
 	var commentStar = 0;
@@ -703,11 +725,9 @@ word-break: break-all;
 		/* (만약 next가 없다면) */
 /* 		$("#reviewList").children("tr:last").after('<tr>'+
 		'<td colspan="2">마지막 후기입니다.</td></tr>'); */
-		
-		
-		
-		
+				
 	}
+	
 	/* 별점 */
 
 	$(".star").on('click', function() {
@@ -721,6 +741,28 @@ word-break: break-all;
 			printIdx = (idx / 2) + 0.5;
 
 		$(".starNumber").html(printIdx);
+	});
+	
+	/* 캘린더 */
+
+	var date = new Date();
+	var date2 = new Date();
+	date2.setMonth(date.getMonth() + 3);
+	$(function() {
+		$('input[name="checkInDatecheckOutDate"]').daterangepicker(
+				{
+					"autoApply" : true,
+					"startDate" : date,
+					"endDate" : "05/30/2020",
+					"minDate" : date,
+					"maxDate" : date2,
+				},
+				function(start, end, label) {
+					console.log('New date range selected: '
+							+ start.format('YYYY-MM-DD') + ' to '
+							+ end.format('YYYY-MM-DD') + ' (predefined range: '
+							+ label + ')');
+				});
 	});
 </script>
 
