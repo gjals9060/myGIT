@@ -161,6 +161,10 @@
 	height: 50px;
 }
 
+.contentReview {
+word-break: break-all;
+}
+
 .contentReview table td {
 	padding: 10px;
 	text-align: center;
@@ -422,6 +426,10 @@
 
 						<div class="contentExplain">
 							<div class="contentExplain Title">숙소 설명</div>
+							경복궁 근처에 있는 한옥집입니다. 집 주변에 많은 관광지가 있기 때문에 관광하기 정말 좋고 주차장도 있습니다. 가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하
+							경복궁 근처에 있는 한옥집입니다. 집 주변에 많은 관광지가 있기 때문에 관광하기 정말 좋고 주차장도 있습니다.
+							경복궁 근처에 있는 한옥집입니다. 집 주변에 많은 관광지가 있기 때문에 관광하기 정말 좋고 주차장도 있습니다.
+							경복궁 근처에 있는 한옥집입니다. 집 주변에 많은 관광지가 있기 때문에 관광하기 정말 좋고 주차장도 있습니다.
 							경복궁 근처에 있는 한옥집입니다. 집 주변에 많은 관광지가 있기 때문에 관광하기 정말 좋고 주차장도 있습니다.
 						</div> <br>
 						<hr> <br>
@@ -685,11 +693,20 @@
 	}
 	
 	function commentMore() {
-		$("#reviewList").children("tr:last").after('<tr>'+'<td><img src="img/berry.jpg" alt="" /><br>가나다</td>'
+		/* 댓글 더보기 (상단부터 오래된 댓글) -> 화면 프린트 시 최근 댓글이 위로 프린트됨 */
+ 		$("#reviewList").children("tr:last").after('<tr>'+'<td><img src="img/berry.jpg" alt="" /><br>가나다</td>'
 				+ '<td>★5<br>숙소가 굉장히 좋아요! 주변에 관광지도 많고 무엇보다 Host분이 굉장히 친절하세요!!</td>'
 				+ '</tr>');
 		$("#reviewList").children("tr:last").after('<tr>'+
-		'<td><img src="img/away.jpg" alt="" /><br>라마바</td><td>★2<br>별로입니다.</td></tr>');		
+		'<td><img src="img/away.jpg" alt="" /><br>라마바</td><td>★2<br>별로입니다.</td></tr>');
+		
+		/* (만약 next가 없다면) */
+/* 		$("#reviewList").children("tr:last").after('<tr>'+
+		'<td colspan="2">마지막 후기입니다.</td></tr>'); */
+		
+		
+		
+		
 	}
 	/* 별점 */
 
