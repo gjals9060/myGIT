@@ -557,7 +557,7 @@
 	$(document).ready(function(){
 		$('#inputTel').blur(function(){
 			var inputTel = $('#inputTel').val();
-			var inputTelCheck = RegExp(/^01[016789]-?([1-9][0-9]{2,3})-?([0-9]{4})$/);
+			var inputTelCheck = RegExp(/^01[016789]-?([0-9][0-9]{2,3})-?([0-9]{4})$/);
 			
 			if(inputTel != 0 ){ /////// 전화번호가 비어있지 않다면.
 				if(inputTelCheck.test(inputTel)){

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원 예약 리스트</title>
+<title>호스트 숙소리스트</title>
 <style>
 #wrap {
 	width: 1100px;
@@ -65,6 +65,7 @@
 
 
 
+
 /* 예약한 게시물 제목 */
 .reservation-list-title {
 	font-size: 20px;
@@ -105,13 +106,14 @@
 
 }
 
+
 </style>
 
 </head>
 <body>
 	<div id="wrap">
 	<!-- 예약 container -->
-		<div class="reservation-list-main-title">예약하신 숙소리스트 입니다.</div>
+		<div class="reservation-list-main-title">등록하신 숙소리스트 입니다.</div>
 		<div class="reservation-list-container">
 		<!-- 예약 리스트 블럭 (1개의 예약상태) 반복문을 돌려서 리스트 처리-->
 			<div class="resercation-list-block">
@@ -119,7 +121,7 @@
 					<p>12345</p>
 				</div>
 				<div class="reservation-list-img">
-					<img src="./img/어린왕자.jpg" alt="" />
+				<img src="./img/어린왕자.jpg" alt="" />
 				</div>
 				<div class="reservaion-list-value">
 					<!-- 숙소 정보  -->
@@ -130,11 +132,9 @@
 					<div class="reservation-list-price">50000 원</div>
 				</div>
 				<div class="reservation-list-refund">
-					<button class="reservation-list-refund-btn">후기등록</button>
-					<button class="reservation-list-refund-btn">환불</button>
+					<button class="reservation-list-refund-btn">숙소수정</button>
 				</div>
 			</div>
-			
 		</div>
 	</div>
 </body>
