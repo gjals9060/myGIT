@@ -32,8 +32,11 @@
 	vertical-align: middle;
 }
 
-.reservInfo th, tr, td {
+.reservInfo tr {
 	border: 1px solid black;
+}
+
+.reservInfo th, tr, td {
 	vertical-align: middle;
 }
 
