@@ -8,9 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-import com.clover.p5.host.model.HostParamVO;
-import com.clover.p5.host.model.SearchHostDTO;
-import com.clover.p5.entity.Host;
+import com.clover.p5.host.dto.*;
 import com.clover.p5.host.mapper.HostMapper;
 
 @Service
@@ -27,16 +25,31 @@ public class HostServiceImpl implements HostService {
 		
 		String id = request.getParameter("id");
 		System.out.println("호출된 id :" + id);
-
-		Host host = hostMapper.selectHost(id);
-		model.addAttribute("host", host);
+		
+		String startDate = request.getParameter("startDate");
+		System.out.println("호출된 startDate : " + startDate);
+		
+		String endDate = request.getParameter("endDate");
+		System.out.println("호출된 endDate : " + endDate);
+		
+		
+		
+		String capacity = request.getParameter("capacity");
+		System.out.println("호출된 capacity : " + capacity);
+				
+		HostInfoDTO hostInfoDto = hostMapper.selectHost(id);
+		
+		model.addAttribute("host", hostInfoDto);
+		model.addAttribute("startDate", startDate);
+		model.addAttribute("endDate", endDate);
+		model.addAttribute("capacity", capacity);
 		
 		return "postPage";	
 	}
 
 
 	@Override
-	public List<Host> selectHostList(HostParamVO vo) {
+	public List<HostInfoDTO> selectHostList(SearchInputDTO vo) {
 		
 		System.out.println("ajaxHosts 요청!");	
 		
@@ -70,9 +83,9 @@ public class HostServiceImpl implements HostService {
 		System.out.println("sStartDate : " + sStartDate);
 		System.out.println("sEndDate : " + sEndDate);
 		
-		SearchHostDTO dto = new SearchHostDTO(sStartDate, sEndDate, swLatitude, neLatitude, swLongitude, neLongitude, capacity);
+		SearchHostDTO searchHostDto = new SearchHostDTO(sStartDate, sEndDate, swLatitude, neLatitude, swLongitude, neLongitude, capacity);
 				
-		return hostMapper.selectHostList(dto);
+		return hostMapper.selectHostList(searchHostDto);
 	}
 
 

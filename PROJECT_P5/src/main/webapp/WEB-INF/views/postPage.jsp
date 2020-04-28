@@ -402,7 +402,7 @@ word-break: break-all;
                            <td rowspan="2"><div class="contentProfile">
                                  <!-- 프로필 사진 경로 넣기 -->
                                  <img src="img/room1.jpg" alt="" />
-                              </div> <br>${host.memberId }님</td>
+                              </div> <br>${host.firstName } 님</td>
                         </tr>
                         <tr>
                            <td colspan="2">작성일 ${host.creationDate } |
@@ -509,10 +509,11 @@ word-break: break-all;
                      <br>
                      <div class="contentReservTitle">날짜</div>
                      <input type="text" id="checkDate" name="checkInDatecheckOutDate"
-                        value="01/01/2018 - 01/15/2018" onchange="countDate()" /><br>
+                        value="${checkInDatecheckOutDate}" onchange="countDate()" /><br>
                      <br>
                      <div class="contentReservTitle">인원</div>
-                     <input type='text' name='personnel' class="personnel_input" value="0">
+                     <input type='text' name='personnel' class="personnel_input" value="${capacity}">
+                     <!-- ${capacity}는 검색할때의 인원 설정 조건임, ${host.capacity} 와 다름 -->
                      <button id="increaseQuantity">▲</button>
                      <button id="decreaseQuantity">▼</button>
                      <br><br>
@@ -827,8 +828,8 @@ word-break: break-all;
       $('input[name="checkInDatecheckOutDate"]').daterangepicker(
             {
                "autoApply" : true,
-               "startDate" : date,
-               "endDate" : "05/30/2020",
+               "startDate" : "${startDate}",
+               "endDate" : "${endDate}",
                "minDate" : date,
                "maxDate" : date2,
             },
@@ -839,7 +840,6 @@ word-break: break-all;
                      + label + ')');
             });
    });
-   $()
    function countDate() {
    var date = $("#checkDate").val().split(" - ");
    var checkInDate = date[0].split("/");
@@ -873,7 +873,13 @@ word-break: break-all;
          var stat = $('.personnel_input').val();
          var num = parseInt(stat, 10);
          num++;
+         
+         if(num > ${host.capacity}){
+        	 alert("host의 최대 수용 인원 보다 많습니다.");
+        	 num--;
+         }
          $('.personnel_input').val(num);
+
       });
    });
 </script>

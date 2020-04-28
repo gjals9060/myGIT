@@ -14,8 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.clover.p5.host.model.HostParamVO;
 import com.clover.p5.entity.Host;
+import com.clover.p5.host.dto.HostInfoDTO;
+import com.clover.p5.host.dto.SearchInputDTO;
 import com.clover.p5.host.service.HostService;
 
 @SessionAttributes("newHost")
@@ -27,8 +28,8 @@ public class HostController {
 
 	@ResponseBody
 	@RequestMapping(value="/ajax/Hosts", method = RequestMethod.POST)
-	public List<Host> ajaxMap(@RequestBody HostParamVO hostParamVO) {	
-		return hostService.selectHostList(hostParamVO);
+	public List<HostInfoDTO> ajaxMap(@RequestBody SearchInputDTO searchInputDto) {	
+		return hostService.selectHostList(searchInputDto);
 	}
 
 	@RequestMapping("/reservationList")
@@ -51,9 +52,10 @@ public class HostController {
 	
 	
 	
-///////////////////////////// 호스트 등록 ////////////////////////////////	
+///////////////////////////// 호스트 등록 ////////////////////////////////
+	
 	@ModelAttribute("newHost")
-	public Host newHost() {
+	public Host newHostInfoDTO() {
 		return new Host();
 	}
 	@RequestMapping("/host/registration/roomType") // 등록 첫 페이지 - 단순 이동

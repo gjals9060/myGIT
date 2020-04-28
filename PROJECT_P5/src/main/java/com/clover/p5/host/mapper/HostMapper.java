@@ -2,13 +2,12 @@ package com.clover.p5.host.mapper;
 
 import java.util.List;
 
-import com.clover.p5.host.model.SearchHostDTO;
-import com.clover.p5.entity.Host;
+import com.clover.p5.host.dto.*;
 
 public interface HostMapper {
 
-	Host selectHost(String id);
+	HostInfoDTO selectHost(String id);
 	
-	List<Host> selectHostList(SearchHostDTO dto);
+	List<HostInfoDTO> selectHostList(SearchHostDTO searchHostDto);
 	
 }

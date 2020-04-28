@@ -6,8 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.ui.Model;
 
-import com.clover.p5.host.model.HostParamVO;
-import com.clover.p5.entity.Host;
+import com.clover.p5.host.dto.*;
 
 public interface HostService {
 	
@@ -15,7 +14,7 @@ public interface HostService {
 	String selectHost(HttpServletRequest request, Model model);
 	
 	// 지도 반응형 리스트
-	List<Host> selectHostList(HostParamVO vo);
+	List<HostInfoDTO> selectHostList(SearchInputDTO searchInputDto);
 	
 	// reservationList 이동
 	String reservationList(HttpServletRequest request, Model model);

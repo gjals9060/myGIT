@@ -1,6 +1,6 @@
-package com.clover.p5.host.model;
+package com.clover.p5.host.dto;
 
-public class HostParamVO {
+public class SearchInputDTO {
 	
 	private String swLatlng;
 	private String neLatlng;
@@ -8,13 +8,13 @@ public class HostParamVO {
 	private String startDate;
 	private String endDate;
 
-	public HostParamVO() {
+	public SearchInputDTO() {
 		// TODO Auto-generated constructor stub
 	}
 	
 	
 	
-	public HostParamVO(String swLatlng, String neLatlng, String capacity, String startDate, String endDate) {
+	public SearchInputDTO(String swLatlng, String neLatlng, String capacity, String startDate, String endDate) {
 		super();
 		this.swLatlng = swLatlng;
 		this.neLatlng = neLatlng;
