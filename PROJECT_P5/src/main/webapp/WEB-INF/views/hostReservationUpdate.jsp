@@ -165,7 +165,6 @@
 						<!-- value는 db에서 값을 가져와서 처리  -->
 						<input type="text" value="1" disabled="disabled" id="maximumNumberGuest"/>
 						<button class="host-update-roomcount-btn" id="maximumNumberIncrease">▲</button>
-					
 						<button class="host-update-roomcount-btn" id="maximumNumberDecrease">▼</button>
 					</div>
 					<div id="maximumNuberCountError"></div>
@@ -224,7 +223,6 @@
 			<button id="map-save-btn">저장하기</button>
 			<div id="result"></div>
 			
-			   
 			<input type="text" name="hostUpdateAdress" id="hostUpdateAdress"  />
 			      
 			      
@@ -258,6 +256,9 @@
 				<input type="checkbox" name="availableFacilities" value="isWashingMachine" />세탁기<br>
 				<input type="checkbox" name="availableFacilities" value="isElevator" />앨리베이터<br>
 				<input type="checkbox" name="availableFacilities" value="isParkingLot" />주차<br>
+				<div class="host-update-submit">
+					<input type="button" value="수정" id="hostUpdateFacilitiesBtn" />
+				</div>
 			</div>
 		</div>
 		
@@ -292,11 +293,12 @@
 			<div class="host-update-content">
 				<div class="host-update-title"> 제목/설명을 수정합니다.</div>
 				<h3>숙소명</h3>
-				<input type="text" name="name" placeholder="숙소 이름" value=""/>
+				<input type="text" name="name" id="updateTitle"  />
 				<h3>숙소 설명</h3>
-				<textarea name="description"  rows="10" cols="50" id="hostUpdateDescription"></textarea>
+				<textarea name="description"  rows="10" cols="50" id="updateDescription"></textarea>
 				<h3>기타사항(선택)</h3>
-				<textarea name="description_etc" rows="10" cols="50" value=""></textarea>
+				<textarea name="description_etc" rows="10" cols="50"  id="updateSubDescription"></textarea>
+				<input type="button" value="수정" id="hostUpdateDescriptionBtn" />
 			</div>
 		</div>
 		
@@ -305,18 +307,21 @@
 			<div class="host-update-content">
 				<div class="host-update-title"> 숙박일수를 수정합니다.</div>
 				최소 숙박
-				<input type="number" name="minimumStay" class="minimum-date" disabled value="1" />
-				<button id="minimum-date-increase-quantity">▲</button>
-				<button id="minimum-date-decrease-quantity">▼</button>
+				<input type="number" name="minimumStay" id="minimumDate"  disabled value="1" />
+				<button id="minimumDateIncreaseQuantity">▲</button>
+				<button id="minimumDateDecreaseQuantity">▼</button>
 				<br>
 				<div id="minium-warning"></div>
 				
 				최대 숙박
-				<input type="number" name="maximumStay" class="maximum-date" disabled value="1" />
-				<button id="maximum-date-increase-quantity">▲</button>
-				<button id="maximum-date-decrease-quantity">▼</button>
+				<input type="number" name="maximumStay" id="maximumDate" disabled value="1" />
+				<button id="maximumDateIncreaseQuantity">▲</button>
+				<button id="maximumDateDecreaseQuantity">▼</button>
 				<br>
 				<div id="maximum-warning"></div>
+				<div class="host-update-submit">
+					<input type="button" value="수정" id="hostUpdateStayDateBtn" />
+				</div>
 			</div>
 		</div>
 		
@@ -338,8 +343,11 @@
 				<div class="host-update-title"> 기본요금을 수정합니다.</div>
 				<!--0부터 9까지 숫자를 입력하지않으면 ""로 replace됨  --><!--value값은 사용자가 입력한 숙소요금  -->
 				
-			    금액 <input type="text" value="10000" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>  
+			    금액 <input type="text" id="updatePrice" value="10000" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>  
 			    
+				<div class="host-update-submit">
+					<input type="button" value="수정" id="hostUpdatePriceBtn" />
+				</div>
 			</div>
 		</div>
 	
@@ -512,7 +520,7 @@
 		var inputBathCount = $('#maximumNumberBathRoom').val();
 		
 	 	$.ajax({
-			url:"",
+			url:"updateRoomCount",
 			type: "POST",
 			data : {
 				capacity :  inputCapacity,
@@ -533,11 +541,6 @@
 	});
 	
 	
-	
-	
-	
-	
-	
 
 
 
@@ -555,26 +558,37 @@
 		/* map.setDraggable(true); ////지도 드래그/ tab을 눌렀을때 보여주는 지도에서 드래그를 사욯하고 싶다면*/
 		
 		
+		////el로 받아오기 
+		$("#hostlatitude").val('37.570695628909476'); 
+        $("#hostlongitude").val('126.9918696665976');
+        $('#hostUpdateAdress').val(); // 주소
+		
 	});
 	
 	
+	
+	
 	var toggle = false;   //버튼 활성화
-	   
+	
+	
+	/// el로 값 적용.
+	var lat123 = 37.570695628909476;
+	var lon123 = 126.9918696665976;
+		
 	$('#map-set-btn').show();   // 기본적으로  조정하기 버튼 숨김
 	$('#map-save-btn').hide();   // 기본적으로  저장하기 버튼 숨김
-	   
-	/// 지도 생성
-	var mapContainer = document.getElementById('map'), // 지도를 표시할 div /// div에서 Container설정 해놓음.
-	  
-	mapOption = {
-		center : new daum.maps.LatLng(37.570695628909476, 126.9918696665976), // 지도의 중심좌표 /// 중심좌표를 호스트가 등록한 좌표로
-   		level : 2	// 지도의 확대 레벨
-  	}; 
 	
+
+	/// 지도 생성
+	mapOption = {
+			center : new daum.maps.LatLng(lat123, lon123), // 지도의 중심좌표 /// 중심좌표를 호스트가 등록한 좌표로
+	   		level : 2	// 지도의 확대 레벨
+	  	}; 
+	
+	var mapContainer = document.getElementById('map'); // 지도를 표시할 div /// div에서 Container설정 해놓음.
+	  
 	var map = new daum.maps.Map(mapContainer, mapOption);
 	   
-	
-	
 	// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다(확대/축소 막대)
 	var zoomControl = new kakao.maps.ZoomControl();
 	map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
@@ -592,11 +606,11 @@
 	   
 	map.setDraggable(false);   //드래그 비활성화
 	map.setZoomable(false);      //줌 비활성화
-	   
+	
 	// 지도에 표시할 원을 생성합니다
 	var circle = new kakao.maps.Circle({
 		
-		center : new kakao.maps.LatLng(37.570695628909476, 126.9918696665976),  // 원의 중심좌표 입니다  //// 초기의 좌표로
+		center : new kakao.maps.LatLng(lat123, lon123),  // 원의 중심좌표 입니다  //// 초기의 좌표로
 	    radius: 30, // 미터 단위의 원의 반지름입니다 
 	    strokeWeight: 5, // 선의 두께입니다 
 	    strokeColor: '#75B8FA', // 선의 색깔입니다
@@ -604,8 +618,12 @@
 	    strokeStyle: 'dashed', // 선의 스타일 입니다
 	    fillColor: '#CFE7FF', // 채우기 색깔입니다
 	    fillOpacity: 0.7  // 채우기 불투명도 입니다   
-	
 	});
+	
+
+	
+	
+	
 	 
 	// 주소검색
 	   function sample5_execDaumPostcode() {
@@ -613,7 +631,6 @@
 	         oncomplete : function(data) {
 	        	 
 	            var addr = data.address; // 최종 주소 변수
-	            $('#map-set-btn').show();
 
 	            // 주소 정보를 해당 필드에 넣는다.
 	            document.getElementById("sample5_address").value = addr;
@@ -627,6 +644,11 @@
 
 	                  // 해당 주소에 대한 좌표를 받아서
 	                  var coords = new daum.maps.LatLng(result.y, result.x);
+	                  
+	                  /// 검색한 주소의 정보 (위도, 경도, 주소)를 입력
+	                  $("#hostlatitude").val(result.y);
+		              $("#hostlongitude").val(result.x);
+		              $('#hostUpdateAdress').val(result.road_address.address_name);
 	                  
 	                  // 지도를 보여준다.
 	                  mapContainer.style.display = "block";
@@ -652,7 +674,6 @@
 	   
 	      
 	   $(document).on('click','#map-set-btn', function() {
-	      
 	      $('#map-set-btn').hide();
 	      $('#map-save-btn').show();
 	      toggle = true;   // 이벤트 활성화
@@ -671,7 +692,7 @@
 	      
 	      // 좌표중심 원 위치 조정
 	      var latlng = map.getCenter();
-	         circle.setPosition(new kakao.maps.LatLng(latlng.getLat(), latlng.getLng()));
+	      circle.setPosition(new kakao.maps.LatLng(latlng.getLat(), latlng.getLng()));
 
 	   });
 	   
@@ -724,17 +745,14 @@
 	   
 	   $('#hostUpdateAddressBtn').on("click",function(){
 		   
-		   /// input hidden으로 숨김.
 			var hostLatitude =  $("#hostlatitude").val(); ///위도
 			var hostLongitude =  $("#hostlongitude").val(); /// 경도
 			var addressInfo = $('#hostUpdateAdress').val(); /// 도로명 주소 
 
 			alert(hostLatitude + ' / '+ hostLongitude+' / '+addressInfo);
-		
-			
 			
 			$.ajax({
-				url: "",
+				url: "updateAddress",
 				type: "POST",
 				dateType : "json",
 				date : {
@@ -771,6 +789,34 @@
 		hostReservatoonUpdateBtn.css("border","1px solid");
 		$("#hostUpdateFacilitiesTab").css("border", "1px solid red");
 	});
+	   
+	  
+	$("#hostUpdateFacilitiesBtn").on("click",function(){
+		
+		alert("변경");
+		
+		$.ajax({
+			url: "updateFacilities",
+			type : "POST",
+			data:{
+				
+				
+			},
+			dataType: "json",
+			success : function(){
+				alert("서버 통신" );
+			},
+			error: function(){
+				alert("연결 실패")
+			}
+		});
+		
+	});
+	
+	
+	   
+	   
+	   
 	
 	
 	
@@ -789,8 +835,6 @@
 	$(document).ready(function() {   
 	    $("#picture").on("change", handleImgFileSelect);   
 	});    
-
-
 
 	function fileUploadAction() {   
 	    console.log("fileUploadAction");   
@@ -904,8 +948,34 @@
 		$("#hostUpdateDescriptionTab").css("border", "1px solid red");
 	});
 	
+	$("#hostUpdateDescriptionBtn").on("click", function() {
+		var inputDescription = $("#updateDescription").val();
+		var inputDescriptionEtc= $("#updateSubDescription").val();
+		var inputTitle = $("#updateTitle").val(); 
+		
+		$.ajax({
+			url: 'updatDesciptionBtn',
+			type: "POST",
+			dataType: "json",
+			data:{
+				name : inputTitle,
+				description: inputDescription,
+				descriptionEtc:inputDescriptionEtc
+			},
+			succuess: function(){
+				alert("연결성공");
+			},
+			error: function(){
+				alert("연결실패");
+			}
+			
+			
+		});
+	});
 	
-	$("#hostUpdateDescription").val("숙소설명");
+	
+	
+	
 
 	
 	
@@ -917,6 +987,74 @@
 		hostReservatoonUpdateBtn.css("border","1px solid");
 		$("#hostUpdateStayDateTab").css("border", "1px solid red");
 	});
+	
+	// 최소숙박 - 올림
+	$("#minimumDateIncreaseQuantity").on("click", function() {
+		var num = $('#minimumDate').val();
+		num++;
+		$('#minimumDate').val(num);
+	});
+	
+	// 최소숙박 - 내림 
+	$('#minimumDateDecreaseQuantity').on('click',function(){
+		var num = $('#minimumDate').val();
+		num--;
+		$('#minimumDate').val(num);
+	});
+	
+	
+	//최대 숙박 - 올림
+	
+	$("#maximumDateIncreaseQuantity").on("click", function() {
+		var num = $('#maximumDate').val();
+		num++;
+		$('#maximumDate').val(num);
+	});
+	//최대 숙박 - 내림
+	
+	$('#maximumDateDecreaseQuantity').on('click',function(){
+		var num = $('#maximumDate').val();
+		num--;
+		$('#maximumDate').val(num);
+	});
+	
+	
+	///// 수정 버튼을 눌렀을 경우
+	
+	$('#hostUpdateStayDateBtn').on('click',function(){
+		var minimumStay = $('#minimumDate').val();
+		var maximumStay = $('#maximumDate').val();
+		
+		$.ajax({
+			url : "",
+			type: "POST",
+			dataType: "json",
+			data : {
+				minimumStay : minimumStay,
+				maximumStay : maximumStay
+			},
+			succuess : function(){
+				alert("성공");
+				/// 그 후 로직
+				
+				
+			},
+			error: function(){
+				alert("실패");
+			}
+		});
+		
+	});
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	///////////////////// 예약불가날짜  tab 클릭 ///////////////////
 	$("#hostUpdateCalendarTab").on("click", function() {
@@ -937,8 +1075,6 @@
       	maxDate: 60, // +30 days from today
   	 });
 	
-
-
 	
 	///////////////////// 동일기본요금  tab 클릭 ///////////////////
 	$("#hostUpdatePriceTab").on("click", function() {
@@ -949,9 +1085,32 @@
 	});
 	
 	
+	$('#hostUpdatePriceBtn').on('click',function(){
+		var price = $("#updatePrice").val();	
+		$.ajax({
+			url: "updatePrice",
+			type: "POST",
+			data: {
+				price : price
+			},
+			dataType: "json",
+			succuess: function(){
+				alert("성공");
+			},
+			error: function(){
+				alert("실패");
+				
+			}
+		});
+		
+	});
 	
 	
-	 
+	
+	
+	
+	
+	
 	
 
 </script>
