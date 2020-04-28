@@ -210,25 +210,31 @@
 			</div>
 		</div>
 		
+		
 		<!-- 지역  -->
 		<div class="host-reservation-update-container" id="hostUpdateAddressCon">
 			<div class="host-update-content">
 			<div class="host-update-title"> 지역을 수정합니다.</div>
-				<input type="text" id="sample5_address" placeholder="주소">
-			   <input type="button" onclick="sample5_execDaumPostcode()" value="주소 검색">
-			   <br>
-			   <div id="map" style="width: 300px; height: 300px; margin-top: 10px; display: none"></div>
-			   <button id="map-set-btn">조정하기</button>
-			   <button id="map-save-btn">저장하기</button>
-			   <div id="result"></div>
+			<input type="hidden" id="sample5_address" placeholder="주소">
+			<input type="button" onclick="sample5_execDaumPostcode()" value="주소 검색">
+			<br>
+			<div id="addressInfo"></div>
+			<div id="map" style="width: 300px; height: 300px; margin-top: 10px; display: none"></div>
+			<button id="map-set-btn">조정하기</button>
+			<button id="map-save-btn">저장하기</button>
+			<div id="result"></div>
 			
-			   <div id="addressInfo"></div>
-			      <input type="text" name="hostUpdateAdress" id="hostUpdateAdress"  />
+			   
+			<input type="text" name="hostUpdateAdress" id="hostUpdateAdress"  />
 			      
 			      
-			      <!-- 위도 경도 히든, ajax로 값 전송 -->
-			      <input type="text" id="hostlatitude" />
-			      <input type="text" id="hostlongitude" />
+			   <!-- 위도 경도 히든, ajax로 값 전송 -->
+			   <input type="text" id="hostlatitude" />
+			   <input type="text" id="hostlongitude" />
+			      
+			<div class="host-update-submit">
+				<input type="button" value="수정" id="hostUpdateAddressBtn" />
+			</div>
 			   
 			</div>
 			
@@ -372,15 +378,14 @@
 		alert(hostUpdateTypeValue);
 		alert(hostUpdateRoomTypeValue);
 		
-	
-		
 		$.ajax({
 			url: "roomTypeUpdate",  //// 숙소 형태 변경 url
+			type: "POST",
+			dataType: "json",
 			data: {
 				type : hostUpdateTypeValue, 
 				roomType : hostUpdateRoomTypeValue
 			},
-			type: "POST",
 			success : function(result){
 				alert("확인");
 			},
@@ -498,23 +503,33 @@
 	
 	
 	
-	/////수용인원 - 수정버튼 
+/////수용인원 - 수정버튼 ajax
 	$("#hostUpdateRoomCountBtn").on('click',function(){
 	
-		alert($("#maximumNumberGuest").val());
-		alert($('#maximumNumberRoom').val());
-		alert($('#maximumNumberBed').val());
-		alert($('#maximumNumberBathRoom').val());
+		var inputCapacity = $("#maximumNumberGuest").val();
+		var inputRoomCount = $('#maximumNumberRoom').val();
+		var inputBedCount = $('#maximumNumberBed').val();
+		var inputBathCount = $('#maximumNumberBathRoom').val();
 		
-	/* 	$.ajax({
+	 	$.ajax({
 			url:"",
+			type: "POST",
 			data : {
-				capacity : 
+				capacity :  inputCapacity,
+				roomCount : inputRoomCount,
+				bedCount : inputBedCount,
+				bathroomCount : inputBathCount
+			},
+			success: function(result){
+				alert("성공했습니다.");
+				///// 그 후 로직....
+				// 기존에 있던 값 지우고 다시 입력한 값 가져오기				
 				
+			},
+			error : function(result){
+				alert("통신실패");
 			}
-		}); */
-		
-		
+		}); 
 	});
 	
 	
@@ -523,6 +538,8 @@
 	
 	
 	
+
+
 
 	
 	/////////////////////지역  tab 클릭/////////////////////
@@ -531,62 +548,76 @@
 		$("#hostUpdateAddressCon").css("display","block");
 		hostReservatoonUpdateBtn.css("border","1px solid");
 		$("#hostUpdateAddressTab").css("border", "1px solid red");
+		
+		/// tab을 눌렀을 때 지도가 보이도록
+		mapContainer.style.display = "block";
+		map.relayout(); 
+		/* map.setDraggable(true); ////지도 드래그/ tab을 눌렀을때 보여주는 지도에서 드래그를 사욯하고 싶다면*/
+		
+		
 	});
+	
 	
 	var toggle = false;   //버튼 활성화
 	   
-	   $('#map-set-btn').hide();   // 기본적으로  조정하기 버튼 숨김
-	   $('#map-save-btn').hide();   // 기본적으로  저장하기 버튼 숨김
+	$('#map-set-btn').show();   // 기본적으로  조정하기 버튼 숨김
+	$('#map-save-btn').hide();   // 기본적으로  저장하기 버튼 숨김
 	   
-	   var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-	   mapOption = {
-	      center : new daum.maps.LatLng(37.537187, 127.005476), // 지도의 중심좌표
-	      level : 1
-	   // 지도의 확대 레벨
-	   };
+	/// 지도 생성
+	var mapContainer = document.getElementById('map'), // 지도를 표시할 div /// div에서 Container설정 해놓음.
+	  
+	mapOption = {
+		center : new daum.maps.LatLng(37.570695628909476, 126.9918696665976), // 지도의 중심좌표 /// 중심좌표를 호스트가 등록한 좌표로
+   		level : 2	// 지도의 확대 레벨
+  	}; 
+	
+	var map = new daum.maps.Map(mapContainer, mapOption);
+	   
+	
+	
+	// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다(확대/축소 막대)
+	var zoomControl = new kakao.maps.ZoomControl();
+	map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
-	   //지도를 미리 생성
-	   var map = new daum.maps.Map(mapContainer, mapOption);
+	map.setMaxLevel(3);   //최대 줌 레벨
 	   
-	   // 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다(확대/축소 막대)
-	   var zoomControl = new kakao.maps.ZoomControl();
-	   map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
-
-	   map.setMaxLevel(3);   //최대 줌 레벨
+ 	//주소-좌표 변환 객체를 생성
+	var geocoder = new daum.maps.services.Geocoder();
 	   
-	   //주소-좌표 변환 객체를 생성
-	   var geocoder = new daum.maps.services.Geocoder();
-	   // 마커 미리 생성
-	   var marker = new daum.maps.Marker({
-	      position : new daum.maps.LatLng(37.537187, 127.005476),
-	      map : map
-	   });
+	// 마커 미리 생성
+	var marker = new daum.maps.Marker({
+	    position : new daum.maps.LatLng(37.537187, 127.005476),
+		map : map
+	});
 	   
-	   map.setDraggable(false);   //드래그 비활성화
-	   map.setZoomable(false);      //줌 비활성화
+	map.setDraggable(false);   //드래그 비활성화
+	map.setZoomable(false);      //줌 비활성화
 	   
-	   // 지도에 표시할 원을 생성합니다
-	    var circle = new kakao.maps.Circle({
-	        center : new kakao.maps.LatLng(37.537187, 127.005476),  // 원의 중심좌표 입니다 
-	        radius: 30, // 미터 단위의 원의 반지름입니다 
-	        strokeWeight: 5, // 선의 두께입니다 
-	        strokeColor: '#75B8FA', // 선의 색깔입니다
-	        strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-	        strokeStyle: 'dashed', // 선의 스타일 입니다
-	        fillColor: '#CFE7FF', // 채우기 색깔입니다
-	        fillOpacity: 0.7  // 채우기 불투명도 입니다   
-	    });
+	// 지도에 표시할 원을 생성합니다
+	var circle = new kakao.maps.Circle({
+		
+		center : new kakao.maps.LatLng(37.570695628909476, 126.9918696665976),  // 원의 중심좌표 입니다  //// 초기의 좌표로
+	    radius: 30, // 미터 단위의 원의 반지름입니다 
+	    strokeWeight: 5, // 선의 두께입니다 
+	    strokeColor: '#75B8FA', // 선의 색깔입니다
+	    strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+	    strokeStyle: 'dashed', // 선의 스타일 입니다
+	    fillColor: '#CFE7FF', // 채우기 색깔입니다
+	    fillOpacity: 0.7  // 채우기 불투명도 입니다   
+	
+	});
 	 
-	   // 주소검색
+	// 주소검색
 	   function sample5_execDaumPostcode() {
 	      new daum.Postcode({
 	         oncomplete : function(data) {
-	            
+	        	 
 	            var addr = data.address; // 최종 주소 변수
 	            $('#map-set-btn').show();
 
 	            // 주소 정보를 해당 필드에 넣는다.
 	            document.getElementById("sample5_address").value = addr;
+	            alert($('#sample5_address').val());
 	            // 주소로 상세 정보를 검색
 	            geocoder.addressSearch(data.address, function(results, status) {
 	               // 정상적으로 검색이 완료됐으면
@@ -676,9 +707,11 @@
 	                 $("#hostlatitude").val(latlng.getLat());
 	                 $("#hostlongitude").val(latlng.getLng());
 	                 
-	               $('#addressInfo').empty();
-	               $('#addressInfo').append('<div>도로명주소 : ' + result[0].address.address_name + '</div>');
+	               	$('#addressInfo').empty();
+	               	$('#addressInfo').append('도로명주소 : ' + result[0].address.address_name);
 	               
+	                 /// 도로명 주소 받아오기
+	                 $('#hostUpdateAdress').val(result[0].address.address_name);
 	             }
 	         };
 
@@ -687,9 +720,49 @@
 	          
 	       }
 	   });
+	   
+	   
+	   $('#hostUpdateAddressBtn').on("click",function(){
+		   
+		   /// input hidden으로 숨김.
+			var hostLatitude =  $("#hostlatitude").val(); ///위도
+			var hostLongitude =  $("#hostlongitude").val(); /// 경도
+			var addressInfo = $('#hostUpdateAdress').val(); /// 도로명 주소 
 
+			alert(hostLatitude + ' / '+ hostLongitude+' / '+addressInfo);
+		
+			
+			
+			$.ajax({
+				url: "",
+				type: "POST",
+				dateType : "json",
+				date : {
+					address : addressInfo,
+					latitude : hostLatitude,
+					longitude : hostLongitude
+				},
+				succuess : function(result){
+					alert("성공하였습니다.");
+					// 성공 후, 지도에 뿌리기
+					
+					
+				},
+				error : function(result){
+					alert("실패하였습니다.")
+				}
+			});
+				
+	   });
 
-	
+	   ///////////////////////
+	   
+	   
+	   
+	   
+	   
+	   
+
 	
 	/////////////////////// 편의시설  tab 클릭 //////////////////////////
 	$("#hostUpdateFacilitiesTab").on("click", function() {
@@ -698,6 +771,8 @@
 		hostReservatoonUpdateBtn.css("border","1px solid");
 		$("#hostUpdateFacilitiesTab").css("border", "1px solid red");
 	});
+	
+	
 	
 	
 	/////////////////// 사진등록  tab 클릭 /////////////////////////
