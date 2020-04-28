@@ -118,6 +118,50 @@ public class HostServiceImpl implements HostService {
 		
 		return "reservationList";
 	}
+
+
+	@Override
+	public String reservationPurchase(HttpServletRequest request, Model model) {
+
+		System.out.println("reservationPurchase 페이지 이동");
+
+		String checkInDatecheckOutDate = request.getParameter("checkInDatecheckOutDate");
+		String personnel = request.getParameter("personnel");
+		String hostId = request.getParameter("hostId");
+		String memberId = request.getParameter("userId");
+		String hostName = request.getParameter("hostName");
+		int hostPrice = Integer.parseInt(request.getParameter("hostPrice"));
+		int dateCount = Integer.parseInt(request.getParameter("dateCnt"));
+		
+		String[] date = checkInDatecheckOutDate.split(" - ");
+		String checkInDate = date[0];
+		String checkOutDate = date[1];
+				
+		int payment = dateCount * hostPrice;
+		
+		System.out.println("날짜 : " + checkInDatecheckOutDate);
+		System.out.println("인원 : " + personnel);
+		System.out.println("호스트 id : " + hostId);
+		System.out.println("유저 id : " + memberId);
+		System.out.println("체크인 : " + checkInDate);
+		System.out.println("체크아웃 : " + checkOutDate);
+		System.out.println("호스트 1박 금액 : " + hostPrice);
+		System.out.println("호스트 이름 : " + hostName);
+		System.out.println("결제 금액 : " + payment);
+		
+		model.addAttribute("personnel", personnel);
+		model.addAttribute("memberId", memberId);
+		model.addAttribute("checkInDatecheckOutDate", checkInDatecheckOutDate);
+		model.addAttribute("checkInDate", checkInDate);
+		model.addAttribute("checkOutDate", checkOutDate);
+		model.addAttribute("hostPrice", hostPrice);
+		model.addAttribute("dateCount", dateCount);
+		model.addAttribute("hostName", hostName);
+		model.addAttribute("payment", payment);
+		
+		
+		return "reservationPurchase";
+	}
 	
 	
 }

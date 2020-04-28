@@ -19,5 +19,7 @@ public interface HostService {
 	// reservationList 이동
 	String reservationList(HttpServletRequest request, Model model);
 	
+	// reservaionPurchase 이동
+	String reservationPurchase(HttpServletRequest request, Model model);
 	
 }

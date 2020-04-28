@@ -42,6 +42,11 @@ public class HostController {
 		return hostService.selectHost(request, model);
 	}
 	
+	@RequestMapping("/reservationPurchase")
+	public String reservationPurchase(HttpServletRequest request, Model model) {	
+		return hostService.reservationPurchase(request, model);
+	}
+	
 	
 	
 	

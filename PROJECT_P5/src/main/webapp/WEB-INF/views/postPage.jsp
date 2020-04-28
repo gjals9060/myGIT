@@ -504,21 +504,30 @@ word-break: break-all;
                </td>
                <td>
                   <div class="contentReserv">
-                     <div class="contentReservTitle">예약</div>
-                     ${host.price }/1박<br>
-                     <br>
-                     <div class="contentReservTitle">날짜</div>
-                     <input type="text" id="checkDate" name="checkInDatecheckOutDate"
-                        value="${checkInDatecheckOutDate}" onchange="countDate()" /><br>
-                     <br>
-                     <div class="contentReservTitle">인원</div>
-                     <input type='text' name='personnel' class="personnel_input" value="${capacity}">
-                     <!-- ${capacity}는 검색할때의 인원 설정 조건임, ${host.capacity} 와 다름 -->
-                     <button id="increaseQuantity">▲</button>
-                     <button id="decreaseQuantity">▼</button>
-                     <br><br>
-                     <div id="dateCount"></div>
-                     <br> <input type="button" value="예약하기" />
+                  	  <form action="reservationPurchase" method="post">
+		                  <div class="contentReservTitle">예약</div>
+		                  ${host.price}/1박<br>
+		                  <br>
+		                  <div class="contentReservTitle">날짜</div>
+		                  <input type="text" id="checkDate" name="checkInDatecheckOutDate"
+		                     value="${checkInDatecheckOutDate}" onchange="countDate()" /><br>
+		                  <br>
+		                  <div class="contentReservTitle">인원</div>
+		                  <input type='text' name='personnel' class="personnel_input" value="${capacity}">
+		                  <!-- ${capacity}는 검색할때의 인원 설정 조건임, ${host.capacity} 와 다름 -->
+		                  <button id="increaseQuantity">▲</button>
+		                  <button id="decreaseQuantity">▼</button>
+		                  <br><br>
+		                  <div id="dateCount"></div>
+		                  <br>
+		                  <input type="hidden" id="hostId" name="hostId" value="${host.id}">
+		                  <input type="hidden" id="userId" name="userId" value="${user.id}">
+		                  <input type="hidden" id="hostName" name="hostName" value="${host.name}">
+		                  <input type="hidden" id="hostPrice" name="hostPrice" value="${host.price}">
+		                  <input type="hidden" id="dateCnt" name="dateCnt" value="">
+		                  
+		                  <input type="submit" value="예약하기" />
+	                  </form>
                   </div>
                </td>
             </tr>
@@ -848,6 +857,8 @@ word-break: break-all;
    var checkOutDate1 = new Date(checkOutDate[2], checkOutDate[0]-1, checkOutDate[1]);
    var dateCount = parseInt(checkOutDate1-checkInDate1)/(24*60*60*1000);
    
+   $('#dateCnt').val(dateCount);
+   
    $("#dateCount").html(dateCount + "박 " + (dateCount+1) + "일<br>" + ("${host.price }"*dateCount) + "원");
    }
    
@@ -872,6 +883,7 @@ word-break: break-all;
          e.preventDefault();
          var stat = $('.personnel_input').val();
          var num = parseInt(stat, 10);
+         var capacity
          num++;
          
          if(num > ${host.capacity}){
