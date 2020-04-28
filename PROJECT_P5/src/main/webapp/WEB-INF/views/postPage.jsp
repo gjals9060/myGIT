@@ -148,6 +148,7 @@
 
 .Title {
    font-size: 20px;
+   margin: 10px 0px;
 }
 
 .contentIntro table td:first-child {
@@ -156,8 +157,8 @@
 }
 
 .contentConven img {
-   width: 30px;
-   height: 30px;
+   width: 25px;
+   height: 25px;
 }
 
 .contentProfile img {
@@ -247,6 +248,10 @@ word-break: break-all;
    left: 65%;
    position: sticky;
    text-align: center;
+}
+
+.personnel_input {
+   width: 50%;
 }
 
 /* 별점 */
@@ -400,13 +405,16 @@ word-break: break-all;
                               </div> <br>${host.memberId }님</td>
                         </tr>
                         <tr>
-                           <td colspan="2">작성일 ${host.creationDate } | 수정일${host.modificationDate }</td>
+                           <td colspan="2">작성일 ${host.creationDate } |
+                              수정일${host.modificationDate }</td>
                         </tr>
                         <tr>
                            <td><div class="contentLocation">${host.address }</div></td>
                         </tr>
                         <tr>
-                           <td colspan="2">${host.type }${host.roomType } | 인원 ${host.capacity }명 방 ${host.roomCount }개 침대 ${host.bedCount }개 욕실 ${host.bathroomCount }개</td>
+                           <td colspan="2">${host.type }${host.roomType }| 인원
+                              ${host.capacity }명 방 ${host.roomCount }개 침대 ${host.bedCount }개
+                              욕실 ${host.bathroomCount }개</td>
                         </tr>
                      </table>
                   </div> <!-- postContentIntro end --> <br>
@@ -423,74 +431,74 @@ word-break: break-all;
 
                   <div class="contentEct">
                      <div class="contentEct Title">기타 사항</div>
-                  	 ${host.descriptionEtc }
+                     ${host.descriptionEtc }
                   </div> <br>
                   <hr> <br>
                   <div class="contentMap">
-					<div class="contentMap Title">지도</div>
-                     <!-- (지도 들어갈 자리) <br> <br> <br> <br> <br> <br>
-                     <br> <br> <br> <br> <br> <br> <br>
-                     <br> <br> <br> <br> <br> <br> <br> -->
-					 <div id="map" style="width: 500px; height: 400px; margin-top: 10px; z-index: 3;">
-					 	<button style="background-color: #FFFFFF; width: 33px; height: 35px; margin-right: 2px; position: absolute; top: 105px; right: 0; z-index: 5; border: none; border-radius: 10px;" onclick="panTo()">
-					 		<img alt="focus" src="./img/focus.png" style="width: 100%; height: 100%;">
-					 	</button>
-					 </div>
-				     
-					 
-					 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c9d8461122e464c2883b7e5ce3c5eedf"></script>
-						<script>
-							var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-							    mapOption = { 
-							        center: new kakao.maps.LatLng(37.240910457871784, 131.86707687050958), // 지도의 중심좌표
-							        level: 3 // 지도의 확대 레벨
-							    };
-							
-							var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-							
-							map.setMinLevel(2);
-							map.setMaxLevel(4);
-							
-							var latitude = ${host.latitude};
-							var longitude = ${host.longitude};
-							
-							map.setCenter(new kakao.maps.LatLng(latitude, longitude));
-						
-							// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
-							var zoomControl = new kakao.maps.ZoomControl();
-							map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
-							
-							
-							// center 좌표에 마커 생성
-							var imageSrc = './img/marker2.png', // 마커이미지의 주소입니다    
-							    imageSize = new kakao.maps.Size(65, 70), // 마커이미지의 크기입니다
-							    imageOption = {offset: new kakao.maps.Point(30, 60)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
-							
-							var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
-							    markerPosition = new kakao.maps.LatLng(latitude, longitude); // 마커가 표시될 위치입니다
-							    
-							// 마커를 생성합니다
-							var marker = new kakao.maps.Marker({
-								position: markerPosition,
-								image: markerImage, // 마커이미지 설정
-								title: "${host.name}",
-								zIndex: 4
-							
-							});
-							// 마커가 지도 위에 표시되도록 설정합니다
-							marker.setMap(map);
-							
-							function panTo() {
-							    // 이동할 위도 경도 위치를 생성합니다 -> 마커 위치로
-							    var moveLatLon = markerPosition;
-							    
-							    // 지도 중심을 부드럽게 이동시킵니다
-							    // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
-							    map.panTo(moveLatLon);            
-							}    
-							
-						</script>
-					          
+                     <div class="contentMap Title">지도</div>
+                     <div id="map"
+                        style="width: 500px; height: 400px; margin-top: 10px; z-index: 3;">
+                        <button
+                           style="background: #FFFFFF; width: 33px; margin-right: 2px; padding: unset; position: absolute; top: 105px; right: 0; z-index: 5; border: none; border-radius: 10px;"
+                           onclick="panTo()">
+                           <img alt="focus" src="./img/focus.png"
+                              style="width: 30px; height: 30px;">
+                        </button>
+                     </div>
+
+                     <script type="text/javascript"
+                        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c9d8461122e464c2883b7e5ce3c5eedf"></script>
+                     <script>
+                     var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+                         mapOption = { 
+                             center: new kakao.maps.LatLng(37.240910457871784, 131.86707687050958), // 지도의 중심좌표
+                             level: 3 // 지도의 확대 레벨
+                         };
+                     
+                     var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+                     
+                     map.setMinLevel(2);
+                     map.setMaxLevel(4);
+                     
+                     var latitude = ${host.latitude};
+                     var longitude = ${host.longitude};
+                     
+                     map.setCenter(new kakao.maps.LatLng(latitude, longitude));
+                  
+                     // 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+                     var zoomControl = new kakao.maps.ZoomControl();
+                     map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+                     
+                     
+                     // center 좌표에 마커 생성
+                     var imageSrc = './img/marker2.png', // 마커이미지의 주소입니다    
+                         imageSize = new kakao.maps.Size(65, 70), // 마커이미지의 크기입니다
+                         imageOption = {offset: new kakao.maps.Point(30, 60)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+                     
+                     var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
+                         markerPosition = new kakao.maps.LatLng(latitude, longitude); // 마커가 표시될 위치입니다
+                         
+                     // 마커를 생성합니다
+                     var marker = new kakao.maps.Marker({
+                        position: markerPosition,
+                        image: markerImage, // 마커이미지 설정
+                        title: "${host.name}",
+                        zIndex: 4
+                     });
+                     // 마커가 지도 위에 표시되도록 설정합니다
+                     marker.setMap(map);
+                     
+                     function panTo() {
+                         // 이동할 위도 경도 위치를 생성합니다 -> 마커 위치로
+                         var moveLatLon = markerPosition;
+                         
+                         // 지도 중심을 부드럽게 이동시킵니다
+                         // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
+                         map.panTo(moveLatLon);            
+                     }    
+                     
+                  </script>
+
                   </div> <br>
                   <hr> <br>
                </td>
@@ -498,11 +506,18 @@ word-break: break-all;
                   <div class="contentReserv">
                      <div class="contentReservTitle">예약</div>
                      ${host.price }/1박<br>
+                     <br>
                      <div class="contentReservTitle">날짜</div>
-                     <input type="text" name="checkInDatecheckOutDate" value="01/01/2018 - 01/15/2018" /><br>
+                     <input type="text" id="checkDate" name="checkInDatecheckOutDate"
+                        value="01/01/2018 - 01/15/2018" onchange="countDate()" /><br>
+                     <br>
                      <div class="contentReservTitle">인원</div>
-                     (암튼 따서 복붙하기)<br> <br> <br> <br> <br> <br>
-                     <input type="button" value="예약하기" />
+                     <input type='text' name='personnel' class="personnel_input" value="0">
+                     <button id="increaseQuantity">▲</button>
+                     <button id="decreaseQuantity">▼</button>
+                     <br><br>
+                     <div id="dateCount"></div>
+                     <br> <input type="button" value="예약하기" />
                   </div>
                </td>
             </tr>
@@ -568,7 +583,6 @@ word-break: break-all;
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="js/jquery-3.4.1.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-
 <script type="text/javascript">
 
    /* 이미지 슬라이드 */
@@ -677,62 +691,62 @@ word-break: break-all;
    function spanOnoff() {
       var conventCount = 0;
       var convenList = ["${host.isTv }", "${host.isWifi }", "${host.isAirConditioner }", "${host.isAirPurifier }", "${host.isHairDryer }", "${host.isIron }", "${host.isKitchen }", "${host.isWashingMachine }", "${host.isElevator }", "${host.isParkingLot }"];
-/*       var convenList = ["N","Y","N","N","N","N","N","Y","Y","Y"]; */
+
       for (var i = 0; i < convenList.length; i++) {
          if(convenList[i] == "Y") {
             switch (i) {
             case 0:
-               $("#contentConven").append('<span class="convenTv"><img src="./img/tv.png" alt="" /> TV </span>');
+               $("#contentConven").append('<span class="convenImg Tv"><img src="./img/tv.png" alt="" /> TV </span>');
                conventCount++;
                break;
             case 1:
-               $("#contentConven").append('<span class="convenWifi"><img src="./img/wifi.png" alt="" /> WiFi </span>');
+               $("#contentConven").append('<span class="convenImg Wifi"><img src="./img/wifi.png" alt="" /> WiFi </span>');
                conventCount++;
                break;
             case 2:
-               $("#contentConven").append('<span class="convenAirconditioner"><img src="./img/airconditioner.png" alt="" /> 에어컨 </span>');
+               $("#contentConven").append('<span class="convenImg Airconditioner"><img src="./img/airconditioner.png" alt="" /> 에어컨 </span>');
                conventCount++;
                break;
             case 3:
-               $("#contentConven").append('<span class="convenAirpurifier"><img src="./img/airpurifier.png" alt="" /> 공기청정기 </span>');
+               $("#contentConven").append('<span class="convenImg Airpurifier"><img src="./img/airpurifier.png" alt="" /> 공기청정기 </span>');
                conventCount++;
                break;
             case 4:
-               $("#contentConven").append('<span class="convenHairdryer"><imgsrc="./img/hairdryer.png" alt="" /> 헤어드라이어 </span>');
+               $("#contentConven").append('<span class="convenImg Hairdryer"><img src="./img/hairdryer.png" alt="" /> 헤어드라이어 </span>');
                conventCount++;
                break;
             case 5:
-               $("#contentConven").append('<span class="convenIron"><img src="./img/iron.png" alt="" /> 다리미 </span>');
+               $("#contentConven").append('<span class="convenImg Iron"><img src="./img/iron.png" alt="" /> 다리미 </span>');
                conventCount++;
                break;
             case 6:
-               $("#contentConven").append('<span class="convenKitchen"><img src="./img/kitchen.png" alt="" /> 주방 </span>');
+               $("#contentConven").append('<span class="convenImg Kitchen"><img src="./img/kitchen.png" alt="" /> 주방 </span>');
                conventCount++;
                break;
             case 7:
-               $("#contentConven").append('<span class="convenWashingmachine"><img   src="./img/room1.jpg" alt="" /> 세탁기 </span>');
+               $("#contentConven").append('<span class="convenImg Washingmachine"><img   src="./img/washingmachine.png" alt="" /> 세탁기 </span>');
                conventCount++;
                break;
             case 8:
-               $("#contentConven").append('<span class="convenElevator"><img src="./img/elevator.png" alt="" /> 엘리베이터 </span>');
+               $("#contentConven").append('<span class="convenImg Elevator"><img src="./img/elevator.png" alt="" /> 엘리베이터 </span>');
                conventCount++;
                break;
             case 9:
-               $("#contentConven").append('<span class="convenParking"><img src="./img/parking.png" alt="" /> 주차장 </span>');
+               $("#contentConven").append('<span class="convenImg Parking"><img src="./img/parking.png" alt="" /> 주차장 </span>');
                conventCount++;
                break;
             default:
                break;
             }
          }
-      /*     if(conventCount == 5) $("#contentConven").append('<br>');  */
+       if(conventCount == 5) $("#contentConven").append('<br>');  
 
       }
    }
    spanOnoff();
    
    
-   /* 댓글 작성 */
+   /* 댓글 */
    var commentCount = 0;
    var commentStar = 0;
 
@@ -745,6 +759,7 @@ word-break: break-all;
    }
    commentLoad();
    
+   /* 댓글 작성 
    function commentUp() {
       var reviewList = document.getElementById("reviewList");
       var contentReviewStar = document
@@ -765,14 +780,14 @@ word-break: break-all;
       contentReviewStar[0].innerHTML = '★' + commentStar + ' ('
             + commentCount + ')';
       
-      /* 후기 등록 후 입력 막기 */
+       후기 등록 후 입력 막기 
       $("#commentUpButton").attr('onclick', "");
       $("#commentUpButton").val("등록완료");
       $(".star").off('click'); 
-       $("#commentReview").val("");
+      $("#commentReview").val("");
       $("#commentReview").attr('placeholder', '후기를 입력한 숙소입니다.');
       $("#commentReview").attr('disabled', 'disabled');
-   }
+   } */ 
    
    function commentMore() {
       /* 댓글 더보기 (상단부터 오래된 댓글) -> 화면 프린트 시 최근 댓글이 위로 프린트됨 */
@@ -823,6 +838,43 @@ word-break: break-all;
                      + end.format('YYYY-MM-DD') + ' (predefined range: '
                      + label + ')');
             });
+   });
+   $()
+   function countDate() {
+   var date = $("#checkDate").val().split(" - ");
+   var checkInDate = date[0].split("/");
+   var checkInDate1 = new Date(checkInDate[2], checkInDate[0]-1, checkInDate[1]);
+   var checkOutDate = date[1].split("/");
+   var checkOutDate1 = new Date(checkOutDate[2], checkOutDate[0]-1, checkOutDate[1]);
+   var dateCount = parseInt(checkOutDate1-checkInDate1)/(24*60*60*1000);
+   
+   $("#dateCount").html(dateCount + "박 " + (dateCount+1) + "일<br>" + ("${host.price }"*dateCount) + "원");
+   }
+   
+   /* 인원 선택 */
+   $(function() {
+      $('#decreaseQuantity').click(function(e) {
+         e.preventDefault();
+         var stat = $('.personnel_input').val();
+         var num = parseInt(stat, 10);
+         num--;
+
+         if (num < 0) {
+            alert('더이상 줄일수 없습니다.');
+            num = 1;
+         }
+
+         $('.personnel_input').val(num);
+
+      }); /* click이벤트  */
+
+      $('#increaseQuantity').click(function(e) {
+         e.preventDefault();
+         var stat = $('.personnel_input').val();
+         var num = parseInt(stat, 10);
+         num++;
+         $('.personnel_input').val(num);
+      });
    });
 </script>
 
