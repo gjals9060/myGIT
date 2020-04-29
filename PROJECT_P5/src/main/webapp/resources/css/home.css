@@ -12,39 +12,46 @@ html {
 	min-height: 100%;
 }
 
-
-/* 예약 */
-
-
+#presentationTitle {
+	margin: 40px 0px 40px 0;
+	font-size: 30px;
+}
 
 /*이미지*/
 article {
-	display: grid !important;
-    grid-template-columns: 1fr 1fr;
+    display: grid !important;
+    width: 100%;
+    grid-template-columns: repeat(4,1fr);
+    grid-template-rows: repeat(2,1fr);
+    margin: 50px auto !important;
+    box-sizing: content-box;
 }
 
-article img {
-   width: 100%;
-  
+.presentation-img {
+    width: 97%;
+    padding: 5px;
+    height: 250px;
 }
 
-.home-img2 {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
+/* 첫번째 사진  */
+#presenttationImg {
+	grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 3;
+    height: 100%;
 }
-
 
 /*인기숙소*/
 section {
-	margin-top:20px; 
+	margin-top: 100px !important;
 }
 
 .popular {
-  	text-align: center;
-    width: 50%;
     font-size: 30px;
-    margin-bottom: 20px;
+    margin: 50px 10px;
+    text-align: center;
+    width: 40%;
 }
 	
 .popular-img img {
@@ -73,35 +80,40 @@ section {
 
 
 /*swiper css  */
-
 .swiper-container {
-  width: 100%;
+	width: 90%;
+    height: 100%;
+    margin: 100px;
 }
 
 .swiper-slide {
-  text-align: center;
-  font-size: 18px;
-  background: #fff;
+	text-align: center;
+    font-size: 18px;
+    background: #fff;
 
-  /* Center slide text vertically */
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  -webkit-justify-content: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  -webkit-align-items: center;
-  align-items: center;
+    /* Center slide text vertically */
+   	display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+	align-items: center;
 }
 
-.swiper-pagination {
-	position: relative !important;
-    margin: 10px 10px;
-    z-index: 1 !important;
+.swiper-flex {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 80%;
+    border: 1px solid;
+    padding: 20px;
+    border-radius: 5px;
 }
 
 /*footer*/

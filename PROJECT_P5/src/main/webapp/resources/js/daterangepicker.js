@@ -57,6 +57,7 @@
         this.autoUpdateInput = true;
         this.alwaysShowCalendars = false;
         this.ranges = {};
+  
 
         this.opens = 'right';
         if (this.element.hasClass('pull-right'))
@@ -171,7 +172,7 @@
             this.endDate = moment(options.endDate, this.locale.format);
 
         if (typeof options.minDate === 'string')
-            this.minDate = moment(options.minDate, this.locale.format);
+            this.minDate = moment(options.minDate,this.locale.format);
 
         if (typeof options.maxDate === 'string')
             this.maxDate = moment(options.maxDate, this.locale.format);
@@ -299,7 +300,7 @@
                     split = val.split(this.locale.separator);
 
                 start = end = null;
-
+$('input').val('');
                 if (split.length == 2) {
                     start = moment(split[0], this.locale.format);
                     end = moment(split[1], this.locale.format);
@@ -309,7 +310,7 @@
                 }
                 if (start !== null && end !== null) {
                     this.setStartDate(start);
-                    this.setEndDate(end);
+                   this.setEndDate(end);
                 }
             }
         }
@@ -488,7 +489,7 @@
         },
 
         setEndDate: function(endDate) {
-            if (typeof endDate === 'string')
+           if (typeof endDate === 'string')
                 this.endDate = moment(endDate, this.locale.format);
 
             if (typeof endDate === 'object')
@@ -776,7 +777,7 @@
                     maxDate = maxLimit;
                 }
             }
-var date=new Date('2020-05-01');
+
             for (var row = 0; row < 6; row++) {
                 html += '<tr>';
 
@@ -794,7 +795,6 @@ var date=new Date('2020-05-01');
                     if (calendar[row][col].isSame(new Date(), "day"))
                         classes.push('today');
            
-                    
                  
               
                     // highlight weekends
@@ -1259,10 +1259,13 @@ var date=new Date('2020-05-01');
         },
 
         hoverDate: function(e) {
-
+          	
+        	
+        	
             // ignore dates that can't be selected
             if (!$(e.target).hasClass('available')) return;
-
+          
+var a=new Date("2020-05-01");
             var title = $(e.target).attr('data-title');
             var row = title.substr(1, 1);
             var col = title.substr(3, 1);
@@ -1285,7 +1288,7 @@ var date=new Date('2020-05-01');
                     var col = title.substr(3, 1);
                     var cal = $(el).parents('.drp-calendar');
                     var dt = cal.hasClass('left') ? leftCalendar.calendar[row][col] : rightCalendar.calendar[row][col];
-
+                    if(dt.isAfter(startDate)&&dt.isBefore("2020-05-01")) return;
                     if ((dt.isAfter(startDate) && dt.isBefore(date)) || dt.isSame(date, 'day')) {
                         $(el).addClass('in-range');
                     } else {
@@ -1298,7 +1301,9 @@ var date=new Date('2020-05-01');
         },
 
         clickDate: function(e) {
-
+        	
+        	
+        	
             if (!$(e.target).hasClass('available')) return;
 
             var title = $(e.target).attr('data-title');
@@ -1306,7 +1311,10 @@ var date=new Date('2020-05-01');
             var col = title.substr(3, 1);
             var cal = $(e.target).parents('.drp-calendar');
             var date = cal.hasClass('left') ? this.leftCalendar.calendar[row][col] : this.rightCalendar.calendar[row][col];
-var demo=$('#demo').val();
+            var demo=$('#demo').val();
+
+
+ 
             // 싱글
             //
             // this function needs to do a few things:
@@ -1339,8 +1347,15 @@ var demo=$('#demo').val();
                     var second = this.timePickerSeconds ? parseInt(this.container.find('.left .secondselect').val(), 10) : 0;
                     date = date.clone().hour(hour).minute(minute).second(second);
                 }
+                
+                
                 this.endDate = null;
                 this.setStartDate(date.clone());
+                
+                ///////////////////////////
+                if(this.startDate.isSameOrBefore("2020-05-01")&&this.endDate.isSameOrAfter("2020-05-01")) return;
+               
+
             } else if (!this.endDate && date.isBefore(this.startDate)) {
                 // special case: clicking the same date for start/end,
                 // but the time of the end date is before the start date
@@ -1368,13 +1383,14 @@ var demo=$('#demo').val();
                   this.clickApply();
                 }
             }
-
+  
             if (this.singleDatePicker) {
                 this.setEndDate(this.startDate);
                 if (!this.timePicker)
                     this.clickApply();
             }
-
+            
+         
             this.updateView();
 
             // This is to cancel the blur event handler if the mouse was in one
@@ -1545,7 +1561,7 @@ var demo=$('#demo').val();
             if (!start.isValid() || !end.isValid()) return;
 
             this.setStartDate(start);
-            this.setEndDate(end);
+         this.setEndDate(end);
             this.updateView();
         },
 
@@ -1566,9 +1582,9 @@ var demo=$('#demo').val();
 
         updateElement: function() {
             if (this.element.is('input') && this.autoUpdateInput) {
-                var newValue = this.startDate.format(this.locale.format);
+                var newValue = this.startDate.format('YYYY-MM-DD');
                 if (!this.singleDatePicker) {
-                    newValue += this.locale.separator + this.endDate.format(this.locale.format);
+                    newValue += this.locale.separator + this.endDate.format('YYYY-MM-DD');
                 }
                 if (newValue !== this.element.val()) {
                     this.element.val(newValue).trigger('change');

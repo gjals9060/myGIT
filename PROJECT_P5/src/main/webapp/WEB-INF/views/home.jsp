@@ -31,83 +31,104 @@
 </head>
 <body>
 	<jsp:include page="./header.jsp"></jsp:include>	
-		<div id="wrap" >
+	<div id="wrap" >
+		
+		<div id="presentationTitle">Peace / Place / Pleasure / Present / People </div>
 
  <!--이미지  -->
 	 <article>
-	
-	    <div class="home-img1">
-	            <img src="img/bedroom.jpg" alt="" />
-	         </div>
-	            <div class="home-img2">
-	            <div class="home-img3"><img src="img/bedroom.jpg" alt="" /></div>
-	            <div class="home-img4"><img src="img/bedroom.jpg" alt="" /></div>
-	            <div class="home-img5"><img src="img/bedroom.jpg" alt="" /></div>
-	            <div class="home-img6"><img src="img/bedroom.jpg" alt="" /></div>
-	            
-	            </div>
-	 
+		<img src="img/cafe.jpg" alt="" class="presentation-img" id="presenttationImg"/>
+		<img src="img/coffee.jpg" alt="" class="presentation-img"/>
+		<img src="img/elevator.png" alt="" class="presentation-img"/>
+		<img src="img/iron.png" alt="" class="presentation-img"/>
+		<img src="img/fox.jpg" alt="" class="presentation-img"/>
 	 </article>
 	 
 	 <!-- 스와이퍼 이미지   -->
-	<section>
-			<div class="popular">인기숙소</div>
-			<div class="swiper-container">
-				<div class="swiper-wrapper">
-					<div class="swiper-slide">
-						<div class="popular-img">
-							<img src="img/bedroom.jpg" alt="" />
-						</div>
-						<div class="popular-description">
-							종로구 전통적인 한옥
-							<div class="popular-facilities">편의시설</div>
-							<div class="star">
-								<span class="fa fa-star checked"></span> <span class="fa fa-star checked"></span> <span class="fa fa-star checked"></span> <span class="fa fa-star"></span> <span class="fa fa-star"></span>
-							</div>
+	  <!-- Swiper -->
+  <!-- Swiper -->
+  	<div class="popular">인기숙소 </div>
+  
+  	<div class="swiper-container">
+    	<div class="swiper-wrapper">
+      		<div class="swiper-slide">
+	      		<div class="swiper-flex">
+	      			<div class="popular-img">
+						<img src="img/room1.jpg" alt="" />
+					</div>
+					<div class="popular-description">
+						종로구 전통적인 한옥
+						<div class="popular-facilities">편의시설</div>
+						<div class="star">
+							<span class="fa fa-star checked"></span> <span class="fa fa-star checked"></span> 
+							<span class="fa fa-star checked"></span> <span class="fa fa-star"></span> <span class="fa fa-star"></span>
 						</div>
 					</div>
-					<div class="swiper-slide">
-						<div class="popular-img">
-							<img src="img/bedroom.jpg" alt="" />
-						</div>
-						<div class="popular-description">
-							종로구 전통적인 한옥
-							<div class="popular-facilities">편의시설</div>
-							<div class="star">
-								<span class="fa fa-star checked"></span> <span class="fa fa-star checked"></span> <span class="fa fa-star checked"></span> <span class="fa fa-star"></span> <span class="fa fa-star"></span>
-							</div>
+	     	 	</div>
+     	 	</div>
+      		<div class="swiper-slide">
+	      		<div class="swiper-flex">
+	      			<div class="popular-img">
+						<img src="img/room1.jpg" alt="" />
+					</div>
+					<div class="popular-description">
+						종로구 전통적인 한옥
+						<div class="popular-facilities">편의시설</div>
+						<div class="star">
+							<span class="fa fa-star checked"></span> <span class="fa fa-star checked"></span> 
+							<span class="fa fa-star checked"></span> <span class="fa fa-star"></span> <span class="fa fa-star"></span>
 						</div>
 					</div>
-					<div class="swiper-slide">
-						<div class="popular-img">
-							<img src="img/bedroom.jpg" alt="" />
-						</div>
-						<div class="popular-description">
-							종로구 전통적인 한옥
-							<div class="popular-facilities">편의시설</div>
-							<div class="star">
-								<span class="fa fa-star checked"></span> <span class="fa fa-star checked"></span> <span class="fa fa-star checked"></span> <span class="fa fa-star"></span> <span class="fa fa-star"></span>
-							</div>
+	     	 	</div>
+     	 	</div>
+      		<div class="swiper-slide">
+	      		<div class="swiper-flex">
+	      			<div class="popular-img">
+						<img src="img/room1.jpg" alt="" />
+					</div>
+					<div class="popular-description">
+						종로구 전통적인 한옥
+						<div class="popular-facilities">편의시설</div>
+						<div class="star">
+							<span class="fa fa-star checked"></span> <span class="fa fa-star checked"></span> 
+							<span class="fa fa-star checked"></span> <span class="fa fa-star"></span> <span class="fa fa-star"></span>
 						</div>
 					</div>
-				</div>
-			</div>
-			
-			<div class="swiper-pagination"></div>
-		</section>
-		
-		 <script src="https://unpkg.com/swiper/js/swiper.min.js"></script>
-	
-	  <!-- Initialize Swiper -->
-	  <script>
-	    var swiper = new Swiper('.swiper-container', {
-	      spaceBetween: 30,
-	      pagination: {
-	        el: '.swiper-pagination',
-	        clickable: true,
-	      },
-	    });
-	  </script>
+	     	 	</div>
+     	 	</div>
+      		<div class="swiper-slide">
+	      		<div class="swiper-flex">
+	      			<div class="popular-img">
+						<img src="img/room1.jpg" alt="" />
+					</div>
+					<div class="popular-description">
+						종로구 전통적인 한옥
+						<div class="popular-facilities">편의시설</div>
+						<div class="star">
+							<span class="fa fa-star checked"></span> <span class="fa fa-star checked"></span> 
+							<span class="fa fa-star checked"></span> <span class="fa fa-star"></span> <span class="fa fa-star"></span>
+						</div>
+					</div>
+	     	 	</div>
+     	 	</div>
+    	</div>
+    <!-- Add Arrows -->
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+  </div>
+
+  <!-- Swiper JS -->
+  <script src="https://unpkg.com/swiper/js/swiper.min.js"></script>
+
+  <!-- Initialize Swiper -->
+  <script>
+    var swiper = new Swiper('.swiper-container', {
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+    });
+  </script>
 	
 	</div>
 
