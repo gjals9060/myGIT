@@ -51,6 +51,88 @@
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- 호스트 등록 -->
+	<insert id="insertHost" parameterType="NewHostDTO">
+		INSERT INTO host
+		VALUES
+		(
+			SEQ_host_id.nextval,
+			#{memberId},
+			#{name},
+			#{description},
+			#{descriptionEtc},
+			#{type},
+			#{roomType},
+			#{capacity},
+			#{roomCount},
+			#{bedCount},
+			#{bathroomCount},
+			#{address},
+			#{latitude},
+			#{longitude},
+			#{isTv},
+			#{isWifi},
+			#{isAirConditioner},
+			#{isAirPurifier},
+			#{isHairDryer},
+			#{isIron},
+			#{isKitchen},
+			#{isWashingMachine},
+			#{isElevator},
+			#{isParkingLot},
+			#{minimumStay},
+			#{maximumStay},
+			#{price},
+			TO_DATE(#{creationDate}, 'YYYY-MM-DD HH24:MI:SS'),
+			NULL
+								)
+	</insert>
+	
+	
+	<select id="selectNewHostId" parameterType="int" resultType="int">
+		SELECT MAX(id)
+		FROM host
+		WHERE member_id = #{memberId}
+	</select>
+	
+	
+	<!-- 예약 차단일 등록 -->
+	<insert id="insertBlocking">
+		<foreach collection="arrBlockingDate" item="blockingDate"
+		 separator=" " open="INSERT ALL " close="SELECT * FROM DUAL">
+			INTO blocking
+			(
+				host_id,
+				blocking_date
+								)
+			VALUES
+			(
+				#{hostId},
+				TO_DATE(#{blockingDate}, 'MM/DD/YYYY')
+														)
+		</foreach>
+	</insert>
+	
+	
 
 
 
