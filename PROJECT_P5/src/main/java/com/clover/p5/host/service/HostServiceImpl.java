@@ -16,11 +16,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.clover.p5.entity.Host;
 import com.clover.p5.entity.NewHostDTO;
-
-import com.clover.p5.host.dto.*;
-
+import com.clover.p5.host.dto.HostInfoDTO;
+import com.clover.p5.host.dto.SearchHostDTO;
+import com.clover.p5.host.dto.SearchInputDTO;
 import com.clover.p5.host.mapper.HostMapper;
 
 @Service

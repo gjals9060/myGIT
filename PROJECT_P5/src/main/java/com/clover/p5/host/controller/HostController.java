@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.multipart.MultipartFile;
 
-import com.clover.p5.entity.Host;
 import com.clover.p5.entity.Member;
 import com.clover.p5.entity.NewHostDTO;
 import com.clover.p5.host.dto.HostInfoDTO;

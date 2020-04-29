@@ -4,10 +4,9 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.clover.p5.host.dto.*;
-
-import com.clover.p5.entity.Host;
 import com.clover.p5.entity.NewHostDTO;
+import com.clover.p5.host.dto.HostInfoDTO;
+import com.clover.p5.host.dto.SearchHostDTO;
 
 public interface HostMapper {
 
