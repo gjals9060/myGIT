@@ -21,7 +21,7 @@ section {
 	display: grid;
 	grid-template-columns: 35% 65%;
 	box-sizing: border-box;
-	height: 400px;
+	height: 500px;
 }
 
 /* 회원정보 img  */
@@ -87,21 +87,20 @@ section {
 /* 회원 프로필 사진 block*/
 .userinfo-update-img-block {
 	width: 100%;
-	margin: 50px;	
+	margin: 50px;
 }
 
 /* 회원 프로필 사진 이미지 */
-.userinfo-update-img-block>img{
+.userinfo-update-img-block>img {
 	width: 20%;
 	border-radius: 50%;
 }
 
 /* 회원정보 수정 버튼 */
-.userinfo-input-submit>input[type=button] {
+.userinfo-input-submit {
 	float: right;
 	width: 100px;
 }
-
 
 /* 회원 비밀번호변경 modal */
 .userinfo-password-update-modal {
@@ -131,20 +130,19 @@ section {
 	animation: downFrame 0.3s ease-out;
 }
 
-@keyframes downFrame {
-	from {
-		transform: translateY(-5%);
-		opacity: 0.2;
-	}
-	to {
-		transform: translateY(0%);
-		opacity: 1;
-	}
+@keyframes downFrame {from { transform:translateY(-5%);
+	opacity: 0.2;
 }
 
+to {
+	transform: translateY(0%);
+	opacity: 1;
+}
+
+}
 
 /* 비밀번호 유효성 검사 경고문 */
-.userinfo-input-value-error{
+.userinfo-input-value-error {
 	display: none;
 	width: 40%;
 	margin: auto;
@@ -162,19 +160,21 @@ section {
 	color: rgb(255, 255, 255);
 }
 
-
 </style>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 </head>
 <body>
 	<div id=wrap>
 		<section>
 			<div class="userinfo-img-content">
-				<img src="../img/어린왕자.jpg" alt="" />
+				<img id="userinfoImg" src="../img/어린왕자.jpg" alt="" />
 			</div>
 			<div class="userinfo-update-content">
 				<div class="userinfo-update-title">회원정보</div>
 				<div class="userinfo-input">
-					<form action="../modal/loginModal.jsp" name="userinfoUpdateSubmit">
+				
+					<form action="" name="userinfoUpdateSubmit">
 						<div class="userinfo-input-block">
 							<div class="userinfo-input-title">이름</div>
 							<div class="userinfo-input-value">
@@ -190,8 +190,27 @@ section {
 						<div class="userinfo-input-block">
 							<div class="userinfo-input-title">전화번호</div>
 							<div class="userinfo-input-value">
-								<input type="text" />
+								<button id="phoneCertificationBtn">인증</button>
+								<div id="phoneCertificationOk">인증완료</div>
 							</div>
+							<!-- 핸드폰 인증 결과 / 인증 1 , no 0 --> 
+							<input type="hidden" id="phoneCertificationInput" value="0"/> 
+							
+							<!-- 전화번호 인증이 되어있다면 인증버튼이 필요없음. -->
+							<script>
+								var phoneCertification=$("#phoneCertificationBtn");
+								var phoneCertificationOk = $("#phoneCertificationOk");
+								var phoneCertificationResult = $("#phoneCertificationInput").val();
+	
+								$(document).ready(function() {
+									if(phoneCertificationResult == 1){ /// 인증이 된 회원 
+										phoneCertification.hide();
+									}else if(phoneCertificationResult == 0){
+										phoneCertificationOk.hide();
+									}
+								});
+								
+							</script>
 						</div>
 					</form>
 
@@ -202,27 +221,140 @@ section {
 							<input type="button" value="변경" id="userinfoPasswordUpdateBtn" />
 						</div>
 					</div>
+					
 					<div class="userinfo-input-submit">
-						<input type="button" value="수정"
-							onclick="userinfoUpdateSubmit.submit()" />
+						<input type="submit" value="수정"/>
 					</div>
+					
+					
+					
+					
 				</div>
 				<!-- 사용자 프로필 사진  -->
-				<div class="userinfo-update-img-block"> 
-				<!-- 변경해야할 부분 -->
-					<img src="../img/어린왕자.jpg" alt="" />
+				<div class="userinfo-update-img-block">
+					<!-- 사용자 프로필 사진 업로드 -->
+					
+				<script>
+				//이미지 정보들을 담을 배열   
+				var sel_files = [];
+				$(document).ready(function() {
+					$("#picture").on("change", handleImgFileSelect);
+				});
+				
+				
+				
+				function fileUploadAction() {
+					console.log("fileUploadAction");
+					$("#picture").trigger('click');
+				}
+				
+				function handleImgFileSelect(e) {
+					// 이미지 정보들을 초기화   
+					sel_files = [];
+					/*     $(".imgs_wrap").empty();   */
+					var files = e.target.files;
+					var filesArr = Array.prototype.slice.call(files);
+					var index = 0;
+					filesArr.forEach(function(f) {
+								if (!f.type.match("image.*")) {
+									alert("확장자는 이미지 확장자만 가능합니다.");
+									return;
+								}
+								sel_files.push(f);
+								var reader = new FileReader();
+								reader.onload = function(e) {
+									var html = "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction("
+											+ index
+											+ ")\" id=\"img_id_"
+											+ index
+											+ "\"><img src=\"" + e.target.result + "\" data-file='"+f.name+"' class='selProductFile' title='클릭 시 삭제됩니다.' width=\"150px\" ></a>";
+									$(".imgs_wrap").append(html);
+									index++;
+									
+									///// 이미지를 추가하면 그 이미지를 가져옴
+									$(".userinfo-img-content *").remove();
+									$(".userinfo-img-content").append(
+										"<img src=\"" + e.target.result + "\"id='userinfoImg'></a>"		
+									);
+									
+									alert($("#userinfoImg").attr("src"));
+								}
+								reader.readAsDataURL(f);
+							});
+				}
+				
+				
+				function deleteImageAction(index) {
+					console.log("index : " + index);
+					console.log("sel length : " + sel_files.length);
+					sel_files.splice(index, 1);
+					var img_id = "#img_id_" + index;
+					$(img_id).remove();
+					
+					/// 이미지 삭제시 프로필 사진을 기본 이미지로 변경.
+					$(".userinfo-img-content *").remove();
+					$(".userinfo-img-content").append(
+							"<img src=\"../img/어린왕자.jpg\"id='userinfoImg'></a>"		
+						);
+				}
+				
+				function fileUploadAction() {
+					console.log("fileUploadAction");
+					$("#picture").trigger('click');
+				}
+				
+				function submitAction() {
+					console.log("업로드 파일 갯수 : " + sel_files.length);
+					var data = new FormData();
+					for (var i = 0, len = sel_files.length; i < len; i++) {
+						var name = "image_" + i;
+						data.append(name, sel_files[i]);
+					}
+					data.append("image_count", sel_files.length);
+					if (sel_files.length < 1) {
+						alert("한개이상의 파일을 선택해주세요.");
+						return;
+					}
+					var xhr = new XMLHttpRequest();
+					xhr.open("POST", "./register4.jsp");
+					xhr.onload = function(e) {
+						if (this.status == 200) {
+							console.log("Result : "
+									+ e.currentTarget.responseText);
+						}
+					}
+					xhr.send(data);
+				}
+			</script>
+
+					<div class="upload_List_Block">
+
+						<div class="upload_List_Title">사진</div>
+
+						<div class="upload_List_Input">
+							<div class="input_wrap">
+								<div class="imgs_wrap">
+									<img id="img" />
+								</div>
+								<a href="javascript:" onclick="fileUploadAction();" class="my_button"></a> 
+								<input type="file" id="picture" multiple="multiple" />
+							</div>
+						</div>
+					</div>
+					<input type="submit" value="다음" />
 				</div>
 			</div>
-			
+
 		</section>
-	</div> <!-- wrap-end -->
+	</div>
+	<!-- wrap-end -->
 
 	<!-- 비밀번호 변경 modal -->
 	<div class="userinfo-password-update-modal"
 		id="userInfoPasswordUpdateModal">
 		<span id="userinfoPasswordUpdateClose">&times;</span>
 		<div class="userinfo-password-update-container">
-		<!-- 비밀번호 form 설정해야함. -->
+			<!-- 비밀번호 form 설정해야함. -->
 			<form action="" name="userinfoPasswordUpdateSubmit">
 				<div class="userinfo-input-block">
 					<div class="userinfo-input-title">현재 비밀번호</div>
@@ -262,6 +394,7 @@ section {
 </body>
 
 <script>
+
 	// 비밀번호 modal(div) popup
 	var userinfoPasswordModal = document
 			.getElementById("userInfoPasswordUpdateModal");
@@ -281,6 +414,14 @@ section {
 		userinfoPasswordModal.style.display="none";
 		
 	}
+	
+	
+	$('#phoneCertificationBtn').on('click', function() {
+		var phoneURL = '../home.jsp';
+		var phoneOption =  "width=370, height=360, resizable=no, scrollbars=no, status=no;";
+		
+		window.open(phoneURL,"",phoneOption);	
+	});
 	
 	
 	

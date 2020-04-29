@@ -344,13 +344,12 @@
 				<!--0부터 9까지 숫자를 입력하지않으면 ""로 replace됨  --><!--value값은 사용자가 입력한 숙소요금  -->
 				
 			    금액 <input type="text" id="updatePrice" value="10000" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>  
-			  
+			      
 				<div class="host-update-submit">
 					<input type="button" value="수정" id="hostUpdatePriceBtn" />
 				</div>
 			</div>
 		</div>
-	
 	
 	</div><!--wrap div  -->	
 		
@@ -363,7 +362,6 @@
 </body>
 
 <script>
-
 
 
 // container class 
@@ -1094,10 +1092,7 @@
 		$.ajax({
 			url: "updatePrice",
 			type: "POST",
-			data: {
-				price : price
-			},
-			dataType: "json",
+			data: "price="+price,
 			succuess: function(){
 				alert("성공");
 			},
