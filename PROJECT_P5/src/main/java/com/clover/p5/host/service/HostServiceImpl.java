@@ -1,14 +1,28 @@
 package com.clover.p5.host.service;
 
+import java.io.File;
+import java.io.IOException;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.clover.p5.DTO.SearchHostDTO;
+import com.clover.p5.VO.HostParamVO;
+import com.clover.p5.entity.Host;
+import com.clover.p5.entity.NewHostDTO;
 
 import com.clover.p5.host.dto.*;
+
 import com.clover.p5.host.mapper.HostMapper;
 
 @Service
@@ -162,6 +176,107 @@ public class HostServiceImpl implements HostService {
 		
 		return "reservationPurchase";
 	}
+	
+	
+	//////////// 아래부터 by 근형
+	
+	@Transactional
+	@Override
+	public boolean insertHost(NewHostDTO newHostDto) {
+		// 서버시간에 서울의 타임존을 적용한 DateTime을 얻는다
+		ZonedDateTime nowSeoul = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
+		newHostDto.setCreationDate( // 필요한 형식으로 변경하여 세팅
+				nowSeoul.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+		);
+		if(hostMapper.insertHost(newHostDto) == 1) { // 호스트 등록 성공했으면
+			
+			List<MultipartFile> photos = newHostDto.getPhoto();
+			if(photos.size() == 1 && photos.get(0).isEmpty()) {
+				System.out.println("업로드한 파일이 존재하지 않는다.");
+			} else {
+				if(storePhoto("host", photos)) { // 서버에 잘 저장했으면
+					System.out.println(photos.size() + "개의 사진 입력하겠음.");
+					// insertHostPhoto
+				}
+			}
+			
+			
+			String blockingDate = newHostDto.getBlockingDate();
+			if(blockingDate.isEmpty()) { // 등록할 예약불가 날짜가 없으면
+				System.out.println("등록할 예약불가 날짜가 없습니다.");
+				return true; // 호스트 등록 결과를 바로 반환
+			} else { // 등록할 예약불가 날짜가 있으면
+				int memberId = newHostDto.getMemberId();
+				if(insertBlocking(memberId, blockingDate) == 0) { //입력할 게 있는데 못했으면
+					System.out.println("차단일 입력 중에 오류..");
+					return false;
+				}
+			}
+			return true; // 등록 성공 결과를 반환
+		}
+		return false;
+	}
+	
+	
+	@Override
+	public boolean storePhoto(String lastFolderName, List<MultipartFile> photos) {
+		// 파일을 저장할 폴더의 경로(Windows 기반)
+		String folderPath = "\\p5\\upload\\" + lastFolderName; // host or profile
+		
+        ///////// 파일을 저장할 폴더가 존재하지 않을 경우 폴더를 생성. //////
+		File folder = new File(folderPath);
+        if(!folder.exists()) {
+            if(folder.mkdirs()) { // 정상적으로 생성하면
+            	System.out.println(lastFolderName + "폴더를 생성했습니다.");
+            }
+        }//////////////////////////////////////////////////////
+        
+        String originalFileName = null;
+        try {
+	    	for(MultipartFile photo : photos) {
+
+	    		originalFileName = photo.getOriginalFilename(); // 파일명 추출
+	    		String fileExtension = // 파일명 중 확장자만 추출  
+	    				originalFileName.substring(originalFileName.lastIndexOf("."));
+	    		
+	    		ZonedDateTime nowSeoul = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
+	    		String saveFileName = (
+	    				
+	    				nowSeoul.format(DateTimeFormatter.ofPattern("yyMMdd_HHmmssSSS_")) +
+	    				UUID.randomUUID() + fileExtension
+	    														).replace("-", "");
+	    		String saveFilePath = folderPath + "\\" + saveFileName;
+	    		System.out.println(saveFilePath); // DB에 저장할 실제 파일 저장 경로
+	    		
+	    		File file = new File(saveFilePath);
+	    		
+					photo.transferTo(file); // 파일 저장
+	    	}
+    	} catch (IllegalStateException | IOException e) {
+    		e.printStackTrace();
+    		System.out.println("파일 저장 중에 오류 발생 - " + originalFileName);
+    		return false;
+    	}
+		return true;
+	}
+
+	@Transactional
+	@Override
+	public int insertBlocking(int memberId, String blockingDate) {
+		// 작성자 ID를 받아서 방금 DB에 넣은 호스트의 ID를 검색하고
+		int hostId = hostMapper.selectNewHostId(memberId);
+		// 날짜를 배열에 담는다
+		String[] arrBlockingDate = blockingDate.split(",");
+		// 출력도 해보고
+		for(int i = 0; i < arrBlockingDate.length; i++) {
+			System.out.println(arrBlockingDate[i]);
+		}
+		int result = hostMapper.insertBlocking(hostId, arrBlockingDate);
+		System.out.println(
+			hostId + "번 호스트 - " + result + "건의 차단일 입력.");
+		return result;
+	}
+
 	
 	
 }

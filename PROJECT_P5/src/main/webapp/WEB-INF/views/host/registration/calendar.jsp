@@ -17,11 +17,13 @@
 
     </head>
 	<body>
+	<form action="price" method="post">
 		<div id="mdp-demo"></div>
-		<input type="text" id="altField" value="">
+		<input type="text" id="altField" value="" name="blockingDate" />
 		<input type="text" id="check" />
-		<a href="price">다음</a>
-	<a href="stayDate">이전</a>
+		<a href="stayDate">이전</a>
+		<input type="submit" value="다음" />
+	</form>
 	</body>
 	<script >
 	
