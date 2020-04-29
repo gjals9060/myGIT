@@ -11,7 +11,7 @@ public class Member {
 	private String lastName;
 	private Date birthDate;
 	private String mobilePhone;
-	private Date registrationDate;
+	private String registrationDate;
 	private String profilePhotoPath;
 	
 	
@@ -57,10 +57,10 @@ public class Member {
 	public void setMobilePhone(String mobilePhone) {
 		this.mobilePhone = mobilePhone;
 	}
-	public Date getRegistrationDate() {
+	public String getRegistrationDate() {
 		return registrationDate;
 	}
-	public void setRegistrationDate(Date registrationDate) {
+	public void setRegistrationDate(String registrationDate) {
 		this.registrationDate = registrationDate;
 	}
 	public String getProfilePhotoPath() {
@@ -75,6 +75,13 @@ public class Member {
 				+ ", lastName=" + lastName + ", birthDate=" + birthDate + ", mobilePhone=" + mobilePhone
 				+ ", registrationDate=" + registrationDate + ", profilePhotoPath=" + profilePhotoPath + "]";
 	}
+	
+
+	
+	
+	
+	
+	
 	
 	
 	
