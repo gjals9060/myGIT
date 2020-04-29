@@ -1,4 +1,4 @@
-package com.clover.p5.DTO;
+package com.clover.p5.host.dto;
 
 public class SearchHostDTO {
 	

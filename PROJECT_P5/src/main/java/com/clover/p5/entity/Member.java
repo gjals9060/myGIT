@@ -76,13 +76,6 @@ public class Member {
 				+ ", registrationDate=" + registrationDate + ", profilePhotoPath=" + profilePhotoPath + "]";
 	}
 	
-
-	
-	
-	
-	
-	
-	
 	
 	
 	

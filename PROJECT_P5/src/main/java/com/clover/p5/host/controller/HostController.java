@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
-import com.clover.p5.VO.HostParamVO;
-import com.clover.p5.entity.Host;
 import com.clover.p5.entity.Member;
 import com.clover.p5.entity.NewHostDTO;
+import com.clover.p5.host.dto.HostInfoDTO;
+import com.clover.p5.host.dto.SearchInputDTO;
 import com.clover.p5.host.service.HostService;
 
 @SessionAttributes("newHost")
@@ -31,8 +31,8 @@ public class HostController {
 
 	@ResponseBody
 	@RequestMapping(value="/ajax/Hosts", method = RequestMethod.POST)
-	public List<Host> ajaxMap(@RequestBody HostParamVO hostParamVO) {	
-		return hostService.selectHostList(hostParamVO);
+	public List<HostInfoDTO> ajaxMap(@RequestBody SearchInputDTO searchInputDto) {	
+		return hostService.selectHostList(searchInputDto);
 	}
 
 	@RequestMapping("/reservationList")
@@ -41,20 +41,13 @@ public class HostController {
 	}
 	
 	@RequestMapping("/postPage")
-	public String postPage(HttpServletRequest request, Model model) {
-		
-		String id = request.getParameter("id");
-		
-		System.out.println("호출된 id :" + id);
-		
-		// db 가자
-		
-		
-		System.out.println("postPage.jsp gogo");
-		model.addAttribute("id", id);
-
-		return "postPage";
-		
+	public String postPage(HttpServletRequest request, Model model) {	
+		return hostService.selectHost(request, model);
+	}
+	
+	@RequestMapping("/reservationPurchase")
+	public String reservationPurchase(HttpServletRequest request, Model model) {	
+		return hostService.reservationPurchase(request, model);
 	}
 	
 	
@@ -66,8 +59,9 @@ public class HostController {
 	
 	
 	
-	
+//////////아래부터 by 근형	
 ///////////////////////////// 호스트 등록 ////////////////////////////////
+	
 	@ModelAttribute("newHost")
 	public NewHostDTO newHost(@SessionAttribute("user") Member user) {
 		return new NewHostDTO(user.getId());

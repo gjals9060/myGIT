@@ -3,17 +3,21 @@
 
 <mapper namespace="com.clover.p5.host.mapper.HostMapper">
 
-	<select id="selectHost" resultType="String">
+	<select id="selectHost" parameterType="String" resultType="HostInfoDTO">
 		<![CDATA[
 			SELECT
-				*
+				h.*, m.first_name,  m.last_name
 			FROM
-				host
+				host h, member m
+			WHERE
+				h.id = #{id}
+			AND
+				(m.id = h.member_id)	
 		]]>	
 	
 	</select>
 	
-	<select id="selectHostList" parameterType="SearchHostDTO" resultType="Host">
+	<select id="selectHostList" parameterType="SearchHostDTO" resultType="HostInfoDTO">
 		<!--
 		CDATA 사용 이유!
 		https://epthffh.tistory.com/entry/Mybatis-%EC%97%90%EC%84%9C-CDATA-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0
@@ -21,42 +25,29 @@
 		
 		<![CDATA[
 			SELECT 
-				DISTINCT h.* 
+				DISTINCT h.*, m.first_name, m.last_name
 			FROM 
-				host h FULL OUTER JOIN blocking b ON(h.id = b.host_id)
+				host h FULL OUTER JOIN blocking b ON(h.id = b.host_id), member m
 			WHERE 
 				(NOT b.blocking_date BETWEEN TO_DATE(#{sStartDate},'MM/DD/YYYY') 
-				AND TO_DATE(#{sEndDate},'MM/DD/YYYY')
-				OR b.blocking_date IS NULL)
-				AND (h.latitude BETWEEN #{swLatitude} AND #{neLatitude})
-				AND (h.longitude BETWEEN #{swLongitude} AND #{neLongitude})
-				AND h.capacity >= #{capacity}
+			AND
+				TO_DATE(#{sEndDate},'MM/DD/YYYY')
+			OR
+				b.blocking_date IS NULL)
+			AND
+				(h.latitude BETWEEN #{swLatitude} AND #{neLatitude})
+			AND
+				(h.longitude BETWEEN #{swLongitude} AND #{neLongitude})
+			AND
+				h.capacity >= #{capacity}
+			AND
+				(m.id = h.member_id)
 			ORDER BY
 				h.id
 
 		]]>
 	
 	</select>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	<!-- 호스트 등록 -->
@@ -137,6 +128,7 @@
 	</insert>
 	
 	
+
 
 
 

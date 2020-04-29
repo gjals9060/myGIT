@@ -7,20 +7,30 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.clover.p5.VO.HostParamVO;
-import com.clover.p5.entity.Host;
 import com.clover.p5.entity.NewHostDTO;
+import com.clover.p5.host.dto.HostInfoDTO;
+import com.clover.p5.host.dto.SearchInputDTO;
 
 public interface HostService {
 	
-	// service - mapper 예시
-	String selectHost();
+	// postPage이동(id로 host 검색)
+	String selectHost(HttpServletRequest request, Model model);
 	
 	// 지도 반응형 리스트
-	List<Host> selectHostList(HostParamVO vo);
+	List<HostInfoDTO> selectHostList(SearchInputDTO searchInputDto);
 	
 	// reservationList 이동
 	String reservationList(HttpServletRequest request, Model model);
+	
+	// reservaionPurchase 이동
+	String reservationPurchase(HttpServletRequest request, Model model);
+	
+	
+	
+	
+	
+	
+	// 아래부터 by 근형
 	
 	
 	

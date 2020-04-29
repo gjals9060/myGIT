@@ -16,10 +16,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.clover.p5.DTO.SearchHostDTO;
-import com.clover.p5.VO.HostParamVO;
-import com.clover.p5.entity.Host;
 import com.clover.p5.entity.NewHostDTO;
+import com.clover.p5.host.dto.HostInfoDTO;
+import com.clover.p5.host.dto.SearchHostDTO;
+import com.clover.p5.host.dto.SearchInputDTO;
 import com.clover.p5.host.mapper.HostMapper;
 
 @Service
@@ -30,16 +30,37 @@ public class HostServiceImpl implements HostService {
 	
 	
 	@Override
-	public String selectHost() {
+	public String selectHost(HttpServletRequest request, Model model) {
 		
-		String str = hostMapper.selectHost();	
-		return str;
+		System.out.println("postPage 페이지 이동");
 		
+		String id = request.getParameter("id");
+		System.out.println("호출된 id :" + id);
+		
+		String startDate = request.getParameter("startDate");
+		System.out.println("호출된 startDate : " + startDate);
+		
+		String endDate = request.getParameter("endDate");
+		System.out.println("호출된 endDate : " + endDate);
+		
+		
+		
+		String capacity = request.getParameter("capacity");
+		System.out.println("호출된 capacity : " + capacity);
+				
+		HostInfoDTO hostInfoDto = hostMapper.selectHost(id);
+		
+		model.addAttribute("host", hostInfoDto);
+		model.addAttribute("startDate", startDate);
+		model.addAttribute("endDate", endDate);
+		model.addAttribute("capacity", capacity);
+		
+		return "postPage";	
 	}
 
 
 	@Override
-	public List<Host> selectHostList(HostParamVO vo) {
+	public List<HostInfoDTO> selectHostList(SearchInputDTO vo) {
 		
 		System.out.println("ajaxHosts 요청!");	
 		
@@ -73,9 +94,9 @@ public class HostServiceImpl implements HostService {
 		System.out.println("sStartDate : " + sStartDate);
 		System.out.println("sEndDate : " + sEndDate);
 		
-		SearchHostDTO dto = new SearchHostDTO(sStartDate, sEndDate, swLatitude, neLatitude, swLongitude, neLongitude, capacity);
+		SearchHostDTO searchHostDto = new SearchHostDTO(sStartDate, sEndDate, swLatitude, neLatitude, swLongitude, neLongitude, capacity);
 				
-		return hostMapper.selectHostList(dto);
+		return hostMapper.selectHostList(searchHostDto);
 	}
 
 
@@ -110,17 +131,51 @@ public class HostServiceImpl implements HostService {
 	}
 
 
+	@Override
+	public String reservationPurchase(HttpServletRequest request, Model model) {
+
+		System.out.println("reservationPurchase 페이지 이동");
+
+		String checkInDatecheckOutDate = request.getParameter("checkInDatecheckOutDate");
+		String personnel = request.getParameter("personnel");
+		String hostId = request.getParameter("hostId");
+		String memberId = request.getParameter("userId");
+		String hostName = request.getParameter("hostName");
+		int hostPrice = Integer.parseInt(request.getParameter("hostPrice"));
+		int dateCount = Integer.parseInt(request.getParameter("dateCnt"));
+		
+		String[] date = checkInDatecheckOutDate.split(" - ");
+		String checkInDate = date[0];
+		String checkOutDate = date[1];
+				
+		int payment = dateCount * hostPrice;
+		
+		System.out.println("날짜 : " + checkInDatecheckOutDate);
+		System.out.println("인원 : " + personnel);
+		System.out.println("호스트 id : " + hostId);
+		System.out.println("유저 id : " + memberId);
+		System.out.println("체크인 : " + checkInDate);
+		System.out.println("체크아웃 : " + checkOutDate);
+		System.out.println("호스트 1박 금액 : " + hostPrice);
+		System.out.println("호스트 이름 : " + hostName);
+		System.out.println("결제 금액 : " + payment);
+		
+		model.addAttribute("personnel", personnel);
+		model.addAttribute("memberId", memberId);
+		model.addAttribute("checkInDatecheckOutDate", checkInDatecheckOutDate);
+		model.addAttribute("checkInDate", checkInDate);
+		model.addAttribute("checkOutDate", checkOutDate);
+		model.addAttribute("hostPrice", hostPrice);
+		model.addAttribute("dateCount", dateCount);
+		model.addAttribute("hostName", hostName);
+		model.addAttribute("payment", payment);
+		
+		
+		return "reservationPurchase";
+	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	//////////// 아래부터 by 근형
 	
 	@Transactional
 	@Override

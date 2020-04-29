@@ -4,23 +4,23 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.clover.p5.DTO.SearchHostDTO;
-import com.clover.p5.entity.Host;
 import com.clover.p5.entity.NewHostDTO;
+import com.clover.p5.host.dto.HostInfoDTO;
+import com.clover.p5.host.dto.SearchHostDTO;
 
 public interface HostMapper {
 
-	String selectHost();
+	HostInfoDTO selectHost(String id);
 	
-	List<Host> selectHostList(SearchHostDTO dto);
+	List<HostInfoDTO> selectHostList(SearchHostDTO searchHostDto);
 
 	
 	
 	
 	
 	
-	
-	
+	// 아래부터 by 근형
+
 	
 	int insertHost(NewHostDTO newHostDto); // session에 모은 정보로 호스트 등록(DB에 저장)
 	
