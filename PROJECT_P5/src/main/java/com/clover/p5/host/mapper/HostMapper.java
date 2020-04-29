@@ -26,8 +26,15 @@ public interface HostMapper {
 	
 	int selectNewHostId(int memberId); // 작성자 id로 방금 작성한 host id를 검색한다
 	
-	int insertBlocking
-	(@Param("hostId") int hostId, @Param("arrBlockingDate") String[] arrBlockingDate);
+	int insertHostPhoto(
+			@Param("hostId") int hostId,
+			@Param("originalName") String originalName,
+			@Param("fileSize") long fileSize,
+			@Param("path") String path);
+	
+	int insertBlocking(
+			@Param("hostId") int hostId,
+			@Param("arrBlockingDate") String[] arrBlockingDate);
 	
 	
 }

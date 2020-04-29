@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.clover.p5.VO.HostParamVO;
 import com.clover.p5.entity.Host;
@@ -96,6 +95,11 @@ public class HostController {
 	@RequestMapping("/host/registration/description") // 사진 저장
 	public void inputPhoto(@ModelAttribute("newHost") NewHostDTO newHostDto) {
 		System.out.println(newHostDto + "\n사진 " + newHostDto.getPhoto().size() + "개 넘어옴");
+		for(int i = 0; i < newHostDto.getPhoto().size(); i++) {
+			if(newHostDto.getPhoto().get(i).isEmpty()) {
+				System.out.println(i+1+"번째 파일이 비었습니다.");
+			}
+		}
 	}
 	@RequestMapping("/host/registration/stayDate") // 설명 저장
 	public void inputDescription(@ModelAttribute("newHost") NewHostDTO newHostDto) {
@@ -114,7 +118,7 @@ public class HostController {
 	(@ModelAttribute("newHost") NewHostDTO newHostDto, SessionStatus sessionStatus) {
 		System.out.println(newHostDto);
 		if(hostService.insertHost(newHostDto)) {
-			sessionStatus.setComplete();
+			sessionStatus.setComplete(); // 호스트 등록 세션 초기화
 			System.out.println("호스트 등록 성공!");
 		}
 	}

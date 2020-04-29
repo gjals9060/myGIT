@@ -1,6 +1,5 @@
 package com.clover.p5.host.service;
 
-import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,11 +34,11 @@ public interface HostService {
 	// 숙소 등록
 	boolean insertHost(NewHostDTO newHostDto);
 	
-	// 서버에 호스트 사진 등록
-	boolean storePhoto(String lastFolderName, List<MultipartFile> photos);
+	// 호스트 사진(서버) 및 경로(DB) 저장
+	boolean insertHostPhoto(int hostId, List<MultipartFile> photos);
 	
-	// 숙소 등록시 설정한 예약불가 날짜 입력
-	int insertBlocking(int memberId, String blockingDate);
+	// 숙소 등록시 설정한 예약 차단일 저장
+	boolean insertBlocking(int hostId, String blockingDate);
 	
 	
 	

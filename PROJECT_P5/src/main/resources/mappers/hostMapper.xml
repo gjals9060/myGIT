@@ -104,21 +104,36 @@
 	</select>
 	
 	
+	<!-- foreach문에서는 trigger로! .nextval이 안먹힌다 -->
 	<!-- 예약 차단일 등록 -->
 	<insert id="insertBlocking">
 		<foreach collection="arrBlockingDate" item="blockingDate"
 		 separator=" " open="INSERT ALL " close="SELECT * FROM DUAL">
 			INTO blocking
-			(
+			(	
 				host_id,
 				blocking_date
 								)
 			VALUES
-			(
+			(	
 				#{hostId},
 				TO_DATE(#{blockingDate}, 'MM/DD/YYYY')
 														)
 		</foreach>
+	</insert>
+	
+	
+	<!-- 호스트 사진 저장 -->
+	<insert id="insertHostPhoto">
+			INSERT INTO host_photo
+			VALUES
+			(
+				SEQ_host_photo_id.nextval,
+				#{hostId},
+				#{originalName},
+				#{fileSize},
+				#{path}
+									)
 	</insert>
 	
 	
