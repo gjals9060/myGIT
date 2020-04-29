@@ -50,30 +50,6 @@
 	</select>
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	<!-- 호스트 등록 -->
 	<insert id="insertHost" parameterType="NewHostDTO">
 		INSERT INTO host
