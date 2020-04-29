@@ -19,7 +19,7 @@
 <body>
 <header>
 P5
-<div>${user.firstName } ${user.lastName } <button id="btnLogOut">로그아웃</button></div>
+<div>${user.birthDate } ${user.registrationDate} <button id="btnLogOut">로그아웃</button></div>
 <a href="host/registration/roomType">호스트 등록</a>
 </header>
 <nav>

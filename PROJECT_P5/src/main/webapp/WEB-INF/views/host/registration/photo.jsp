@@ -165,7 +165,7 @@ function submitAction() {
 </script>
  </head>
 <body>
-<form action="description" method="post">
+<form action="description" method="post" enctype="multipart/form-data">
                
                <div class="upload_List_Block">
                   
@@ -177,7 +177,7 @@ function submitAction() {
                            <img id="img" />
                         </div>
                         <a href="javascript:" onclick="fileUploadAction();" class="my_button"></a>  
-                        <input type="file" id="picture" multiple="multiple"/>
+                        <input type="file" id="picture" multiple="multiple" name="photo" />
                      </div>
                   </div>
                </div>

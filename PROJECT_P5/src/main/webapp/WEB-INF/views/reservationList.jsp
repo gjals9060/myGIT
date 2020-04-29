@@ -44,18 +44,17 @@ button {
 		날짜 <input type="text" name="checkInDatecheckOutDate" id="checkInDatecheckOutDate" value="${checkInDatecheckOutDate}" />
 
 		<script type="text/javascript">
-		var date = new Date();
-		var date2 = new Date();
-		date2.setMonth(date.getMonth() + 3);	
-		$(function() {
+			$(function() {
 				
 				$('input[name="checkInDatecheckOutDate"]').daterangepicker(
 						{
 							"autoApply" : true,
 							"startDate" : "${startDate}",
 							"endDate" : "${endDate}",
-							"minDate" : date,
-							"maxDate" : date2
+							"minDate" : "04/17/2020",
+							"isInvalidDate" : {
+								
+							}
 						},
 						function(start, end, label) {
 							console.log('New date range selected: '
@@ -293,13 +292,7 @@ button {
 		}	//end-searchPlace
 		
 		function gogo(id) {
-			var checkInDatecheckOutDate = $('#checkInDatecheckOutDate').val();
-			var capacity = $('#capacity').val();
-			var startDate = "${startDate}";
-			var endDate = "${endDate}";
-			
-			
-			location.href = "postPage?id=" + id + "&startDate=" + startDate + "&endDate=" + endDate + "&capacity=" + capacity;
+			location.href = "postPage?id=" + id;
 		}
 		
 		function mapInfo() {

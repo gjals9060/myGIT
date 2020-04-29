@@ -14,16 +14,13 @@
 
 
 
-   지번/도로명 : <input type="text" id="sample5_address" onclick="sample5_execDaumPostcode()" placeholder="주소">
-   <!-- <input type="button" onclick="sample5_execDaumPostcode()" value="주소 검색"> -->
+   <input type="text" id="sample5_address" placeholder="주소">
+   <input type="button" onclick="sample5_execDaumPostcode()" value="주소 검색">
    <br>
-   <div id="map" style="width: 300px; height: 300px; margin-top: 10px; display: none">
-		<button style="background-color: #FFFFFF; width: 33px; height: 35px; margin-right: 2px; position: absolute; top: 105px; right: 0; z-index: 5; border: none; border-radius: 10px;" onclick="panTo()">
-	 		<img alt="focus" src="../../img/focus.png" style="width: 100%; height: 100%;">
-	 	</button>   
-   </div>
-   <button id="map-set-btn">조정</button>
-   <button id="map-save-btn">완료</button>
+   <div id="map"
+      style="width: 300px; height: 300px; margin-top: 10px; display: none"></div>
+   <button id="map-set-btn">조정하기</button>
+   <button id="map-save-btn">저장하기</button>
    <div id="result"></div>
 
 
@@ -38,7 +35,7 @@
    <!--임시 이동  -->
   <!--  <a href="facilities">다음</a> -->
    <a href="roomCount">이전</a>
-   <button id="next" onclick="inputAddress();">다음</button>
+   <button onclick="inputAddress();">다음</button>
 </body>
 
 
@@ -48,8 +45,7 @@
 <script src="../../js/jquery-3.4.1.js"></script>
 
 <script>
-   var toggle = false;   // 버튼 활성화
-   var flag = true;		 // 조정중일때 false => 다음버튼, 주소입력 비활성화
+   var toggle = false;   //버튼 활성화
    
    $('#map-set-btn').hide();   // 기본적으로  조정하기 버튼 숨김
    $('#map-save-btn').hide();   // 기본적으로  저장하기 버튼 숨김
@@ -70,47 +66,13 @@
 
    map.setMaxLevel(3);   //최대 줌 레벨
    
-   // 주소-좌표 변환 객체를 생성
+   //주소-좌표 변환 객체를 생성
    var geocoder = new daum.maps.services.Geocoder();
-   
-	// 검색 주소 마커 미리 생성
-   	var imageSrc1 = '../../img/marker2.png', // 마커이미지의 주소입니다    
-	    imageSize1 = new kakao.maps.Size(65, 70), // 마커이미지의 크기입니다
-	    imageOption1 = {offset: new kakao.maps.Point(30, 60)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
-	
-	var markerImage1 = new kakao.maps.MarkerImage(imageSrc1, imageSize1, imageOption1),
-	    markerPosition1 = new kakao.maps.LatLng(37.537187, 127.005476); // 마커가 표시될 위치입니다
-	
-	// 빨간 마커
-	var marker1 = new daum.maps.Marker({
-		position : markerPosition1,
-		image: markerImage1,
-		map : map,
-		zIndex: 3
-	});
-	marker1.setMap(map); // 지도에 올린다.
-    
-   
-	// 이동 마커를 생성합니다
-	var imageSrc2 = '../../img/marker3.png', // 마커이미지의 주소입니다    
-	    imageSize2 = new kakao.maps.Size(65, 70), // 마커이미지의 크기입니다
-	    imageOption2 = {offset: new kakao.maps.Point(30, 60)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
-	
-	var markerImage2 = new kakao.maps.MarkerImage(imageSrc2, imageSize2, imageOption2),
-	    markerPosition2 = new kakao.maps.LatLng(37.537187, 127.005476); // 마커가 표시될 위치입니다
-	
-	// 파란 마커
-	var marker2 = new daum.maps.Marker({
-		position : markerPosition2,
-		image: markerImage2,
-		map : map,
-		zIndex: 4
-
-	});
-	marker2.setMap(null); // 지도에 제거.
-    
-	    
-	
+   // 마커 미리 생성
+   var marker = new daum.maps.Marker({
+      position : new daum.maps.LatLng(37.537187, 127.005476),
+      map : map
+   });
    
    map.setDraggable(false);   //드래그 비활성화
    map.setZoomable(false);      //줌 비활성화
@@ -129,7 +91,6 @@
  
    // 주소검색
    function sample5_execDaumPostcode() {
-	  
       new daum.Postcode({
          oncomplete : function(data) {
             
@@ -147,32 +108,23 @@
 
                   // 해당 주소에 대한 좌표를 받아서
                   var coords = new daum.maps.LatLng(result.y, result.x);
-                                    
+                  
                   // 지도를 보여준다.
                   mapContainer.style.display = "block";
                   map.relayout();
                   // 지도 중심을 변경한다.
                   map.setCenter(coords);
-                  
                   // 마커를 결과값으로 받은 위치로 옮긴다.
-                  marker1.setPosition(coords);
+                  marker.setPosition(coords)
                   // 지도에 원을 표시합니다 
                   circle.setPosition(coords);
                   circle.setMap(map);
  
                   $('#addressInfo').empty();
-                  $('#addressInfo').append('주소 : <span id="address1">' + result.address.address_name + '</span><br />');
+                  $('#addressInfo').append('도로명주소 : <span id="address1">' + result.address.address_name + '</span><br />');
                   $('#addressInfo').append('상세주소 : <input id="address2" type="text" />');
                   $('input[name="latitude"]').val(result.y);
                   $('input[name="longitude"]').val(result.x);
-                  
-                  // 조정중일때 주소검색시 초기화
-                  if(toggle){
-	                  $('#map-save-btn').hide();
-	                  $('#map-set-btn').show();
-	                  toggle = false;
-	                  flag = true;
-                  }
                   
                }
             });
@@ -187,16 +139,8 @@
       $('#map-set-btn').hide();
       $('#map-save-btn').show();
       toggle = true;   // 이벤트 활성화
-      flag = false;
       map.setDraggable(true);
       //map.setZoomable(true);
-/*       
-      // 조정중에 다음 버튼 비활성화
-      $('#next').prop("disabled", true);
-*/
-	  
-	  marker2.setMap(map);
-
       
    });
    
@@ -205,34 +149,19 @@
       $('#map-save-btn').hide();
       $('#map-set-btn').show();
       toggle = false;
-      flag = true;
       map.setDraggable(false);
       //map.setZoomable(false);
       
       // 좌표중심 원 위치 조정
       var latlng = map.getCenter();
-      
-      circle.setPosition(new kakao.maps.LatLng(latlng.getLat(), latlng.getLng()));
-      
-      // 좌표중심 마커 변경
-      marker1.setPosition(new kakao.maps.LatLng(latlng.getLat(), latlng.getLng()));
-      
-	  marker1.setMap(map);
-      marker2.setMap(null);
-      
-/* 
-      // 다음 버튼 활성화
-      	  $('#next').prop("disabled", false);
-*/
-		
-});
-   
-   
+         circle.setPosition(new kakao.maps.LatLng(latlng.getLat(), latlng.getLng()));
+
+   });
    
    kakao.maps.event.addListener(map, 'center_changed', function() {
       // 지도 중심좌표를 얻어옵니다 
       var latlng = map.getCenter();
-         marker2.setPosition(new kakao.maps.LatLng(latlng.getLat(), latlng.getLng()));
+         marker.setPosition(new kakao.maps.LatLng(latlng.getLat(), latlng.getLng()));
 
    });
    
@@ -254,9 +183,9 @@
          
          var callback = function(result, status) {
              if (status === kakao.maps.services.Status.OK) {
-                 //console.log('도로명 : ' + result[0].address.address_name);
+                 console.log('도로명 : ' + result[0].address.address_name);
                $('#addressInfo').empty();
-               $('#addressInfo').append('주소 : <span id="address1">' + result[0].address.address_name + '</span><br />');
+               $('#addressInfo').append('도로명 주소 : <span id="address1">' + result[0].address.address_name + '</span><br />');
                $('#addressInfo').append('상세주소 : <input id="address2" type="text" />');
                $('input[name="latitude"]').val(latlng.getLat());
                $('input[name="longitude"]').val(latlng.getLng());
@@ -270,28 +199,16 @@
    });
    
    function inputAddress(){
-	   if(flag){
-		   var address2 = $('#address2').val().trim();
-		   if(!address2){ // 상세주소가 없으면
-			   $('input[name="address"]').val($('#address1').text()); // 입력된 도로명 주소만
-		   } else{ // 있으면
-			   $('input[name="address"]').val($('#address1').text() + " " + address2); // 그 뒤에 붙여서
-		   } // input hidden에 넣어주고
-		   
-		   $('form[name="formAddress"]').submit() // 폼 제출 
-	   }else{
-			  alert("주소 조정이 끝났으면 '완료'를 눌러주세요!");
-	   }
+	   var address2 = $('#address2').val().trim();
+	   if(!address2){ // 상세주소가 없으면
+		   $('input[name="address"]').val($('#address1').text()); // 입력된 도로명 주소만
+	   } else{ // 있으면
+		   $('input[name="address"]').val($('#address1').text() + " " + address2); // 그 뒤에 붙여서
+	   } // input hidden에 넣어주고
+	   
+	   $('form[name="formAddress"]').submit() // 폼 제출 
    }
-	
-   function panTo() {
-	    // 이동할 위도 경도 위치를 생성합니다 -> 마커 위치로
-	    var moveLatLon = marker1.getPosition();
-	    
-	    // 지도 중심을 부드럽게 이동시킵니다
-	    // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
-	    map.panTo(moveLatLon);            
-	}
+  
 
 
 </script>

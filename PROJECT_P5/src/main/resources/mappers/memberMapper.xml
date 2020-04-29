@@ -3,39 +3,32 @@
 
 <mapper namespace="com.clover.p5.member.mapper.MemberMapper">
 
-
+	<!-- 회원가입 때만 사용 -->
 	<insert id="insertMember" parameterType="Member">
 		INSERT INTO member
-		(
-			email,
-			password,
-			first_name,
-			last_name,
-			birth_date,
-			mobile_phone,
-			registration_date
-								)
 		VALUES
 		(
+			SEQ_member_id.nextval,
 			#{email},
 			#{password},
 			#{firstName},
 			#{lastName},
 			#{birthDate},
 			#{mobilePhone},
-			SYSDATE
-								)
+			TO_DATE(#{registrationDate}, 'YYYY-MM-DD HH24:MI:SS'),
+			NULL
+																	)
 	</insert>
 	
+	
+	<!-- 로그인할 때 사용 -->
 	<select id="selectMember" parameterType="String" resultType="Member">
 		SELECT *
 		FROM member
 		WHERE email = #{email}
 	</select>
-	
-	<select id="">
 		
-	</select>
+
 
 
 
