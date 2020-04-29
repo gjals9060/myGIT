@@ -41,7 +41,7 @@
 		<img src="img/fox.jpg" alt="" class="presentation-img"/>
 	 </article>
 	 
-	 <script>
+	<!--  <script>
 	 	$('#presenttationImg').on("mouseover", function() {
 
 	 		$('#presenttationImg').css({
@@ -56,7 +56,7 @@
 	 			"transition":"0.5s"
 	 		});
 	 	})
-	 </script>
+	 </script> -->
 	 
 
 	 <!-- 스와이퍼 이미지   -->
@@ -146,29 +146,8 @@
   </script>
 	
 	</div>
+	<jsp:include page="./footer.jsp" />
 
-	<footer>
-		<hr />
-		<div class="footer-text">
-			<div>소개</div>
-			<div>지원센터</div>
-			<div>호스트</div>
-			<div>뉴스룸</div>
-			<div>사이트맵</div>
-			<div>호스트등록</div>
-			<div>이벤트</div>
-			<div>도움말</div>
-		</div>
-		<hr />
-		<div class="footer-inline-text">
-			<ul>
-				<li>개인정보처리|</li>
-				<li>이용약관|</li>
-				<li>사이트맵|</li>
-				<li>환불정책|</li>
-			</ul>
-		</div>
-	</footer>
 
 
 </body>

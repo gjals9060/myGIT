@@ -85,10 +85,10 @@
 		
 		
 		
-<!-- 		
-	<div style="margin: 10px; text-align: center;grid-column-start: 1;grid-column-end: 4;">
+		
+	<!-- <div style="margin: 10px; text-align: center;grid-column-start: 1;grid-column-end: 4;">
 	
-		<a href="./reservation1">리스트</a> roomType으로 이동
+		<a href="./reservation1">리스트</a> 
 		<a href="./userInfoUpdate">회원정보수정</a>
 		<a href="./userinfoReservationList">예약 리스트</a>
 		<a href="host/registration/roomType">숙소등록</a>

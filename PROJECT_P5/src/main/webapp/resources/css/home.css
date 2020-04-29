@@ -116,23 +116,3 @@ section {
     border-radius: 5px;
 }
 
-/*footer*/
-
-footer {
-
-	}
-
-.footer-text {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 20% 20% 20%  ;
-	text-align:center;
-    height: 300px;
-}
-
-.footer-inline-text ul{
-	display: -webkit-inline-box;
-	list-style: none;
-}
-
-
