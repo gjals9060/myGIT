@@ -16,8 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.clover.p5.DTO.SearchHostDTO;
-import com.clover.p5.VO.HostParamVO;
 import com.clover.p5.entity.Host;
 import com.clover.p5.entity.NewHostDTO;
 
