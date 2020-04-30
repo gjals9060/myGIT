@@ -1,5 +1,8 @@
 package com.clover.p5.member.service;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
 import javax.mail.MessagingException;
@@ -36,7 +39,13 @@ public class MemberServiceImpl implements MemberService {
 		member.setPassword( // DB에 저장 전에 암호 해시화
 				passwordEncoder.encode(member.getPassword())
 		);
-		if(memberMapper.insertMember(member) == 1) {
+		// 서버시간에 서울의 타임존을 적용한 DateTime을 얻는다
+		ZonedDateTime nowSeoul = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
+		member.setRegistrationDate( // 필요한 형식으로 변경하여 세팅
+				nowSeoul.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+		);
+		if(memberMapper.insertMember(member) == 1) { // DB에 저장
+			System.out.println("회원가입 완료^^");
 			return true;
 		}
 		return false;

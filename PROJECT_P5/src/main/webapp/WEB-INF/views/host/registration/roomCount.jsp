@@ -7,19 +7,19 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 </head>
 <body>
-	<form action="">
-		최대 숙박인원 <br><input type="text" name="maximumStay" class="maximum-stay" disabled value="1"/>
+	<form action="address" method="post">
+		최대 숙박인원 <br><input type="text" name="capacity" class="maximum-stay" readonly value="1"/>
 		<button id="maximum-increase-quantity">▲</button>
 		<button id="maximum-decrease-quantity">▼</button><br>
 
-		방 갯수를 입력해볼까요? <br><input type="text"name="roomCount"class="room-count" disabled value="1"/>
+		방 갯수를 입력해볼까요? <br><input type="text"name="roomCount"class="room-count" readonly value="1"/>
 		<button id="count-increase-quantity">▲</button>
 		<button id="count-decrease-quantity">▼</button><br>
-		게스트가 사용할 수 있는 침대가 몇 개 인가요?<br> <input type="text"name="bedCount"class="bed-count" disabled value="0"/>
+		게스트가 사용할 수 있는 침대가 몇 개 인가요?<br> <input type="text"name="bedCount"class="bed-count" readonly value="0"/>
 		<button id="bed-increase-quantity">▲</button>
 		<button id="bed-decrease-quantity">▼</button><br>
 		게스트가 사용할 수 있는 욕실은요?<br>
-		<input type="text"name="bathroomCount"name="bathroomCount"class="bathroom-count" disabled value="1"/>
+		<input type="text"name="bathroomCount"name="bathroomCount"class="bathroom-count" readonly value="1"/>
 		<button id="bathroom-increase-quantity">▲</button>
 		<button id="bathroom-decrease-quantity">▼</button>
 		<!--index.jsp랑 똑같음  침대개수는 0이 낮은값 나머지는 1이 낮은값 그이상을줄일수 없음 -->
@@ -121,7 +121,7 @@
 		<input type="submit" value="다음" />
 	</form>
 	<!--페이지 넘어가기(임시방안)  -->
-<a href="enrollRoomType.jsp">이전</a>
-<a href="enrollAddress.jsp">다음</a>
+<a href="roomType">이전</a>
+<!-- <a href="address">다음</a> -->
 </body>
 </html>

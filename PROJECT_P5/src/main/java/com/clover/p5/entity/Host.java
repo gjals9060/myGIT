@@ -39,7 +39,7 @@ public class Host {
 	
 	private Date creationDate;
 	private Date modificationDate;
-	
+
 	
 	public int getId() {
 		return id;

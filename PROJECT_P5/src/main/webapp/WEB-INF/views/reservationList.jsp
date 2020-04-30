@@ -35,7 +35,7 @@ button {
 
 	<main>
 
-	<form action="reservation1" method="post">
+	<form action="reservationList" method="post">
 		<!--지역 입력  -->
 		지역 <input type="text" name="address" id="address" style="width:200px;" value="${address}" />
 		<!--달력에 필요할 jquery plugin  -->
@@ -44,17 +44,18 @@ button {
 		날짜 <input type="text" name="checkInDatecheckOutDate" id="checkInDatecheckOutDate" value="${checkInDatecheckOutDate}" />
 
 		<script type="text/javascript">
-			$(function() {
+		var date = new Date();
+		var date2 = new Date();
+		date2.setMonth(date.getMonth() + 3);	
+		$(function() {
 				
 				$('input[name="checkInDatecheckOutDate"]').daterangepicker(
 						{
 							"autoApply" : true,
 							"startDate" : "${startDate}",
 							"endDate" : "${endDate}",
-							"minDate" : "04/17/2020",
-							"isInvalidDate" : {
-								
-							}
+							"minDate" : date,
+							"maxDate" : date2
 						},
 						function(start, end, label) {
 							console.log('New date range selected: '
@@ -66,8 +67,7 @@ button {
 		</script>
 		<!--인원  -->
 
-		인원 <input type='text' name='personnel' id="personnel"
-			class="personnel_input" value="${personnel}">
+		인원 <input type='text' name='capacity' id="capacity" class="capacity_input" value="${capacity}">
 
 		<button id="increaseQuantity">▲</button>
 		<button id="decreaseQuantity">▼</button>
@@ -77,22 +77,22 @@ button {
 			$(function() {
 				$('#decreaseQuantity').click(function(e) {
 					e.preventDefault();
-					var stat = $('.personnel_input').val();
+					var stat = $('.capacity_input').val();
 					var num = parseInt(stat, 10);
 					num--;
 					if (num < 0) {
 						alert('더이상 줄일수 없습니다.');
 						num = 0;
 					}
-					$('.personnel_input').val(num);
+					$('.capacity_input').val(num);
 				});
 				$('#increaseQuantity').click(function(e) {
 					e.preventDefault();
-					var stat = $('.personnel_input').val();
+					var stat = $('.capacity_input').val();
 					var num = parseInt(stat, 10);
 					num++;
 
-					$('.personnel_input').val(num);
+					$('.capacity_input').val(num);
 				});
 			});
 		</script>
@@ -233,13 +233,6 @@ button {
 						position : coords
 					});
 
-					/*
-					 // 인포윈도우로 장소에 대한 설명을 표시합니다
-					infowindow = new kakao.maps.InfoWindow({
-					    content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
-					});
-					 */
-
 					// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
 					map.setCenter(coords);
 
@@ -299,8 +292,14 @@ button {
 			
 		}	//end-searchPlace
 		
-		function gogo() {
-			/* location.href = 'reservation3.jsp'; */
+		function gogo(id) {
+			var checkInDatecheckOutDate = $('#checkInDatecheckOutDate').val();
+			var capacity = $('#capacity').val();
+			var startDate = "${startDate}";
+			var endDate = "${endDate}";
+			
+			
+			location.href = "postPage?id=" + id + "&startDate=" + startDate + "&endDate=" + endDate + "&capacity=" + capacity;
 		}
 		
 		function mapInfo() {
@@ -359,20 +358,21 @@ button {
 			}
 			
 			function ajaxAction() {
-			
-				$.ajax({
-					type : 'post',
-					url : 'ajaxMap',
-					data : {
+				
+				var hostParamVO = {
 						"swLatlng" : swLatlng.toString(),
 						"neLatlng" : neLatlng.toString(),
-						"personnel" : "${personnel}",
-						"checkInDatecheckOutDate" : "${checkInDatecheckOutDate}",
+						"capacity" : "${capacity}",
 						"startDate" : "${startDate}",
 						"endDate" : "${endDate}"
-							
-					},
+				};
+	
+				$.ajax({
+					type : 'POST',
+					url : 'ajax/Hosts',
+					data : JSON.stringify(hostParamVO),
 					dataType : 'json',
+					contentType: "application/json",
 					success : function(result) {
 					
 								$('#list').empty();								
@@ -382,7 +382,7 @@ button {
 										var ss = '';
 							
 										ss += '=================================================='
-											+ '<article onclick="gogo()" id="place'+ index +'">'
+											+ '<article onclick="gogo(' + item.id + ')" id="place'+ index +'">'
 											+ '<div>'
 												+ '<table border="1">'
 											+ 	'<tr>'

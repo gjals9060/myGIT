@@ -12,17 +12,17 @@
 <div id="payment-window">
 <div class="contents">
 <img src="img/bedroom.jpg" alt="이미지" /><br>
-<h1>
-경복궁 아름다운 한옥집</h1> 
+<h1>${hostName}</h1> 
 <div class="personnel">
-게스트 :1명
+게스트 :${personnel}
 </div>
 <div class="date">
-2020.04.20~2020.04.22<hr>
+${checkInDatecheckOutDate}
+<hr>
 </div>
 <div class="price-calculation">
-4,500 x 2박 <div class="price">9000원</div><hr></div>
-<div class="total-text">총합계</div> <div class="total-price">9000원</div>
+${hostPrice} x ${dateCount}박 <div class="price">${hostPrice}원</div><hr></div>
+<div class="total-text">총합계</div> <div class="total-price">${payment}원</div>
 </div>
 </div>
 <div class="pay-text">

@@ -165,7 +165,7 @@ function submitAction() {
 </script>
  </head>
 <body>
-<form action="" >
+<form action="description" method="post" enctype="multipart/form-data">
                
                <div class="upload_List_Block">
                   
@@ -177,14 +177,14 @@ function submitAction() {
                            <img id="img" />
                         </div>
                         <a href="javascript:" onclick="fileUploadAction();" class="my_button"></a>  
-                        <input type="file" id="picture" multiple="multiple"/>
+                        <input type="file" id="picture" multiple="multiple" name="photo" />
                      </div>
                   </div>
                </div>
                <input type="submit" value="다음" />
                </form>
-               <a href="enrollFacilities.jsp">이전</a>
-               <a href="enrollDescription.jsp">다음</a>
+               <a href="facilities">이전</a>
+               <!-- <a href="description">다음</a> -->
 </body>
 
 </html>

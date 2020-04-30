@@ -41,9 +41,12 @@ DROP SEQUENCE SEQ_place_photo_id;
 
 CREATE SEQUENCE SEQ_blocking_id INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE SEQ_booking_id INCREMENT BY 1 START WITH 1;
+CREATE SEQUENCE SEQ_email_authentication_id INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE SEQ_host_id INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE SEQ_host_photo_id INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE SEQ_member_id INCREMENT BY 1 START WITH 1;
+CREATE SEQUENCE SEQ_place_id INCREMENT BY 1 START WITH 1;
+CREATE SEQUENCE SEQ_place_photo_id INCREMENT BY 1 START WITH 1;
 
 
 
@@ -112,7 +115,9 @@ CREATE TABLE host_photo
 (
 	id number NOT NULL,
 	host_id number,
-	host_photo_path varchar2(100),
+	original_name varchar2(260),
+	file_size number,
+	path varchar2(100),
 	PRIMARY KEY (id)
 );
 
@@ -204,6 +209,15 @@ END;
 
 /
 
+CREATE OR REPLACE TRIGGER TRI_email_authentication_id BEFORE INSERT ON email_authentication
+FOR EACH ROW
+BEGIN
+	SELECT SEQ_email_authentication_id.nextval
+	INTO :new.id
+	FROM dual;
+END;
+
+/
 
 CREATE OR REPLACE TRIGGER TRI_host_id BEFORE INSERT ON host
 FOR EACH ROW
@@ -235,6 +249,25 @@ END;
 
 /
 
+CREATE OR REPLACE TRIGGER TRI_place_id BEFORE INSERT ON place
+FOR EACH ROW
+BEGIN
+	SELECT SEQ_place_id.nextval
+	INTO :new.id
+	FROM dual;
+END;
+
+/
+
+CREATE OR REPLACE TRIGGER TRI_place_photo_id BEFORE INSERT ON place_photo
+FOR EACH ROW
+BEGIN
+	SELECT SEQ_place_photo_id.nextval
+	INTO :new.id
+	FROM dual;
+END;
+
+/
 
 
 
