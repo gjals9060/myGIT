@@ -4,7 +4,7 @@
 <mapper namespace="com.clover.p5.member.mapper.MemberMapper">
 
 	<!-- 회원가입 때만 사용 -->
-	<insert id="insertMember" parameterType="Member">
+	<insert id="insertMember" parameterType="NewMemberDTO">
 		INSERT INTO member
 		VALUES
 		(
@@ -15,6 +15,7 @@
 			#{lastName},
 			#{birthDate},
 			#{mobilePhone},
+			'N',
 			TO_DATE(#{registrationDate}, 'YYYY-MM-DD HH24:MI:SS'),
 			NULL
 																	)

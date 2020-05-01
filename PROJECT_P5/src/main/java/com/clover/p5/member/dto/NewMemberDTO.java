@@ -1,27 +1,19 @@
-package com.clover.p5.entity;
+package com.clover.p5.member.dto;
 
 import java.sql.Date;
 
-public class Member {
+public class NewMemberDTO {
 	
-	private int id;
 	private String email;
 	private String password;
+	private String passwordCheck;
 	private String firstName;
 	private String lastName;
 	private Date birthDate;
 	private String mobilePhone;
-	private char mobileAuthentication;
 	private String registrationDate;
-	private String profilePhotoPath;
 	
 	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
 	public String getEmail() {
 		return email;
 	}
@@ -33,6 +25,12 @@ public class Member {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public String getPasswordCheck() {
+		return passwordCheck;
+	}
+	public void setPasswordCheck(String passwordCheck) {
+		this.passwordCheck = passwordCheck;
 	}
 	public String getFirstName() {
 		return firstName;
@@ -58,39 +56,17 @@ public class Member {
 	public void setMobilePhone(String mobilePhone) {
 		this.mobilePhone = mobilePhone;
 	}
-	public char getMobileAuthentication() {
-		return mobileAuthentication;
-	}
-	public void setMobileAuthentication(char mobileAuthentication) {
-		this.mobileAuthentication = mobileAuthentication;
-	}
 	public String getRegistrationDate() {
 		return registrationDate;
 	}
 	public void setRegistrationDate(String registrationDate) {
 		this.registrationDate = registrationDate;
 	}
-	public String getProfilePhotoPath() {
-		return profilePhotoPath;
-	}
-	public void setProfilePhotoPath(String profilePhotoPath) {
-		this.profilePhotoPath = profilePhotoPath;
-	}
 	@Override
 	public String toString() {
-		return "Member [id=" + id + ", email=" + email + ", password=" + password + ", firstName=" + firstName
-				+ ", lastName=" + lastName + ", birthDate=" + birthDate + ", mobilePhone=" + mobilePhone
-				+ ", mobileAuthentication=" + mobileAuthentication + ", registrationDate=" + registrationDate
-				+ ", profilePhotoPath=" + profilePhotoPath + "]";
+		return "NewMemberDTO [email=" + email + ", password=" + password + ", passwordCheck=" + passwordCheck
+				+ ", firstName=" + firstName + ", lastName=" + lastName + ", birthDate=" + birthDate + ", mobilePhone="
+				+ mobilePhone + ", registrationDate=" + registrationDate + "]";
 	}
-	
-	
-	
-	
-	
-	
-	
 
-
-	
 }

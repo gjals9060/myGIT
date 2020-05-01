@@ -68,6 +68,7 @@ CREATE TABLE booking
 	member_id number,
 	check_in_date date,
 	check_out_date date,
+	guest_count number,
 	payment number,
 	booking_date date,
 	cancellation_date date,
@@ -130,7 +131,8 @@ CREATE TABLE member
 	first_name varchar2(60),
 	last_name varchar2(30),
 	birth_date date,
-	mobile_phone varchar2(16),
+	mobile_phone varchar2(11),
+	mobile_authentication char(1),
 	registration_date date,
 	profile_photo_path varchar2(100),
 	PRIMARY KEY (id)

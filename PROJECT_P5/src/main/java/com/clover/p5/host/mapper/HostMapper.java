@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.clover.p5.entity.NewHostDTO;
 import com.clover.p5.host.dto.HostInfoDTO;
+import com.clover.p5.host.dto.NewHostDTO;
 import com.clover.p5.host.dto.SearchHostDTO;
 
 public interface HostMapper {
@@ -26,15 +26,13 @@ public interface HostMapper {
 	
 	int selectNewHostId(int memberId); // 작성자 id로 방금 작성한 host id를 검색한다
 	
-	int insertHostPhoto(
-			@Param("hostId") int hostId,
-			@Param("originalName") String originalName,
-			@Param("fileSize") long fileSize,
-			@Param("path") String path);
+	int insertHostPhoto(@Param("hostId") int hostId,
+						@Param("originalName") String originalName,
+						@Param("fileSize") long fileSize,
+						@Param("path") String pathz);
 	
-	int insertBlocking(
-			@Param("hostId") int hostId,
-			@Param("arrBlockingDate") String[] arrBlockingDate);
+	int insertBlocking(@Param("hostId") int hostId,
+					@Param("arrBlockingDate") String[] arrBlockingDate);
 	
 	
 }
