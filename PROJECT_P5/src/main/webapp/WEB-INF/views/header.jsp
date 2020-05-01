@@ -86,15 +86,15 @@
 		
 		
 		
-	<!-- <div style="margin: 10px; text-align: center;grid-column-start: 1;grid-column-end: 4;">
+	<div style="margin: 10px; text-align: center;grid-column-start: 1;grid-column-end: 4;">
 	
-		<a href="./reservation1">리스트</a> 
-		<a href="./userInfoUpdate">회원정보수정</a>
+		<a href="/view/">리스트</a> 
+		<a href="/userinfoUpdate">회원정보수정</a>
 		<a href="./userinfoReservationList">예약 리스트</a>
 		<a href="host/registration/roomType">숙소등록</a>
 		<a href="./hostReservationUpdate">숙소 수정</a>
 	
-	</div> -->
+	</div>
 	</header>
 	
 		<div id="modalLogin" class="modal">
@@ -253,7 +253,7 @@ $(window).scroll(function () {
 	$('#scrollId').val(height);
 	
 	
-	if(height >80){
+	if(height >80){ // 스크롤의 위치가 80보다  클경우 
 		$('header').css({
 			"position":"fixed",
 			"box-shadow":"1px 1px 10px 0px #bbb",
@@ -261,7 +261,7 @@ $(window).scroll(function () {
 		});
 		
 		$('.title-logo-img ').css("height","80px");
-	}else{
+	}else{ /// 80보다 낮은 위치라면 
 		$("header").css({
 			"position": "static",
 			"box-shadow" : "0px 0px"
@@ -271,6 +271,8 @@ $(window).scroll(function () {
 	}
 	
 });
+
+
 	
 
 
@@ -293,7 +295,7 @@ modalUseradd.css("display", "block");
 // 이메일 인증 modal
 var modalEmailCheck = $("#modalEmailCheck");
 
-
+/* 
 /////////////////// 이메일 유효성 검사
 $(document).ready(function(){
 	$('#inputEmail').on('keyup',function(){
@@ -321,7 +323,10 @@ $(document).ready(function(){
 	});
 });
 
-
+ */
+ 
+ 
+ /* 
 /////////////////////////// 비밀번호 유효성
 $(document).ready(function(){
 	$('#inputPassword').on('keyup', function() {
@@ -352,7 +357,9 @@ $(document).ready(function(){
 	});
 });
 
-/////////////////////////// 비밀번호 확인 유효성
+ */
+ 
+ /* /////////////////////////// 비밀번호 확인 유효성
 $(document).ready(function(){
 	$('#inputPasswordCheck').blur(function(){
 		var password = $('#inputPassword').val(); /// 비빌번호
@@ -376,8 +383,9 @@ $(document).ready(function(){
 	});
 });
 
+ */
 
-
+ /* 
 /////////////////////////// 이름
 $(function(){
 	$('#inputFirstName').on('keyup',function(){
@@ -402,7 +410,9 @@ $(function(){
 	});
 });
 
-
+ */
+ 
+ /* 
 /////////////////////////// 성
 
 $(function(){
@@ -428,8 +438,9 @@ $(function(){
 	});
 });
 
+ */
 
-
+ /* 
 /////////////////////////// 생년월일
 
 $(document).ready(function(){
@@ -470,7 +481,9 @@ $(document).ready(function(){
 	});
 });
 	
-
+ */
+ 
+ /* 
 /////////////////////////// 전화번호
 $(document).ready(function(){
 	$('#inputTel').blur(function(){
@@ -504,7 +517,9 @@ $(document).ready(function(){
 });
 
 
-
+ */
+ 
+ 
 /// [다음] 클릭시 이벤트 // 유효성 검사를 하고 이상이 없다면 이메일 인증 modal로 넘어가기
 $("#btnSendEmail").on("click", function() {
 	
@@ -517,10 +532,9 @@ $("#btnSendEmail").on("click", function() {
 			); 
 */
 	
-	/// 유효성 검사 조건문 - 변경해야함
-	if($(".form-input-check").css("color")==="rgb(0,0,255)"){
-		
-		var params = $('form[name="newMember"]').serialize();
+
+	///// 회원가입을 위해 입력한 정보들을 params에 담는다.
+	var params = $('form[name="newMember"]').serialize();
 
 	   $.ajax({
 	      type : "POST",
@@ -531,7 +545,7 @@ $("#btnSendEmail").on("click", function() {
 	      success : function(data) {
 	    	  if(!data){ /// 인증번호 전송에 실패했을 때 
 	    		  alert("인증번호 전송에 실패했습니다..");
-	    	  } else{ // 인증번호 전송에 성공했을 때 
+	    	  }else{ // 인증번호 전송에 성공했을 때 
 	    		  alert(data); // 인증번호 확인
 	    		  $("#authenticationCode").val(data); /// 인증번호를 넣어야함
 	    		 
@@ -545,24 +559,7 @@ $("#btnSendEmail").on("click", function() {
 	          alert("통신 실패..");
 	      }
 	   }); // ajax-end
-
-	}else{ //////// 유효성 검사가 안됐을 때
-		
-		/////// 수정중..... 
-		var result =true;
-		
-		alert($('#idCheck').val());
-		alert("빈칸없이 작성해주세요");
-		
-		
-		if($("#idCheck").val()== "통과"){
-			result = true;
-		}else{
-			result = false;
-		}
-		
-		alert(result);
-	}
+	
 
 
 });
@@ -686,7 +683,7 @@ $('#userLoginBtn').on('click', function(){
 				});
 				
 				$('.loginCheck').append(
-					'아이디가 존재하지 않습니다.'		
+					'아이디가 존재하지 않습니다.'
 				);
 				
 				
@@ -709,16 +706,24 @@ $('#userLoginBtn').on('click', function(){
 				alert("로그인 성공");
 				location.reload(true); // 페이지 새로고침
 				// 이후 로직
-				
+						
 				//// 로그인 버튼을 remove, 회원정보와 호스트 등록을 가져옴.
 				/// div 내부를 지우고 
 				$(".useradd-login-form").empty();
-				/// div 다시 채워넣기
+				/// div 에 로그아웃 append
 				$(".useradd-login-form").append(
 					"${user.firstName }"+" ${user.lastName }"+
 					"<button id='btnLogOut'>로그아웃</button>"+
 					"<a href='host/registration/roomType'>호스트 등록</a>"
 				);
+				
+				// 로그인 modal 닫고 내용 지우고, 
+				$('.user-login-input-value').val('');
+				////////// 경고 div 비우고		
+				$('.loginCheck').empty();
+				modalLogin.css("display", "none");
+				modalUseradd.css("display","block");
+				
 				
 			}
 		},
