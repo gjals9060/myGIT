@@ -715,9 +715,9 @@ $('#userLoginBtn').on('click', function(){
 					"${user.firstName }"+" ${user.lastName }"+
 					"<button id='btnLogOut'>로그아웃</button>"+
 					"<a href='host/registration/roomType'>호스트 등록</a>"
+				// 로그인 modal 닫고 내용 지우고, 
 				);
 				
-				// 로그인 modal 닫고 내용 지우고, 
 				$('.user-login-input-value').val('');
 				////////// 경고 div 비우고		
 				$('.loginCheck').empty();
