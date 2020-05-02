@@ -355,13 +355,27 @@ word-break: break-all;
       <!-- postImgSlide end -->
 
       <div class="modalImgSlide">
+      
+         <!-- start 호스트포토 modal 출력 작업 by 허민 -->
+         
+         <c:forEach var="photo" items="${hostPhoto}" varStatus="status">
+			<div class="modalImg">
+            	<div class="modalImgNumber">${status.count} / ${fn:length(hostPhoto)}</div>
+            	<img src="${photo.path}" alt="${photo.originalName}" onclick="modalOff()">
+			</div>
+         
+         </c:forEach>
+         
+         <!-- end 호스트포토 modal 출력 작업 by 허민 -->
+      
          <!-- 사진 데이터 입력 시 반목문으로  >  .modalImgSlide[0] 아래로 append
          <div class="modalImg">
             <div class="modalImgNumber">(i값)/(전체 사진 갯수값)</div>
             <img src="이미지 링크" onclick="modalOff()">
          </div> -->
 
-         <div class="modalImg">
+<!--
+		 <div class="modalImg">
             <div class="modalImgNumber">1 / 8</div>
             <img src="img/room1.jpg" onclick="modalOff()">
          </div>
@@ -393,7 +407,7 @@ word-break: break-all;
             <div class="modalImgNumber">8 / 8</div>
             <img src="img/room1.jpg" onclick="modalOff()">
          </div>
-
+-->
          <div class="modalImgSlideButton">
             <a class="prev" onclick="plusSlides(-1)">&#10094;</a> <a
                class="next" onclick="plusSlides(1)">&#10095;</a>
