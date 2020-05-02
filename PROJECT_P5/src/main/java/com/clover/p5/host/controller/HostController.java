@@ -109,9 +109,9 @@ public class HostController {
 	}
 	@RequestMapping("/host/registration/finish") // 가격 저장
 	public void inputPrice
-	(@ModelAttribute("newHost") NewHostDTO newHostDto, SessionStatus sessionStatus) {
+	(@ModelAttribute("newHost") NewHostDTO newHostDto, SessionStatus sessionStatus, HttpServletRequest request) {
 		System.out.println(newHostDto);
-		if(hostService.insertHost(newHostDto)) {
+		if(hostService.insertHost(newHostDto, request)) {
 			sessionStatus.setComplete(); // 호스트 등록 세션 초기화
 			System.out.println("호스트 등록 성공!");
 		}

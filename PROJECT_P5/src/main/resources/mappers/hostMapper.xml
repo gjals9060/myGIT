@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.clover.p5.host.mapper.HostMapper">
-
+	
+	<!-- postPage에 뿌려줄 host관련 정보(사진은 따로) -->
 	<select id="selectHost" parameterType="String" resultType="HostInfoDTO">
 		<![CDATA[
 			SELECT
@@ -15,6 +16,21 @@
 				(m.id = h.member_id)	
 		]]>	
 	
+	</select>
+	
+	<!-- 호스트 사진 출력 -->
+	<select id="selectHostPhoto" parameterType="String" resultType="HostPhotoDTO">
+		
+		SELECT
+			*
+		FROM
+			host_photo
+		WHERE
+			host_id = #{hostId}
+		ORDER BY
+			id
+			
+		
 	</select>
 	
 	<select id="selectHostList" parameterType="SearchHostDTO" resultType="HostInfoDTO">
@@ -49,6 +65,12 @@
 	
 	</select>
 	
+	
+	
+	
+	
+	
+	<!-- 아래부터 by 근형 -->
 	
 	<!-- 호스트 등록 -->
 	<insert id="insertHost" parameterType="NewHostDTO">

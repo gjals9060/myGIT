@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.clover.p5.entity.NewHostDTO;
 import com.clover.p5.host.dto.HostInfoDTO;
+import com.clover.p5.host.dto.HostPhotoDTO;
 import com.clover.p5.host.dto.SearchHostDTO;
 
 public interface HostMapper {
@@ -14,7 +15,7 @@ public interface HostMapper {
 	
 	List<HostInfoDTO> selectHostList(SearchHostDTO searchHostDto);
 
-	
+	List<HostPhotoDTO> selectHostPhoto(String hostId);
 	
 	
 	

@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.clover.p5.entity.NewHostDTO;
 import com.clover.p5.host.dto.HostInfoDTO;
+import com.clover.p5.host.dto.HostPhotoDTO;
 import com.clover.p5.host.dto.SearchHostDTO;
 import com.clover.p5.host.dto.SearchInputDTO;
 import com.clover.p5.host.mapper.HostMapper;
@@ -47,30 +48,46 @@ public class HostServiceImpl implements HostService {
 		
 		String capacity = request.getParameter("capacity");
 		System.out.println("호출된 capacity : " + capacity);
-				
+		
+		// 호스트 정보
 		HostInfoDTO hostInfoDto = hostMapper.selectHost(id);
+		
+		// 호스트 사진 리스트
+		List<HostPhotoDTO> hostPhotoDto = hostMapper.selectHostPhoto(id);
+		System.out.println(hostPhotoDto.get(0).getPath());
+//		
+//		for(HostPhotoDTO dto : hostPhotoDto) {
+//			String beforePath = dto.getPath();
+//			System.out.println("전 : " + beforePath);
+//			
+//			String afterPath = beforePath.replace("\\", "/");	//java에서 특수문자' \ '은 ' \" ' 으로 쓰임
+//			System.out.println("후 : " + afterPath);
+//			dto.setPath(afterPath);
+//		}
 		
 		model.addAttribute("host", hostInfoDto);
 		model.addAttribute("startDate", startDate);
 		model.addAttribute("endDate", endDate);
 		model.addAttribute("capacity", capacity);
 		
+		model.addAttribute("hostPhoto", hostPhotoDto);
+				
 		return "postPage";	
 	}
 
 
 	@Override
-	public List<HostInfoDTO> selectHostList(SearchInputDTO vo) {
+	public List<HostInfoDTO> selectHostList(SearchInputDTO dto) {
 		
 		System.out.println("ajaxHosts 요청!");	
 		
 		// 받아온 HostParamVO를 SearchHostDTO에 맞게 데이터셋
-		String swLatlng = vo.getSwLatlng();
-		String neLatlng = vo.getNeLatlng();
-		int capacity = Integer.parseInt(vo.getCapacity());
-		String sStartDate = vo.getStartDate();
-		String sEndDate = vo.getEndDate();
-				
+		String swLatlng = dto.getSwLatlng();
+		String neLatlng = dto.getNeLatlng();
+		int capacity = Integer.parseInt(dto.getCapacity());
+		String sStartDate = dto.getStartDate();
+		String sEndDate = dto.getEndDate();
+		
 		System.out.println("sw좌표" + swLatlng);
 		swLatlng = swLatlng.substring(1, (swLatlng.length()-1));
 		
@@ -179,7 +196,7 @@ public class HostServiceImpl implements HostService {
 	
 	@Transactional
 	@Override
-	public boolean insertHost(NewHostDTO newHostDto) {
+	public boolean insertHost(NewHostDTO newHostDto, HttpServletRequest request) {
 		
 	/***
 	** 서버시간에 서울의 타임존을 적용한 DateTime을 얻는다.
@@ -202,6 +219,7 @@ public class HostServiceImpl implements HostService {
 			// DB에 저장할 예약 차단일 정보
 			String blockingDate = newHostDto.getBlockingDate();
 			
+			
 		/***
 		** 저장할 사진 파일이 있으면 서버와 DB에 저장한다.
 		***/
@@ -211,7 +229,7 @@ public class HostServiceImpl implements HostService {
 				
 			} else { // 있으면 저장을 시도
 				
-				if(!insertHostPhoto(hostId, photos)) { // 문제 발생 시에만
+				if(!insertHostPhoto(hostId, photos, request)) { // 문제 발생 시에만
 					return false;
 				}
 				
@@ -237,19 +255,19 @@ public class HostServiceImpl implements HostService {
 		return false;
 	}
 	
-	
-	
-	
+	// start - 이미지 업로드 수정 by 허민
 	@Override
-	public boolean insertHostPhoto(int hostId, List<MultipartFile> photos) {
+	public boolean insertHostPhoto(int hostId, List<MultipartFile> photos, HttpServletRequest request) {
 		
-		// 파일을 저장할 폴더의 경로(Windows 기반)
-		String folderPath = "\\p5\\upload\\host";
-		
+	  String defaultPath = request.getServletContext().getRealPath("/");
+
+      //파일 기본경로 _ 상세경로
+      String path = defaultPath + "resources" + File.separator + "upload" + File.separator + "host" + File.separator;
+      	
 	/**
 	** 파일을 저장할 폴더가 존재하지 않을 경우 폴더를 생성해준다.
 	**/
-		File folder = new File(folderPath);
+		File folder = new File(path);
         if(!folder.exists()) { // 존재하지 않으면
             if(folder.mkdirs()) { // 폴더를 생성하고 결과를 출력
             	System.out.println("host 폴더를 생성했습니다.");
@@ -275,14 +293,17 @@ public class HostServiceImpl implements HostService {
 				nowSeoul.format(DateTimeFormatter.ofPattern("yyMMdd_HHmmssSSS_")) +
 				UUID.randomUUID() + fileExtension		).replace("-", "");
     		
-    		// DB에 저장될 최종 path
-    		String savePath = folderPath + "\\" + saveName;
+    		// 서버에 저장될 최종 path
+    		String serverPath = path + saveName;
     		
+    		// DB에 저장될 최종 path
+    		String savePath = request.getContextPath() + "/upload/host/" + saveName;
+    		System.out.println("이미지 경로 : " + savePath);
     		
 		/***
 		 ** 서버에 파일 저장
 		 ***/
-    		File file = new File(savePath);
+    		File file = new File(serverPath);
     		try {
 				photo.transferTo(file);
 			} catch (IllegalStateException | IOException e) {
@@ -307,6 +328,76 @@ public class HostServiceImpl implements HostService {
     		(photos.size() + "개의 업로드 파일을 성공적으로 서버와 DB에 저장했습니다.");
 	    return true; // 문제 없이 모든 수행이 끝났으면 true를 반환.
 	}
+	// end - 이미지 업로드 수정 by 허민
+	
+	
+//	@Override
+//	public boolean insertHostPhoto(int hostId, List<MultipartFile> photos) {
+//		
+//		// 파일을 저장할 폴더의 경로(Windows 기반)
+//		String folderPath = "\\p5\\upload\\host";
+//		
+//	/**
+//	** 파일을 저장할 폴더가 존재하지 않을 경우 폴더를 생성해준다.
+//	**/
+//		File folder = new File(folderPath);
+//        if(!folder.exists()) { // 존재하지 않으면
+//            if(folder.mkdirs()) { // 폴더를 생성하고 결과를 출력
+//            	System.out.println("host 폴더를 생성했습니다.");
+//            }
+//        }
+//        
+//    /**
+//    ** 서버에 파일을 저장하고 DB에 파일 정보 및 경로를 저장한다.
+//    **/
+//    	for(MultipartFile photo : photos) {
+//    		
+//    		// 원본 파일명
+//    		String originalName = photo.getOriginalFilename();
+//    		// 파일 크기
+//    		long fileSize = photo.getSize();
+//    		// 파일 확장자
+//    		String fileExtension =
+//				originalName.substring(originalName.lastIndexOf("."));
+//    		
+//    		// 저장 파일명을 생성
+//    		ZonedDateTime nowSeoul = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
+//    		String saveName = (
+//				nowSeoul.format(DateTimeFormatter.ofPattern("yyMMdd_HHmmssSSS_")) +
+//				UUID.randomUUID() + fileExtension		).replace("-", "");
+//    		
+//    		// DB에 저장될 최종 path
+//    		String savePath = folderPath + "\\" + saveName;
+//    		
+//    		
+//		/***
+//		 ** 서버에 파일 저장
+//		 ***/
+//    		File file = new File(savePath);
+//    		try {
+//				photo.transferTo(file);
+//			} catch (IllegalStateException | IOException e) {
+//				e.printStackTrace();
+//				System.out.println("업로드 파일을 서버에 저장 중에 오류 발생");
+//				return false;
+//			}
+//    		
+//    		
+//		/***
+//		** DB에 파일 정보 저장
+//		***/
+//    		if(hostMapper.insertHostPhoto
+//    				(hostId, originalName, fileSize, savePath) != 1) {
+//    			System.out.println("업로드 파일을 DB에 저장 중에 오류 발생");
+//    			return false;
+//    		}
+//    		
+//    	} // for-END
+//    	
+//    	System.out.println
+//    		(photos.size() + "개의 업로드 파일을 성공적으로 서버와 DB에 저장했습니다.");
+//	    return true; // 문제 없이 모든 수행이 끝났으면 true를 반환.
+//	}
 
 	
 	

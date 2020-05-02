@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
-<%@taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
+
    
 <!DOCTYPE html>
 <html>
@@ -293,7 +295,21 @@ word-break: break-all;
             <img src="이미지 링크" onclick="modalOn()">
          </div>
          -->
-         <div class="postImg">
+         
+         <!-- start 호스트포토 리스트 출력 작업 by 허민 -->
+         
+         <c:forEach var="photo" items="${hostPhoto}" varStatus="status">
+			<div class="postImg">
+            	<div class="postImgNumber">${status.count} / ${fn:length(hostPhoto)}</div>
+            	<img src="${photo.path}" alt="${photo.originalName}" onclick="modalOn()">
+			</div>
+         
+         </c:forEach>
+         
+         <!-- end 호스트포토 리스트 출력 작업 by 허민 -->
+         
+<!-- 
+    	<div class="postImg">
             <div class="postImgNumber">1 / 8</div>
             <img src="img/room1.jpg" onclick="modalOn()">
          </div>
@@ -325,6 +341,7 @@ word-break: break-all;
             <div class="postImgNumber">8 / 8</div>
             <img src="img/room1.jpg" onclick="modalOn()">
          </div>
+-->
 
          <div class="postImgSlideButton">
             <a class="prev" onclick="plusSlides(-1)">&#10094;</a> <a

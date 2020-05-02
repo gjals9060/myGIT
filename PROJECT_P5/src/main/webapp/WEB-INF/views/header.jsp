@@ -31,9 +31,9 @@
 		
 		<!-- 정보입력-->
 		<div class="input-info">
-			<form action="">
+			<form action="reservationList">
 			<!--지역 입력  -->				
-				<span class="input-text">지역</span><input type="text" name="address" id="" />
+				<span class="input-text">지역</span><input type="text" name="address" id="address" placeholder="Add city, landmark, or address"/>
 				<!--달력에 필요할 jquery plugin  -->
 				
 				<!--  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" /> --> 
@@ -61,7 +61,7 @@
 					
 				<!--인원  -->
 				<span class="input-text">인원</span> 
-				<input type='text' name='personnel' class="personnel_input" value="0" >
+				<input type='text' name='capacity' class="personnel_input" value="0" >
 				<button id="increaseQuantity">▲</button>
 				<button id="decreaseQuantity">▼</button>
 					        <!--인원 카운트 다운 0미만은 줄일수 없게함  -->

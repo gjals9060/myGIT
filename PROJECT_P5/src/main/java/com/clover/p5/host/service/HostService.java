@@ -42,10 +42,10 @@ public interface HostService {
 	
 	
 	// 숙소 등록
-	boolean insertHost(NewHostDTO newHostDto);
+	boolean insertHost(NewHostDTO newHostDto, HttpServletRequest request);
 	
 	// 호스트 사진(서버) 및 경로(DB) 저장
-	boolean insertHostPhoto(int hostId, List<MultipartFile> photos);
+	boolean insertHostPhoto(int hostId, List<MultipartFile> photos, HttpServletRequest request);
 	
 	// 숙소 등록시 설정한 예약 차단일 저장
 	boolean insertBlocking(int hostId, String blockingDate);

@@ -292,7 +292,7 @@ button {
 			
 		}	//end-searchPlace
 		
-		function gogo(id) {
+		function gogo(id) {	//postPage로
 			var checkInDatecheckOutDate = $('#checkInDatecheckOutDate').val();
 			var capacity = $('#capacity').val();
 			var startDate = "${startDate}";
@@ -359,7 +359,7 @@ button {
 			
 			function ajaxAction() {
 				
-				var hostParamVO = {
+				var searchInputDTO = {
 						"swLatlng" : swLatlng.toString(),
 						"neLatlng" : neLatlng.toString(),
 						"capacity" : "${capacity}",
@@ -370,7 +370,7 @@ button {
 				$.ajax({
 					type : 'POST',
 					url : 'ajax/Hosts',
-					data : JSON.stringify(hostParamVO),
+					data : JSON.stringify(searchInputDTO),
 					dataType : 'json',
 					contentType: "application/json",
 					success : function(result) {
