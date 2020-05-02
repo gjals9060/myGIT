@@ -34,6 +34,17 @@ public class HomeController {
 		
 		return "home";
 	}
+	
+	
+	
+	// 임시 페이지 이동
+	@RequestMapping("/userInfoUpdate")
+	public void userInfoUpdate() {}
+	@RequestMapping("/userInfoReservationList")
+	public void userInfoReservationList() {}
+	@RequestMapping("/hostReservationUpdate")
+	public void hostReservationUpdate() {}
+
 
 	
 	

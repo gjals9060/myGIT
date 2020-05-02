@@ -14,8 +14,10 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.support.SessionStatus;
 
 import com.clover.p5.entity.Member;
+import com.clover.p5.member.dto.NewMemberDTO;
 import com.clover.p5.member.mapper.MemberMapper;
 
 @Service
@@ -34,26 +36,42 @@ public class MemberServiceImpl implements MemberService {
 	
 	
 	
+	
+	
+	
 	@Override
-	public boolean insertMember(Member member) {
-		member.setPassword( // DB에 저장 전에 암호 해시화
-				passwordEncoder.encode(member.getPassword())
-		);
-		// 서버시간에 서울의 타임존을 적용한 DateTime을 얻는다
-		ZonedDateTime nowSeoul = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
-		member.setRegistrationDate( // 필요한 형식으로 변경하여 세팅
-				nowSeoul.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
-		);
-		if(memberMapper.insertMember(member) == 1) { // DB에 저장
-			System.out.println("회원가입 완료^^");
-			return true;
-		}
-		return false;
+	public int signUp(String inputCode, String authenticationCode, NewMemberDTO newMemberDto,
+			SessionStatus sessionStatus) {
+		/***
+		** 인증번호 입력값과 비교
+		***/
+			if(authenticationCode.isEmpty()) {
+				return 0;
+			}
+			if(!passwordEncoder.matches(inputCode, authenticationCode)) {
+				return 0;
+			}
+			
+		/***
+		** 통과했으면 DB에 정보를 저장
+		***/
+			newMemberDto.setPassword( // DB에 저장 전에 암호 해시화
+					passwordEncoder.encode(newMemberDto.getPassword())
+			);
+			// 서버시간에 서울의 타임존을 적용한 DateTime을 얻는다
+			ZonedDateTime nowSeoul = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
+			newMemberDto.setRegistrationDate( // 필요한 형식으로 변경하여 세팅
+					nowSeoul.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+			);
+			if(memberMapper.insertMember(newMemberDto) == 1) { // DB에 저장
+				System.out.println("회원가입 완료^^");
+				sessionStatus.setComplete(); // 세션을 비워주고
+				return 1;
+			}
+					
+			System.out.println("회원정보 DB에 저장 실패");
+			return 2;
 	}
-	
-	
-	
-	
 	
 	
 	
@@ -83,10 +101,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 
-	@Override
-	public boolean checkEmailCode(String inputCode, String authenticationCode) {
-		return passwordEncoder.matches(inputCode, authenticationCode);
-	}
+	
 
 
 
@@ -107,6 +122,21 @@ public class MemberServiceImpl implements MemberService {
 		session.setAttribute("user", member); // 세션에 정보 저장
 		return 2; // 로그인 성공
 	}
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
 	
 	
 

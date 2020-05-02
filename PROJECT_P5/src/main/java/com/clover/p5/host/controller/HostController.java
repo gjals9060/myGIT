@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.clover.p5.entity.Member;
-import com.clover.p5.entity.NewHostDTO;
 import com.clover.p5.host.dto.HostInfoDTO;
+import com.clover.p5.host.dto.NewHostDTO;
 import com.clover.p5.host.dto.SearchInputDTO;
 import com.clover.p5.host.service.HostService;
 

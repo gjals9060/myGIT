@@ -16,9 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.clover.p5.entity.NewHostDTO;
 import com.clover.p5.host.dto.HostInfoDTO;
 import com.clover.p5.host.dto.HostPhotoDTO;
+import com.clover.p5.host.dto.NewHostDTO;
 import com.clover.p5.host.dto.SearchHostDTO;
 import com.clover.p5.host.dto.SearchInputDTO;
 import com.clover.p5.host.mapper.HostMapper;
@@ -218,7 +218,6 @@ public class HostServiceImpl implements HostService {
 			List<MultipartFile> photos = newHostDto.getPhoto();
 			// DB에 저장할 예약 차단일 정보
 			String blockingDate = newHostDto.getBlockingDate();
-			
 			
 		/***
 		** 저장할 사진 파일이 있으면 서버와 DB에 저장한다.

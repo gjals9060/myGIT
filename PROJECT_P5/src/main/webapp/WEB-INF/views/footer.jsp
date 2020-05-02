@@ -16,7 +16,7 @@
 			<div>호스트</div>
 			<div>뉴스룸</div>
 			<div>사이트맵</div>
-			<div><a href="host/registration/roomType">호스트등록</a></div>
+			<div>호스트등록</div>
 			<div>이벤트</div>
 			<div>도움말</div>
 		</div>

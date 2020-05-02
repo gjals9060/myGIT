@@ -75,26 +75,38 @@
 	
 
 		<div class="useradd-login-form">
-			<!--클릭시 로그인  modal pop-up -->
-			<button id="login-btn" class="btn">로그인</button>
-					 
-			<!--클릭시 회원가입 modal pop-up -->
-			<button id="useradd-btn" class="btn">회원가입</button>
+			<%
+			if(session.getAttribute("user") == null){
+			%>
+				<!--클릭시 로그인  modal pop-up -->
+				<button id="login-btn" class="btn">로그인</button>
+				<!--클릭시 회원가입 modal pop-up -->
+				<button id="useradd-btn" class="btn">회원가입</button>
+			<%
+			} else{
+			%>
+				<!-- 이름만 출력 -->
+				${user.firstName }
+				<button id='btnLogOut'>로그아웃</button>
+				<a href='host/registration/roomType'>호스트 등록</a>
+			<%
+			}
+			%>
 		</div>
 		
 		
 		
 		
 		
-	<!-- <div style="margin: 10px; text-align: center;grid-column-start: 1;grid-column-end: 4;">
+	<div style="margin: 10px; text-align: center;grid-column-start: 1;grid-column-end: 4;">
+		
+		<!-- 헤더에 있어서 절대경로로 -->
+		<a href="/p5/reservationList">리스트</a> 
+		<a href="/p5/userInfoUpdate">회원정보수정</a>
+		<a href="/p5/userInfoReservationList">예약 리스트</a>
+		<a href="/p5/hostReservationUpdate">숙소 수정</a>
 	
-		<a href="./reservation1">리스트</a> 
-		<a href="./userInfoUpdate">회원정보수정</a>
-		<a href="./userinfoReservationList">예약 리스트</a>
-		<a href="host/registration/roomType">숙소등록</a>
-		<a href="./hostReservationUpdate">숙소 수정</a>
-	
-	</div> -->
+	</div>
 	</header>
 	
 		<div id="modalLogin" class="modal">
@@ -106,21 +118,22 @@
 	         	<h1>로그인</h1>
 	         	<hr>
 	         	<br>
-	
+				<form action="" onsubmit="return userLogin()">
 	         	<div class="loginTitle">이메일</div>
 	         	<div class="loginInput">
-	            	<input type="text" class="user-login-input-value" id="userEmail" />
+	            	<input type="text" class="user-login-input-value" id="userEmail" name="userEmail" />
 	         	</div>
 	
 	         	<div class="loginTitle">비밀번호</div>
 	         	<div class="loginInput">
-	            	<input type="password" class="user-login-input-value" id="userPassword" />
+	            	<input type="password" class="user-login-input-value" id="userPassword" name="userPassword" />
 	         	</div>
 	         	<br />
 	         	<div class="loginCheck"></div>
 	
 		        <br> 
-		        <input type="button" value="로그인" id="userLoginBtn"/> 
+		        <input type="submit" value="로그인" />
+		        </form> 
 		        <br> 
 		        <input type="button" value="카카오톡으로 로그인하기" /> 
 		        <br> 
@@ -156,7 +169,7 @@
 	            
 	            <div class="formTitle">비밀번호 확인</div>
 	            <div class="formInput">
-	               <input type="password" class="input-value" id="inputPasswordCheck" name="userPasswordCheck" />
+	               <input type="password" class="input-value" id="inputPasswordCheck" name="passwordCheck" />
 	            </div>
 	            <div class="form-input-check" id="passwordReCheck" ></div>
 	            <br>
@@ -253,7 +266,7 @@ $(window).scroll(function () {
 	$('#scrollId').val(height);
 	
 	
-	if(height >80){
+	if(height >80){ // 스크롤의 위치가 80보다  클경우 
 		$('header').css({
 			"position":"fixed",
 			"box-shadow":"1px 1px 10px 0px #bbb",
@@ -261,7 +274,7 @@ $(window).scroll(function () {
 		});
 		
 		$('.title-logo-img ').css("height","80px");
-	}else{
+	}else{ /// 80보다 낮은 위치라면 
 		$("header").css({
 			"position": "static",
 			"box-shadow" : "0px 0px"
@@ -271,413 +284,164 @@ $(window).scroll(function () {
 	}
 	
 });
+
+
+
+
+
+
+
+
+
+
+
+//==========================================================================
+//======================= 회원가입, 로그인, 로그아웃 =============================
+//==========================================================================
+
 	
-
-
-//로그인 modal
-var modalLogin = $("#modalLogin");
-
-$("#login-btn").on("click", function() {
-modalLogin.css("display", "block");
-});
-
-
-// 회원가입 modal
-var modalUseradd = $("#modalUseradd");
-
-$("#useradd-btn").on("click", function() {
-modalUseradd.css("display", "block");
-});
-
-
-// 이메일 인증 modal
-var modalEmailCheck = $("#modalEmailCheck");
-
-
-/////////////////// 이메일 유효성 검사
-$(document).ready(function(){
-	$('#inputEmail').on('keyup',function(){
-		var email = $("#inputEmail").val();
-		var emailCheck = new RegExp
-		(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
-		
-
-		if(email != 0 ){
-			if(emailCheck.test(email)){
-				$('#idCheck').css({
-					"color": "blue"
-				});
-				$('#idCheck').html("통과");
-				
-			}else {
-				$('#idCheck').css({
-					"color": "red"
-				});
-				$('#idCheck').html("안돼");
-			}
-		}else{
-			$('#idCheck').empty();
-		}
-	});
-});
-
-
-/////////////////////////// 비밀번호 유효성
-$(document).ready(function(){
-	$('#inputPassword').on('keyup', function() {
-		var password = $('#inputPassword').val();
-		var passwordCheck = RegExp(/^[A-Za-z0-9~!@#$%^&*()_+|<>?:{}]{8,16}$/);
-		
-		if(password != 0){
-			if(passwordCheck.test(password)){
-				
-				$('#passwordCheck').css({
-					"color": "rgb(0,0,255)"
-				});
-				$('#passwordCheck').html('ㅇㅋㅇㅋ');
-				
-			}else {
-				
-				$('#passwordCheck').css({
-					"color": "rgb(255,0,0)"
-				});
-				$('#passwordCheck').html('안됌');
-				
-			}
-		} else {
-			
-			$('#passwordCheck').empty();
-			
-		}
-	});
-});
-
-/////////////////////////// 비밀번호 확인 유효성
-$(document).ready(function(){
-	$('#inputPasswordCheck').blur(function(){
-		var password = $('#inputPassword').val(); /// 비빌번호
-		var passwordReCheck = $('#inputPasswordCheck').val(); // 비밀번호 확인
-		
-		if(passwordReCheck != 0){ /// 빈값이 아니라면
-			if(password == passwordReCheck){
-				$('#passwordReCheck').css({
-					"color": "rgb(0,0,255)"
-				});
-				$('#passwordReCheck').html('ㅇㅋㅇㅋ');
-			}else {
-				$('#passwordReCheck').css({
-					"color": "rgb(255,0,0)"
-				});
-				$('#passwordReCheck').html('안됌');
-			}
-		}else {
-			$('#passwordReCheck').empty();
-		}
-	});
-});
-
-
-
-/////////////////////////// 이름
-$(function(){
-	$('#inputFirstName').on('keyup',function(){
-		var firstName = $('#inputFirstName').val();
-		var firstNameCheck =  RegExp(/^[가-힣A-Za-z]+$/); // 한글, 영문 대 소문자만 사용
-		
-		if(firstName != 0 ){
-			if(firstNameCheck.test(firstName)){
-				$('#firstNameCheck').css({
-					"color":"rgb(0,0,255)"
-				});
-				$('#firstNameCheck').html('ㅇㅋ');
-			}else{
-				$('#firstNameCheck').css({
-					"color":"rgb(255,0,0)"
-				});
-				$('#firstNameCheck').html('안됌');
-			}
-		}else{
-			$('#firstNameCheck').empty();
-		}
-	});
-});
-
-
-/////////////////////////// 성
-
-$(function(){
-	$('#inputLastName').on('keyup',function(){
-		var firstName = $('#inputLastName').val();
-		var firstNameCheck =  RegExp(/^[가-힣A-Za-z]+$/); // 한글, 영문 대 소문자만 사용
-		
-		if(firstName != 0 ){
-			if(firstNameCheck.test(firstName)){
-				$('#lastNameCheck').css({
-					"color":"rgb(0,0,255)"
-				});
-				$('#lastNameCheck').html('ㅇㅋ');
-			}else{
-				$('#lastNameCheck').css({
-					"color":"rgb(255,0,0)"
-				});
-				$('#lastNameCheck').html('안됌');
-			}
-		}else{
-			$('#lastNameCheck').empty();
-		}
-	});
-});
-
-
-
-/////////////////////////// 생년월일
-
-$(document).ready(function(){
-	$('#inputDate').change(function(){ //// 변경할 때마다 유효성 검사 
-		var inputDate = $('#inputDate').val();
-		var inputDateCheck = RegExp(/^\d{4}-?\d{2}-?\d{2}$/);
-		var by = parseInt(inputDate.substring(0,4));
-		
-		
-		if(inputDate != 0){ ///// inputDate가 0 이 아니라면,
-		
-			
-			if(inputDateCheck.test(inputDate)){ //// 정규식에 맞춰서 잘 되어 있다면
-				
-				if(by > 2001 || by < 1900){ // 미성년자는 안됌
-					$('#dateCheck').css({
-						"color":"rgb(255,0,0)"
-					});
-					$('#dateCheck').html("안돼");
-				}else{ /// 그렇지 않다면 
-					
-					$('#dateCheck').css({
-						"color":"rgb(0,0,255)"
-					});
-					$('#dateCheck').html("확인");
-				}
-				
-			}else { //// 정규식대로 되어있지 않다면
-				$('#dateCheck').css({
-					"color":"rgb(255,0,0)"
-				});
-				$('#dateCheck').html("안돼");
-			}
-			
-		}else{//// inputDate가 0이라면
-			$('#dateCheck').empty(); /// 경고문을 비움. ( 자리는 남아 있음.)
-		}
-	});
-});
-	
-
-/////////////////////////// 전화번호
-$(document).ready(function(){
-	$('#inputTel').blur(function(){
-		var inputTel = $('#inputTel').val();
-		var inputTelCheck = RegExp(/^01[016789]-?([0-9][0-9]{2,3})-?([0-9]{4})$/);
-		
-		if(inputTel != 0 ){ /////// 전화번호가 비어있지 않다면.
-			if(inputTelCheck.test(inputTel)){
-				$('#telCheck').css({
-					"color":"rgb(0,0,255)"
-				});
-				$('#telCheck').html("확인");
-			}else {
-				$('#telCheck').html("안돼");
-				$('#telCheck').css({
-					"color":"rgb(255,0,0)"
-				});
-				
-				
-				
-			}
-		}else { // 전화번호가 비어있다면.
-			$('#telCheck').empty();
-		}
-		
-	
-		/////// 정규 표현식을 통과했다면 -과 공백을 replace
-		var inputTelCheckValue = inputTel.replace(/\-/g, '');
-		$('#inputTel').val(inputTelCheckValue);
-	});
-});
-
-
-
-/// [다음] 클릭시 이벤트 // 유효성 검사를 하고 이상이 없다면 이메일 인증 modal로 넘어가기
-$("#btnSendEmail").on("click", function() {
-	
-/* 	
-데이터 확인	
-	//// 확인용
-	alert($('#inputEmail').val()+""+$('#inputPassword').val()
-			+$('#inputFirstName').val()+""+$('#inputLastName').val()+
-			""+$('#inputDate').val()+""+$("#inputTel").val()
-			); 
-*/
-	
-	/// 유효성 검사 조건문 - 변경해야함
-	if($(".form-input-check").css("color")==="rgb(0,0,255)"){
-		
-		var params = $('form[name="newMember"]').serialize();
-
-	   $.ajax({
-	      type : "POST",
-	      url : "ajax/emailAuthentication", // 요청보낼주소 
-	      data : params,
-	//      async : "false",
-	//      dataType: 'json', // json으로 받으려면 안됨
-	      success : function(data) {
-	    	  if(!data){ /// 인증번호 전송에 실패했을 때 
-	    		  alert("인증번호 전송에 실패했습니다..");
-	    	  } else{ // 인증번호 전송에 성공했을 때 
-	    		  alert(data); // 인증번호 확인
-	    		  $("#authenticationCode").val(data); /// 인증번호를 넣어야함
-	    		 
-	    		  /// 통신을 한 이후에 이메일 인증 modal을 띄움.
-	    		  modalUseradd.css("display", "none");
-	    		   modalEmailCheck.css("display", "block");
-	    		   $('#toEmail').text($('input[name="email"]').val()+"으로 인증번호가 전송되었습니다.");
-	    	  }	
-	      },
-	      error: function() {
-	          alert("통신 실패..");
-	      }
-	   }); // ajax-end
-
-	}else{ //////// 유효성 검사가 안됐을 때
-		
-		/////// 수정중..... 
-		var result =true;
-		
-		alert($('#idCheck').val());
-		alert("빈칸없이 작성해주세요");
-		
-		
-		if($("#idCheck").val()== "통과"){
-			result = true;
-		}else{
-			result = false;
-		}
-		
-		alert(result);
-	}
-
-
-});
-
-
-
-// 닫기 버튼
-var close = [ "login-close", "useradd-close", "email-check-close" ];
-
-for (var i = 0; i < close.length; i++) {
-document.getElementById(close[i]).onclick = function() {
-
-	   // 로그인 닫기 시에 input 태그 비우기
-   if (modalLogin.css("display") === "block") {
- 	  $('.user-login-input-value').val('');
- 	  $('.loginCheck').empty();
- 	  modalLogin.css("display", "none");
-
-   } else if (modalUseradd.css("display")==="block") {
-      modalUseradd.css("display", "none");
-      $("#idCheck").empty();
-      
-   } else if (modalEmailCheck.css("display")=="block") {
-      modalEmailCheck.css("display", "none");
-   }
+	//modal OFF
+function modalOff(){
+	$('#modalLogin').css("display", "none");
+	$('#modalUseradd').css("display", "none");
+	$('#modalEmailCheck').css("display", "none");
 }
+	// 로그인 modal ON	
+function logInModalOn(){
+	modalOff();
+	$('.user-login-input-value').val("");
+	$('.loginCheck').empty();
+	$('#modalLogin').css("display", "block");
+	$('#userEmail').focus();
+}
+	// 회원가입 modal ON
+function signUpModalOn(){
+	modalOff();
+	$('.input-value').val("");
+	$('#modalUseradd').css("display", "block");
+	$('#inputEmail').focus();
+}
+	// 이메일인증 modal ON
+function emailAuthenticationModalOn(){
+	modalOff();
+	$('#toEmail').text($('input[name="email"]').val()+"으로 인증번호가 전송되었습니다.");
+	$('#inputCode').val("");
+	$('#modalEmailCheck').css("display", "block");
+	$('#inputCode').focus();
 }
 
+	
+	
 
-//이메일 인증에서 뒤로가기
-
-var back = $("#emailCheckBack");
-
-var inputReset = $(".input-value");
-
-
-
-back.on("click", function() {
-inputReset.val("");
-
-modalEmailCheck.css("display", "none");
-modalUseradd.css("display","block");
+	// modal 닫기
+$('.close').on('click', modalOff);
+	// '로그인' 클릭
+$('#login-btn').on('click', logInModalOn);
+	// '이메일로 가입하기' 클릭
+$('#emailUserAdd').on('click', signUpModalOn);
+	// '회원가입' 클릭
+$('#useradd-btn').on('click', signUpModalOn);
+	// 회원가입 modal에서 '다음' 클릭
+$('#btnSendEmail').on('click', function(){
+	emailAuthenticationModalOn(); // 화면 전환
+	
+	var params = $('form[name="newMember"]').serialize();
+	
+    $.ajax({
+      type : "POST",
+      url : "ajax/emailAuthentication",
+      data : params,
+      success : function(data) {
+    	  if(!data){ /// 인증번호 전송에 실패했을 때 
+    		  alert("인증메일 발송에 실패했습니다.");
+    	  }else{ // 인증번호 전송에 성공했을 때 
+    		  $("#authenticationCode").val(data); /// 인증번호 적용
+    	  }
+      },
+      error: function() {
+          alert("통신 실패..");
+      }
+   }); // ajax-end
+});
+	
+	
+	
+	// 이메일 인증에서 뒤로가기
+$('#emailCheckBack').on('click', function(){
+	modalOff();
+		// 비밀번호 관련 input만 초기화
+	$('#inputPassword').val("");
+	$('#inputPasswordCheck').val("");
+	$('#modalUseradd').css("display","block");
+	$('#inputPassword').focus();
 });
 
 
-//// 재요청 
-
-$("#rerequest").on("click", function() {
- /// 재요청시 
- $.ajax({
-    type: "POST",
-    url: "ajax/rerequest",
-    success:function(data){
- 	   if(!data){
- 		   alert("인증번호 재전송에 실패했습니다..");
- 	   } else{
- 		   alert(data); // 인증번호 확인
- 		   $("#authenticationCode").val(data); // 인증번호 값
- 	   }
-    },
-    error: function() {
-         alert("통신 실패..");
-    }
+	
+	// 인증메일 재요청
+$("#rerequest").on("click", function(){
+	$("#authenticationCode").val(""); // 인증번호 값을 초기화
+	alert("인증번호를 재전송했습니다. 이전 번호는 사용 못함");
+	
+	$.ajax({
+	    type: "POST",
+	    url: "ajax/rerequest",
+	    success:function(data){
+	 	   if(!data){
+	 		   alert("인증메일 재발송에 실패했습니다.");
+	 	   } else{
+	 		   $("#authenticationCode").val(data); // 새로운 인증번호 값 적용
+	 	   }
+	    },
+	    error: function() {
+	         alert("통신 실패..");
+	    }
+	});
 });
- alert("인증번호를 재전송했습니다. 이전 번호는 사용 못함");
-});
 
 
-///// 완료 ( 회원가입)
-$("#completeSignUp").on("click", function() {
+	// '(회원가입)완료' 클릭
+$("#completeSignUp").on("click", function(){
 	var params = {
 		authenticationCode : $('#authenticationCode').val(), // 인증번호(해시)
 		inputCode : $('#inputCode').val().trim() // 입력값
-	}
-//	alert($('#authenticationCode').val());
-//	alert($('#inputCode').val().trim());
- $.ajax({
-    type: "POST",
-    url: "ajax/completeSignUp",
-    data: params,
-    dataType: 'json',
-    success:function(data){
- 	   if(data){ // 일치하면 DB에 저장하고 성공
- 		   alert("회원가입 완료.");
- 	   
- 	   	// 회원가입 완료 이후, 페이지 새로고침으로 처리하여 다시 로그인하도록 처리.
- 	   		location.reload(true); 
- 	   
- 	   ////////////////////////////
- 	   
- 	   } else{ // 일치하지 않으면 DB에 저장 안함
- 		   alert("인증번호가 일치하지 않습니다.")
- 	   }
-    },
-    error: function() {
-         alert("통신 실패..");
-    }
-});
+	};
+	
+	$.ajax({
+	   type: "POST",
+	   url: "ajax/completeSignUp",
+	   data: params,
+	   success:function(result){
+			 if(result == 0){ // 인증번호 불일치
+					alert("인증번호가 일치하지 않습니다.");
+			} else if(result == 1){ // 인증번호 일치 , DB에 저장 성공
+					alert("회원가입을 완료했습니다.");
+					logInModalOn(); // 로그인 modal 전환
+			} else if(result == 2){ // 인증번호 일치, DB에 저장 실패
+					alert("회원가입을 정상적으로 완료하지 못했습니다.");
+			}
+	   },
+	   error: function() {
+	        alert("통신 실패..");
+	   }
+	});
 });
 
 
-/// login 버튼
-$('#userLoginBtn').on('click', function(){
+	// 로그인 시도
+function userLogin() {
 	var params = {
 		userEmail : $('#userEmail').val(),
 		userPassword : $('#userPassword').val()
-	}
+	};
 	
-	$.ajax({
+	 $.ajax({
 		type : "POST",
 		url : "ajax/logIn",
 		data : params,
+		async : false,
 		success : function(result){
-			if(result == 0){
-				// 이후 로직
+			if(result == 0){ // 존재하지 않는 ID
 				
 				$('.loginCheck').empty();
 				
@@ -686,14 +450,13 @@ $('#userLoginBtn').on('click', function(){
 				});
 				
 				$('.loginCheck').append(
-					'아이디가 존재하지 않습니다.'		
+					'아이디가 존재하지 않습니다.'
 				);
 				
 				
 				
-			} else if(result == 1){
-				alert("비밀번호 불일치");
-				// 이후 로직
+			} else if(result == 1){ // 비밀번호 불일치
+				
 				$('.loginCheck').empty();
 				
 				$('.loginCheck').css({
@@ -705,54 +468,54 @@ $('#userLoginBtn').on('click', function(){
 				);
 									
 				
-			} else if(result == 2){
+			} else if(result == 2){ // 로그인 성공
 				alert("로그인 성공");
-				location.reload(true); // 페이지 새로고침
-				// 이후 로직
+				location.reload();
 				
-				//// 로그인 버튼을 remove, 회원정보와 호스트 등록을 가져옴.
+			 	/* //// 로그인 버튼을 remove, 회원정보와 호스트 등록을 가져옴.
 				/// div 내부를 지우고 
 				$(".useradd-login-form").empty();
-				/// div 다시 채워넣기
+				/// div 에 로그아웃 append
 				$(".useradd-login-form").append(
-					"${user.firstName }"+" ${user.lastName }"+
-					"<button id='btnLogOut'>로그아웃</button>"+
+					"${user.firstName }" +
+					"<button id='btnLogOut'>로그아웃</button>" +
 					"<a href='host/registration/roomType'>호스트 등록</a>"
 				);
-				
+				// 로그인 modal 닫기
+				modalLogin.css("display", "none"); */
 			}
 		},
 		error : function(){
 			alert("통신 실패..");
 		}
 	});
-});
+	 
+	return false; //submit은 동작하지 않게
+}
 
 //// 카카오톡으로 가입하기 버튼을 눌렀을 때 처리.
 
 
-//// 이메일로 가입하기 버튼을 눌렀을 때 회원가입 modal을 띄움
-$('#emailUserAdd').on('click', function() {
-	
-	
-	// 로그인 modal을 none, 회원가입 modal은 block.
-	///// 로그인 input 지우고 
-	$('.user-login-input-value').val('');
-	////////// 경고 div 비우고		
-	$('.loginCheck').empty();
-	modalLogin.css("display", "none");
-	modalUseradd.css("display","block");
-})
 
 
-//// 로그아웃 버튼
+
+	// '로그아웃' 클릭
 $('#btnLogOut').on('click', function(){
 	$.ajax({
 		type : "POST",
 		url : "ajax/logOut",
 		success : function(){
 			alert("로그아웃 했다");
-			location.reload(true); // 페이지 새로고침
+			location.reload(); // 페이지 새로 고침
+			
+/* 			// 헤더에 로그아웃 결과 반영
+			$(".useradd-login-form").empty();
+			$(".useradd-login-form").append(
+				<!--클릭시 로그인  modal pop-up -->
+				'<button id="login-btn" class="btn">로그인</button>' +
+				<!--클릭시 회원가입 modal pop-up -->
+				'<button id="useradd-btn" class="btn">회원가입</button>'
+			); */
 		},	
 		error : function(){
 			alert("통신 실패..");
@@ -761,6 +524,246 @@ $('#btnLogOut').on('click', function(){
 });
 
 
+
+/* for (var i = 0; i < close.length; i++) {
+document.getElementById(close[i]).onclick = function() {
+
+	   if (modalLogin.css("display") === "block") {
+	 	  modalLogin.css("display", "none");
+	
+	   } else if (modalUseradd.css("display")==="block") {
+	      modalUseradd.css("display", "none");
+	      
+	   } else if (modalEmailCheck.css("display")=="block") {
+	      modalEmailCheck.css("display", "none");
+	   }
+	}
+} */
+
+
+/* 
+/////////////////// 이메일 유효성 검사
+$(document).ready(function(){
+$('#inputEmail').on('keyup',function(){
+var email = $("#inputEmail").val();
+var emailCheck = new RegExp
+(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+
+
+if(email != 0 ){
+if(emailCheck.test(email)){
+$('#idCheck').css({
+	"color": "blue"
+});
+$('#idCheck').html("통과");
+
+}else {
+$('#idCheck').css({
+	"color": "red"
+});
+$('#idCheck').html("안돼");
+}
+}else{
+$('#idCheck').empty();
+}
+});
+});
+
+*/
+
+
+/* 
+/////////////////////////// 비밀번호 유효성
+$(document).ready(function(){
+$('#inputPassword').on('keyup', function() {
+var password = $('#inputPassword').val();
+var passwordCheck = RegExp(/^[A-Za-z0-9~!@#$%^&*()_+|<>?:{}]{8,16}$/);
+
+if(password != 0){
+if(passwordCheck.test(password)){
+
+$('#passwordCheck').css({
+	"color": "rgb(0,0,255)"
+});
+$('#passwordCheck').html('ㅇㅋㅇㅋ');
+
+}else {
+
+$('#passwordCheck').css({
+	"color": "rgb(255,0,0)"
+});
+$('#passwordCheck').html('안됌');
+
+}
+} else {
+
+$('#passwordCheck').empty();
+
+}
+});
+});
+
+*/
+
+/* /////////////////////////// 비밀번호 확인 유효성
+$(document).ready(function(){
+$('#inputPasswordCheck').blur(function(){
+var password = $('#inputPassword').val(); /// 비빌번호
+var passwordReCheck = $('#inputPasswordCheck').val(); // 비밀번호 확인
+
+if(passwordReCheck != 0){ /// 빈값이 아니라면
+if(password == passwordReCheck){
+$('#passwordReCheck').css({
+	"color": "rgb(0,0,255)"
+});
+$('#passwordReCheck').html('ㅇㅋㅇㅋ');
+}else {
+$('#passwordReCheck').css({
+	"color": "rgb(255,0,0)"
+});
+$('#passwordReCheck').html('안됌');
+}
+}else {
+$('#passwordReCheck').empty();
+}
+});
+});
+
+*/
+
+/* 
+/////////////////////////// 이름
+$(function(){
+$('#inputFirstName').on('keyup',function(){
+var firstName = $('#inputFirstName').val();
+var firstNameCheck =  RegExp(/^[가-힣A-Za-z]+$/); // 한글, 영문 대 소문자만 사용
+
+if(firstName != 0 ){
+if(firstNameCheck.test(firstName)){
+$('#firstNameCheck').css({
+	"color":"rgb(0,0,255)"
+});
+$('#firstNameCheck').html('ㅇㅋ');
+}else{
+$('#firstNameCheck').css({
+	"color":"rgb(255,0,0)"
+});
+$('#firstNameCheck').html('안됌');
+}
+}else{
+$('#firstNameCheck').empty();
+}
+});
+});
+
+*/
+
+/* 
+/////////////////////////// 성
+
+$(function(){
+$('#inputLastName').on('keyup',function(){
+var firstName = $('#inputLastName').val();
+var firstNameCheck =  RegExp(/^[가-힣A-Za-z]+$/); // 한글, 영문 대 소문자만 사용
+
+if(firstName != 0 ){
+if(firstNameCheck.test(firstName)){
+$('#lastNameCheck').css({
+	"color":"rgb(0,0,255)"
+});
+$('#lastNameCheck').html('ㅇㅋ');
+}else{
+$('#lastNameCheck').css({
+	"color":"rgb(255,0,0)"
+});
+$('#lastNameCheck').html('안됌');
+}
+}else{
+$('#lastNameCheck').empty();
+}
+});
+});
+
+*/
+
+/* 
+/////////////////////////// 생년월일
+
+$(document).ready(function(){
+$('#inputDate').change(function(){ //// 변경할 때마다 유효성 검사 
+var inputDate = $('#inputDate').val();
+var inputDateCheck = RegExp(/^\d{4}-?\d{2}-?\d{2}$/);
+var by = parseInt(inputDate.substring(0,4));
+
+
+if(inputDate != 0){ ///// inputDate가 0 이 아니라면,
+
+
+if(inputDateCheck.test(inputDate)){ //// 정규식에 맞춰서 잘 되어 있다면
+
+if(by > 2001 || by < 1900){ // 미성년자는 안됌
+	$('#dateCheck').css({
+		"color":"rgb(255,0,0)"
+	});
+	$('#dateCheck').html("안돼");
+}else{ /// 그렇지 않다면 
+	
+	$('#dateCheck').css({
+		"color":"rgb(0,0,255)"
+	});
+	$('#dateCheck').html("확인");
+}
+
+}else { //// 정규식대로 되어있지 않다면
+$('#dateCheck').css({
+	"color":"rgb(255,0,0)"
+});
+$('#dateCheck').html("안돼");
+}
+
+}else{//// inputDate가 0이라면
+$('#dateCheck').empty(); /// 경고문을 비움. ( 자리는 남아 있음.)
+}
+});
+});
+
+*/
+
+/* 
+/////////////////////////// 전화번호
+$(document).ready(function(){
+$('#inputTel').blur(function(){
+var inputTel = $('#inputTel').val();
+var inputTelCheck = RegExp(/^01[016789]-?([0-9][0-9]{2,3})-?([0-9]{4})$/);
+
+if(inputTel != 0 ){ /////// 전화번호가 비어있지 않다면.
+if(inputTelCheck.test(inputTel)){
+$('#telCheck').css({
+	"color":"rgb(0,0,255)"
+});
+$('#telCheck').html("확인");
+}else {
+$('#telCheck').html("안돼");
+$('#telCheck').css({
+	"color":"rgb(255,0,0)"
+});
+
+
+
+}
+}else { // 전화번호가 비어있다면.
+$('#telCheck').empty();
+}
+
+
+/////// 정규 표현식을 통과했다면 -과 공백을 replace
+var inputTelCheckValue = inputTel.replace(/\-/g, '');
+$('#inputTel').val(inputTelCheckValue);
+});
+});
+
+
+*/
 </script>
 
 </html>
