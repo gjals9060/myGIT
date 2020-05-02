@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 <!-- services와 clusterer, drawing 라이브러리 불러오기 -->
 <script type="text/javascript"
-   src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c9d8461122e464c2883b7e5ce3c5eedf&libraries=services,clusterer,drawing"></script>
+   src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6252091adcb28726fdb95ebdf0b78361&libraries=services"></script>
 
 </head>
 <body>
