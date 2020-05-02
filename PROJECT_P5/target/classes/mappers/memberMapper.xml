@@ -15,7 +15,6 @@
 			#{lastName},
 			#{birthDate},
 			#{mobilePhone},
-			'N',
 			TO_DATE(#{registrationDate}, 'YYYY-MM-DD HH24:MI:SS'),
 			NULL
 																	)

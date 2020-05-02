@@ -255,7 +255,7 @@ public class HostServiceImpl implements HostService {
 		return false;
 	}
 	
-	// start - 이미지 업로드 수정 by 허민
+	/////////////////////// start - 이미지 업로드 수정 by 허민
 	@Override
 	public boolean insertHostPhoto(int hostId, List<MultipartFile> photos, HttpServletRequest request) {
 		
@@ -328,7 +328,7 @@ public class HostServiceImpl implements HostService {
     		(photos.size() + "개의 업로드 파일을 성공적으로 서버와 DB에 저장했습니다.");
 	    return true; // 문제 없이 모든 수행이 끝났으면 true를 반환.
 	}
-	// end - 이미지 업로드 수정 by 허민
+	/////////////////////// end - 이미지 업로드 수정 by 허민
 	
 	
 //	@Override
