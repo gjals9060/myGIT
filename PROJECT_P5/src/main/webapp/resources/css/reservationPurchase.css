@@ -1,0 +1,77 @@
+@charset "UTF-8";
+#wrap{
+	position:relative;
+	width:1100px;
+	left:20%;
+}
+#payment-window{
+	border: 1px solid #ed2d55;
+    border-radius: 15px;
+    width: 700px;
+    height: 400px;
+	
+}
+.contents{
+	margin-left:30px;
+}
+#payment-window img{
+	float:right;
+    margin-right: 100px;
+    width: 150px;
+    height: 150px;
+	}
+.personnel{
+margin-top:70px;
+}
+.date{
+margin-top:40px;
+}
+
+.price-calculation{
+margin-top:40px;
+display:iline;
+}
+.price{
+	display:inline;
+	margin-left: 300px;
+}
+hr{
+	border-color: #ed2d55;
+	width:450px;
+margin-left:0px;
+}
+.total-text{
+	display:inline;
+}
+.total-price{
+		display:inline;
+	margin-left: 336px;
+}
+.pay-text{
+	margin-top: 40px;
+}
+.kakaopay{
+	display:inline;
+	margin-left: 200px;
+
+}
+a{
+		float: right;
+		margin-right:750px;
+}
+/*태블릿버전  */
+@media (max-width: 768px){
+	#wrap{
+	margin: 0;
+	left:0;
+}
+
+}
+/*태블릿버전  */
+@media (max-width: 480px){
+	#wrap{
+	margin: 0;
+	left:0;
+}
+
+}

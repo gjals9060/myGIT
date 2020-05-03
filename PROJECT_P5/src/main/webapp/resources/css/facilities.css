@@ -1,0 +1,138 @@
+@charset "UTF-8";
+#wrap{
+	position: relative;
+	left:25%;
+}
+
+h1 {
+	margin-bottom: 10px;
+}
+/*진행바  */
+progress {
+	width: 100%;
+	-webkit-appearance: none;
+	border: 1px solid;
+	border-radius: 100px;
+	background: white;
+}
+
+progress::-webkit-progress-bar-value {
+	-webkit-appearance: none;
+	background: orangered;
+}
+
+progress {
+	color: lightblue;
+}
+
+progress::-webkit-progress-value {
+	background: white;
+}
+
+progress::-moz-progress-bar {
+	background: lightcolor;
+}
+
+progress::-webkit-progress-value {
+	background: #008489;
+	border-radius: 100px;
+}
+
+progress::-webkit-progress-bar {
+	background: white;
+}
+/*기본 체크박스 없애기*/
+input[type="checkbox"] {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	border: 0
+}
+
+input[type="checkbox"]+label:before {
+	content: '';
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	line-height: 20px;
+	margin: -2px 8px 0 0;
+	text-align: center;
+	vertical-align: middle;
+	background: #fafafa;
+	border: 1px solid #cacece;
+	border-radius: 3px;
+	box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px
+		rgba(0, 0, 0, 0.05);
+}
+
+input[type="checkbox"]+label:active:before, input[type="checkbox"]:checked+label:active:before
+	{
+	box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05), inset 0px 1px 3px
+		rgba(0, 0, 0, 0.01);
+}
+
+input[type="checkbox"]:checked+label:before {
+	content: '\2713';
+	color: white;
+	text-shadow: 1px 1px white;
+	background: #008489;
+	border-color: #adb8c0;
+	box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px
+		rgba(0, 0, 0, 0.05);
+}
+.available-facilities{
+	margin-top: 70px;
+}
+input[type="submit"]{
+	background-color: #008489;
+    border-color: #008489;
+    color: white;
+    height: 50px;
+    width: 100px;
+    border-radius: 20%;
+    position: relative;
+    left: 700px;
+}
+.text{
+	color: #767676;
+}
+/*태블릿  */
+@media (max-width: 768px){
+	#wrap{
+	width:768px;
+	left:0;
+}
+input[type="submit"] {
+    background-color: #008489;
+    border-color: #008489;
+    color: white;
+    height: 50px;
+    width: 100px;
+    border-radius: 20%;
+    position: relative;
+    left: 600px;
+}
+}
+/*모바일  */
+@media ( max-width : 450px) {
+ #wrap{
+	left: 0%;
+	}
+	input[type="submit"] {
+ left: 300px;
+	}
+}
+/* 	#sample5_address {
+		width: 250px;
+		height: 50px;
+	}
+	input[type="submit"] {
+    margin-top: 50px;
+    position: relative;
+       left: 180px;
+}  */
+}

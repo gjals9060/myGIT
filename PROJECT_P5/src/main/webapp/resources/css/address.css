@@ -1,0 +1,84 @@
+@charset "UTF-8";
+
+#wrap {
+	margin-top: 30px;
+	position: relative;
+	left: 25%;
+}
+/*주소 입력창  */
+#sample5_address {
+	width: 300px;
+	height: 60px;
+}
+
+input[type="button"],  button {
+	background-color: #008489;
+	color: white;
+	height: 60px;
+	width: 100px;
+}
+
+input[type="submit"] {
+	margin-top: 50px;
+	position: relative;
+	left: 310px;
+	background-color: #008489;
+    border-color: #008489;
+    color: white;
+    height: 50px;
+    width: 100px;
+    border-radius: 20%;
+}
+
+/*진행바  */
+progress {
+	width: 100%;
+	-webkit-appearance: none;
+	border: 1px solid;
+	border-radius: 100px;
+	background: white;
+}
+
+progress::-webkit-progress-bar-value {
+	-webkit-appearance: none;
+	background: orangered;
+}
+
+progress {
+	color: lightblue;
+}
+
+progress::-webkit-progress-value {
+	background: white;
+}
+
+progress::-moz-progress-bar {
+	background: lightcolor;
+}
+
+progress::-webkit-progress-value {
+	background: #008489;
+	border-radius: 100px;
+	/*   transition: width 0.5s;
+   -webkit-transition: width 0.5s; */
+	
+}
+
+progress::-webkit-progress-bar {
+	background: white;
+}
+/*모바일  */
+@media ( max-width : 450px) {
+	#wrap{
+	left: 0%;
+	}
+	#sample5_address {
+		width: 250px;
+		height: 50px;
+	}
+	input[type="submit"] {
+    margin-top: 50px;
+    position: relative;
+       left: 180px;
+}
+}

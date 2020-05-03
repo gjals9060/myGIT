@@ -1,0 +1,111 @@
+@charset "UTF-8";
+#wrap{
+	width:1100px;
+	position: relative;
+	left:20%;
+}
+/*진행바  */
+progress {
+	width: 100%;
+	-webkit-appearance: none;
+	border: 1px solid;
+	border-radius: 100px;
+	background: white;
+}
+
+progress::-webkit-progress-bar-value {
+	-webkit-appearance: none;
+	background: orangered;
+}
+
+progress {
+	color: lightblue;
+}
+
+progress::-webkit-progress-value {
+	background: white;
+}
+
+progress::-moz-progress-bar {
+	background: lightcolor;
+}
+
+progress::-webkit-progress-value {
+	background: #008489;
+	border-radius: 100px;
+	/*   transition: width 0.5s;
+   -webkit-transition: width 0.5s; */
+	
+}
+
+progress::-webkit-progress-bar {
+	background: white;
+}
+
+input[type="submit"] {
+	margin-top: 50px;
+	position: relative;
+	left: 310px;
+	background-color: #008489;
+    border-color: #008489;
+    color: white;
+    height: 50px;
+    width: 100px;
+    border-radius: 20%;
+}
+input[type="number"]{
+	border:0px;
+
+	text-align: center;
+}
+//증가 감소 버튼
+/*버튼*/
+#maximum-increase-quantity, #count-increase-quantity,
+	#bed-increase-quantity, #bathroom-increase-quantity {
+	background: url(../img/plus.png) no-repeat;
+	border: none;
+	width: 32px;
+	height: 32px;
+	cursor: pointer;
+	position: relative;
+}
+
+#maximum-decrease-quantity, #count-decrease-quantity,
+	#bed-decrease-quantity, #bathroom-decrease-quantity {
+	background: url( "../img/minus.png" ) no-repeat;
+	border: none;
+	width: 32px;
+	height: 32px;
+	cursor: pointer;
+	position: relative;
+	left: -150px;
+	margin-top: 20px;
+}
+#minium-warning {
+    display: block;
+    color: red;
+   
+  
+    background-width: 100px;
+    width: 311px;
+}
+/*태블릿버전  */
+@media (max-width: 768px){
+	#wrap{
+	margin: 0;
+	left:0;
+}
+input[type="submit"] {
+    position: relative;
+    left: 10px;
+    background-color: #008489;
+    border-color: #008489;
+    color: white;
+    height: 50px;
+    width: 80px;
+    border-radius: 20%;
+    padding: 20px;
+    top: 50px;
+}
+
+}

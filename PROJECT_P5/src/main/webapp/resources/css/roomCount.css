@@ -1,0 +1,115 @@
+@charset "UTF-8";
+
+#wrap {
+	position: relative;
+	margin-left: 35%;
+}
+/*진행바  */
+progress {
+	width: 100%;
+	-webkit-appearance: none;
+	border: 1px solid;
+	border-radius: 100px;
+	background: white;
+}
+
+progress::-webkit-progress-bar-value {
+	-webkit-appearance: none;
+	background: orangered;
+}
+
+progress {
+	color: lightblue;
+}
+
+progress::-webkit-progress-value {
+	background: white;
+}
+
+progress::-moz-progress-bar {
+	background: lightcolor;
+}
+
+progress::-webkit-progress-value {
+	background: #008489;
+	border-radius: 100px;
+}
+
+progress::-webkit-progress-bar {
+	background: white;
+}
+/*버튼*/
+#maximum-increase-quantity, #count-increase-quantity,
+	#bed-increase-quantity, #bathroom-increase-quantity {
+	background: url(../img/plus.png) no-repeat;
+	border: none;
+	width: 32px;
+	height: 32px;
+	cursor: pointer;
+	position: relative;
+}
+
+#maximum-decrease-quantity, #count-decrease-quantity,
+	#bed-decrease-quantity, #bathroom-decrease-quantity {
+	background: url( "../img/minus.png" ) no-repeat;
+	border: none;
+	width: 32px;
+	height: 32px;
+	cursor: pointer;
+	position: relative;
+	left: -150px;
+	margin-top: 20px;
+}
+
+}
+/*input값  */
+input {
+	border: 0;
+	background: white;
+}
+
+input[type="text"] {
+	width: 150px;
+	position: relative;
+	left: 110px;
+	top: -10px;
+	border: 0;
+	background-color: white;
+}
+
+form {
+	margin-top: 50px;
+	color: #767676;
+}
+
+input[type="submit"] {
+	position: relative;
+	left: 10px;
+	background-color: #008489;
+	border-color: #008489;
+	color: white;
+	height: 50px;
+	width: 100px;
+	border-radius: 20%;
+	padding: 20px;
+	top: 50px;
+}
+/*모바일버전  */
+@media (max-width: 450px){
+	#wrap{
+	margin: 0;
+}
+input[type="submit"] {
+    position: relative;
+    left: 10px;
+    background-color: #008489;
+    border-color: #008489;
+    color: white;
+    height: 50px;
+    width: 80px;
+    border-radius: 20%;
+    padding: 20px;
+    top: 50px;
+}
+
+}
