@@ -17,12 +17,32 @@
 #wrap {
    width: 100%;
    max-width: 1100px;
-   margin: 0 auto;
+   margin: 10px auto;
+}
+
+hr {
+	margin: 20px 0 20px;
+}
+
+button {
+	border: none;
 }
 
 input {
 	vertical-align: middle;
 	text-align: center;
+	width: 100%;
+}
+
+input[type=submit] {
+	border: none;
+	width: 100%;
+	background: #ed2d55;
+    color: white;
+    font-size: 18px;
+    font-weight: bolder;
+    padding: 5px;
+    margin: 10px 0 0 0;
 }
 
 /* modalImgSlide */
@@ -32,7 +52,6 @@ input {
    background: rgb(0, 0, 0, 0.8);
    position: fixed;
    z-index: 1;
-   padding-top: 10%;
    left: 0;
    top: 0;
    width: 100%;
@@ -51,17 +70,18 @@ input {
    text-align: center;
 }
 
-.modalImg img {
-   max-width: 1100px;
-   height: 700px;
-}
-
 .postImg img, .modalImg img {
    max-width: 900px;
-   height: 500px;
+   height: 400px;
    cursor: pointer;
    transition: 0.3s;
    cursor: pointer;
+   padding-top: 0.5%;
+}
+
+.modalImg img {
+   max-width: 1100px;
+   height: 600px;
 }
 
 .postImg:hover {
@@ -101,13 +121,18 @@ input {
 .postImgNumber, .modalImgNumber {
    font-size: 12px;
    top: 0px;
+   padding-top: 0.5%;
 }
 
 .postImgThumbnails, .modalImgThumbnails {
    width: 100%;
    min-width: 500px;
-   max-width: 900px;
    margin: 0 auto;
+}
+
+.postImgThumbnails, .modalImgThumbnails {
+	width: 90%;
+	margin: 0 auto;
 }
 
 .postImgThumbnails:after, .modalImgThumbnails:after {
@@ -139,6 +164,8 @@ input {
 .postContentTable td:first-child {
    width: 75%;
    min-width: 500px;
+   font-size: 95%;
+   line-height: normal;
 }
 
 .postContent td:nth-child(2) {
@@ -146,12 +173,14 @@ input {
 }
 
 .contentTitle {
-   font-size: 25px;
+   font-size: 28px;
    font-weight: bolder;
 }
 
 .Title {
-   font-size: 20px;
+   font-size: 19px;
+   margin: 0px 0px 25px 0px;
+   font-weight: bolder;
 }
 
 .contentIntro table td:first-child {
@@ -243,16 +272,27 @@ input {
 
 .contentReserv {
    border: 1px solid black;
-   padding: 10%;
-   margin: 5%;
+   padding: 8%;
+   margin: 0 10% 0;
    position: sticky;
+   top: 10%;
    bottom: 30%;
    left: 65%;
    text-align: center;
 }
 
+.contentReservTitle {
+    font-size: 17px;
+    margin: 15px 0 10px;
+    font-weight: bolder;
+}
+
 .personnel_input {
-   width: 50%;
+   width: 45%;
+}
+
+#dateCount {
+	margin: 20px 0 10px;
 }
 
 /* 지도 */
@@ -262,17 +302,15 @@ input {
 	margin-top: 10px;
 	z-index: 3;
 	text-align: center;
+	margin: 0 auto;
+	margin-bottom: 30px;
 }
 
 </style>
 
-
-
 </head>
 <body>
-
    <div id="wrap">
-
       <div class="postImgSlide">
          <!-- 사진 데이터 입력 시 반목문으로  >  .postImgSlide[0] 아래로 append
          <div class="postImg">
@@ -280,9 +318,8 @@ input {
             <img src="이미지 링크" onclick="modalOn()">
          </div>
          -->
-         
+
          <!-- start 호스트포토 리스트 출력 작업 by 허민 -->
-         
          <c:forEach var="photo" items="${hostPhoto}" varStatus="status">
 			<div class="postImg">
             	<div class="postImgNumber">${status.count} / ${fn:length(hostPhoto)}</div>
@@ -413,17 +450,15 @@ input {
                      <table>
                         <tr>
                            <td><div class="contentTitle">${host.name}</div></td>
-                           <td rowspan="2"><div class="contentProfile">
-                                 <!-- 프로필 사진 경로 넣기 -->
-                                 <img src="img/room1.jpg" alt="" />
-                              </div> <br>${host.firstName } 님</td>
+                           <td><span class="contentProfile"><img src="img/room1.jpg" alt="" /></span></td>
                         </tr>
                         <tr>
-                           <td colspan="2">작성일 ${host.creationDate } |
+                           <td>작성일 ${host.creationDate } |
                               수정일${host.modificationDate }</td>
+                              <td>${host.firstName } 님</td>
                         </tr>
                         <tr>
-                           <td><div class="contentLocation">${host.address }</div></td>
+                           <td colspan="2"><span class="contentLocation">${host.address }</span></td>
                         </tr>
                         <tr>
                            <td colspan="2">${host.type }${host.roomType }| 인원
@@ -519,33 +554,27 @@ input {
                   <div class="contentReserv">
                   	  <form action="reservationPurchase" method="post">
 		                  <div class="contentReservTitle">예약</div>
-		                  ${host.price}/1박<br>
-		                  <br>
+		                  ${host.price}/1박
 		                  <div class="contentReservTitle">날짜</div>
 		                  <input type="text" id="checkDate" name="checkInDatecheckOutDate"
-		                     value="${checkInDatecheckOutDate}" onchange="countDate()" /><br>
-		                  <br>
+		                     value="${checkInDatecheckOutDate}" onchange="countDate()" />
 		                  <div class="contentReservTitle">인원</div>
 		                  <input type='text' name='personnel' class="personnel_input" value="${capacity}">
 		                  <!-- ${capacity}는 검색할때의 인원 설정 조건임, ${host.capacity} 와 다름 -->
 		                  <button id="increaseQuantity">▲</button>
 		                  <button id="decreaseQuantity">▼</button>
-		                  <br><br>
 		                  <div id="dateCount"></div>
-		                  <br>
 		                  <input type="hidden" id="hostId" name="hostId" value="${host.id}">
 		                  <input type="hidden" id="userId" name="userId" value="${user.id}">
 		                  <input type="hidden" id="hostName" name="hostName" value="${host.name}">
 		                  <input type="hidden" id="hostPrice" name="hostPrice" value="${host.price}">
 		                  <input type="hidden" id="dateCnt" name="dateCnt" value="">
-		                  
 		                  <input type="submit" value="예약하기" />
 	                  </form>
                   </div>
                </td>
             </tr>
          </table>
-
          <div class="contentReview">
             <div class="contentReview Title">후기</div>
             <div class="contentReviewStar">★ 4.5 (21)</div>
@@ -567,10 +596,7 @@ input {
             </table>
  -->
             <table class="contentReviewList" id="reviewList">
-               <tr>
-                  <td></td>
-                  <td></td>
-               </tr>
+               <tr></tr>
 <!--                <tr>
                   <td><img src="img/rose.jpg" alt="" /><br>가나다</td>
                   <td>★★★★★<br>숙소가 굉장히 좋아요! 주변에 관광지도 많고 무엇보다 Host분이 굉장히
@@ -586,7 +612,6 @@ input {
             <input type="button" value="더보기" onclick="commentMore()" />
          </div>
          <!-- contentReview end -->
-
          <hr>
          <div class="contentRefund">
             <div class="contentRefund Title">환불정책</div>
@@ -896,7 +921,7 @@ input {
          var capacity
          num++;
          
-         if(num > ${host.capacity}){
+         if(num > ${host.capacity }){
         	 alert("host의 최대 수용 인원 보다 많습니다.");
         	 num--;
          }
