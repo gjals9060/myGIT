@@ -20,6 +20,11 @@
    margin: 0 auto;
 }
 
+input {
+	vertical-align: middle;
+	text-align: center;
+}
+
 /* modalImgSlide */
 .modalImgSlide {
    display: none;
@@ -130,10 +135,7 @@
 .postContent {
    min-width: 320px;
 }
-/* 
-.postContent table {
-   width: -webkit-fill-available;
-} */
+
 .postContentTable td:first-child {
    width: 75%;
    min-width: 500px;
@@ -150,7 +152,6 @@
 
 .Title {
    font-size: 20px;
-   margin: 10px 0px;
 }
 
 .contentIntro table td:first-child {
@@ -169,7 +170,7 @@
 }
 
 .contentReview {
-word-break: break-all;
+	word-break: break-all;
 }
 
 .contentReview table td {
@@ -215,23 +216,23 @@ word-break: break-all;
 }
 
 .commentSlider {
-   -webkit-appearance: none; /* Override default CSS styles */
+   -webkit-appearance: none;
    appearance: none;
-   width: 100%; /* Full-width */
-   height: 25px; /* Specified height */
-   background: #d3d3d3; /* Grey background */
-   outline: none; /* Remove outline */
-   opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
-   -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+   width: 100%; 
+   height: 25px; 
+   background: #d3d3d3; 
+   outline: none; 
+   opacity: 0.7; 
+   -webkit-transition: .2s; 
    transition: opacity .2s;
 }
 
 .commentSlider:hover {
-   opacity: 1; /* Fully shown on mouse-over */
+   opacity: 1;
 }
 
 .commentSlider::-webkit-slider-thumb {
-   -webkit-appearance: none; /* Override default look */
+   -webkit-appearance: none;
    appearance: none;
    width: 25px;
    height: 25px;
@@ -245,10 +246,8 @@ word-break: break-all;
    padding: 10%;
    margin: 5%;
    position: sticky;
-   top: 30%;
-   bottom: 10%;
+   bottom: 30%;
    left: 65%;
-   position: sticky;
    text-align: center;
 }
 
@@ -256,29 +255,15 @@ word-break: break-all;
    width: 50%;
 }
 
-/* 별점 */
-.star {
-   display: inline-block;
-   width: 15px;
-   height: 30px;
-   cursor: pointer;
+/* 지도 */
+.map {
+	width: 500px;
+	height: 400px;
+	margin-top: 10px;
+	z-index: 3;
+	text-align: center;
 }
 
-.starLeft {
-   background: url(img/star2.png) no-repeat 0 0;
-   background-size: 30px;
-   margin-right: -3px;
-}
-
-.starRight {
-   background: url(img/star2.png) no-repeat -15px 0;
-   background-size: 30px;
-   margin-left: -3px;
-}
-
-.star.on {
-   background-image: url(img/star1.png);
-}
 </style>
 
 
@@ -418,8 +403,6 @@ word-break: break-all;
          </div>
 
       </div>
-
-      <br>
       <hr>
 
       <div class="postContent">
@@ -448,27 +431,26 @@ word-break: break-all;
                               욕실 ${host.bathroomCount }개</td>
                         </tr>
                      </table>
-                  </div> <!-- postContentIntro end --> <br>
-                  <hr> <br>
+                  </div> <!-- postContentIntro end -->
+                  <hr>
                   <div class="contentConven" id="contentConven">
                      <div class="contentConven Title">편의시설</div>
-                  </div> <br>
-                  <hr> <br>
+                  </div>
+                  <hr>
                   <div class="contentExplain">
                      <div class="contentExplain Title">숙소 설명</div>
                      ${host.description }
-                  </div> <br>
-                  <hr> <br>
+                  </div>
+                  <hr>
 
                   <div class="contentEct">
                      <div class="contentEct Title">기타 사항</div>
                      ${host.descriptionEtc }
-                  </div> <br>
-                  <hr> <br>
+                  </div>
+                  <hr>
                   <div class="contentMap">
                      <div class="contentMap Title">지도</div>
-                     <div id="map"
-                        style="width: 500px; height: 400px; margin-top: 10px; z-index: 3;">
+                     <div id="map" class="map">
                         <button
                            style="background: #FFFFFF; width: 33px; margin-right: 2px; padding: unset; position: absolute; top: 105px; right: 0; z-index: 5; border: none; border-radius: 10px;"
                            onclick="panTo()">
@@ -530,8 +512,8 @@ word-break: break-all;
                      
                   </script>
 
-                  </div> <br>
-                  <hr> <br>
+                  </div>
+                  <hr>
                </td>
                <td>
                   <div class="contentReserv">
@@ -584,7 +566,6 @@ word-break: break-all;
                </tr>
             </table>
  -->
-             <br> <br>
             <table class="contentReviewList" id="reviewList">
                <tr>
                   <td></td>
@@ -606,9 +587,7 @@ word-break: break-all;
          </div>
          <!-- contentReview end -->
 
-         <br>
          <hr>
-         <br>
          <div class="contentRefund">
             <div class="contentRefund Title">환불정책</div>
             체크인 30일 전까지는 전액환불 가능합니다.
