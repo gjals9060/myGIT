@@ -2,13 +2,26 @@ package com.clover.p5.member.dto;
 
 import java.sql.Date;
 
+import javax.validation.constraints.NotEmpty;
+
+
 public class NewMemberDTO {
 	
+	
+	@NotEmpty(message="이메일 입력해라")
 	private String email;
+	@NotEmpty(message="비밀번호 입력해라")
 	private String password;
+	
+	
 	private String passwordCheck;
+	@NotEmpty(message="이름 입력해라")
 	private String firstName;
+	
+	@NotEmpty(message="성 입력해라")
 	private String lastName;
+	
+//	@NotEmpty(message="생년월일 입력해라")
 	private Date birthDate;
 	private String mobilePhone;
 	private String registrationDate;

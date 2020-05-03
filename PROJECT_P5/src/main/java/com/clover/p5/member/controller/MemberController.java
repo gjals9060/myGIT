@@ -1,15 +1,21 @@
 package com.clover.p5.member.controller;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.clover.p5.member.dto.ErrorFieldDTO;
 import com.clover.p5.member.dto.NewMemberDTO;
 import com.clover.p5.member.service.MemberService;
 
@@ -32,40 +38,37 @@ public class MemberController {
 	
 	
 	
-	@RequestMapping("/ajax/emailAuthentication") // 회원가입시 이메일 인증 + 유효성 검사
+	@RequestMapping("/ajax/validateSignUp") // 유효성 검사
 	@ResponseBody
-	public String emailAuthentication(@ModelAttribute("newMember") NewMemberDTO newMemberDto) {
-		// 이메일을 발송하고 해시된 인증번호를 보내준다
-		return memberService.sendEmailCode(newMemberDto.getEmail());
+	public List<ErrorFieldDTO> validateSignUp
+	(@ModelAttribute("newMember") @Valid NewMemberDTO newMemberDto, Errors errors) {
+		System.out.println(newMemberDto);
+		return memberService.validationResult(errors);
 	}
 	
 	
 	
-	@RequestMapping("/ajax/rerequest") // 인증번호 재전송
-	@ResponseBody
-	public String rerequestAuthenticationCode(@ModelAttribute("newMember") NewMemberDTO newMemberDto) {
-		// 이메일을 발송하고 해시된 인증번호를 보내준다
+	@RequestMapping("/ajax/sendEmailAuthenticationCode") // 인증메일 발송
+	@ResponseBody // 이메일을 발송하고 해시된 인증번호를 반환한다.
+	public String sendEmailAuthenticationCode(@ModelAttribute("newMember") NewMemberDTO newMemberDto) {
 		return memberService.sendEmailCode(newMemberDto.getEmail());
 	}
 	
-
-	
-	@RequestMapping("/ajax/completeSignUp") // 회원가입 완료(인증번호 일치 확인)
-	@ResponseBody
+	@RequestMapping("/ajax/completeSignUp") // 회원가입 완료
+	@ResponseBody // 입력한 인증번호의 일치여부를 확인하고 회원정보를 DB에 저장한다.
 	public int completeSignUp
-		(@ModelAttribute("newMember") NewMemberDTO newMemberDto, SessionStatus sessionStatus,
-			String inputCode, String authenticationCode) {
-		return memberService.signUp(inputCode, authenticationCode, newMemberDto, sessionStatus);
+		(HttpServletRequest req, SessionStatus sessionStatus) {
+		return memberService.signUp(req, sessionStatus);
 	}
 	
-	@RequestMapping("/ajax/logIn")
-	@ResponseBody
-	public int logIn(String userEmail, String userPassword, HttpSession session) {
-		return memberService.logIn(userEmail, userPassword, session);
+	@RequestMapping("/ajax/logIn") // 로그인
+	@ResponseBody // 입력한 정보를 토대로 로그인을 시도하여 결과를 반환한다.
+	public int logIn(HttpServletRequest req) {
+		return memberService.logIn(req);
 	}
 	
-	@RequestMapping("/ajax/logOut")
-	@ResponseBody
+	@RequestMapping("/ajax/logOut") // 로그아웃
+	@ResponseBody // 세션을 초기화한다.
 	public void logOut(HttpSession session) {
 		session.invalidate(); // 세션 초기화
 		return;

@@ -329,7 +329,23 @@ function emailAuthenticationModalOn(){
 	$('#modalEmailCheck').css("display", "block");
 	$('#inputCode').focus();
 }
-
+	// 인증메일 발송
+function sendEmailAuthenticationCode(){
+	$.ajax({
+	    type: "POST",
+	    url: "ajax/sendEmailAuthenticationCode",
+	    success:function(data){
+	 	   if(!data){
+	 		   alert("인증메일 발송에 실패했습니다.");
+	 	   } else{
+	 		   $("#authenticationCode").val(data); // 새로운 인증번호 값 적용
+	 	   }
+	    },
+	    error: function() {
+	         alert("통신 실패..");
+	    }
+	});
+}
 	
 	
 
@@ -341,21 +357,27 @@ $('#login-btn').on('click', logInModalOn);
 $('#emailUserAdd').on('click', signUpModalOn);
 	// '회원가입' 클릭
 $('#useradd-btn').on('click', signUpModalOn);
+	
+	
+	
 	// 회원가입 modal에서 '다음' 클릭
 $('#btnSendEmail').on('click', function(){
-	emailAuthenticationModalOn(); // 화면 전환
-	
 	var params = $('form[name="newMember"]').serialize();
 	
     $.ajax({
       type : "POST",
-      url : "ajax/emailAuthentication",
+      url : "ajax/validateSignUp",
       data : params,
-      success : function(data) {
-    	  if(!data){ /// 인증번호 전송에 실패했을 때 
-    		  alert("인증메일 발송에 실패했습니다.");
-    	  }else{ // 인증번호 전송에 성공했을 때 
-    		  $("#authenticationCode").val(data); /// 인증번호 적용
+      success : function(result) {
+    	  if(!result.length){ // 유효성 탈락 항목이 없다.
+    		  alert("통과");
+    		  emailAuthenticationModalOn(); // 화면 전환
+    		  sendEmailAuthenticationCode(); // 인증메일 발송
+    	  } else{ // 유효성 탈락 항목이 있을 때
+    		  alert(result.length + "건의 유효성 탈락 항목 정보를 console.log에서 확인하세요.");
+    		  $.each(result, function(index, field){    // 추가로 가져온 값들을 추가해준다
+              	console.log(field.name + " - " + field.message);    
+              }); 
     	  }
       },
       error: function() {
@@ -382,23 +404,10 @@ $('#emailCheckBack').on('click', function(){
 $("#rerequest").on("click", function(){
 	$("#authenticationCode").val(""); // 인증번호 값을 초기화
 	alert("인증번호를 재전송했습니다. 이전 번호는 사용 못함");
-	
-	$.ajax({
-	    type: "POST",
-	    url: "ajax/rerequest",
-	    success:function(data){
-	 	   if(!data){
-	 		   alert("인증메일 재발송에 실패했습니다.");
-	 	   } else{
-	 		   $("#authenticationCode").val(data); // 새로운 인증번호 값 적용
-	 	   }
-	    },
-	    error: function() {
-	         alert("통신 실패..");
-	    }
-	});
+	sendEmailAuthenticationCode(); // 인증메일 발송
 });
 
+	
 
 	// '(회원가입)완료' 클릭
 $("#completeSignUp").on("click", function(){
