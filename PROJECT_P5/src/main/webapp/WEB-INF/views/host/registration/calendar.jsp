@@ -12,7 +12,7 @@
 <script src="https://cdn.rawgit.com/dubrox/Multiple-Dates-Picker-for-jQuery-UI/master/jquery-ui.multidatespicker.js"></script>
 <link rel="stylesheet" href="../../css/reservationCalendar.css" />
 		
-<link rel="stylesheet" href="https://cdn.rawgit.com/dubrox/Multiple-Dates-Picker-for-jQuery-UI/master/jquery-ui.multidatespicker.css" />
+
 		
 
     </head>
