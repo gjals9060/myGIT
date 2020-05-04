@@ -35,27 +35,6 @@ button {
 	background: none;
 }
 
-.reservTab input {
-	vertical-align: middle;
-	text-align: center;
-	width: 100%;
-}
-
-.personnel_input {
- 	width: 60% !important;
- }
-
-.reservTab input[type=submit] {
-	border: none;
-	width: 100%;
-	background: #ed2d55;
-	color: white;
-	font-size: 18px;
-	font-weight: bolder;
-	padding: 5px;
-	margin: 10px 0 0 0;
-}
-
 /* modalImgSlide */
 .modalImgSlide {
 	display: none;
@@ -235,66 +214,22 @@ button {
 	object-position: center;
 }
 
-.contentReviewInput img {
-	width: 80px;
-	height: 80px;
-	object-fit: cover;
-	object-position: center;
+.contentReviewStar {
+	font-size: 
 }
 
-.reviewStar {
-	width: 20px !important;
-	height: 20px !important;
-}
-
-.contentReviewInput {
-	vertical-align: middle;
-}
-
-.contentReviewInput td:nth-child(2) {
-	width: 100%;
-	min-width: 300px;
-}
-
-.contentReviewInput input {
-	width: -webkit-fill-available
-}
-
-.commentSlider {
-	-webkit-appearance: none;
-	appearance: none;
-	width: 100%;
-	height: 25px;
-	background: #d3d3d3;
-	outline: none;
-	opacity: 0.7;
-	-webkit-transition: .2s;
-	transition: opacity .2s;
-}
-
-.commentSlider:hover {
-	opacity: 1;
-}
-
-.commentSlider::-webkit-slider-thumb {
-	-webkit-appearance: none;
-	appearance: none;
-	width: 25px;
-	height: 25px;
-	border: 0;
-	background-image: url('img/back.jpg');
-	cursor: pointer;
-}
+/* 예약창 */
 
 .contentReserv {
 	border: 1px solid black;
-	padding: 8%;
-	margin: 0 10% 0;
+	padding: 3%;
 	position: sticky;
 	top: 10%;
-	bottom: 30%;
-	left: 65%;
+	bottom: 25%;
+	left: 75%;
 	text-align: center;
+	width: 15%;
+	min-width: 120px;
 }
 
 .contentReservTitle {
@@ -303,9 +238,31 @@ button {
 	font-weight: bolder;
 }
 
-.personInput {
+.contentReserv tr {
+	display: grid;
+}
+	
+.contentReserv input {
+	vertical-align: middle;
+	text-align: center;
 	width: 100%;
 }
+
+.personnel_input {
+ 	width: 60% !important;
+ }
+
+.contentReserv input[type=submit] {
+	border: none;
+	width: 100%;
+	background: #ed2d55;
+	color: white;
+	font-size: 18px;
+	font-weight: bolder;
+	padding: 5px;
+	margin: 10px 0 0 0;
+}
+
 
 #dateCount {
 	margin: 20px 0 10px;
@@ -328,49 +285,6 @@ button {
 	margin-bottom: 30px;
 }
 
-/* 반응형 */
-.contentReservFix {
-	display: none;
-	position: fixed;
-    bottom: 0;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    left: 0;
-    vertical-align: middle;
-    text-align: center;
-	background: #eee;
-}
-
-.contentReservFix table {
-	padding: 0 15px;
-}
-
-.contentReservFix td:nth-child(3) {
-	width: 20%;
-	min-width: 120px;
-}
-
-
-.contentReservFix input {
-	vertical-align: middle;
-	text-align: center;
-	width: -webkit-fill-available;
-	
-}
-
-
-.contentReservFix input[type=submit] {
-	border: none;
-	width: 100%;
-	background: #ed2d55;
-	color: white;
-	font-size: 18px;
-	font-weight: bolder;
-	padding: 5px;
-	margin: 10px 0 0 0;
-}
-
 /* 페이징 */
 .pagination a {
   color: black;
@@ -388,14 +302,11 @@ button {
 .pagination a:hover:not(.active) {background-color: #ddd;}
 
 
-
-
 @media (min-width: 480px) and (max-width: 880px) {
 	
 	#wrap {
 		width: 90%;
 		max-width: 880px;
-		background: red;
 	}
 	
 	.postContent div {
@@ -433,6 +344,27 @@ button {
 	.postImgThumbnails img, .modalImgThumbnails img {
 		height: 70px;
 	}
+	
+	/* 반응형 */
+		
+	.contentReserv {
+	    bottom: 0;
+	    width: 100%;
+	    margin: 0;
+	    padding: 0;
+	    left: 0;
+	    vertical-align: middle;
+	    text-align: center;
+		background: #eee;
+	}
+	
+	.contentReserv table {
+		padding: 0 15px;
+	}
+	
+	.contentReserv tr {
+		display: contents;
+	}
 }
 
 @media (min-width: 0px) and (max-width: 480px) {
@@ -441,7 +373,6 @@ button {
 		width: 90%;
 		max-width: 480px;
 		min-width: 360px;
-		background: blue;
 	}
 	
 	.postContent div {
@@ -477,6 +408,29 @@ button {
 	.postImgThumbnails img, .modalImgThumbnails img {
 		height: 50px;
 	}
+	
+	
+	/* 반응형 */
+		
+	.contentReserv {
+	    bottom: 0;
+	    width: 100%;
+	    margin: 0;
+	    padding: 0;
+	    left: 0;
+	    vertical-align: middle;
+	    text-align: center;
+		background: #eee;
+	}
+	
+	.contentReserv table {
+		padding: 0 15px;
+	}
+	
+	.contentReserv tr {
+		display: contents;
+	}
+	
 }
 
 </style>
@@ -731,39 +685,9 @@ button {
                     	relayout();
 
                     	</script>
-					</td>
-					<td class="reservTab">
-						<div class="contentReserv">
-							<form action="reservationPurchase" method="post">
-								<div class="contentReservTitle">예약</div>
-								${host.price}/1박
-								<div class="contentReservTitle">날짜</div>
-								<input type="text" id="checkDate" name="checkInDatecheckOutDate"
-									value="${checkInDatecheckOutDate}" onchange="countDate()" />
-								<div class="contentReservTitle">인원</div>
-								<span class="personInput"><input type='text' name='personnel' class="personnel_input"
-									value="${capacity}">
-								<!-- ${capacity}는 검색할때의 인원 설정 조건임, ${host.capacity} 와 다름 -->
-								<button id="increaseQuantity">▲</button>
-								<button id="decreaseQuantity">▼</button>
-								</span>
-								<div id="dateCount"></div>
-								<input type="hidden" id="hostId" name="hostId"
-									value="${host.id}"> <input type="hidden" id="userId"
-									name="userId" value="${user.id}"> <input type="hidden"
-									id="hostName" name="hostName" value="${host.name}"> <input
-									type="hidden" id="hostPrice" name="hostPrice"
-									value="${host.price}"> <input type="hidden"
-									id="dateCnt" name="dateCnt" value=""> <input
-									type="submit" value="예약하기" />
-							</form>
-						</div>
-					</td>
-				</tr>
-			</table>
-			<hr>
+                    	<hr>
 			<div class="contentReview">
-				<div class="contentReview Title">후기<span class="contentReviewStar">★ 4.5 (21)</span></div>
+				<div class="contentReview Title">후기 <span class="contentReviewStar">★ 4.5 (21)</span></div>
 				<table class="contentReviewList" id="reviewList">
 <!-- 					<tr></tr> -->
 				</table>
@@ -781,38 +705,44 @@ button {
 			</div>
 			<!-- contentReview end -->
 			<br>
+			<br>
 			<hr>
 			<div class="contentRefund">
 				<div class="contentRefund Title">환불정책</div>
 				체크인 30일 전까지는 전액환불 가능합니다.
 			</div>
+					</td>
+					<td class="reservTab">
+					</td>
+				</tr>
+				<tr>
+			</table>
 		</div>
+<!-- postContent end-->
 
-		<div class="contentReservFix">
+
+
+
+	</div>
+   <!-- wrap end -->
+
+		<div class="contentReserv">
 			<form action="reservationPurchase" method="post">
-				<table>
-					<tr>
-						<td><div class="contentReservTitle">예약</div></td>
-						<td><div class="contentReservTitle">날짜</div></td>
-						<td><div class="contentReservTitle">인원</div></td>
-					</tr>
-					<tr>
-						<td>${host.price}/1박</td>
-						<td><input type="text" id="checkDate2"
-							name="checkInDatecheckOutDate" value="${checkInDatecheckOutDate}"
-							onchange="countDate2()" /></td>
-						<td><input type='text' name='personnel'
-							class="personnel_input" value="${capacity}">
-							<!-- ${capacity}는 검색할때의 인원 설정 조건임, ${host.capacity} 와 다름 -->
-							<button id="increaseQuantity">▲</button>
-							<button id="decreaseQuantity">▼</button></td>
-					</tr>
-					<tr>
-						<td colspan="3">
-							<div id="dateCount2"></div>
-						</td>
-					</tr>
-				</table>
+			<table>
+				<tr>
+					<td><div class="contentReservTitle">예약</div>
+					${host.price}/1박</td>
+					<td><div class="contentReservTitle">날짜</div>
+					<input type="text" id="checkDate" name="checkInDatecheckOutDate"
+					value="${checkInDatecheckOutDate}" onchange="countDate()" /></td>
+					<td><div class="contentReservTitle">인원</div>
+					<span class="personInput"><input type='text' name='personnel'
+					class="personnel_input" value="${capacity}"> <!-- ${capacity}는 검색할때의 인원 설정 조건임, ${host.capacity} 와 다름 -->
+					<button id="increaseQuantity">▲</button>
+					<button id="decreaseQuantity">▼</button></span></td>
+				</tr>
+			</table>
+				<div id="dateCount"></div>
 				<input type="hidden" id="hostId" name="hostId" value="${host.id}">
 				<input type="hidden" id="userId" name="userId" value="${user.id}">
 				<input type="hidden" id="hostName" name="hostName"
@@ -822,10 +752,6 @@ button {
 					type="submit" value="예약하기" />
 			</form>
 		</div>
-		<!-- postContent end-->
-   </div>
-   <!-- wrap end -->
-
 </body>
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
@@ -1055,20 +981,7 @@ button {
    
    $('#dateCnt').val(dateCount);
    
-   $("#dateCount").html(dateCount + "박 " + (dateCount+1) + "일<br>" + ("${host.price }"*dateCount) + "원");
-   }
-   
-   function countDate2() {
-   var date = $("#checkDate2").val().split(" - ");
-   var checkInDate = date[0].split("/");
-   var checkInDate1 = new Date(checkInDate[2], checkInDate[0]-1, checkInDate[1]);
-   var checkOutDate = date[1].split("/");
-   var checkOutDate1 = new Date(checkOutDate[2], checkOutDate[0]-1, checkOutDate[1]);
-   var dateCount = parseInt(checkOutDate1-checkInDate1)/(24*60*60*1000);
-   
-   $('#dateCnt').val(dateCount);
-   
-   $("#dateCount2").html(dateCount + "박 " + (dateCount+1) + "일 / " + ("${host.price }"*dateCount) + "원");
+   $("#dateCount").html(dateCount + "박 " + (dateCount+1) + "일 / " + ("${host.price }"*dateCount) + "원");
    }
    
    /* 인원 선택 */
