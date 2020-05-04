@@ -1,0 +1,131 @@
+@charset "UTF-8";
+
+#wrap{
+	width:1100px;
+	margin-left: 350px;
+	margin-right: 350px;
+}
+#container{
+	display: inline;
+	float: left;
+}
+h4{
+	margin-bottom: 30px;
+	margin-left: 35px;
+}
+h2{
+color: #6E6E6E;
+font-size:20px;	
+}
+/*진행바  */
+progress{
+	width: 100%;
+
+	-webkit-appearance: none;
+	  border: 1px solid;
+  border-radius: 100px;
+ 
+  background: white;
+
+}
+
+progress::-webkit-progress-bar-value {
+  -webkit-appearance: none;
+  background: orangered;
+}
+
+progress {
+  color: lightblue;
+}
+
+progress::-webkit-progress-value {
+  background: white;
+
+}
+
+progress::-moz-progress-bar {
+  background: lightcolor;
+
+}
+
+progress::-webkit-progress-value {
+  background: #008489;
+    border-radius: 100px;
+  
+}
+
+progress::-webkit-progress-bar {
+  background: white;
+}
+select{
+	width: 380px;
+	height: 80px;
+	font-size: 20px;
+}
+/*셀렉트 화살표 이미지로 대체*/
+select { 
+    -webkit-appearance: none; /* 네이티브 외형 감추기 */ 
+    -moz-appearance: none; 
+    appearance: none;
+     background: url(../img/checklist.png) no-repeat 95% 30%; /* 화살표 모양의 이미지 */ 
+background-size: 30px;
+border-color: #E8E8E8;
+} 
+input[type="submit"]{
+	background-color:#008489;
+	border-color:#008489;
+	color:white; 
+height:50px;
+width:100px;
+border-radius:20%;
+top: 300px;
+    position: relative;
+}
+a{
+	position: relative;
+    top: 300px;
+}
+img[src="../../img/vase.png"]{
+	height:900px;
+	display: inline;
+	float: right;
+	width:500px;
+	
+	
+}
+/*미디어 쿼리  */
+@media (max-width: 768px){
+	#wrap{
+	width:768px;
+	margin-left: 0px;
+	margin-right: 0px;
+}
+img[src="../img/vase.png"] {
+    height: 700px;
+    display: inline;
+    float: right;
+    width: 240px;
+}
+/*모바일  */
+@media (max-width: 450px){
+	#wrap{
+	width:450px;
+	margin-left: 0px;
+	margin-right: 0px;
+}
+img[src="../img/vase.png"] {
+      height: 400px;
+    display: inline;
+    float: right;
+    width: 150px;
+    position: relative;
+    top: -250px;
+}
+select {
+    width: 280px;
+    height: 80px;
+    font-size: 20px;
+}
+}
+}
+	

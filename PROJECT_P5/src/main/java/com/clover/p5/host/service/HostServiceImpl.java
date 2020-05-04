@@ -259,10 +259,10 @@ public class HostServiceImpl implements HostService {
 	public boolean insertHostPhoto(int hostId, List<MultipartFile> photos, HttpServletRequest request) {
 		
 	  String defaultPath = request.getServletContext().getRealPath("/");
-
+	  
       //파일 기본경로 _ 상세경로
       String path = defaultPath + "resources" + File.separator + "upload" + File.separator + "host" + File.separator;
-      	
+      System.out.println(path);
 	/**
 	** 파일을 저장할 폴더가 존재하지 않을 경우 폴더를 생성해준다.
 	**/

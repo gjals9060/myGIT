@@ -1,21 +1,22 @@
 package com.clover.p5.member.service;
 
-import javax.servlet.http.HttpSession;
+import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.support.SessionStatus;
 
-import com.clover.p5.member.dto.NewMemberDTO;
+import com.clover.p5.member.dto.ErrorFieldDTO;
 
 public interface MemberService {
 	
+	
 	// 회원가입 정보 입력
-	int signUp(String inputCode,
-					String authenticationCode,
-					NewMemberDTO newMemberDto,
-					SessionStatus sessionStatus);
+	int signUp(HttpServletRequest req, SessionStatus sessionStatus);
 	
 	// 로그인
-	int logIn(String email, String password, HttpSession session);
+	int logIn(HttpServletRequest req);
 	
 	
 	
@@ -26,10 +27,11 @@ public interface MemberService {
 	
 	
 	
+	// 이메일 인증번호 발송
+	String sendEmailCode(String email);
 	
-	String sendEmailCode(String email); // 이메일 인증번호 발송
-	
-	
+	// 유효성 검사 결과를 정리
+	List<ErrorFieldDTO> validationResult(Errors errors);
 	
 	
 	

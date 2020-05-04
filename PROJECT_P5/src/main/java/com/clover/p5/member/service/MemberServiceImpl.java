@@ -3,10 +3,13 @@ package com.clover.p5.member.service;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +17,12 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.clover.p5.entity.Member;
+import com.clover.p5.member.dto.ErrorFieldDTO;
 import com.clover.p5.member.dto.NewMemberDTO;
 import com.clover.p5.member.mapper.MemberMapper;
 
@@ -40,8 +46,11 @@ public class MemberServiceImpl implements MemberService {
 	
 	
 	@Override
-	public int signUp(String inputCode, String authenticationCode, NewMemberDTO newMemberDto,
-			SessionStatus sessionStatus) {
+	public int signUp(HttpServletRequest req, SessionStatus sessionStatus) {
+		String authenticationCode = req.getParameter("authenticationCode");
+		String inputCode = req.getParameter("inputCode");
+		NewMemberDTO newMemberDto = (NewMemberDTO) req.getSession().getAttribute("newMember");
+		
 		/***
 		** 인증번호 입력값과 비교
 		***/
@@ -111,7 +120,11 @@ public class MemberServiceImpl implements MemberService {
 
 
 	@Override
-	public int logIn(String email, String password, HttpSession session) {
+	public int logIn(HttpServletRequest req) {
+		String email = req.getParameter("userEmail");
+		String password = req.getParameter("userPassword");
+		HttpSession session = req.getSession();
+		
 		Member member = memberMapper.selectMember(email);
 		if(member == null) {
 			return 0; // 없는 아이디
@@ -121,6 +134,27 @@ public class MemberServiceImpl implements MemberService {
 		}
 		session.setAttribute("user", member); // 세션에 정보 저장
 		return 2; // 로그인 성공
+	}
+
+
+
+
+	@Override
+	public List<ErrorFieldDTO> validationResult(Errors errors) {
+		ArrayList<ErrorFieldDTO> list = new ArrayList<>();
+		
+		if(errors.hasErrors()) {
+			for(FieldError error : errors.getFieldErrors()) {
+				String name = error.getField();
+				String message = error.getDefaultMessage();
+				ErrorFieldDTO dto = new ErrorFieldDTO(name, message);
+				System.out.println(dto);
+				
+				list.add(dto);
+			}
+		}
+		System.out.println("유효성 검사 탈락 : " + list.size() + "건");
+        return list;
 	}
 
 

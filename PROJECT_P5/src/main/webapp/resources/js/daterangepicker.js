@@ -786,7 +786,7 @@ $('input').val('');
                     html += '<td class="week">' + calendar[row][0].week() + '</td>';
                 else if (this.showISOWeekNumbers)
                     html += '<td class="week">' + calendar[row][0].isoWeek() + '</td>';
-
+                var arr=new Array("2020-05-05","2020-05-07");
                 for (var col = 0; col < 7; col++) {
 
                     var classes = [];
@@ -809,9 +809,12 @@ $('input').val('');
                     // don't allow selection of dates before the minimum date
                     if (this.minDate && calendar[row][col].isBefore(this.minDate, 'day'))
                         classes.push('off', 'disabled');
-                   
-                    if (calendar[row][col].isSame(new Date("2020-05-01"), 'day'))
-                    	classes.push('off', 'disabled');
+                        //array로 해서 변경
+                   for(i=0;i<arr.length;i++){
+                	   if (calendar[row][col].isSame(new Date(arr[i]), 'day'))
+                		   classes.push('off', 'disabled');
+                	   
+                   }
                     
                  
                   // highlight the currently selected start date
@@ -1259,8 +1262,8 @@ $('input').val('');
         },
 
         hoverDate: function(e) {
-          	
-        	
+          	//변경
+        	   if(this.startDate.isBefore("2020-05-01")&&this.endDate.isAfter("2020-05-01")) return;
         	
             // ignore dates that can't be selected
             if (!$(e.target).hasClass('available')) return;
@@ -1288,7 +1291,7 @@ var a=new Date("2020-05-01");
                     var col = title.substr(3, 1);
                     var cal = $(el).parents('.drp-calendar');
                     var dt = cal.hasClass('left') ? leftCalendar.calendar[row][col] : rightCalendar.calendar[row][col];
-                    if(dt.isAfter(startDate)&&dt.isBefore("2020-05-01")) return;
+                 
                     if ((dt.isAfter(startDate) && dt.isBefore(date)) || dt.isSame(date, 'day')) {
                         $(el).addClass('in-range');
                     } else {
@@ -1352,8 +1355,11 @@ var a=new Date("2020-05-01");
                 this.endDate = null;
                 this.setStartDate(date.clone());
                 
-                ///////////////////////////
-                if(this.startDate.isSameOrBefore("2020-05-01")&&this.endDate.isSameOrAfter("2020-05-01")) return;
+                // /////////////////////////
+              /*
+				 * if(this.startDate.isSameOrBefore("2020-05-01")&&this.endDate.isAfter("2020-05-01"))
+				 * return;
+				 */
                
 
             } else if (!this.endDate && date.isBefore(this.startDate)) {
@@ -1377,7 +1383,10 @@ var a=new Date("2020-05-01");
                     var second = this.timePickerSeconds ? parseInt(this.container.find('.right .secondselect').val(), 10) : 0;
                     date = date.clone().hour(hour).minute(minute).second(second);
                 }
+            
                 this.setEndDate(date.clone());
+                //변경
+                if(this.startDate.isBefore("2020-05-01")&&this.endDate.isAfter("2020-05-01")) return;
                 if (this.autoApply) {
                   this.calculateChosenLabel();
                   this.clickApply();
@@ -1389,7 +1398,6 @@ var a=new Date("2020-05-01");
                 if (!this.timePicker)
                     this.clickApply();
             }
-            
          
             this.updateView();
 
