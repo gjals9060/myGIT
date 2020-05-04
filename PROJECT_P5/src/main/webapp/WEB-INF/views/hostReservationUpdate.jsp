@@ -90,6 +90,15 @@
 .imgs_wrap {
 
 }
+
+.representative-image{
+	border: 1px solid black;
+	height: 300px;
+}
+
+.representative-image *{
+	width: 100%;
+}
 	
 
 
@@ -268,6 +277,8 @@
 				<div class="host-update-title"> 사진을 수정합니다.</div>
 				    
                <div class="upload_List_Block">
+               
+               <div class="representative-image" ondrop="drop(event)"  ondragover="allowDrop(event)"></div>
                   	<!-- host가 설정한 이미지를 가져옴, 거기에 onclick="fileUploadAction();" -->
                   
                   <div class="upload_List_Input">
@@ -831,6 +842,23 @@
 		$("#hostUpdatePhotoTab").css("border", "1px solid red");
 	});
 	
+	////////////////////드래그 앤 드롭 /////////////////////
+	function allowDrop(ev) {
+		ev.preventDefault();
+	}
+
+	function drag(ev) {
+		ev.dataTransfer.setData("img",ev.target.id);
+	}
+
+
+	function drop(ev) {
+		ev.preventDefault();
+		var data = ev.dataTransfer.getData("img");
+		ev.target.appendChild(document.getElementById(data));
+	}
+	
+	
 	//이미지 정보들을 담을 배열   
 	var sel_files = [];   
 
@@ -861,7 +889,7 @@
 
 	        var reader = new FileReader();   
 	        reader.onload = function(e) {   
-	            var html = "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction("+index+")\" id=\"img_id_"+index+"\"><img src=\"" + e.target.result + "\" data-file='"+f.name+"' class='selProductFile' title='Click to remove' width=\"150px\" ></a>";   
+	            var html = "<img src=\"" + e.target.result + "\" data-file='"+f.name+"' draggable='true' ondragstart='drag(event)' class='selProductFile'  width=\"150px\" >";   
 	              
 	            $(".imgs_wrap").append(html);   
 

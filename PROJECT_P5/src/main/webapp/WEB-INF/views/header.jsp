@@ -94,10 +94,13 @@
 			} else{
 			%>
 				<!-- 이름만 출력 -->
-				<span id="userImgBlock"><img id="userImg" src="img/p5_logo.png" alt="" /></span>
-				<a href="/p5/userInfoUpdate">${user.firstName }</a>
-				<button id='btnLogOut'>로그아웃</button>
 				<a href='host/registration/roomType'>호스트 등록</a>
+				<div class="user-drap-down">
+					<span id="userImgBlock"><img id="userImg" src="img/p5_logo.png" alt="" /></span>
+					<a href="/p5/userInfoUpdate">${user.firstName }</a>
+				</div>
+				<button id='btnLogOut'>로그아웃</button>
+				
 			<%
 			}
 			%>
