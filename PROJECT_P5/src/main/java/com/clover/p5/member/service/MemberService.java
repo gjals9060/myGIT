@@ -12,8 +12,18 @@ import com.clover.p5.member.dto.ErrorFieldDTO;
 public interface MemberService {
 	
 	
-	// 회원가입 정보 입력
+	
+	// 이메일 인증번호 발송
+	String sendEmailCode(String email);
+	
+	// 회원가입(DB에 정보 입력)
 	int signUp(HttpServletRequest req, SessionStatus sessionStatus);
+	
+	
+	
+	
+	
+	
 	
 	// 로그인
 	int logIn(HttpServletRequest req);
@@ -21,8 +31,13 @@ public interface MemberService {
 	
 	
 	
+	
+	
 	// 휴대전화 인증여부 확인
 	boolean isMobileAuthentication(int userId);
+	
+	// 휴대전화 인증번호 발송
+	String sendMobileCode(String mobileNumber);
 	
 	// 휴대전화 인증(인증번호 확인 + 결과 DB에 적용)
 	int mobileAuthentication(HttpServletRequest req);
@@ -30,18 +45,20 @@ public interface MemberService {
 	
 	
 	
-	// 이메일 인증번호 발송
-	String sendEmailCode(String email);
 	
-	// 휴대전화 인증번호 발송
-	String sendMobileCode(String mobileNumber);
 	
-	// 유효성 검사 결과를 정리
-	List<ErrorFieldDTO> validationResult(Errors errors);
+	
+	
+	
+	
+	
+	
 	
 	// user session 새로고침
 	void refreshUserSession(HttpServletRequest req, int userId);
 	
+	// 유효성 검사 결과를 정리
+	List<ErrorFieldDTO> validationResult(Errors errors);
 	
 	
 }

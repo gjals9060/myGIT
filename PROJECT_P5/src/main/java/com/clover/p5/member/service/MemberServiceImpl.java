@@ -48,8 +48,34 @@ public class MemberServiceImpl implements MemberService {
 	
 	
 	
+//******************************** 인증 이메일 전송 ********************************************
+	@Override
+	public String sendEmailCode(String email) {
+		 String code = new Random().nextInt(900000) + 100000 + ""; // 6자리 숫자 난수 생성
+		 String content = "이메일 인증번호는 " + code + "입니다~~";				// 100000 ~ 999999
+		 String hashedCode = passwordEncoder.encode(code); // 인증번호 해싱
+		 
+		 MimeMessage message = javaMailSender.createMimeMessage();
+         try {
+			MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+			
+            messageHelper.setSubject("p5입니다. 메일인증 하세요!"); // 메일제목은 생략이 가능하다
+            messageHelper.setText(content); // 메일 내용
+            messageHelper.setFrom("p5.email.authentication"); // 보내는사람 생략하면 정상작동을 안함
+            messageHelper.setTo(email); // 받는사람 이메일
+            
+            javaMailSender.send(message);
+		} catch (MessagingException e) {
+			e.printStackTrace();
+			return ""; // 메일 발송 실패
+		}
+         
+         return hashedCode;
+	}
+//******************************** 인증 이메일 전송-END ********************************************
 	
 	
+//****************************** 회원 가입 **************************************************	
 	@Override
 	public int signUp(HttpServletRequest req, SessionStatus sessionStatus) {
 		String authenticationCode = req.getParameter("authenticationCode");
@@ -86,33 +112,13 @@ public class MemberServiceImpl implements MemberService {
 			System.out.println("회원정보 DB에 저장 실패");
 			return 2;
 	}
+//****************************** 회원 가입-END **************************************************		
+	
+	
+
 	
 	
 	
-	
-	@Override
-	public String sendEmailCode(String email) {
-		 String code = new Random().nextInt(900000) + 100000 + ""; // 6자리 숫자 난수 생성
-		 String content = "이메일 인증번호는 " + code + "입니다~~";				// 100000 ~ 999999
-		 String hashedCode = passwordEncoder.encode(code); // 인증번호 해싱
-		 
-		 MimeMessage message = javaMailSender.createMimeMessage();
-         try {
-			MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
-			
-            messageHelper.setSubject("p5입니다. 메일인증 하세요!"); // 메일제목은 생략이 가능하다
-            messageHelper.setText(content); // 메일 내용
-            messageHelper.setFrom("p5.email.authentication"); // 보내는사람 생략하면 정상작동을 안함
-            messageHelper.setTo(email); // 받는사람 이메일
-            
-            javaMailSender.send(message);
-		} catch (MessagingException e) {
-			e.printStackTrace();
-			return ""; // 메일 발송 실패
-		}
-         
-         return hashedCode;
-	}
 
 
 	
@@ -121,9 +127,7 @@ public class MemberServiceImpl implements MemberService {
 
 
 
-
-
-
+//******************************** 로그인 시도 ********************************************
 	@Override
 	public int logIn(HttpServletRequest req) {
 		String email = req.getParameter("userEmail");
@@ -141,31 +145,34 @@ public class MemberServiceImpl implements MemberService {
 		session.setAttribute("user", member); // 세션에 정보 저장
 		return 2; // 로그인 성공
 	}
+//******************************** 로그인 시도-END ********************************************
+
+	
+	
+	
+	
+	
 
 
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
-	@Override
-	public List<ErrorFieldDTO> validationResult(Errors errors) {
-		ArrayList<ErrorFieldDTO> list = new ArrayList<>();
-		
-		if(errors.hasErrors()) {
-			for(FieldError error : errors.getFieldErrors()) {
-				String name = error.getField();
-				String message = error.getDefaultMessage();
-				ErrorFieldDTO dto = new ErrorFieldDTO(name, message);
-				System.out.println(dto);
-				
-				list.add(dto);
-			}
-		}
-		System.out.println("유효성 검사 탈락 : " + list.size() + "건");
-        return list;
-	}
-
-
-
-
+//******************************** 휴대전화 인증 여부 확인 ********************************************
 	@Override
 	public boolean isMobileAuthentication(int userId) {
 		String result = memberMapper.selectMobileAuthentication(userId);
@@ -174,41 +181,10 @@ public class MemberServiceImpl implements MemberService {
 		}
 		return false;
 	}
-
-
-
-
-	@Override
-	public int mobileAuthentication(HttpServletRequest req) {
-		String authenticationCode = req.getParameter("authenticationCode");
-		String inputCode = req.getParameter("inputCode");
-		int userId = (int)req.getSession().getAttribute("userId");
-		
-		/***
-		** 인증번호 입력값과 비교
-		***/
-			/*if(authenticationCode.isEmpty()) {
-				return 0;
-			}*/
-			if(!passwordEncoder.matches(inputCode, authenticationCode)) {
-				return 0;
-			}
-			
-		/***
-		** 통과했으면 DB에 결과를 적용
-		***/
-			if(memberMapper.updateMobileAuthentication(userId) == 1) {
-				refreshUserSession(req, userId); // session 새로고침
-				System.out.println("휴대전화 인증 결과를 DB에 적용했습니다.");
-				return 1;
-			}
-			System.out.println("휴대전화 인증 결과를 DB에 적용 실패했습니다.");
-			return 2;
-	}
-
-
-
-
+//******************************** 휴대전화 인증 여부 확인-END ********************************************
+	
+	
+//******************************** 인증 문자메세지 전송 ********************************************
 	@Override
 	public String sendMobileCode(String mobileNumber) {
 		String code = new Random().nextInt(900000) + 100000 + ""; // 6자리 숫자 난수 생성
@@ -260,30 +236,108 @@ public class MemberServiceImpl implements MemberService {
 	    }
 		return hashedCode;
 	}
+//******************************** 인증 문자메세지 전송-END ********************************************
+
+	
+//******************************** 휴대전화 인증 ********************************************
+	@Override
+	public int mobileAuthentication(HttpServletRequest req) {
+		String authenticationCode = req.getParameter("authenticationCode");
+		String inputCode = req.getParameter("inputCode");
+		int userId = (int)req.getSession().getAttribute("userId");
+		
+		/***
+		** 인증번호 입력값과 비교
+		***/
+			if(!passwordEncoder.matches(inputCode, authenticationCode)) {
+				return 0;
+			}
+			
+		/***
+		** 통과했으면 DB에 결과를 적용
+		***/
+			if(memberMapper.updateMobileAuthentication(userId) == 1) {
+				refreshUserSession(req, userId); // session 새로고침
+				System.out.println("휴대전화 인증 결과를 DB에 적용했습니다.");
+				return 1;
+			}
+			System.out.println("휴대전화 인증 결과를 DB에 적용 실패했습니다.");
+			return 2;
+	}
+//******************************** 휴대전화 인증-END ********************************************
+
+	
+	
+	
+	
+	
+	
+
+	
+	
+	
+	
+	
 
 
 
 
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 
 
+//******************************** session 갱신 ********************************************
 	@Override
 	public void refreshUserSession(HttpServletRequest req, int userId) {
 		Member member = memberMapper.selectMemberById(userId);
 		req.getSession().setAttribute("user", member); // session을 갱신
 	}
+//******************************** session 갱신-END ********************************************
 
-
-
+	
+	
+	//******************************** 백엔드 유효성 검사 결과 ********************************************
+		@Override
+		public List<ErrorFieldDTO> validationResult(Errors errors) {
+			ArrayList<ErrorFieldDTO> list = new ArrayList<>();
+			
+			if(errors.hasErrors()) {
+				for(FieldError error : errors.getFieldErrors()) {
+					String name = error.getField();
+					String message = error.getDefaultMessage();
+					ErrorFieldDTO dto = new ErrorFieldDTO(name, message);
+					System.out.println(dto);
+					
+					list.add(dto);
+				}
+			}
+			System.out.println("유효성 검사 탈락 : " + list.size() + "건");
+	        return list;
+		}
+	//******************************** 백엔드 유효성 검사 결과-END ********************************************
 	
 
 
-
-
-
-
-	
 
 
 
