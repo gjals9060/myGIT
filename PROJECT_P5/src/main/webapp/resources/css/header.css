@@ -71,7 +71,6 @@ herder > * {
 	text-align: center;
 	border: none;
 	font-size: 20px;
-	
 }
 
 
@@ -86,6 +85,44 @@ herder > * {
 	text-align: center;
 	font-size: 20px;
 }
+
+/* 이름을 눌렀을 때 dropdown */
+.user-drop-down-btn {
+	border-radius: 10px;
+	vertical-align: middle;
+	background: white;
+	outline: none;	
+	position: static;
+}
+/* 드롭다운 화면  */
+.user-drop-down {
+	position: absolute;
+    width: 200px;
+    height: 250px;
+    border: 1px solid;
+    right: 100px;
+    display: none;
+    background: white;
+}
+
+/* user label  */
+.user-drop-down-label {
+	font-size: 20px;
+	padding: 10px;
+	border-bottom: 1px solid;
+	cursor: default;
+}
+
+/* 메뉴 버튼 */
+.user-drop-down-menu-btn {
+	cursor: pointer;	
+	padding: 8px;
+}
+
+.user-drop-down-menu-btn:hover {
+	background: #bbb;
+}
+
 
  /* modal 화면 */
 .modal {
@@ -169,6 +206,26 @@ herder > * {
    font-style: bold;
    color: rgb(255, 255, 255);
 }
+
+/*  임시 비밀번호 wrap*/
+.makeshift-password-input-wrap {
+	margin: 10px auto;
+    width: 50%;
+}
+
+/* 임시비빌번호 block */
+.makeshift-password-input-block{
+	display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    vertical-align: middle;
+    align-self: flex-start;
+}
+
+.makeshift-password-input-error {
+	margin: 10px 0px;
+}
+
 
 /* 예약 */
 

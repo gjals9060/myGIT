@@ -95,12 +95,32 @@
 			%>
 				<!-- 이름만 출력 -->
 				<a href='host/registration/roomType'>호스트 등록</a>
-				<div class="user-drap-down">
+				<button class="user-drop-down-btn">
 					<span id="userImgBlock"><img id="userImg" src="img/p5_logo.png" alt="" /></span>
-					<a href="/p5/userInfoUpdate">${user.firstName }</a>
-				</div>
-				<button id='btnLogOut'>로그아웃</button>
+					${user.firstName }
+				</button>
 				
+				<script>
+				//////////////////////////////사용자 dropdown창.
+					$(".user-drop-down-btn").on('click',function(){
+						if($('.user-drop-down').css("display")=="none"){
+							
+							$('.user-drop-down').css("display","block");
+						}else {
+							$('.user-drop-down').css("display","none");
+						}
+					});
+				</script>
+				
+				<div class="user-drop-down">
+					<p class="user-drop-down-label">Host</p>
+						<div class="user-drop-down-menu-btn" id='btnHostReservationList'>등록한 숙소보기</div>
+					<p class="user-drop-down-label">Guest</p>
+						<div class="user-drop-down-menu-btn" id='btnUserInfoUpdate'>회원정보</div>
+						<div class="user-drop-down-menu-btn" id='btnLogOut'>로그아웃</div>
+				</div>
+				
+								
 			<%
 			}
 			%>
@@ -150,6 +170,8 @@
 		        <br> 
 		        <br> 
 		        <input type="button" id="emailUserAdd" value="이메일로 가입하기" />
+		        <br />
+		       	<button id="makeshiftPasswordBtn">비밀번호를 잊어버리셨나요?</button>
 	      </div>
 	   </div>
 	
@@ -223,7 +245,7 @@
 	   <!-- 회원가입 2단계 ( 이메일 인증 )  -->
 	   <div id="modalEmailCheck" class="modal">
 	      <span id="emailCheckBack" class="back">&lt;</span> 
-	      <span id="email-check-close" class="close">&times;</span>
+	      <span id="emailCheckClose" class="close">&times;</span>
 	      <div class="modal-popup"> 
 	         <h1>이메일 인증</h1>
 	         <br />
@@ -238,6 +260,31 @@
 	         <input type="button" value="완료" id="completeSignUp" />
 	      </div>
 	   </div>
+	   
+	<!-- 임시비밀번호 modal -->
+	<div id="makeshiftPasswordModal" class="modal">
+		<span id="makeshiftPasswordBack" class="back">&lt;</span> 
+	    <span id="makeshiftPasswordClose" class="close">&times;</span>
+	    <div class="modal-popup">
+	    	<h1>임시 비밀번호 발급</h1>
+	    	<br />
+	    	<div class="makeshift-password-input-wrap">
+		    	<div class="makeshift-password-input-block">
+					<div class="makeshift-password-input-title">이메일</div>
+					<div class="makeshift-password-input-value">
+						<input type="text" id="makeshiftInputEmail" />
+					</div>
+		    	</div>
+		    	<div class="makeshift-password-input-error"></div>
+		    	
+		    	<div class="makeshift-password-input-btn">
+		    		<button id="makeshiftPasswordInputBtn">이메일 전송</button>
+		    	</div>
+		    	
+	    	</div>
+	    
+	    </div>
+	</div>
 
 </body>
 <script>
@@ -316,6 +363,7 @@ function modalOff(){
 	$('#modalLogin').css("display", "none");
 	$('#modalUseradd').css("display", "none");
 	$('#modalEmailCheck').css("display", "none");
+	$('#makeshiftPasswordModal').css('display','none');
 }
 	// 로그인 modal ON	
 function logInModalOn(){
@@ -325,6 +373,14 @@ function logInModalOn(){
 	$('#modalLogin').css("display", "block");
 	$('#userEmail').focus();
 }
+	
+	// 임시비밀번호 modal ON
+
+function makeshiftPasswordModalOn(){
+	modalOff();
+	$('#makeshiftPasswordModal').css("display", "block");
+}
+
 	// 회원가입 modal ON
 function signUpModalOn(){
 	modalOff();
@@ -358,6 +414,11 @@ function sendEmailAuthenticationCode(){
 	});
 }
 	
+	/// 임시비밀번호 이메일로 보내기
+function sendEmailMekeshiftPasswordCode(){
+
+}
+	
 	
 
 	// modal 닫기
@@ -368,6 +429,8 @@ $('#login-btn').on('click', logInModalOn);
 $('#emailUserAdd').on('click', signUpModalOn);
 	// '회원가입' 클릭
 $('#useradd-btn').on('click', signUpModalOn);
+	// '임시비밀번호' 클릭
+$('#makeshiftPasswordBtn').on('click',makeshiftPasswordModalOn);
 	
 	
 	
@@ -407,6 +470,14 @@ $('#emailCheckBack').on('click', function(){
 	$('#inputPasswordCheck').val("");
 	$('#modalUseradd').css("display","block");
 	$('#inputPassword').focus();
+});
+	// 임시비밀번호에서 뒤로가기
+$('#makeshiftPasswordBack').on('click', function(){
+	modalOff();
+	$('.user-login-input-value').val("");
+	$('.loginCheck').empty();
+	$('#modalLogin').css("display", "block");
+	$('#userEmail').focus();
 });
 
 
@@ -542,6 +613,8 @@ $('#btnLogOut').on('click', function(){
 		}
 	});
 });
+
+
 
 
 
@@ -784,6 +857,10 @@ $('#inputTel').val(inputTelCheckValue);
 
 
 */
+
+
+
+
 </script>
 
 </html>
