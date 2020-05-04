@@ -111,7 +111,6 @@
 		
 		<!-- 헤더에 있어서 절대경로로 -->
 		<a href="/p5/reservationList">리스트</a> 
-		<a href="/p5/userInfoUpdate">회원정보수정</a>
 		<a href="/p5/userInfoReservationList">예약 리스트</a>
 		<a href="/p5/hostReservationUpdate">숙소 수정</a>
 	
@@ -222,7 +221,7 @@
 	   <div id="modalEmailCheck" class="modal">
 	      <span id="emailCheckBack" class="back">&lt;</span> 
 	      <span id="email-check-close" class="close">&times;</span>
-	      <div class="modal-popup">
+	      <div class="modal-popup"> 
 	         <h1>이메일 인증</h1>
 	         <br />
 	         <!-- 이메일 인증 input -->
