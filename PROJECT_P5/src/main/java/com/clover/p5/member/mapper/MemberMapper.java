@@ -7,8 +7,8 @@ public interface MemberMapper {
 
 	int insertMember(NewMemberDTO newMemberDto);
 	
-	Member selectMember(String email);
-	Member selectMemberById(int userId);
+	int selectMemberId(String email);
+	Member selectMember(int userId);
 	
 	String selectMobileAuthentication(int userId);
 	

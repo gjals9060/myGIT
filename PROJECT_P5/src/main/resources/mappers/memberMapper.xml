@@ -23,13 +23,12 @@
 	
 	
 	<!-- 로그인할 때 사용 -->
-	<select id="selectMember" parameterType="String" resultType="Member">
-		SELECT *
+	<select id="selectMemberId" parameterType="String" resultType="int">
+		SELECT id
 		FROM member
 		WHERE email = #{email}
 	</select>
-		<!-- 그 외 -->
-	<select id="selectMemberById" parameterType="int" resultType="Member">
+	<select id="selectMember" parameterType="int" resultType="Member">
 		SELECT *
 		FROM member
 		WHERE id = #{userId}
@@ -37,14 +36,27 @@
 	
 	
 	
+	<select id=""></select>
+	
+
+
+
+
+
+
+
+
+
+
+
+	<!-- 휴대전화 인증 여부를 검색 -->
 	<select id="selectMobileAuthentication" parameterType="int" resultType="String">
 		SELECT mobile_authentication
 		FROM member
 		WHERE id = #{userId}
 	</select>
 	
-	
-	
+	<!-- 휴대전화 인증 결과를 DB에 적용 -->
 	<update id="updateMobileAuthentication" parameterType="int">
 		UPDATE member
 		SET mobile_authentication = 'Y'

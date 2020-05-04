@@ -133,8 +133,9 @@ public class MemberServiceImpl implements MemberService {
 		String email = req.getParameter("userEmail");
 		String password = req.getParameter("userPassword");
 		HttpSession session = req.getSession();
+		int userId = memberMapper.selectMemberId(email);
 		
-		Member member = memberMapper.selectMember(email);
+		Member member = memberMapper.selectMember(userId);
 		if(member == null) {
 			return 0; // 없는 아이디
 		}
@@ -309,8 +310,9 @@ public class MemberServiceImpl implements MemberService {
 //******************************** session 갱신 ********************************************
 	@Override
 	public void refreshUserSession(HttpServletRequest req, int userId) {
-		Member member = memberMapper.selectMemberById(userId);
+		Member member = memberMapper.selectMember(userId);
 		req.getSession().setAttribute("user", member); // session을 갱신
+		System.out.println("session 갱신 완료.");
 	}
 //******************************** session 갱신-END ********************************************
 

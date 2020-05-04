@@ -46,6 +46,10 @@ public class HomeController {
 	public void hostReservationUpdate() {}
 	@RequestMapping("/phoneCertification")
 	public void phoneCertification() {}
+	@RequestMapping("/hostReservationList")
+	public void hostReservationList() {}
+	
+	
 
 
 	

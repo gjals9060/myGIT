@@ -94,7 +94,8 @@
 			} else{
 			%>
 				<!-- 이름만 출력 -->
-				<a href='host/registration/roomType'>호스트 등록</a>
+				<!-- <a href='host/registration/roomType'>호스트 등록</a> -->
+				<button onclick='isMobileAuthentication()'>호스트 등록</button>
 				<button class="user-drop-down-btn">
 					<span id="userImgBlock"><img id="userImg" src="img/p5_logo.png" alt="" /></span>
 					${user.firstName }
@@ -434,8 +435,27 @@ function sendEmailAuthenticationCode(){
 function sendEmailMekeshiftPasswordCode(){
 
 }
-	
-	
+	/// 호스트 등록을 눌렀을 때
+function isMobileAuthentication(){
+	$.ajax({
+		type : "POST",
+		url : "ajax/isMobileAuthentication",
+		success : function(data){
+			if(data){ // 휴대전화 인증자이면
+				location.href="/p5/host/registration/roomType";
+			} else{ // 아니면
+				alert("휴대전화 인증 이후에 이용 가능한 서비스입니다.");
+			////////// 팝업창
+				var phoneURL = '/p5/phoneCertification';
+				var phoneOption =  "width=370, height=360, resizable=no, scrollbars=no, status=no;";
+				window.open(phoneURL,"",phoneOption);	
+			}
+		},	
+		error : function(){
+			alert("통신 실패..");
+		}
+	});
+}
 
 	// modal 닫기
 $('.close').on('click', modalOff);

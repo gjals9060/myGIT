@@ -727,7 +727,7 @@ button {
    <!-- wrap end -->
 
 		<div class="contentReserv">
-			<form action="reservationPurchase" method="post">
+			<form action="reservationPurchase" method="post" onsubmit="return isMobileAuthentication();">
 			<table>
 				<tr>
 					<td><div class="contentReservTitle">예약</div>
@@ -1081,5 +1081,37 @@ button {
  */
  }
  
+	
+	
+	// 휴대전화 인증 여부 검사
+	function isMobileAuthentication(){
+		var isAuthentication = false;
+		
+		$.ajax({
+			type : "POST",
+			url : "ajax/isMobileAuthentication",
+			async : false,
+			success : function(data){
+				if(data){ // 휴대전화 인증자이면
+					
+					isAuthentication = true; // submit을 허락
+					
+				} else{ // 아니면
+					
+					alert("휴대전화 인증 이후에 이용 가능한 서비스입니다.");
+				////////// 팝업창
+					var phoneURL = '/p5/phoneCertification';
+					var phoneOption =  "width=370, height=360, resizable=no, scrollbars=no, status=no;";
+					window.open(phoneURL,"",phoneOption);
+					
+				}
+			},	
+			error : function(){
+				alert("통신 실패..");
+			}
+		});
+		
+		return isAuthentication;
+	}
 </script>
 </html>
