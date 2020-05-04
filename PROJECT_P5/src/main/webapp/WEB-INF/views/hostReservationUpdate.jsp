@@ -378,12 +378,18 @@
 
 // container class 
 	var hostReservationUpdateContainer=$(".host-reservation-update-container");
+	
+	function hostReservationModalAllClose(){
+		hostReservationUpdateContainer.css('display','none');
+	}
+	
+	
 // tab
 	var hostReservatoonUpdateBtn=$(".host-reservation-update-btn");
 	
 	//////////////////// 숙소 형태 tab 클릭/////////////////
 	$("#hostUpdateRoomTypeTab").on("click", function() {
-		hostReservationUpdateContainer.css("display","none");
+		hostReservationModalAllClose;
 		$("#hostUpdateRoomTypeCon").css("display", "block");
 		hostReservatoonUpdateBtn.css("border","1px solid");
 		$("#hostUpdateRoomTypeTab").css("border", "1px solid red");

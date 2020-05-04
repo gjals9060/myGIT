@@ -117,9 +117,25 @@
 						<div class="user-drop-down-menu-btn" id='btnHostReservationList'>등록한 숙소보기</div>
 					<p class="user-drop-down-label">Guest</p>
 						<div class="user-drop-down-menu-btn" id='btnUserInfoUpdate'>회원정보</div>
+						<div class="user-drop-down-menu-btn" id='btnUserReservationList'>예약 숙소 리스트</div>
 						<div class="user-drop-down-menu-btn" id='btnLogOut'>로그아웃</div>
 				</div>
+				<script>
+				$('#btnHostReservationList').on('click',function(){
+					alert("등록한 숙소 리스트로 이동");
+					location.href="/p5/hostReservationList";
+				});
 				
+				$('#btnUserInfoUpdate').on('click',function(){
+					alert("회원정보수정으로 이동");
+					location.href="/p5/userInfoUpdate";
+				});
+				
+				$('#btnUserReservationList').on('click',function(){
+					alert("예약 숙소리스트로 이동");
+					location.href="/p5/userInfoReservationList";
+				});
+				</script>
 								
 			<%
 			}
@@ -133,9 +149,9 @@
 	<div style="margin: 10px; text-align: center;grid-column-start: 1;grid-column-end: 4;">
 		
 		<!-- 헤더에 있어서 절대경로로 -->
-		<a href="/p5/reservationList">리스트</a> 
 		<a href="/p5/userInfoReservationList">예약 리스트</a>
 		<a href="/p5/hostReservationUpdate">숙소 수정</a>
+		<a href="/p5/userInfoUpdate">회원정보</a>
 	
 	</div>
 	</header>

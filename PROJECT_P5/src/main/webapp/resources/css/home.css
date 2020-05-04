@@ -84,6 +84,7 @@ section {
 	width: 90%;
     height: 100%;
     margin: 100px;
+    z-index: -1 !important;
 }
 
 .swiper-slide {
