@@ -6,8 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <!-- services와 clusterer, drawing 라이브러리 불러오기 -->
-<script type="text/javascript"
-   src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6252091adcb28726fdb95ebdf0b78361&libraries=services"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c57fda7695336028646dd43a52736a17&libraries=services"></script>
 
 </head>
 <body>

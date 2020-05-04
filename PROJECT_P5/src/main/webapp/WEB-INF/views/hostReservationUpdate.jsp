@@ -100,7 +100,7 @@
 <link href="https://code.jquery.com/ui/1.12.1/themes/pepper-grinder/jquery-ui.css" rel="stylesheet"/>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-<script src="https://cdn.rawgit.com/dubrox/Multiple-Dates-Picker-for-jQuery-UI/master/jquery-ui.multidatespicker.js"></script>
+<script src="js/enrollCalendar.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 
 <!-- 카카오맵 -->
@@ -332,7 +332,8 @@
 				<div id="mdp-demo"></div>    	
 				
 						<!-- host기 예약불가설정을 한 날짜가 들어감 -->
-    			<input type="hidden" id="altField" value="">
+    			<input type="text" id="altField" value="">
+    			
 			</div>
 		</div>
 
@@ -1068,15 +1069,40 @@
 	
 	
 	/////////// jQuery UI - MultiDatesPicker
+	var arr=new Array("2020-06-07","2020-07-03","2020-05-08","2020-05-10");
 	var dates = $('#mdp-demo').multiDatesPicker('value');
 	$("#check").val(dates);
-
+for(i=0;i<arr.length;i++){
 	$('#mdp-demo').multiDatesPicker({
+		dateFormat: "yy-mm-dd", 
+		addDates :  [new Date(arr[i])], 
+			
+		
 		altField: '#altField',
      	minDate: 0, // today
       	maxDate: 60, // +30 days from today
   	 });
 	
+	
+	
+}
+$('td').on('click',function(){
+	var blockingDate = $("#altFied").val();	
+	$.ajax({
+		url: "",
+		type: "POST",
+		data: "blockingDate="+blockingDate,
+		succuess: function(){
+			alert("성공");
+		},
+		error: function(){
+			alert("실패");
+			
+		}
+	});
+	
+});
+
 	
 	///////////////////// 동일기본요금  tab 클릭 ///////////////////
 	$("#hostUpdatePriceTab").on("click", function() {

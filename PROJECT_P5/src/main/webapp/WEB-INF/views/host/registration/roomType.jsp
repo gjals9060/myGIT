@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="../css/enrollType.css" />
+<link rel="stylesheet" href="css/roo.css" />
 </head>
 <body>
 <form action="roomCount" method="post">

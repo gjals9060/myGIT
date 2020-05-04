@@ -7,6 +7,9 @@
 
 /* Layout helpers
 ----------------------------------*/
+html{
+	width:1100px;
+}
 .ui-helper-hidden {
 	display: none;
 }
@@ -901,12 +904,14 @@ body .ui-tooltip {
 	border: 1px solid #cbc7bd;
 	width: 700px;
 height: 850px;
+position: relative;
+left:20%;
 
 	
 }
 .ui-widget-content {
 	border: 1px solid #d9d6c4;
-	background: #eceadf url("images/ui-bg_fine-grain_10_eceadf_60x60.png") 50% 50% repeat;
+	background: white url("images/ui-bg_fine-grain_10_eceadf_60x60.png") 50% 50% repeat;
 	color: #1f1f1f;
 }
 .ui-widget-content a {
@@ -933,10 +938,10 @@ height: 850px;
 works properly when clicked or hovered */
 html .ui-button.ui-state-disabled:hover,
 html .ui-button.ui-state-disabled:active {
-	border: 1px solid #cbc7bd;
-	background: #f8f7f6 url("images/ui-bg_fine-grain_10_f8f7f6_60x60.png") 50% 50% repeat;
+	border:  1px solid gray;
+	background: white url("images/ui-bg_fine-grain_10_f8f7f6_60x60.png") 50% 50% repeat;
 	font-weight: bold;
-	color: #654b24;
+	color: #008489;
 	height: 100px;
 }
 .ui-state-default a,
@@ -946,7 +951,7 @@ a.ui-button,
 a:link.ui-button,
 a:visited.ui-button,
 .ui-button {
-	color: #654b24;
+	color: #008489;
 	text-decoration: none;
 }
 .ui-state-hover,
@@ -957,8 +962,8 @@ a:visited.ui-button,
 .ui-widget-header .ui-state-focus,
 .ui-button:hover,
 .ui-button:focus {
-	border: 1px solid #654b24;
-	background: #654b24 url("images/ui-bg_fine-grain_65_654b24_60x60.png") 50% 50% repeat;
+	border: 1px solid #008489;
+	background: #008489 url("images/ui-bg_fine-grain_65_654b24_60x60.png") 50% 50% repeat;
 	font-weight: bold;
 	color: #ffffff;
 }
@@ -985,10 +990,10 @@ a.ui-button:focus {
 a.ui-button:active,
 .ui-button:active,
 .ui-button.ui-state-active:hover {
-	border: 1px solid #d9d6c4;
-	background: #eceadf url("images/ui-bg_fine-grain_15_eceadf_60x60.png") 50% 50% repeat;
-	font-weight: bold;
-	color: #140f06;
+    border: 1px solid #d9d6c4;
+    background: white url(images/ui-bg_fine-grain_15_eceadf_60x60.png) 50% 50% repeat;
+    font-weight: bold;
+    color: #140f06;
 }
 .ui-icon-background,
 .ui-state-active .ui-icon-background {
@@ -1007,9 +1012,14 @@ a.ui-button:active,
 .ui-state-highlight,
 .ui-widget-content .ui-state-highlight,
 .ui-widget-header .ui-state-highlight {
-	border: 1px solid #b2a266;
-	background: #f7f3de url("images/ui-bg_fine-grain_15_f7f3de_60x60.png") 50% 50% repeat;
-	color: #3a3427;
+	/* border: 1px solid WHITE; */
+	/* BACKGROUND: WHITE url("images/ui-bg_fine-grain_15_f7f3de_60x60.png") 50% 50% repeat; */
+	/* color: #3a3427; */
+/* 	border: 1px solid gray; */
+	background: white url(images/ui-bg_fine-grain_10_f8f7f6_60x60.png) 50% 50% repeat;
+	font-weight: bold;
+	color: #008489;
+	height: 100px;
 }
 .ui-state-checked {
 	border: 1px solid #b2a266;
@@ -1018,7 +1028,8 @@ a.ui-button:active,
 .ui-state-highlight a,
 .ui-widget-content .ui-state-highlight a,
 .ui-widget-header .ui-state-highlight a {
-	color: #3a3427;
+	color: WHITE;
+	BACKGROUND: #008489;
 }
 .ui-state-error,
 .ui-widget-content .ui-state-error,
@@ -1075,7 +1086,7 @@ a.ui-button:active,
 .ui-widget-header .ui-icon {
 	background-image: url("images/ui-icons_b83400_256x240.png");
 }
-.ui-state-hover .ui-icon,
+.ui-state-#008489 .ui-icon,
 .ui-state-focus .ui-icon,
 .ui-button:hover .ui-icon,
 .ui-button:focus .ui-icon {
