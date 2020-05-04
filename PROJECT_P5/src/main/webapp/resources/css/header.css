@@ -7,7 +7,10 @@ header{
 	background: white;
 	width:100%;
 	box-shadow: 0px 0px;
-	
+}
+
+herder > * {
+	font-family: "Malgun Gothic";
 }
 
 .title-logo-img {
@@ -24,13 +27,21 @@ header{
 	margin: auto;
 }
 
+/* 검색 block */
+.input-search-value-input {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-around;
+}
+
 /* 검색 input  */
 .input-text {
 	margin-right: 10px;
 }
 
 .useradd-login-form {
-	margin: auto 0 auto 25%;
+	margin: auto 0px;
 }
 
 /* 로그인 회원가입 버튼 */
@@ -46,6 +57,34 @@ header{
 
 .btn:hover {
 	border: 1px solid #bbb;
+}
+
+/* 지역 날짜 input */
+.input-serach-value {
+	width: 180px;
+	text-align: center;
+} 
+
+/* 인원 input */
+.personnel_input {
+	width: 50px;
+	text-align: center;
+	border: none;
+	font-size: 20px;
+	
+}
+
+
+
+/* 인원 + 버튼  ,- 벼튼*/
+#decreaseQuantity,
+#increaseQuantity {
+	outline: none;
+	background: none;
+	width: 20px;
+	border: none;
+	text-align: center;
+	font-size: 20px;
 }
 
  /* modal 화면 */
@@ -144,5 +183,41 @@ header{
 	width:105px;
 	height: 50px;
 	outline: none;
+}
+
+#userImg {
+	border-radius: 50%;
+	width: 30px;
+}
+
+
+
+@media screen and (max-width: 768px) {
+
+	#titleLogoImg {
+		height: 60%;
+	}
+	
+	
+	
+	
+}
+
+@media screen and (max-width : 480px){
+	
+	
+}
+
+
+@media screen and (max-width : 1416px){
+	
+	#searchBtn {
+		border-radius: 15px;
+		background-color: #E51E51;
+		color: WHITE;
+		width:75px;
+		height: 50px;
+		outline: none;
+	}
 }
 

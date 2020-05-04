@@ -178,13 +178,13 @@ to {
 						<div class="userinfo-input-block">
 							<div class="userinfo-input-title">이름</div>
 							<div class="userinfo-input-value">
-								<input type="text" />
+								<input type="text" value= ${user.firstName } />
 							</div>
 						</div>
 						<div class="userinfo-input-block">
 							<div class="userinfo-input-title">성</div>
 							<div class="userinfo-input-value">
-								<input type="text" />
+								<input type="text" value=${user.lastName }/>
 							</div>
 						</div>
 						<div class="userinfo-input-block">
@@ -235,26 +235,26 @@ to {
 					<!-- 사용자 프로필 사진 업로드 -->
 					
 				<script>
-				//이미지 정보들을 담을 배열   
+			 	//이미지 정보들을 담을 배열   
 				var sel_files = [];
 				$(document).ready(function() {
 					$("#picture").on("change", handleImgFileSelect);
-				});
+				}); 
 				
 				
 				
 				function fileUploadAction() {
 					console.log("fileUploadAction");
 					$("#picture").trigger('click');
-				}
+				} 
 				
 				function handleImgFileSelect(e) {
-					// 이미지 정보들을 초기화   
+				// 이미지 정보들을 초기화   
 					sel_files = [];
-					/*     $(".imgs_wrap").empty();   */
+					  $(".imgs_wrap").empty();  
 					var files = e.target.files;
 					var filesArr = Array.prototype.slice.call(files);
-					var index = 0;
+					var index = 0; 
 					filesArr.forEach(function(f) {
 								if (!f.type.match("image.*")) {
 									alert("확장자는 이미지 확장자만 가능합니다.");
@@ -263,13 +263,13 @@ to {
 								sel_files.push(f);
 								var reader = new FileReader();
 								reader.onload = function(e) {
-									var html = "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction("
+								/* 	var html = "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction("
 											+ index
 											+ ")\" id=\"img_id_"
 											+ index
 											+ "\"><img src=\"" + e.target.result + "\" data-file='"+f.name+"' class='selProductFile' title='클릭 시 삭제됩니다.' width=\"150px\" ></a>";
 									$(".imgs_wrap").append(html);
-									index++;
+									index++; */
 									
 									///// 이미지를 추가하면 그 이미지를 가져옴
 									$(".userinfo-img-content *").remove();
@@ -283,7 +283,7 @@ to {
 							});
 				}
 				
-				
+	
 				function deleteImageAction(index) {
 					console.log("index : " + index);
 					console.log("sel length : " + sel_files.length);
@@ -341,7 +341,6 @@ to {
 							</div>
 						</div>
 					</div>
-					<input type="submit" value="다음" />
 				</div>
 			</div>
 

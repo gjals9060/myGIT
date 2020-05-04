@@ -1,0 +1,158 @@
+@charset "UTF-8";
+
+<style>
+#wrap {
+	width: 1100px;
+	margin: auto;
+}
+
+/* 회원이미지 프로필 */
+.userinfo-img-content>img {
+	width: 100%;
+	border-radius: 50%;
+}
+
+section {
+	display: grid !important;
+	grid-template-columns: 35% 65%;
+	box-sizing: border-box;
+	height: 500px;
+}
+
+/* 회원정보 img  */
+.userinfo-img-content {
+	padding: 5px;
+	margin: auto;
+	width: 100%;
+}
+
+/* 회원정보 content  */
+.userinfo-update-content {
+	height: 100%;
+	border: 1px solid;
+	border-radius: 5px;
+	box-sizing: border-box;
+	margin-left: 10px;
+}
+
+/* 회원정보 input (margin 정리)*/
+.userinfo-input {
+	margin: auto;
+	width: 60%;
+	padding: 10px;
+}
+
+/* 회원정보 title */
+.userinfo-update-title {
+	font-size: 30px;
+	text-align: center;
+	padding-top: 10px;
+}
+
+/* 회원정보 input block */
+.userinfo-input-block {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	padding: 10px;
+}
+
+/* 회원정보 input title */
+.userinfo-input-title {
+	text-align: left;
+	font-size: 20px;
+	width: 40%;
+}
+
+/* 회원정보 input 값 */
+.userinfo-input-value {
+	width: 60%;
+}
+
+/* input text 설정 (크기 / 디자인 ) */
+.userinfo-input-value>input[type="text"] {
+	width: 100%;
+}
+
+/* input password 설정 */
+.userinfo-input-value>input[type=password] {
+	width: 300px;
+}
+
+/* 회원 프로필 사진 block*/
+.userinfo-update-img-block {
+	width: 100%;
+	margin: 50px;
+}
+
+/* 회원 프로필 사진 이미지 */
+.userinfo-update-img-block>img {
+	width: 20%;
+	border-radius: 50%;
+}
+
+/* 회원정보 수정 버튼 */
+.userinfo-input-submit {
+	float: right;
+	width: 100px;
+}
+
+/* 회원 비밀번호변경 modal */
+.userinfo-password-update-modal {
+	display: none;
+	position: fixed;
+	background-color: rgb(0, 0, 0, 0.9);
+	width: 100%;
+	height: 105%;
+	top: 0;
+	right: 0;
+	padding: auto;
+	top: 0;
+}
+
+/* 회원 비밀번호변경 modal-container */
+.userinfo-password-update-container {
+	width: 50%;
+	height: 30%;
+	background-color: white;
+	margin: auto;
+	margin-top: 300px;
+	padding: 50px;
+}
+
+/* modal 애니메이션 설정 */
+.userinfo-password-update-modal .userinfo-password-update-container {
+	animation: downFrame 0.3s ease-out;
+}
+
+@keyframes downFrame {from { transform:translateY(-5%);
+	opacity: 0.2;
+}
+
+to {
+	transform: translateY(0%);
+	opacity: 1;
+}
+
+}
+
+/* 비밀번호 유효성 검사 경고문 */
+.userinfo-input-value-error {
+	width: 40%;
+	margin: 0 auto;
+	height: 20px;
+}
+
+/* 회원 비밀번호 변경 modal colse */
+#userinfoPasswordUpdateClose {
+	display: block;
+	position: absolute;
+	top: 0;
+	right: 10px;
+	cursor: pointer;
+	font-size: 50px;
+	font-style: bold;
+	color: rgb(255, 255, 255);
+}
+
+</style>

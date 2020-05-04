@@ -32,13 +32,18 @@
 		<!-- 정보입력-->
 		<div class="input-info">
 			<form action="reservationList">
-			<!--지역 입력  -->				
-				<span class="input-text">지역</span><input type="text" name="address" id="address" placeholder="Add city, landmark, or address"/>
+			<!--지역 입력  -->
+			<div class="input-search-value-input">
+			<div class="input-location-block">				
+				<span class="input-text">지역</span><input class="input-serach-value" type="text" name="address" id="address" placeholder="Add city, landmark, or address"/>
+				
+				</div>
 				<!--달력에 필요할 jquery plugin  -->
 				
 				<!--  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" /> --> 
-				<span class="input-text">날짜</span><input type="text" name="checkInDatecheckOutDate"  />
-					
+				<div class="input-date-block">
+				<span class="input-text">날짜</span><input class="input-serach-value" type="text" name="checkInDatecheckOutDate"  />
+				</div>	
 					
 		<script type="text/javascript">
             var date=new Date();
@@ -60,15 +65,18 @@
 					
 					
 				<!--인원  -->
+				<div class="input-personnel-block">
 				<span class="input-text">인원</span> 
-				<input type='text' name='capacity' class="personnel_input" value="0" >
-				<button id="increaseQuantity">▲</button>
-				<button id="decreaseQuantity">▼</button>
+				<button id="increaseQuantity">+</button>
+				<input  type='text' name='capacity' class="personnel_input" value="0" >
+				<button id="decreaseQuantity">-</button>
+				</div>
 					        <!--인원 카운트 다운 0미만은 줄일수 없게함  -->
 				
 				
 					<!-- <i class="fa fa-search" aria-hidden="true"></i> -->
 				 	<input type="submit" id="searchBtn" value="검색" />
+				 </div>
 			 </form>
 		 </div>
 			
@@ -86,7 +94,8 @@
 			} else{
 			%>
 				<!-- 이름만 출력 -->
-				${user.firstName }
+				<span id="userImgBlock"><img id="userImg" src="img/p5_logo.png" alt="" /></span>
+				<a href="/p5/userInfoUpdate">${user.firstName }</a>
 				<button id='btnLogOut'>로그아웃</button>
 				<a href='host/registration/roomType'>호스트 등록</a>
 			<%
