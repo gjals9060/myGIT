@@ -8,6 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>숙소 상세보기</title>
 
 
@@ -15,9 +16,13 @@
 <link rel="stylesheet" href="css/daterangepicker.css" />
 <style type="text/css">
 #wrap {
-   width: 100%;
-   max-width: 1100px;
-   margin: 10px auto;
+	width: 90%;
+	max-width: 1100px;
+	margin: 10px auto;
+}
+
+table {
+	width: 100%;
 }
 
 hr {
@@ -26,108 +31,114 @@ hr {
 
 button {
 	border: none;
+	width: 15px;
+	background: none;
 }
 
-input {
+.reservTab input {
 	vertical-align: middle;
 	text-align: center;
 	width: 100%;
 }
 
-input[type=submit] {
+.personnel_input {
+ 	width: 60% !important;
+ }
+
+.reservTab input[type=submit] {
 	border: none;
 	width: 100%;
 	background: #ed2d55;
-    color: white;
-    font-size: 18px;
-    font-weight: bolder;
-    padding: 5px;
-    margin: 10px 0 0 0;
+	color: white;
+	font-size: 18px;
+	font-weight: bolder;
+	padding: 5px;
+	margin: 10px 0 0 0;
 }
 
 /* modalImgSlide */
 .modalImgSlide {
-   display: none;
-   background: black;
-   background: rgb(0, 0, 0, 0.8);
-   position: fixed;
-   z-index: 1;
-   left: 0;
-   top: 0;
-   width: 100%;
-   height: 100%;
-   overflow: auto;
-   background: black;
+	display: none;
+	background: black;
+	background: rgb(0, 0, 0, 0.8);
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background: black;
 }
 
 /* --- postImgSlide --- */
 .postImgSlide {
-   position: relative;
+	position: relative;
 }
 
 .postImg, .modalImg {
-   display: none;
-   text-align: center;
+	display: none;
+	text-align: center;
 }
 
 .postImg img, .modalImg img {
-   max-width: 900px;
-   height: 400px;
-   cursor: pointer;
-   transition: 0.3s;
-   cursor: pointer;
-   padding-top: 0.5%;
+	max-width: 500px;
+	cursor: pointer;
+	transition: 0.3s;
+	padding-top: 0.5%;
 }
 
 .modalImg img {
-   max-width: 1100px;
-   height: 600px;
+	width: 100%;
+	height: auto;
+	min-width: 600px;
+	max-width: 900px;
 }
 
 .postImg:hover {
-   opacity: 0.7;
+	opacity: 0.7;
 }
 
 .modalImgSlideButton {
-   color: white;
+	color: white;
 }
 
 .postImgSlideButton, .modalImgSlideButton {
-   text-align: center;
-   margin: 15px;
+	text-align: center;
+	margin: 15px;
 }
 
 .prev, .next {
-   cursor: pointer;
-   padding: 10px;
-   font-weight: bold;
-   font-size: 20px;
-   border-radius: 0 3px 3px 0;
+	cursor: pointer;
+	padding: 10px;
+	font-weight: bold;
+	font-size: 20px;
+	border-radius: 0 3px 3px 0;
 }
 
 .next {
-   left: 550px;
-   border-radius: 3px 0 0 3px;
+	left: 550px;
+	border-radius: 3px 0 0 3px;
 }
 
 .prev:hover, .next:hover {
-   background: rgba(0, 0, 0, 0.5);
+	background: rgba(0, 0, 0, 0.5);
 }
 
 .modalImgNumber {
-   color: white;
+	color: white;
 }
 
 .postImgNumber, .modalImgNumber {
-   font-size: 12px;
-   top: 0px;
-   padding-top: 0.5%;
+	font-size: 12px;
+	top: 0px;
+	padding-top: 0.5%;
 }
 
 .postImgThumbnails, .modalImgThumbnails {
-   width: 100%;
-   min-width: 500px;
-   margin: 0 auto;
+	width: 100%;
+	min-width: 500px;
+	margin: 0 auto;
 }
 
 .postImgThumbnails, .modalImgThumbnails {
@@ -136,66 +147,71 @@ input[type=submit] {
 }
 
 .postImgThumbnails:after, .modalImgThumbnails:after {
-   content: "";
-   display: table;
-   clear: both;
+	content: "";
+	display: table;
+	clear: both;
 }
 
 .postImgThumbnail.active img, .postImgThumbnail img:hover,
-   .modalImgThumbnail.active img, .modalImgThumbnail img:hover {
-   opacity: 1;
+	.modalImgThumbnail.active img, .modalImgThumbnail img:hover {
+	opacity: 1;
 }
 
 .postImgThumbnail img, .modalImgThumbnail img {
-   cursor: pointer;
-   float: left;
-   opacity: 0.6;
-   object-fit: cover;
-   object-position: center;
-   width: 20%;
-   height: 100px;
+	cursor: pointer;
+	float: left;
+	opacity: 0.6;
+	object-fit: cover;
+	object-position: center;
+	width: 20%;
+	height: 100px;
 }
 
 /* --- postContent --- */
 .postContent {
-   min-width: 320px;
+	min-width: 320px;
 }
 
 .postContentTable td:first-child {
-   width: 75%;
-   min-width: 500px;
-   font-size: 95%;
-   line-height: normal;
+	width: 75%;
+	/* min-width: 500px; */
+	max-width: 1px;
+	font-size: 95%;
+	line-height: normal;
 }
 
 .postContent td:nth-child(2) {
-   text-align: right;
+	text-align: right;
 }
 
 .contentTitle {
-   font-size: 28px;
-   font-weight: bolder;
+	font-size: 28px;
+	font-weight: bolder;
 }
 
 .Title {
-   font-size: 19px;
-   margin: 0px 0px 25px 0px;
-   font-weight: bolder;
+	font-size: 19px;
+	margin: 0px 0px 25px 0px;
+	font-weight: bolder;
 }
 
 .contentIntro table td:first-child {
-   vertical-align: middle;
-   min-height: 400px;
+	vertical-align: middle;
+	min-height: 400px;
+}
+
+.contentConven {
+	word-break: keep-all;
 }
 
 .contentConven img {
-   width: 25px;
-   height: 25px;
+	width: 25px;
+	height: 25px;
 }
 
 .contentProfile img {
-   width: 50px;
-   height: 50px;
+	width: 50px;
+	height: 50px;
 }
 
 .contentReview {
@@ -203,92 +219,92 @@ input[type=submit] {
 }
 
 .contentReview table td {
-   padding: 10px;
-   text-align: center;
-   vertical-align: middle;
+	padding: 10px;
+	text-align: center;
+	vertical-align: middle;
 }
 
 .contentReview table td:nth-child(2) {
-   text-align: left;
+	text-align: left;
 }
 
 .contentReview img {
-   width: 50px;
-   height: 50px;
-   object-fit: cover;
-   object-position: center;
+	width: 50px;
+	height: 50px;
+	object-fit: cover;
+	object-position: center;
 }
 
 .contentReviewInput img {
-   width: 80px;
-   height: 80px;
-   object-fit: cover;
-   object-position: center;
+	width: 80px;
+	height: 80px;
+	object-fit: cover;
+	object-position: center;
 }
 
 .reviewStar {
-   width: 20px !important;
-   height: 20px !important;
+	width: 20px !important;
+	height: 20px !important;
 }
 
 .contentReviewInput {
-   vertical-align: middle;
+	vertical-align: middle;
 }
 
 .contentReviewInput td:nth-child(2) {
-   width: 100%;
-   min-width: 300px;
+	width: 100%;
+	min-width: 300px;
 }
 
 .contentReviewInput input {
-   width: -webkit-fill-available
+	width: -webkit-fill-available
 }
 
 .commentSlider {
-   -webkit-appearance: none;
-   appearance: none;
-   width: 100%; 
-   height: 25px; 
-   background: #d3d3d3; 
-   outline: none; 
-   opacity: 0.7; 
-   -webkit-transition: .2s; 
-   transition: opacity .2s;
+	-webkit-appearance: none;
+	appearance: none;
+	width: 100%;
+	height: 25px;
+	background: #d3d3d3;
+	outline: none;
+	opacity: 0.7;
+	-webkit-transition: .2s;
+	transition: opacity .2s;
 }
 
 .commentSlider:hover {
-   opacity: 1;
+	opacity: 1;
 }
 
 .commentSlider::-webkit-slider-thumb {
-   -webkit-appearance: none;
-   appearance: none;
-   width: 25px;
-   height: 25px;
-   border: 0;
-   background-image: url('img/back.jpg');
-   cursor: pointer;
+	-webkit-appearance: none;
+	appearance: none;
+	width: 25px;
+	height: 25px;
+	border: 0;
+	background-image: url('img/back.jpg');
+	cursor: pointer;
 }
 
 .contentReserv {
-   border: 1px solid black;
-   padding: 8%;
-   margin: 0 10% 0;
-   position: sticky;
-   top: 10%;
-   bottom: 30%;
-   left: 65%;
-   text-align: center;
+	border: 1px solid black;
+	padding: 8%;
+	margin: 0 10% 0;
+	position: sticky;
+	top: 10%;
+	bottom: 30%;
+	left: 65%;
+	text-align: center;
 }
 
 .contentReservTitle {
-    font-size: 17px;
-    margin: 15px 0 10px;
-    font-weight: bolder;
+	font-size: 17px;
+	margin: 15px 0 10px;
+	font-weight: bolder;
 }
 
-.personnel_input {
-   width: 45%;
+.personInput {
+	width: 100%;
 }
 
 #dateCount {
@@ -296,14 +312,171 @@ input[type=submit] {
 }
 
 /* 지도 */
+
+.contentMap {
+	width: 60vw;
+	max-width: 700px;
+}
+
 .map {
-	width: 500px;
+ 	width: 500px; 
 	height: 400px;
 	margin-top: 10px;
 	z-index: 3;
 	text-align: center;
 	margin: 0 auto;
 	margin-bottom: 30px;
+}
+
+/* 반응형 */
+.contentReservFix {
+	display: none;
+	position: fixed;
+    bottom: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    left: 0;
+    vertical-align: middle;
+    text-align: center;
+	background: #eee;
+}
+
+.contentReservFix table {
+	padding: 0 15px;
+}
+
+.contentReservFix td:nth-child(3) {
+	width: 20%;
+	min-width: 120px;
+}
+
+
+.contentReservFix input {
+	vertical-align: middle;
+	text-align: center;
+	width: -webkit-fill-available;
+	
+}
+
+
+.contentReservFix input[type=submit] {
+	border: none;
+	width: 100%;
+	background: #ed2d55;
+	color: white;
+	font-size: 18px;
+	font-weight: bolder;
+	padding: 5px;
+	margin: 10px 0 0 0;
+}
+
+/* 페이징 */
+.pagination a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: background-color .3s;
+}
+
+.pagination a.active {
+  background-color: dodgerblue;
+  color: white;
+}
+
+.pagination a:hover:not(.active) {background-color: #ddd;}
+
+
+
+
+@media (min-width: 480px) and (max-width: 880px) {
+	
+	#wrap {
+		width: 90%;
+		max-width: 880px;
+		background: red;
+	}
+	
+	.postContent div {
+		width: 85vw;
+	}
+	
+	.contentTitle {
+		width: none;
+	}
+	
+	.reservTab {
+		display: none;
+	}
+	
+	.contentReservFix {
+		display: block;
+	}
+		
+	.postImg img, .modalImg img {
+		max-width: 400px;
+		padding-top: 0.5%;
+	}
+	
+	.modalImg img {
+		width: 100%;
+		height: auto;
+		min-width: 400px;
+		max-width: 800px;
+	}
+	
+	.postImgThumbnails, .modalImgThumbnails {
+		min-width: 300px;
+	}
+	
+	.postImgThumbnails img, .modalImgThumbnails img {
+		height: 70px;
+	}
+}
+
+@media (min-width: 0px) and (max-width: 480px) {
+ 	
+	#wrap {
+		width: 90%;
+		max-width: 480px;
+		min-width: 360px;
+		background: blue;
+	}
+	
+	.postContent div {
+		width: 85vw;
+	
+	}
+	
+	.reservTab {
+		display: none;
+	}
+	
+	.contentReservFix {
+		display: block;
+	}
+	
+	
+	.postImg img, .modalImg img {
+		max-width: 360px;
+		padding-top: 0.5%;
+	}
+	
+	.modalImg img {
+		width: 100%;
+		height: auto;
+		min-width: 300px;
+		max-width: 500px;
+	}
+	
+	.postImgThumbnails, .modalImgThumbnails {
+		min-width: 300px;
+	}
+	
+	.postImgThumbnails img, .modalImgThumbnails img {
+		height: 50px;
+	}
 }
 
 </style>
@@ -442,61 +615,60 @@ input[type=submit] {
       </div>
       <hr>
 
-      <div class="postContent">
-         <table class="postContentTable">
-            <tr>
-               <td>
-                  <div class="contentIntro">
-                     <table>
-                        <tr>
-                           <td><div class="contentTitle">${host.name}</div></td>
-                           <td><span class="contentProfile"><img src="img/room1.jpg" alt="" /></span></td>
-                        </tr>
-                        <tr>
-                           <td>작성일 ${host.creationDate } |
-                              수정일${host.modificationDate }</td>
-                              <td>${host.firstName } 님</td>
-                        </tr>
-                        <tr>
-                           <td colspan="2"><span class="contentLocation">${host.address }</span></td>
-                        </tr>
-                        <tr>
-                           <td colspan="2">${host.type }${host.roomType }| 인원
-                              ${host.capacity }명 방 ${host.roomCount }개 침대 ${host.bedCount }개
-                              욕실 ${host.bathroomCount }개</td>
-                        </tr>
-                     </table>
-                  </div> <!-- postContentIntro end -->
-                  <hr>
-                  <div class="contentConven" id="contentConven">
-                     <div class="contentConven Title">편의시설</div>
-                  </div>
-                  <hr>
-                  <div class="contentExplain">
-                     <div class="contentExplain Title">숙소 설명</div>
-                     ${host.description }
-                  </div>
-                  <hr>
+		<div class="postContent">
+			<table class="postContentTable">
+				<tr>
+					<td>
+						<div class="contentIntro">
+							<table>
+								<tr>
+									<td><div class="contentTitle">${host.name}</div></td>
+									<td rowspan="4"><span class="contentProfile"><img
+											src="img/room1.jpg" alt="" /></span><br>${host.firstName }님</td>
+								</tr>
+								<tr>
+									<td>작성일 ${host.creationDate } | 수정일${host.modificationDate }</td>
+								</tr>
+								<tr>
+									<td><span class="contentLocation">${host.address }</span></td>
+								</tr>
+								<tr>
+									<td>${host.type }${host.roomType }|인원
+										${host.capacity }명 방 ${host.roomCount }개 침대 ${host.bedCount }개
+										욕실 ${host.bathroomCount }개</td>
+								</tr>
+							</table>
+						</div> <!-- postContentIntro end -->
+						<hr>
+						<div class="contentConven" id="contentConven">
+							<div class="contentConven Title">편의시설</div>
+						</div>
+						<hr>
+						<div class="contentExplain">
+							<div class="contentExplain Title">숙소 설명</div>
+							${host.description }
+						</div>
+						<hr>
 
-                  <div class="contentEct">
-                     <div class="contentEct Title">기타 사항</div>
-                     ${host.descriptionEtc }
-                  </div>
-                  <hr>
-                  <div class="contentMap">
-                     <div class="contentMap Title">지도</div>
-                     <div id="map" class="map">
-                        <button
-                           style="background: #FFFFFF; width: 33px; margin-right: 2px; padding: unset; position: absolute; top: 105px; right: 0; z-index: 5; border: none; border-radius: 10px;"
-                           onclick="panTo()">
-                           <img alt="focus" src="./img/focus.png"
-                              style="width: 30px; height: 30px;">
-                        </button>
-                     </div>
-
-                     <script type="text/javascript"
-                        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6252091adcb28726fdb95ebdf0b78361"></script>
-                     <script>
+						<div class="contentEct">
+							<div class="contentEct Title">기타 사항</div>
+							${host.descriptionEtc }
+						</div>
+						<hr>
+						<div class="contentMap">
+							<div class="contentMap Title">지도</div>
+							<div id="map" class="map" style="width: 90%">
+								<button
+									style="background: #FFFFFF; width: 33px; margin-right: 2px; padding: unset; position: absolute; top: 105px; right: 0; z-index: 5; border: none; border-radius: 10px;"
+									onclick="panTo()">
+									<img alt="focus" src="./img/focus.png"
+										style="width: 30px; height: 30px;">
+								</button>
+							</div>
+							</div>
+							<script type="text/javascript"
+								src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6252091adcb28726fdb95ebdf0b78361"></script>
+							<script>
                      var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
                          mapOption = { 
                              center: new kakao.maps.LatLng(37.240910457871784, 131.86707687050958), // 지도의 중심좌표
@@ -545,80 +717,112 @@ input[type=submit] {
                          map.panTo(moveLatLon);            
                      }    
                      
-                  </script>
+                     function resizeMap() {
+                    	    var mapContainer = document.getElementById('map');
+                    	    mapContainer.style.width = '90%';
+                    	    /* mapContainer.style.height = '650px'; */ 
+                    	}
 
-                  </div>
-                  <hr>
-               </td>
-               <td>
-                  <div class="contentReserv">
-                  	  <form action="reservationPurchase" method="post">
-		                  <div class="contentReservTitle">예약</div>
-		                  ${host.price}/1박
-		                  <div class="contentReservTitle">날짜</div>
-		                  <input type="text" id="checkDate" name="checkInDatecheckOutDate"
-		                     value="${checkInDatecheckOutDate}" onchange="countDate()" />
-		                  <div class="contentReservTitle">인원</div>
-		                  <input type='text' name='personnel' class="personnel_input" value="${capacity}">
-		                  <!-- ${capacity}는 검색할때의 인원 설정 조건임, ${host.capacity} 와 다름 -->
-		                  <button id="increaseQuantity">▲</button>
-		                  <button id="decreaseQuantity">▼</button>
-		                  <div id="dateCount"></div>
-		                  <input type="hidden" id="hostId" name="hostId" value="${host.id}">
-		                  <input type="hidden" id="userId" name="userId" value="${user.id}">
-		                  <input type="hidden" id="hostName" name="hostName" value="${host.name}">
-		                  <input type="hidden" id="hostPrice" name="hostPrice" value="${host.price}">
-		                  <input type="hidden" id="dateCnt" name="dateCnt" value="">
-		                  <input type="submit" value="예약하기" />
-	                  </form>
-                  </div>
-               </td>
-            </tr>
-         </table>
-         <div class="contentReview">
-            <div class="contentReview Title">후기</div>
-            <div class="contentReviewStar">★ 4.5 (21)</div>
-<!--             <table class="contentReviewInput">
-               <tr>
-                  <td><img src="img/fox.jpg" /><br> 내닉네임</td>
-                  <td>
-                     <div class="starBox">
-                        <span class="star starLeft"></span> <span class="star starRight"></span>
-                        <span class="star starLeft"></span> <span class="star starRight"></span>
-                        <span class="star starLeft"></span> <span class="star starRight"></span>
-                        <span class="star starLeft"></span> <span class="star starRight"></span>
-                        <span class="star starLeft"></span> <span class="star starRight"></span>
-                        <span class="starNumber" id="starNum">0</span>
-                     </div> <input type="text" id="commentReview" placeholder="내용을 입력해주세요." />
-                  </td>
-                  <td><input type="button" value="등록" id="commentUpButton" onclick="commentUp()" /></td>
-               </tr>
-            </table>
- -->
-            <table class="contentReviewList" id="reviewList">
-               <tr></tr>
-<!--                <tr>
-                  <td><img src="img/rose.jpg" alt="" /><br>가나다</td>
-                  <td>★★★★★<br>숙소가 굉장히 좋아요! 주변에 관광지도 많고 무엇보다 Host분이 굉장히
-                     친절하세요!!
-                  </td>
-               </tr>
-               <tr>
-                  <td><img src="img/flower.jpg" alt="" /><br>라마바</td>
-                  <td>★★★<br>별로입니다.
-                  </td>
-               </tr> -->
-            </table>
-            <input type="button" value="더보기" onclick="commentMore()" />
-         </div>
-         <!-- contentReview end -->
-         <hr>
-         <div class="contentRefund">
-            <div class="contentRefund Title">환불정책</div>
-            체크인 30일 전까지는 전액환불 가능합니다.
-         </div>
-      </div>
-      <!-- postContent end-->
+                    	function relayout() {
+                    	    map.relayout();
+                    	}
+                    	
+                    	resizeMap();
+                    	relayout();
+
+                    	</script>
+					</td>
+					<td class="reservTab">
+						<div class="contentReserv">
+							<form action="reservationPurchase" method="post">
+								<div class="contentReservTitle">예약</div>
+								${host.price}/1박
+								<div class="contentReservTitle">날짜</div>
+								<input type="text" id="checkDate" name="checkInDatecheckOutDate"
+									value="${checkInDatecheckOutDate}" onchange="countDate()" />
+								<div class="contentReservTitle">인원</div>
+								<span class="personInput"><input type='text' name='personnel' class="personnel_input"
+									value="${capacity}">
+								<!-- ${capacity}는 검색할때의 인원 설정 조건임, ${host.capacity} 와 다름 -->
+								<button id="increaseQuantity">▲</button>
+								<button id="decreaseQuantity">▼</button>
+								</span>
+								<div id="dateCount"></div>
+								<input type="hidden" id="hostId" name="hostId"
+									value="${host.id}"> <input type="hidden" id="userId"
+									name="userId" value="${user.id}"> <input type="hidden"
+									id="hostName" name="hostName" value="${host.name}"> <input
+									type="hidden" id="hostPrice" name="hostPrice"
+									value="${host.price}"> <input type="hidden"
+									id="dateCnt" name="dateCnt" value=""> <input
+									type="submit" value="예약하기" />
+							</form>
+						</div>
+					</td>
+				</tr>
+			</table>
+			<hr>
+			<div class="contentReview">
+				<div class="contentReview Title">후기<span class="contentReviewStar">★ 4.5 (21)</span></div>
+				<table class="contentReviewList" id="reviewList">
+<!-- 					<tr></tr> -->
+				</table>
+				<div class="pagination">
+					<div class="pagingPrev"><a class="paging" onclick="commentLoad(nowCommentPage-1)">&laquo;</a></div>
+					<div class="pagingNum">
+		  				<a class="paging active" onclick="commentLoad(1)">1</a>
+						<a class="paging" onclick="commentLoad(2)">2</a>
+						<a class="paging" onclick="commentLoad(3)">3</a>
+						<a class="paging" onclick="commentLoad(4)">4</a>
+						<a class="paging" onclick="commentLoad(5)">5</a>
+					</div>
+					<div class="pagingNext"><a class="paging" onclick="commentLoad(nowCommentPage+1)">&raquo;</a></div>
+			</div>
+			</div>
+			<!-- contentReview end -->
+			<br>
+			<hr>
+			<div class="contentRefund">
+				<div class="contentRefund Title">환불정책</div>
+				체크인 30일 전까지는 전액환불 가능합니다.
+			</div>
+		</div>
+
+		<div class="contentReservFix">
+			<form action="reservationPurchase" method="post">
+				<table>
+					<tr>
+						<td><div class="contentReservTitle">예약</div></td>
+						<td><div class="contentReservTitle">날짜</div></td>
+						<td><div class="contentReservTitle">인원</div></td>
+					</tr>
+					<tr>
+						<td>${host.price}/1박</td>
+						<td><input type="text" id="checkDate2"
+							name="checkInDatecheckOutDate" value="${checkInDatecheckOutDate}"
+							onchange="countDate2()" /></td>
+						<td><input type='text' name='personnel'
+							class="personnel_input" value="${capacity}">
+							<!-- ${capacity}는 검색할때의 인원 설정 조건임, ${host.capacity} 와 다름 -->
+							<button id="increaseQuantity">▲</button>
+							<button id="decreaseQuantity">▼</button></td>
+					</tr>
+					<tr>
+						<td colspan="3">
+							<div id="dateCount2"></div>
+						</td>
+					</tr>
+				</table>
+				<input type="hidden" id="hostId" name="hostId" value="${host.id}">
+				<input type="hidden" id="userId" name="userId" value="${user.id}">
+				<input type="hidden" id="hostName" name="hostName"
+					value="${host.name}"> <input type="hidden" id="hostPrice"
+					name="hostPrice" value="${host.price}"> <input
+					type="hidden" id="dateCnt" name="dateCnt" value=""> <input
+					type="submit" value="예약하기" />
+			</form>
+		</div>
+		<!-- postContent end-->
    </div>
    <!-- wrap end -->
 
@@ -747,6 +951,7 @@ input[type=submit] {
             case 1:
                $("#contentConven").append('<span class="convenImg Wifi"><img src="./img/wifi.png" alt="" /> WiFi </span>');
                conventCount++;
+               $("#contentConven").append('&nbsp;&nbsp;');
                break;
             case 2:
                $("#contentConven").append('<span class="convenImg Airconditioner"><img src="./img/airconditioner.png" alt="" /> 에어컨 </span>');
@@ -783,8 +988,9 @@ input[type=submit] {
             default:
                break;
             }
+            $("#contentConven").append('&nbsp;');
          }
-       if(conventCount == 5) $("#contentConven").append('<br>');  
+/*        if(conventCount == 5) $("#contentConven").append('<br>'); */  
 
       }
    }
@@ -794,7 +1000,7 @@ input[type=submit] {
    /* 댓글 */
    var commentCount = 0;
    var commentStar = 0;
-
+/* 
    function commentLoad() {
       $("#reviewList").children("tbody").after('<tr>'+'<td><img src="img/room1.jpg" alt="" /><br>가나다</td>'
             + '<td>★4<br>숙소가 굉장히 좋아요! 주변에 관광지도 많고 무엇보다 Host분이 굉장히 친절하세요!!</td>'
@@ -802,37 +1008,7 @@ input[type=submit] {
       $("#reviewList").children("tbody").after('<tr>'+
       '<td><img src="img/room1.jpg" alt="" /><br>라마바</td><td>★1<br>별로입니다.</td></tr>');
    }
-   commentLoad();
-   
-   /* 댓글 작성 
-   function commentUp() {
-      var reviewList = document.getElementById("reviewList");
-      var contentReviewStar = document
-            .getElementsByClassName("contentReviewStar");
-      var contentReviewInput = document
-            .getElementsByClassName("contentReviewInput");
-      
-      $("#reviewList").children("tbody").before('<tr><td><img src="'
-      + contentReviewInput[0].getElementsByTagName("img")[0].src
-      + '" /><br>' + '닉네임' + '</td><td>' +
-      '<img src="img/star1.png" class="reviewStar" />' +
-      $(".starNumber").text()
-      + '<br>'
-       + $("#commentReview").val() + '</td></tr>');
-      
-      commentCount++;
-      commentStar = (commentStar + Number($(".starNumber").text())) / 2;
-      contentReviewStar[0].innerHTML = '★' + commentStar + ' ('
-            + commentCount + ')';
-      
-       후기 등록 후 입력 막기 
-      $("#commentUpButton").attr('onclick', "");
-      $("#commentUpButton").val("등록완료");
-      $(".star").off('click'); 
-      $("#commentReview").val("");
-      $("#commentReview").attr('placeholder', '후기를 입력한 숙소입니다.');
-      $("#commentReview").attr('disabled', 'disabled');
-   } */ 
+   commentLoad(); */
    
    function commentMore() {
       /* 댓글 더보기 (상단부터 오래된 댓글) -> 화면 프린트 시 최근 댓글이 위로 프린트됨 */
@@ -845,23 +1021,7 @@ input[type=submit] {
       /* (만약 next가 없다면) */
 /*       $("#reviewList").children("tr:last").after('<tr>'+
       '<td colspan="2">마지막 후기입니다.</td></tr>'); */
-            
    }
-   
-   /* 별점 */
-
-   $(".star").on('click', function() {
-      var idx = $(this).index();
-      $(".star").removeClass("on");
-      for (var i = 0; i <= idx; i++) {
-         $(".star").eq(i).addClass("on");
-      }
-      var printIdx = idx + 0.5;
-      if (printIdx >= 1)
-         printIdx = (idx / 2) + 0.5;
-
-      $(".starNumber").html(printIdx);
-   });
    
    /* 캘린더 */
 
@@ -884,6 +1044,7 @@ input[type=submit] {
                      + label + ')');
             });
    });
+   
    function countDate() {
    var date = $("#checkDate").val().split(" - ");
    var checkInDate = date[0].split("/");
@@ -895,6 +1056,19 @@ input[type=submit] {
    $('#dateCnt').val(dateCount);
    
    $("#dateCount").html(dateCount + "박 " + (dateCount+1) + "일<br>" + ("${host.price }"*dateCount) + "원");
+   }
+   
+   function countDate2() {
+   var date = $("#checkDate2").val().split(" - ");
+   var checkInDate = date[0].split("/");
+   var checkInDate1 = new Date(checkInDate[2], checkInDate[0]-1, checkInDate[1]);
+   var checkOutDate = date[1].split("/");
+   var checkOutDate1 = new Date(checkOutDate[2], checkOutDate[0]-1, checkOutDate[1]);
+   var dateCount = parseInt(checkOutDate1-checkInDate1)/(24*60*60*1000);
+   
+   $('#dateCnt').val(dateCount);
+   
+   $("#dateCount2").html(dateCount + "박 " + (dateCount+1) + "일 / " + ("${host.price }"*dateCount) + "원");
    }
    
    /* 인원 선택 */
@@ -921,14 +1095,78 @@ input[type=submit] {
          var capacity
          num++;
          
-         if(num > ${host.capacity }){
+         if(num > ${host.capacity }) {
         	 alert("host의 최대 수용 인원 보다 많습니다.");
         	 num--;
          }
          $('.personnel_input').val(num);
-
       });
    });
-</script>
+   
+   /* 페이징 */
+   
+   var nowCommentPage = 1;
+	commentLoad(nowCommentPage);
 
+	function commentLoad(n) {
+			nowCommentPage = n;
+			var nn = Math.ceil(n/5)-1;
+	
+			/* 댓글 정보 리스트 */
+	/* 		var commentWriterImgList = ["img/back.jpg", "img/berry.jpg", "img/bread.jpg", "img/coffee.jpg", "img/fox.jpg", "img/water.jpg", "img/flower.jpg"];
+			var commentWriterList = ["가나", "다라", "마바", "사아", "자차", "카타", "파하"];
+			var commentStarList = ["1", "1.5", "2", "2.5", "3", "4.5", "5"];
+			var commentContentList = ["좋아요", "숙소가 굉장히 좋아요!", "주변에 관광지도 많아요", "무엇보다 Host분이 굉장히 친절하세요!!", "별로입니다.", "그냥 그래요", "ㅁㅇㅁㄴㅇㅁㅇㅁㄴㅇ" ];
+	 */		
+			/* 한페이지당 댓글 출력 갯수 3개로 설정 */
+		 var paging = document.getElementsByClassName("paging");
+	
+	/* 		var commentNum = 3;
+		   var pagingNumber = Math.ceil(commentWriterList.length/commentNum); 
+		  */
+		   /* 화살표 */
+	/* 	   if(n == 1){
+			   $(".pagingPrev").css("display", "none");
+		   } else if(n == pagingNumber){
+			   $(".pagingNext").css("display", "none");
+		   } else {
+			   $(".pagingPrev").css("display", "block");
+			   $(".pagingNext").css("display", "block");
+		   }
+	 */	   
+		   /* 페이징 번호 */
+	/* 	   $(".pagingNum").html("");
+		   for (var i = (1+nn*5); i < (1+nn*5+5); i++) {
+			   $(".pagingNum").append('<a class="paging" onclick="commentLoad(' + i + ')">' + i + '</a>');
+		}
+		    */
+		   for (var i = 0; i < paging.length; i++) {
+			   paging[i].className = paging[i].className.replace(" active", "");
+			}
+		    
+			paging[n].className += " active";		    
+		   /* paging[n-(nn*5)].className += " active"; */
+		   
+		   /* 01234
+		   56789
+		   1011121314 
+		   n-(nn*5)
+		   */
+		   /* 1 123
+		   	2 456
+		   	3 789
+		   */
+		   /* 
+		   var startNum = 1+(commentNum*(n-1))-1;
+				$("#reviewList").children("tbody").html('<tr>'+'<td><img src="' + commentWriterImgList[startNum] +'" alt="" /><br>' + commentWriterList[startNum] + ' </td>'
+			            + '<td>★' + commentStarList[startNum] +'<br>'+ commentContentList[startNum] +'</td></tr>');
+				
+				$("#reviewList").children("tbody").children("tr:last").after('<tr>'+'<td><img src="' + commentWriterImgList[startNum+1] +'" alt="" /><br>' + commentWriterList[startNum+1] + ' </td>'
+			            + '<td>★' + commentStarList[startNum+1] +'<br>'+ commentContentList[startNum+1] +'</td></tr>');
+				$("#reviewList").children("tbody").children("tr:last").after('<tr>'+'<td><img src="' + commentWriterImgList[startNum+2] +'" alt="" /><br>' + commentWriterList[startNum+2] + ' </td>'
+			            + '<td>★' + commentStarList[startNum+2] +'<br>'+ commentContentList[startNum+2] +'</td></tr>');
+ */
+ }
+ 
+</script>
 </html>
