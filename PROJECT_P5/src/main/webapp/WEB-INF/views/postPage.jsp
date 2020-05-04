@@ -733,11 +733,12 @@ button {
 					<td><div class="contentReservTitle">예약</div>
 					${host.price}/1박</td>
 					<td><div class="contentReservTitle">날짜</div>
-					<input type="text" id="checkDate" name="checkInDatecheckOutDate"
-					value="${checkInDatecheckOutDate}" onchange="countDate()" /></td>
+					<input type="text" id="checkDate" name="checkInDatecheckOutDate" 
+						autocomplete="off" placeholder="날짜 선택" onchange="countDate()" /></td>
 					<td><div class="contentReservTitle">인원</div>
 					<span class="personInput"><input type='text' name='personnel'
-					class="personnel_input" value="${capacity}"> <!-- ${capacity}는 검색할때의 인원 설정 조건임, ${host.capacity} 와 다름 -->
+					class="personnel_input" value="${capacity}">
+					<!-- ${capacity}는 검색할때의 인원 설정 조건임, ${host.capacity} 와 다름 -->
 					<button id="increaseQuantity">▲</button>
 					<button id="decreaseQuantity">▼</button></span></td>
 				</tr>
@@ -745,11 +746,10 @@ button {
 				<div id="dateCount"></div>
 				<input type="hidden" id="hostId" name="hostId" value="${host.id}">
 				<input type="hidden" id="userId" name="userId" value="${user.id}">
-				<input type="hidden" id="hostName" name="hostName"
-					value="${host.name}"> <input type="hidden" id="hostPrice"
-					name="hostPrice" value="${host.price}"> <input
-					type="hidden" id="dateCnt" name="dateCnt" value=""> <input
-					type="submit" value="예약하기" />
+				<input type="hidden" id="hostName" name="hostName" value="${host.name}">
+				<input type="hidden" id="hostPrice"	name="hostPrice" value="${host.price}">
+				<input type="hidden" id="dateCnt" name="dateCnt" value="">
+		        <input type="submit" id="goPurchase" value="예약하기" onclick="return gogo();"/>
 			</form>
 		</div>
 </body>
@@ -951,9 +951,91 @@ button {
    
    /* 캘린더 */
 
+   	function gogo() {
+		if(!flag){
+			alert("날짜를 선택하세요!");
+			return false;
+		}else{
+			return true;
+		}
+	}
+   
+   var flag = true;	// 날짜 출력 여부
+   
    var date = new Date();
    var date2 = new Date();
    date2.setMonth(date.getMonth() + 3);
+    
+   	var blockingStr = "${blocking}";
+   	console.log(blockingStr);
+	var blockingArr = blockingStr.split(',');
+/* 	
+	for(var i in blockingArr){
+		console.log("blocking : " + i);
+	}
+*/
+
+
+   var minimumStay = ${host.minimumStay};
+   var maximumStay = ${host.maximumStay};
+   
+   console.log("최소 숙박 : " + minimumStay + ", 최대 숙박 : " + maximumStay);
+   
+   function getFormatDate(date){	// YYYY-MM-DD형태로
+	    var year = date.getFullYear();              //yyyy
+	    var month = (1 + date.getMonth());          //M
+	    month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
+	    var day = date.getDate();                   //d
+	    day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
+	    return  year + '-' + month + '-' + day;
+	}
+
+	function getFormatPrevDate(date){	// YYYY-MM-DD형태로
+	    var year = date.getFullYear();              //yyyy
+	    var month = (1 + date.getMonth());          //M
+	    month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
+	    var day = (date.getDate() - 1);                   //d
+	    day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
+	    return  year + '-' + month + '-' + day;
+	}
+
+	function getFormatNextDate(date){	// YYYY-MM-DD형태로
+	    var year = date.getFullYear();              //yyyy
+	    var month = (1 + date.getMonth());          //M
+	    month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
+	    var day = (date.getDate() + 1);                   //d
+	    day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
+	    return  year + '-' + month + '-' + day;
+	}
+	
+	//  변수날짜보다 -1일 날짜 => MM/DD/YYYY 형태로
+	function getOtherFormat(date){
+	    var year = date.getFullYear();              //yyyy
+	    var month = (1 + date.getMonth());          //M
+	    month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
+	    var day = (date.getDate() - 1);                   //d
+	    day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
+	    return  month + '/' + day + '/' +  year;
+	}
+	
+	function getKoreanFormat(date){
+	    var year = date.getFullYear();              //yyyy
+	    var month = (1 + date.getMonth());          //M
+	    month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
+	    var day = date.getDate();                   //d
+	    day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
+	    return year + '년 ' + month + '월 ' + day + '일';
+	}
+
+	function getMinDateFormat(date){
+	    var year = date.getFullYear();              //yyyy
+	    var month = (1 + date.getMonth());          //M
+	    month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
+	    var day = date.getDate() + minimumStay;                   //d
+	    day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
+	    return month + '/' + day + '/' +  year;
+	}
+
    $(function() {
       $('input[name="checkInDatecheckOutDate"]').daterangepicker(
             {
@@ -962,27 +1044,102 @@ button {
                "endDate" : "${endDate}",
                "minDate" : date,
                "maxDate" : date2,
+               "maxSpan" : {"days" : maximumStay}
+                ,
+               "isInvalidDate" : function(ele) {
+                   var currDate = moment(ele._d).format('YYYY-MM-DD');
+                   return [${blocking}].indexOf(currDate) != -1;
+            	}
             },
             function(start, end, label) {
-               console.log('New date range selected: '
-                     + start.format('YYYY-MM-DD') + ' to '
-                     + end.format('YYYY-MM-DD') + ' (predefined range: '
-                     + label + ')');
-            });
+            	
+            	var startDay = start.format("YYYY-MM-DD");
+            	var endDay = end.format("YYYY-MM-DD");
+            	
+            	//console.log("endDay값 : " + endDay);
+            	//console.log("endDay의 타임스탬프 : " + end);
+
+            	//var tsNewDate = new Date(xDate).getTime();	// timestamp로 변환
+            	
+            	//console.log("xDate의 타임스탬프 : " + tsNewDate);
+            	//console.log("xDate값 : " + getFormatDate(new Date(tsNewDate)));
+            	//console.log("xPrevDate값 : " + getFormatPrevDate(new Date(tsNewDate)));
+            	//console.log("xNextDate값 : " + getFormatNextDate(new Date(tsNewDate)));
+            	//console.log("xNextDate 타임스탬프 : " + new Date(getFormatNextDate(new Date(tsNewDate))).getTime() );
+            	
+				//var setTypeXDate = getOtherFormat(new Date(tsNewDate));	// MM/(DD-1)/yyyy
+            	//var koreanDate = getKoreanFormat(new Date(tsNewDate));	// yyyy년 MM월 DD일
+            	//console.log(setTypeXDate);
+            	
+            	var setTypeMinDate = getMinDateFormat(new Date(start));
+            	console.log("start : " + setTypeMinDate);
+
+				
+            	// start 선택하고 end로 min 또는 자신 선택못함 
+				if(startDay == endDay) {
+					$('input[name="checkInDatecheckOutDate"]').data('daterangepicker').setStartDate(moment().subtract(1, 'days'));
+					$('input[name="checkInDatecheckOutDate"]').data('daterangepicker').setEndDate(moment().subtract(3, 'days'));
+            		alert("호스트의 최소 숙박일 수가 " + minimumStay + "박" + (minimumStay+1) + "일 부터 입니다." );
+					flag = false;
+            	}else{
+            		flag = true;
+            	}
+            	
+            	
+            	
+				// endDate가 비활성날짜보다 클 때 비활성 이전 날짜로 알림 후 맞춰짐(x)
+				// 그냥 오늘 날짜로 초기화 하기로 함.
+				blockingArr.forEach(function(item){
+					console.log("blocking : " + item);
+					var blockDate = new Date(item).getTime();
+					console.log("blocking stamp : " + blockDate);
+					
+	            	if(end >= blockDate && start < blockDate){
+	            		
+	            		var koreanDate = getKoreanFormat(new Date(blockDate));	// yyyy년 MM월 DD일
+	            		
+	            		//$('input[name="checkInDatecheckOutDate"]').data('daterangepicker').setEndDate(setTypeXDate);
+	            		$('input[name="checkInDatecheckOutDate"]').data('daterangepicker').setStartDate(moment().subtract(1, 'days'));
+						$('input[name="checkInDatecheckOutDate"]').data('daterangepicker').setEndDate(moment().subtract(3, 'days'));
+	            		
+	            		alert("호스트의 사정으로 " + koreanDate + "는 예약이 불가능합니다.");
+	            		flag = false;
+	            	}
+	            	
+				});
+
+            }	            
+
+      );
+
    });
    
    function countDate() {
-   var date = $("#checkDate").val().split(" - ");
-   var checkInDate = date[0].split("/");
-   var checkInDate1 = new Date(checkInDate[2], checkInDate[0]-1, checkInDate[1]);
-   var checkOutDate = date[1].split("/");
-   var checkOutDate1 = new Date(checkOutDate[2], checkOutDate[0]-1, checkOutDate[1]);
-   var dateCount = parseInt(checkOutDate1-checkInDate1)/(24*60*60*1000);
-   
-   $('#dateCnt').val(dateCount);
-   
-   $("#dateCount").html(dateCount + "박 " + (dateCount+1) + "일 / " + ("${host.price }"*dateCount) + "원");
-   }
+
+	 	
+	   	if(flag){
+			var date = $("#checkDate").val().split(" - ");
+			var checkInDate = date[0].split("/");
+			var checkInDate1 = new Date(checkInDate[2], checkInDate[0]-1, checkInDate[1]);
+			var checkOutDate = date[1].split("/");
+			var checkOutDate1 = new Date(checkOutDate[2], checkOutDate[0]-1, checkOutDate[1]);
+			var dateCount = parseInt(checkOutDate1-checkInDate1)/(24*60*60*1000);
+			
+			$('#dateCnt').val(dateCount);
+			
+			$("#dateCount").html(dateCount + "박 " + (dateCount+1) + "일/" + ("${host.price }"*dateCount) + "원");
+			
+	   	}else{
+	   		
+	   		$("#checkDate").val('');
+	   		$('#dateCnt').val('');
+	   		$("#dateCount").empty();
+			$("#dateCount").html("날짜 선택해주세요.");
+			
+	   		
+	   	}
+	}
+
    
    /* 인원 선택 */
    $(function() {
@@ -1008,11 +1165,12 @@ button {
          var capacity
          num++;
          
-         if(num > ${host.capacity }) {
+         if(num > ${host.capacity }){
         	 alert("host의 최대 수용 인원 보다 많습니다.");
         	 num--;
          }
          $('.personnel_input').val(num);
+
       });
    });
    
@@ -1114,4 +1272,5 @@ button {
 		return isAuthentication;
 	}
 </script>
+
 </html>

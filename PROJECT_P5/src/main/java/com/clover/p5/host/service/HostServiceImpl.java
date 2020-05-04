@@ -2,6 +2,8 @@ package com.clover.p5.host.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -55,6 +57,10 @@ public class HostServiceImpl implements HostService {
 		// 호스트 사진 리스트
 		List<HostPhotoDTO> hostPhotoDto = hostMapper.selectHostPhoto(id);
 		System.out.println(hostPhotoDto.get(0).getPath());
+		
+		// 호스트 block 날짜 리스트
+		List<Date> blocking = hostMapper.selectBlocking(id);
+
 //		
 //		for(HostPhotoDTO dto : hostPhotoDto) {
 //			String beforePath = dto.getPath();
@@ -64,6 +70,16 @@ public class HostServiceImpl implements HostService {
 //			System.out.println("후 : " + afterPath);
 //			dto.setPath(afterPath);
 //		}
+		StringBuffer sbBlocking = new StringBuffer();
+		
+		for(Date d : blocking) {
+			SimpleDateFormat form1 = new SimpleDateFormat("yyyy-MM-dd");
+			System.out.println("블로킹 날짜 : " + form1.format(d));
+			sbBlocking.append("'" + form1.format(d) + "',");
+		}
+		System.out.println("sbBlocking : " + sbBlocking);
+		String sBlocking = sbBlocking.substring(0, sbBlocking.length()-1);
+		System.out.println("sBlocking : " + sBlocking);
 		
 		model.addAttribute("host", hostInfoDto);
 		model.addAttribute("startDate", startDate);
@@ -71,6 +87,7 @@ public class HostServiceImpl implements HostService {
 		model.addAttribute("capacity", capacity);
 		
 		model.addAttribute("hostPhoto", hostPhotoDto);
+		model.addAttribute("blocking", sBlocking);
 				
 		return "postPage";	
 	}
