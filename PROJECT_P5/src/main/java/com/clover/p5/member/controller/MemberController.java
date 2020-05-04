@@ -29,14 +29,12 @@ public class MemberController {
 	private MemberService memberService;
 	
 	
-	
+//********************************** 회원가입 ******************************************
 	@ModelAttribute("newMember")
 	public NewMemberDTO newMember() {
 		return new NewMemberDTO();
 	} // @SessionAttributes에 선언된 모델을 @ModelAttribute로 호출시 값이 없으면 에러가 나는데
 	  // 이렇게 설정해주면 값이 없을 때만 return 값을 적용하여 모델을 생성해준다.
-	
-	
 	
 	@RequestMapping("/ajax/validateSignUp") // 유효성 검사
 	@ResponseBody
@@ -45,8 +43,6 @@ public class MemberController {
 		System.out.println(newMemberDto);
 		return memberService.validationResult(errors);
 	}
-	
-	
 	
 	@RequestMapping("/ajax/sendEmailAuthenticationCode") // 인증메일 발송
 	@ResponseBody // 이메일을 발송하고 해시된 인증번호를 반환한다.
@@ -60,7 +56,14 @@ public class MemberController {
 		(HttpServletRequest req, SessionStatus sessionStatus) {
 		return memberService.signUp(req, sessionStatus);
 	}
+//********************************** 회원가입-END ******************************************	
 	
+	
+	
+	
+	
+	
+//********************************** 로그인, 로그아웃 ******************************************	
 	@RequestMapping("/ajax/logIn") // 로그인
 	@ResponseBody // 입력한 정보를 토대로 로그인을 시도하여 결과를 반환한다.
 	public int logIn(HttpServletRequest req) {
@@ -73,6 +76,36 @@ public class MemberController {
 		session.invalidate(); // 세션 초기화
 		return;
 	}
+//********************************** 로그인, 로그아웃-END ******************************************	
+	
+	
+	
+	
+	
+	
+//********************************** 휴대전화 인증 ******************************************	
+	@RequestMapping("/ajax/isMobileAuthentication")
+	@ResponseBody
+	public boolean isMobileAuthentication(HttpSession session) {
+		int userId = (int)session.getAttribute("userId");
+		return memberService.isMobileAuthentication(userId);
+	}
+	
+	@RequestMapping("/ajax/sendMobileAuthenticationCode")
+	@ResponseBody
+	public String sendMobileAuthenticationCode(String mobileNumber) {
+		return memberService.sendMobileCode(mobileNumber);
+	}
+	
+	@RequestMapping("/ajax/completeMobileAuthentication")
+	@ResponseBody
+	public int completeMobileAuthentication(HttpServletRequest req) {
+		return memberService.mobileAuthentication(req);
+	}
+//********************************** 휴대전화 인증-END ******************************************
+	
+	
+	
 	
 	
 	

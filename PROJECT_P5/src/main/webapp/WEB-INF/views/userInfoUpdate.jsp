@@ -480,7 +480,7 @@ to {
    
    ////////// 팝업창
 	$('#mobileAuthenticationResult').on('click', function() {
-		var phoneURL = '/p5/phoneCertification.jsp';
+		var phoneURL = '/p5/phoneCertification';
 		var phoneOption =  "width=370, height=360, resizable=no, scrollbars=no, status=no;";
 		window.open(phoneURL,"",phoneOption);	
 	});

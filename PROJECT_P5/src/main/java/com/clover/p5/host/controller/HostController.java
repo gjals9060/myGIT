@@ -60,6 +60,11 @@ public class HostController {
 	
 	
 //////////아래부터 by 근형	
+//	등록한 숙소리스트
+//	hostReservationList
+	
+	
+	
 ///////////////////////////// 호스트 등록 ////////////////////////////////
 	
 	@ModelAttribute("newHost")

@@ -9,4 +9,9 @@ public interface MemberMapper {
 	
 	Member selectMember(String email);
 	
+	String selectMobileAuthentication(int userId);
+	
+	int updateMobileAuthentication(int userId);
+	
+	
 }

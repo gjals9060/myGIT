@@ -21,14 +21,20 @@ public interface MemberService {
 	
 	
 	
+	// 휴대전화 인증여부 확인
+	boolean isMobileAuthentication(int userId);
 	
-	
+	// 휴대전화 인증(인증번호 확인 + 결과 DB에 적용)
+	int mobileAuthentication(HttpServletRequest req);
 	
 	
 	
 	
 	// 이메일 인증번호 발송
 	String sendEmailCode(String email);
+	
+	// 휴대전화 인증번호 발송
+	String sendMobileCode(String mobileNumber);
 	
 	// 유효성 검사 결과를 정리
 	List<ErrorFieldDTO> validationResult(Errors errors);
