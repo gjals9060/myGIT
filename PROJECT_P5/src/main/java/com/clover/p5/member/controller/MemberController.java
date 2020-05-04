@@ -85,20 +85,20 @@ public class MemberController {
 	
 //********************************** 휴대전화 인증 ******************************************	
 	@RequestMapping("/ajax/isMobileAuthentication")
-	@ResponseBody
+	@ResponseBody // 휴대전화 인증여부를 확인한다
 	public boolean isMobileAuthentication(HttpSession session) {
 		int userId = (int)session.getAttribute("userId");
 		return memberService.isMobileAuthentication(userId);
 	}
 	
 	@RequestMapping("/ajax/sendMobileAuthenticationCode")
-	@ResponseBody
+	@ResponseBody // 건당 20원 API를 이용해서 인증문자를 전송한다
 	public String sendMobileAuthenticationCode(String mobileNumber) {
 		return memberService.sendMobileCode(mobileNumber);
 	}
 	
 	@RequestMapping("/ajax/completeMobileAuthentication")
-	@ResponseBody
+	@ResponseBody // 입력한 인증번호의 일치여부를 확인하고 결과를 DB에 적용한다 + session 갱신
 	public int completeMobileAuthentication(HttpServletRequest req) {
 		return memberService.mobileAuthentication(req);
 	}

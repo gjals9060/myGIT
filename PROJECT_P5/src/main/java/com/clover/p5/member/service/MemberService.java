@@ -39,6 +39,9 @@ public interface MemberService {
 	// 유효성 검사 결과를 정리
 	List<ErrorFieldDTO> validationResult(Errors errors);
 	
+	// user session 새로고침
+	void refreshUserSession(HttpServletRequest req, int userId);
+	
 	
 	
 }

@@ -243,6 +243,7 @@ to {
                   <span>${user.mobilePhone }</span>
                   <input type="hidden" name="mobileAuthentication"
                         value="${user.mobileAuthentication }" />
+                  <span id="authenticationResult"></span>
                   <button id="mobileAuthenticationResult"></button>
                </div><br />
                <div>
@@ -468,13 +469,15 @@ to {
    
    $(document).ready(function(){
       var authentication = $('input[name="mobileAuthentication"]').val();
-      var result;
+      
       if(authentication == 'Y'){
-         result = '인증완료';
+         $('#authenticationResult').text("인증완료");
+         $('#authenticationResult').css("color", "blue");
+         $('#authenticationResult').css("font-weight", "bold");
+         $('#mobileAuthenticationResult').remove();
       } else{
-         result = '인증하기';
+     	 $('#mobileAuthenticationResult').text("인증하기");
       }
-      $('#mobileAuthenticationResult').text(result);
    });
 
    

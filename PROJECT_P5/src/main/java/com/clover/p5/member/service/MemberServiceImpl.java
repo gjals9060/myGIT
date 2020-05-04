@@ -137,7 +137,6 @@ public class MemberServiceImpl implements MemberService {
 		if(!passwordEncoder.matches(password, member.getPassword())) {
 			return 1; // 비밀번호 불일치
 		}
-		session.invalidate(); // 정보를 저장하기 전에 초기화
 		session.setAttribute("userId", member.getId()); // 자주 쓰여서 따로 저장
 		session.setAttribute("user", member); // 세션에 정보 저장
 		return 2; // 로그인 성공
@@ -199,6 +198,7 @@ public class MemberServiceImpl implements MemberService {
 		** 통과했으면 DB에 결과를 적용
 		***/
 			if(memberMapper.updateMobileAuthentication(userId) == 1) {
+				refreshUserSession(req, userId); // session 새로고침
 				System.out.println("휴대전화 인증 결과를 DB에 적용했습니다.");
 				return 1;
 			}
@@ -225,12 +225,14 @@ public class MemberServiceImpl implements MemberService {
 	    params.put("from", "01099641539"); // 발신번호
 	    params.put("type", "SMS"); // Message type ( SMS, LMS, MMS, ATA )
 	    params.put("text", content); // 문자내용    
+	    
+	    // 적용이 안된다..
+	    params.put("mode", "test"); // 'test' 모드. 실제로 발송되지 않으며 전송내역에 60 오류코드로 뜹니다. 차감된 캐쉬는 다음날 새벽에 충전 됩니다.
 	   // params.put("app_version", "JAVA SDK v1.2"); // application name and version
 
 	    // Optional parameters for your own needs
 	    // params.put("image", "desert.jpg"); // image for MMS. type must be set as "MMS"
 	    // params.put("image_encoding", "binary"); // image encoding binary(default), base64 
-	     params.put("mode", "test"); // 'test' 모드. 실제로 발송되지 않으며 전송내역에 60 오류코드로 뜹니다. 차감된 캐쉬는 다음날 새벽에 충전 됩니다.
 	    // params.put("delay", "10"); // 0~20사이의 값으로 전송지연 시간을 줄 수 있습니다.
 	    // params.put("force_sms", "true"); // 푸시 및 알림톡 이용시에도 강제로 SMS로 발송되도록 할 수 있습니다.
 	    // params.put("refname", ""); // Reference name
@@ -247,19 +249,34 @@ public class MemberServiceImpl implements MemberService {
 	    try {
 	      JSONObject obj = (JSONObject) coolsms.send(params);
 	      System.out.println(obj.toString());
+	      
+	      // 잔액 확인..
+	      obj = (JSONObject) coolsms.balance();
+	      System.out.println(obj.toString());
 	    } catch (CoolsmsException e) {
 	      System.out.println(e.getMessage());
 	      System.out.println(e.getCode());
-	      System.out.println("인증문자 발송에 실패했습니다.");
 	      return "";
 	    }
-		System.out.println("인증문자 발송에 성공했습니다.");
 		return hashedCode;
 	}
 
 
 
 
+
+
+
+
+	@Override
+	public void refreshUserSession(HttpServletRequest req, int userId) {
+		Member member = memberMapper.selectMemberById(userId);
+		req.getSession().setAttribute("user", member); // session을 갱신
+	}
+
+
+
+	
 
 
 
