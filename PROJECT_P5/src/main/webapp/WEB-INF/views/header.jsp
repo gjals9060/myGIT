@@ -147,14 +147,14 @@
 		
 		
 		
-	<div style="margin: 10px; text-align: center;grid-column-start: 1;grid-column-end: 4;">
+<!-- 	<div style="margin: 10px; text-align: center;grid-column-start: 1;grid-column-end: 4;">
 		
-		<!-- 헤더에 있어서 절대경로로 -->
+		헤더에 있어서 절대경로로
 		<a href="/p5/userInfoReservationList">예약 리스트</a>
 		<a href="/p5/hostReservationUpdate">숙소 수정</a>
 		<a href="/p5/userInfoUpdate">회원정보</a>
 	
-	</div>
+	</div> -->
 	</header>
 	
 		<div id="modalLogin" class="modal">
