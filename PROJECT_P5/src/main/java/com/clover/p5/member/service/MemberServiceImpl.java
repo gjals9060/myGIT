@@ -10,7 +10,9 @@ import java.util.Random;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
@@ -130,12 +132,33 @@ public class MemberServiceImpl implements MemberService {
 
 //******************************** 로그인 ********************************************
 	@Override
-	public int logIn(HttpServletRequest req) {
+	public int logIn(HttpServletRequest req, HttpServletResponse res) {
+	
+	/***
+	** 쿠키 테스트
+	***/
+		String sessionId = req.getSession().getId();
+		System.out.println(sessionId);
+		
+		Cookie cookie = new Cookie("cookieTest", "dmdkdkdkdkdkdkdkdk");
+		
+		cookie.setPath("/");
+        cookie.setMaxAge(60*60*24*7);
+        
+
+		String rememberMe = req.getParameter("rememberMe");
+		if(rememberMe.equals("true")) {
+			System.out.println("자동 로그인에 체크하셨군요?");
+			
+			res.addCookie(cookie);
+		}
+		
+		
+//***************************************************************************************
 		String userEmail = req.getParameter("userEmail");
 		String password = req.getParameter("userPassword");
 		
-		int userId = memberMapper.selectMemberId(userEmail);
-		Member member = memberMapper.selectMember(userId);
+		Member member = memberMapper.selectMemberByEmail(userEmail);
 		
 		if(member == null) {
 			return 0; // 없는 아이디
@@ -144,8 +167,9 @@ public class MemberServiceImpl implements MemberService {
 			return 1; // 비밀번호 불일치
 		}
 		HttpSession session = req.getSession();
-		session.setAttribute("userId", member.getId()); // 자주 쓰여서 따로 저장
 		session.setAttribute("user", member); // 세션에 정보 저장
+		
+		session.setAttribute("userId", member.getId()); // 자주 쓰여서 따로 저장
 		return 2; // 로그인 성공
 	}
 //******************************** 로그인-END ********************************************
@@ -166,8 +190,8 @@ public class MemberServiceImpl implements MemberService {
 		System.out.println("임시 비밀번호 생성 - " + temporaryPassword);
 		
 		String content = "임시 비밀번호는 " + temporaryPassword + "이며"
-						+ " 발급 화면에서만 유효함을 알려드립니다. 발급화면에서 임시 비밀번호를 통해 로그인할 경우,"
-						+ " 로그인에 사용한 임시 비밀번호가 계정의 비밀번호로 변경되며 이후에 꼭 비밀번호 변경을 통해"
+						+ " 발급 화면에서만 유효함을 알려드립니다. 발급 화면에서 임시 비밀번호를 통해 로그인할 경우,"
+						+ " 계정의 비밀번호는 로그인에 사용된 임시 비밀번호로 변경되며 이후에 꼭 비밀번호 변경을 통해"
 						+ " 보안에 신경쓰실 것을 권고드립니다.";
 		
 		String hashedPassword = passwordEncoder.encode(temporaryPassword); // 임시 비밀번호 해싱
@@ -214,20 +238,19 @@ public class MemberServiceImpl implements MemberService {
 	** 일치하면 해싱된 임시비밀번호로 비밀번호를 변경한다.
 	***/
 		int userId = memberMapper.selectMemberId(userEmail);
-		
 		if(memberMapper.updatePassword(userId, temporaryPassword) == 1) {
-			System.out.println("임시비밀번호로 비밀번호를 변경했습니다.");
+			System.out.println("임시비밀번호를 비밀번호로 변경했습니다.");
 		}
 		
 	/***
-	** 갱신된 회원정보(비밀번호 변경)를 session에 등록한다.
+	** 갱신된 회원정보(비밀번호 변경)를 session에 등록한다. - 로그인
 	***/
 		Member member = memberMapper.selectMember(userId);
 		
 		HttpSession session = req.getSession();
-		session.setAttribute("userId", member.getId()); // 자주 쓰여서 따로 저장
 		session.setAttribute("user", member); // 세션에 정보 저장
 		
+		session.setAttribute("userId", member.getId()); // 자주 쓰여서 따로 저장
 		return true; // 로그인 성공
 	}
 //******************************** 임시 로그인-END ******************************************

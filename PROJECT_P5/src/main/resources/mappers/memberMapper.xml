@@ -26,6 +26,12 @@
 	
 	
 	
+	<!-- 로그인에만 사용 -->
+	<select id="selectMemberByEmail" parameterType="String" resultType="Member">
+		SELECT *
+		FROM member
+		WHERE email = #{email}
+	</select>
 	
 	<!-- 회원 테이블에서 이메일에 해당하는 ID를 검색 -->
 	<select id="selectMemberId" parameterType="String" resultType="int">
@@ -33,7 +39,7 @@
 		FROM member
 		WHERE email = #{userEmail}
 	</select>
-	<!-- 로그인, session 갱신 등에 사용 -->
+	<!-- 임시 로그인, session 갱신 등에 사용 -->
 	<select id="selectMember" parameterType="int" resultType="Member">
 		SELECT *
 		FROM member

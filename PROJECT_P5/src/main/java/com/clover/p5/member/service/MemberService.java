@@ -3,6 +3,7 @@ package com.clover.p5.member.service;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.validation.Errors;
@@ -21,7 +22,7 @@ public interface MemberService {
 	int signUp(HttpServletRequest req, SessionStatus sessionStatus);
 		
 	// 로그인
-	int logIn(HttpServletRequest req);
+	int logIn(HttpServletRequest req, HttpServletResponse res);
 	
 	
 	

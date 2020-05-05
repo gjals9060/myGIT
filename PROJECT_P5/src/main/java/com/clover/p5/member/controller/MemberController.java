@@ -3,6 +3,7 @@ package com.clover.p5.member.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -66,8 +67,8 @@ public class MemberController {
 //********************************** 로그인, 로그아웃 ******************************************	
 	@RequestMapping("/ajax/logIn") // 로그인
 	@ResponseBody // 입력한 정보를 토대로 로그인을 시도하여 결과를 반환한다.
-	public int logIn(HttpServletRequest req) {
-		return memberService.logIn(req);
+	public int logIn(HttpServletRequest req, HttpServletResponse res) {
+		return memberService.logIn(req, res);
 	}
 	
 	@RequestMapping("/ajax/logOut") // 로그아웃

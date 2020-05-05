@@ -178,7 +178,11 @@
 	         	</div>
 	         	<br />
 	         	<div class="loginCheck"></div>
-	
+				<div>
+					<input type="checkbox" id="rememberMe" />
+					<label for="rememberMe">자동 로그인</label>			
+				</div>
+				
 		        <br> 
 		        <input type="submit" value="로그인" />
 		        </form> 
@@ -400,6 +404,7 @@ function logInModalOn(){
 	modalOff();
 	$('.user-login-input-value').val("");
 	$('.loginCheck').empty();
+	$('#rememberMe').prop("checked", false);
 	$('#modalLogin').css("display", "block");
 	$('#userEmail').focus();
 }
@@ -579,6 +584,7 @@ $('#makeshiftPasswordBack').on('click', function(){
 	modalOff();
 	$('.user-login-input-value').val("");
 	$('.loginCheck').empty();
+	$('#rememberMe').prop("checked", false);
 	$('#modalLogin').css("display", "block");
 	$('#userEmail').focus();
 });
@@ -625,9 +631,11 @@ $("#completeSignUp").on("click", function(){ // 로딩이미지 필요
 
 	// 로그인 시도
 function userLogin() { // 로딩이미지 필요
+
 	var params = {
 		userEmail : $('#userEmail').val(),
-		userPassword : $('#userPassword').val()
+		userPassword : $('#userPassword').val(),
+		rememberMe : $('#rememberMe').prop("checked")
 	};
 	
 	 $.ajax({
