@@ -1,6 +1,8 @@
 package com.clover.p5.host.mapper;
 
+import java.util.Date;
 import java.util.List;
+
 
 import org.apache.ibatis.annotations.Param;
 
@@ -17,8 +19,7 @@ public interface HostMapper {
 
 	List<HostPhotoDTO> selectHostPhoto(String hostId);
 	
-	
-	
+	List<Date> selectBlocking(String hostId);
 	
 	// 아래부터 by 근형
 

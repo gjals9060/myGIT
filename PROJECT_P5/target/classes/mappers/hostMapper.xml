@@ -33,6 +33,19 @@
 		
 	</select>
 	
+	<select id="selectBlocking" parameterType="String" resultType="Date">
+	
+		SELECT
+			blocking_date
+		FROM
+			blocking
+		WHERE
+			host_id = #{hostId}
+		ORDER BY
+			id
+	
+	</select>
+	
 	<select id="selectHostList" parameterType="SearchHostDTO" resultType="HostInfoDTO">
 		<!--
 		CDATA 사용 이유!
