@@ -22,12 +22,18 @@
 	</insert>
 	
 	
-	<!-- 로그인할 때 사용 -->
+	
+	
+	
+	
+	
+	<!-- 회원 테이블에서 이메일에 해당하는 ID를 검색 -->
 	<select id="selectMemberId" parameterType="String" resultType="int">
 		SELECT id
 		FROM member
-		WHERE email = #{email}
+		WHERE email = #{userEmail}
 	</select>
+	<!-- 로그인, session 갱신 등에 사용 -->
 	<select id="selectMember" parameterType="int" resultType="Member">
 		SELECT *
 		FROM member
@@ -36,10 +42,15 @@
 	
 	
 	
-	<select id=""></select>
 	
-
-
+	
+	
+	<!-- 비밀번호 변경 -->
+	<update id="updatePassword">
+		UPDATE member
+		SET password = #{newPassword}
+		WHERE id = #{userId}
+	</update>
 
 
 

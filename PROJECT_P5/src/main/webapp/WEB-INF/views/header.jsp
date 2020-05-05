@@ -292,11 +292,24 @@
 						<input type="text" id="makeshiftInputEmail" />
 					</div>
 		    	</div>
+		    	<div id="temporaryPasswordButtonBlock">
+					<button id="sendTemporaryPassword" onclick='sendTemporaryPassword()'>요청</button>
+		    	</div>
 		    	<div class="makeshift-password-input-error"></div>
 		    	
-		    	<div class="makeshift-password-input-btn">
-		    		<button id="makeshiftPasswordInputBtn">이메일 전송</button>
-		    	</div>
+		    	
+		    	<div id="temporaryPasswordInputBlock">
+					<div class="makeshift-password-input-title">비밀번호</div>
+					<div class="makeshift-password-input-value">
+						<input type="hidden" id="temporaryPassword" />
+						<input type="password" id="inputTemporaryPassword" />
+					</div>
+					<br />
+					<br />
+					<div>
+						<button onclick='temporaryLogIn()'>로그인</button>
+					</div>
+				</div>
 		    	
 	    	</div>
 	    
@@ -392,10 +405,14 @@ function logInModalOn(){
 }
 	
 	// 임시비밀번호 modal ON
-
 function makeshiftPasswordModalOn(){
 	modalOff();
+	$('#makeshiftInputEmail').val("");
+	$('#makeshiftInputEmail').attr("readonly", false);
+	$('#temporaryPasswordInputBlock').css("display", "none");
+	$('#temporaryPasswordButtonBlock').css("display", "block");
 	$('#makeshiftPasswordModal').css("display", "block");
+	$('#makeshiftInputEmail').focus();
 }
 
 	// 회원가입 modal ON
@@ -431,15 +448,65 @@ function sendEmailAuthenticationCode(){
 	});
 }
 	
-	/// 임시비밀번호 이메일로 보내기
-function sendEmailMekeshiftPasswordCode(){
-
+	/// 임시 비밀번호 이메일로 보내기
+function sendTemporaryPassword(){ // 로딩이미지 들어가야됨
+	$.ajax({
+		type : "POST",
+		url : "ajax/sendTemporaryPassword",
+		data : 'userEmail=' + $('#makeshiftInputEmail').val(),
+		async : false,
+		success:function(data){
+			if(!data){
+				alert("임시 비밀번호 발송에 실패했습니다.");
+			} else{
+				$('#makeshiftInputEmail').attr("readonly", true);
+				$('#temporaryPasswordButtonBlock').css("display", "none");
+				$('#temporaryPassword').val(data); // 임시비밀번호(해싱) 적용
+				$('#inputTemporaryPassword').val("");
+				$('#temporaryPasswordInputBlock').css("display", "block");
+				$('#inputTemporaryPassword').focus();
+			}
+	    },
+		error : function(){
+			alert("통신 실패..");
+		}
+	});
 }
+
+	// 임시 로그인
+function temporaryLogIn(){ // 로딩이미지 필요
+	var params = {
+			userEmail : $('#makeshiftInputEmail').val(),
+			temporaryPassword : $('#temporaryPassword').val(),
+			inputTemporaryPassword : $('#inputTemporaryPassword').val()
+	}
+		
+	$.ajax({
+		type : "POST",
+		url : "ajax/temporaryLogIn",
+		data : params,
+		async : false,
+		success : function(data){
+			if(data){ // 입력한 임시 비밀번호가 올바르면;
+				alert("임시비밀번호로 비밀번호가 변경됐습니다. 비밀번호 변경을 권고드립니다.");
+				location.href="/p5/userInfoUpdate?t=1"; // 비밀번호 변경을 위해 마이페이지로 보냄
+			} else{ // 아니면
+				alert("비밀번호가 일치하지 않습니다. 발급받은 임시 비밀번호를 사용해주세요.");
+				$('#inputTemporaryPassword').focus();
+			}
+		},	
+		error : function(){
+			alert("통신 실패..");
+		}
+	});
+}
+	
 	/// 호스트 등록을 눌렀을 때
 function isMobileAuthentication(){
 	$.ajax({
 		type : "POST",
 		url : "ajax/isMobileAuthentication",
+		async : false,
 		success : function(data){
 			if(data){ // 휴대전화 인증자이면
 				location.href="/p5/host/registration/roomType";
@@ -528,7 +595,7 @@ $("#rerequest").on("click", function(){
 	
 
 	// '(회원가입)완료' 클릭
-$("#completeSignUp").on("click", function(){
+$("#completeSignUp").on("click", function(){ // 로딩이미지 필요
 	var params = {
 		authenticationCode : $('#authenticationCode').val(), // 인증번호(해시)
 		inputCode : $('#inputCode').val().trim() // 입력값
@@ -538,6 +605,7 @@ $("#completeSignUp").on("click", function(){
 	   type: "POST",
 	   url: "ajax/completeSignUp",
 	   data: params,
+	   async : false,
 	   success:function(result){
 			 if(result == 0){ // 인증번호 불일치
 					alert("인증번호가 일치하지 않습니다.");
@@ -556,7 +624,7 @@ $("#completeSignUp").on("click", function(){
 
 
 	// 로그인 시도
-function userLogin() {
+function userLogin() { // 로딩이미지 필요
 	var params = {
 		userEmail : $('#userEmail').val(),
 		userPassword : $('#userPassword').val()
@@ -596,20 +664,10 @@ function userLogin() {
 									
 				
 			} else if(result == 2){ // 로그인 성공
+				
 				alert("로그인 성공");
 				location.reload();
 				
-			 	/* //// 로그인 버튼을 remove, 회원정보와 호스트 등록을 가져옴.
-				/// div 내부를 지우고 
-				$(".useradd-login-form").empty();
-				/// div 에 로그아웃 append
-				$(".useradd-login-form").append(
-					"${user.firstName }" +
-					"<button id='btnLogOut'>로그아웃</button>" +
-					"<a href='host/registration/roomType'>호스트 등록</a>"
-				);
-				// 로그인 modal 닫기
-				modalLogin.css("display", "none"); */
 			}
 		},
 		error : function(){
@@ -631,18 +689,12 @@ $('#btnLogOut').on('click', function(){
 	$.ajax({
 		type : "POST",
 		url : "ajax/logOut",
+		async : false,
 		success : function(){
+			
 			alert("로그아웃 했다");
 			location.reload(); // 페이지 새로 고침
-			
-/* 			// 헤더에 로그아웃 결과 반영
-			$(".useradd-login-form").empty();
-			$(".useradd-login-form").append(
-				<!--클릭시 로그인  modal pop-up -->
-				'<button id="login-btn" class="btn">로그인</button>' +
-				<!--클릭시 회원가입 modal pop-up -->
-				'<button id="useradd-btn" class="btn">회원가입</button>'
-			); */
+
 		},	
 		error : function(){
 			alert("통신 실패..");

@@ -397,12 +397,24 @@ to {
       id="userInfoPasswordUpdateModal">
       <span id="userinfoPasswordUpdateClose">&times;</span>
       <div class="userinfo-password-update-container">
+   		 <!-- 임시 로그인으로 진입 여부 확인 -->
+   		 <%
+   		 if(request.getParameter("t") != null){
+   		 %>
+         <input type="hidden" id="isTemporaryLogIn" value="true" />
+         <%
+   		 } else{
+         %>
+   		<input type="hidden" id="isTemporaryLogIn" />
+   		<%
+   		 }
+   		%>	 
          <!-- 비밀번호 form 설정해야함. -->
          <form action="" name="userinfoPasswordUpdateSubmit">
             <div class="userinfo-input-block">
                <div class="userinfo-input-title">현재 비밀번호</div>
                <div class="userinfo-input-value">
-                  <input type="password" class="password-value" />
+                  <input type="password" class="password-value" id="userPassword" />
                </div>
             </div>
             <div class="userinfo-input-value-error">
@@ -411,7 +423,7 @@ to {
             <div class="userinfo-input-block">
                <div class="userinfo-input-title">비밀번호</div>
                <div class="userinfo-input-value">
-                  <input type="password" class="password-value" />
+                  <input type="password" class="password-value" id="newPassword" />
                </div>
             </div>
             <div class="userinfo-input-value-error">
@@ -420,15 +432,15 @@ to {
             <div class="userinfo-input-block">
                <div class="userinfo-input-title">비밀번호확인</div>
                <div class="userinfo-input-value">
-                  <input type="password" class="password-value" />
+                  <input type="password" class="password-value" id="newPasswordCheck" />
                </div>
             </div>
             <div class="userinfo-input-value-error">
                <input type="text" disabled="disabled" />
             </div>
             <div class="userinfo-input-submit">
-               <input type="button" value="변경"
-                  onclick="userinfoPasswordUpdateSubmit.submit()" />
+               <input type="button" id="btnUpdatePassword" value="변경"
+                  onclick="updateUserPassword()" />
             </div>
          </form>
       </div>
@@ -437,6 +449,60 @@ to {
 </body>
 
 <script>
+
+// 임시 비밀번호로 로그인해서 왔으면 비밀번호 변경 modal 활성화
+$('document').ready(function(){
+	var t = $('#isTemporaryLogIn').val();
+	if(t === 'true'){
+		var userinfoPasswordModal = document
+        .getElementById("userInfoPasswordUpdateModal");
+		userinfoPasswordModal.style.display = "block";
+	}
+});
+
+
+function updateUserPassword(){
+	var params = {
+			userPassword : $('#userPassword').val(),
+			newPassword : $('#newPassword').val(),
+	}
+	
+	$.ajax({
+		type : "POST",
+		url : "ajax/updateUserPassword",
+		data : params,
+		async : false,
+		success : function(result){
+			if(result == 0){
+				
+				alert("기존의 비밀번호가 일치하지 않습니다.");
+				
+			} else if(result == 1){
+				
+				alert("비밀번호 변경 완료.");
+				location.replace("userInfoUpdate");
+				
+			} else{
+				
+				alert("비밀번호 변경 실패.");
+				
+			}
+		},	
+		error : function(){
+			alert("통신 실패..");
+		}
+	});
+}
+	
+	
+	
+	
+
+
+
+
+
+
 
    // 비밀번호 modal(div) popup
    var userinfoPasswordModal = document
@@ -463,7 +529,7 @@ to {
       var phoneURL = '../home.jsp';
       var phoneOption =  "width=370, height=360, resizable=no, scrollbars=no, status=no;";
       
-      window.open(phoneURL,"",phoneOption);   
+      window.open(phoneURL,"",phoneOption);
    });
    
    

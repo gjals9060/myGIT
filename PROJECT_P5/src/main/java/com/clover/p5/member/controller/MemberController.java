@@ -80,6 +80,40 @@ public class MemberController {
 	
 	
 	
+
+	
+	
+//********************************** 임시 비밀번호 발급, 임시 로그인 ******************************************	
+	@RequestMapping("/ajax/sendTemporaryPassword") // 임시 비밀번호 발급
+	@ResponseBody // 입력받은 이메일로 임시 비밀번호를 발송한다
+	public String sendTemporaryPassword(String userEmail) {
+		return memberService.sendTemporaryPassword(userEmail);
+	}
+	
+	@RequestMapping("/ajax/temporaryLogIn") // 임시 로그인
+	@ResponseBody // 임시 비밀번호 발급 화면에서의 로그인
+	public boolean temporaryLogIn(HttpServletRequest req) {
+		return memberService.temporaryLogIn(req);
+	}
+//********************************** 임시 비밀번호 발급, 임시 로그인-END *************************************	
+
+	
+	
+	
+	
+	
+	
+//********************************** 비밀번호 변경 *************************************
+	@RequestMapping("/ajax/updateUserPassword") // 비밀번호 변경
+	@ResponseBody // 기존의 비밀번호를 확인받고 새로운 비밀번호로 변경한다.
+	public int updateUserPassword(HttpServletRequest req) {
+		return memberService.updateUserPassword(req);
+	}
+//********************************** 비밀번호 변경-END *************************************	
+
+	
+	
+	
 	
 	
 	
@@ -87,8 +121,7 @@ public class MemberController {
 	@RequestMapping("/ajax/isMobileAuthentication")
 	@ResponseBody // 휴대전화 인증여부를 확인한다
 	public boolean isMobileAuthentication(HttpSession session) {
-		int userId = (int)session.getAttribute("userId");
-		return memberService.isMobileAuthentication(userId);
+		return memberService.isMobileAuthentication(session);
 	}
 	
 	@RequestMapping("/ajax/sendMobileAuthenticationCode")
