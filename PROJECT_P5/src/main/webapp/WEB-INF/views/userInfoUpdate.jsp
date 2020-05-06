@@ -69,8 +69,8 @@
 				<div class="user-info-update-value">
 					<input class="user-info-update-value-input"
 						id="userInfoUpdateValuePhone" type="text"
-						value=${user.mobilePhone } disabled /> <input type="hidden"
-						name="mobileAuthentication" value="${user.mobileAuthentication }" />
+						value=${user.mobilePhone } disabled /> 
+						<%-- <input type="hidden" name="mobileAuthentication" value="${user.mobileAuthentication }" /> --%>
 					<span id="authenticationResult"></span>
 					<button id="mobileAuthenticationResult"></button>
 				</div>
