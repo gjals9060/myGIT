@@ -6,12 +6,21 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
- <script>
+
+
+<link rel="stylesheet" href="../../css/photoUpload.css" />
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+ 
+ </head>
+  <script>
 //이미지 정보들을 담을 배열   
 
 var sel_files = [];   
-
-
+var files;
+var i=0;
+var a;
+var index;
+var b;
 
 $(document).ready(function() {   
 
@@ -39,13 +48,14 @@ function handleImgFileSelect(e) {
 
 /*     $(".imgs_wrap").empty();   */ 
 
+$('label.sub-upload').empty();
 
 
-    var files = e.target.files;   
+ files = e.target.files;   
 
-    var filesArr = Array.prototype.slice.call(files);   
+ var filesArr= Array.prototype.slice.call(files);   
 
-    var index = 0;   
+   index=0;
 
       
 
@@ -70,14 +80,38 @@ function handleImgFileSelect(e) {
 
 
         reader.onload = function(e) {   
+        	 $("label[class='sub-upload']").remove();   
+        	 b=f.name;
 
-            var html = "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction("+index+")\" id=\"img_id_"+index+"\"><img src=\"" + e.target.result + "\" data-file='"+f.name+"' class='selProductFile' title='Click to remove' width=\"150px\" ></a>";   
+            var html = "<a href=\"javascript:void(0);\" draggable=\"true\"ondrop=\"drop(event)\" ondragover=\"allowDrop(event)\"onclick=\"deleteImageAction("+index+")\" id=\"img_id_"+index+"\"><img src=\"" + e.target.result + "\" data-file='"+f.name+"' class='selProductFile' title='"+a+"' width=\"150px\" height=\"180px\" ></a>";
+        	
+            html+="<label for='picture' class='sub-upload'></label>";
+         
 
-              
+            $(".imgs-wrap").append(html);   
+            $(".imgs-wrap").css("height","100%");   
+a=e.target.result;
 
-            $(".imgs_wrap").append(html);   
-
-            index++;   
+console.log(sel_files);
+            index++;  
+       i=1;
+       if(i==1){
+    	   
+    	   $('label.main.photo').hide()
+    		
+    	   $('i').hide();
+    	
+    	
+    	  
+    	   
+       }
+       else if(i==0){
+    	   
+    	   $('label.main.photo').show()
+   		
+    	   $('i').show();  
+       }
+       
 
         }   
 
@@ -162,22 +196,67 @@ function submitAction() {
     xhr.send(data);   
 
 }
-</script>
- </head>
+
+ function allowDrop(ev) {
+	   ev.preventDefault();
+	}
+
+	function drag(ev) {
+	   ev.dataTransfer.setData("img",ev.target.id);
+	}
+
+
+	function drop(ev) {
+		 ev.preventDefault();
+		   $('p').remove();
+		   var p=document.createElement("p");
+		  
+		  
+		/*   p.innerHTML="<a href=\"javascript:void(0);\" ondrop=\"drop(event)\" ondragover=\"allowDrop(event)\"onclick=\"deleteImageAction("+index+")\" id=\"img_id_"+index+"\"><img src=\"" + a + "\" data-file="+b+"' class='selProductFile' title='클릭하시면 제거됩니다' width=\"150px\" height=\"180px\" ></a>"; */
+		  console.log(p);
+		  console.log(sel_files);
+		  var fileReader = new FileReader();
+		  
+		  fileReader.readAsDataURL(sel_files);
+		  fileReader.onload = function(e) {
+			  p.innerHTML="<a href=\"javascript:void(0);\" ondrop=\"drop(event)\" ondragover=\"allowDrop(event)\"onclick=\"deleteImageAction("+index+")\" id=\"img_id_"+index+"\"><img src=\"" + e.target.result + "\" data-file="+b+"' class='selProductFile' title='b' width=\"150px\" height=\"180px\" ></a>";
+		    console.log(e.target.result);
+		  }
+/* 		   var data = ev.vdataTransfer.getData("img");  */
+
+			
+		   ev.target.appendChild(p);
+		
+	   }
+	</script>
 <body>
+<progress value="50" max="100"></progress>
+<div id="wrap">
+<!-- <form action="/upload-target" class="dropzone"></form> -->
 <form action="description" method="post" enctype="multipart/form-data">
                
-               <div class="upload_List_Block">
+           <div class="upload_List_Block">
                   
                   <div class="upload_List_Title">사진</div>
                   
+               <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)" style="border:1px solid black; width:1100px;height: 350px;"></div>
+
+
+<div ondrop="drop(event)" ondragover="allowDrop(event)" style="border: 1px solid red; height: 300px">
+
+ -->
+<!-- 
+<img src="../../img/plus.png" alt="" id="drag1" draggable="true" ondragstart="drag(event)" width="128" height="128" />
+<img src="../../img/p5.png" alt="" id="drag2" draggable="true" ondragstart="drag(event)" width="128" height="128" /> -->
                   <div class="upload_List_Input">
                      <div class="input_wrap">
-                        <div class="imgs_wrap">
+                        <div class="imgs-wrap">
                            <img id="img" />
                         </div>
                         <a href="javascript:" onclick="fileUploadAction();" class="my_button"></a>  
-                        <input type="file" id="picture" multiple="multiple" name="photo" />
+                      <div class="upload-photo">
+                     <input type="file" id="picture" multiple="multiple"/>
+                     <i class="fa fa-camera fa-2x"></i><label class="main photo" for="picture">사진업로드</label>
                      </div>
                   </div>
                </div>
