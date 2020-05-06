@@ -111,7 +111,7 @@
 				<div class="user-info-update-password-block">
 					<div class="user-info-update-password-title">현재 비밀번호</div>
 					<div class="user-info-update-password-value">
-						<input class="user-info-update-password-input" type="password" />
+						<input class="user-info-update-password-input" type="password" id="userInputPassword" />
 					</div>
 				</div>
 
@@ -120,7 +120,7 @@
 				<div class="user-info-update-password-block">
 					<div class="user-info-update-password-title">변경 비밀번호</div>
 					<div class="user-info-update-password-value">
-						<input class="user-info-update-password-input" type="password" />
+						<input class="user-info-update-password-input" type="password" id="newPassword" />
 					</div>
 				</div>
 				<div class="user-info-update-password-error"></div>
@@ -133,7 +133,7 @@
 				</div>
 				<div class="user-info-update-password-error"></div>
 
-				<button id="passwrodModifyBtn">변경</button>
+				<button onclick="updateUserPassword()">변경</button>
 			</div>
 		</div>
 	</div>
@@ -235,9 +235,10 @@ $('document').ready(function(){
 
 
 function updateUserPassword(){
+	alert($("#userInputPassword").val());
 	var params = {
-			userPassword : $('#userPassword').val(),
-			newPassword : $('#newPassword').val(),
+			userPassword : $('#userInputPassword').val(),
+			newPassword : $('#newPassword').val()
 	}
 	
 	$.ajax({
