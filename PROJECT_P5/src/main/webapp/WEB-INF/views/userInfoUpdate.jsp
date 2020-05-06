@@ -96,7 +96,18 @@
 		<div id="modalPopup">
 			<div class="user-info-update-password-container">
 				<div class="user-info-update-password-label">비밀번호 변경</div>
-
+				<!-- 임시 로그인으로 진입 여부 확인 -->
+   		 <%
+   		 if(request.getParameter("t") != null){
+   		 %>
+         <input type="hidden" id="isTemporaryLogIn" value="true" />
+         <%
+   		 } else{
+         %>
+   		<input type="hidden" id="isTemporaryLogIn" />
+   		<%
+   		 }
+   		%>	 
 				<div class="user-info-update-password-block">
 					<div class="user-info-update-password-title">현재 비밀번호</div>
 					<div class="user-info-update-password-value">
@@ -212,6 +223,49 @@
 		}
 	});
 	
+
+
+// 임시 비밀번호로 로그인해서 왔으면 비밀번호 변경 modal 활성화
+$('document').ready(function(){
+	var t = $('#isTemporaryLogIn').val();
+	if(t === 'true'){
+		$("#userInfoUpdatePasswordModify").css("display","block");
+	}
+});
+
+
+function updateUserPassword(){
+	var params = {
+			userPassword : $('#userPassword').val(),
+			newPassword : $('#newPassword').val(),
+	}
+	
+	$.ajax({
+		type : "POST",
+		url : "ajax/updateUserPassword",
+		data : params,
+		async : false,
+		success : function(result){
+			if(result == 0){
+				
+				alert("기존의 비밀번호가 일치하지 않습니다.");
+				
+			} else if(result == 1){
+				
+				alert("비밀번호 변경 완료.");
+				location.replace("userInfoUpdate");
+				
+			} else{
+				
+				alert("비밀번호 변경 실패.");
+				
+			}
+		},	
+		error : function(){
+			alert("통신 실패..");
+		}
+	});
+}
 
 	
 	/////////////// 비밀번호 변경 모달 /////////////

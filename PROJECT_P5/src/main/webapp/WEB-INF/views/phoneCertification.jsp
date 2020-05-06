@@ -12,7 +12,7 @@
 </style>
 </head>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-<body>
+<body onload="window.focus();">
 	<h1> 휴대폰 인증</h1>
 	
 	전화번호 :
