@@ -11,8 +11,7 @@ public class Member {
 	private String lastName;
 	private Date birthDate;
 	private String mobilePhone;
-	private char mobileAuthentication;
-	private String registrationDate;
+	private Date registrationDate;
 	private String profilePhotoPath;
 	
 	
@@ -58,16 +57,10 @@ public class Member {
 	public void setMobilePhone(String mobilePhone) {
 		this.mobilePhone = mobilePhone;
 	}
-	public char getMobileAuthentication() {
-		return mobileAuthentication;
-	}
-	public void setMobileAuthentication(char mobileAuthentication) {
-		this.mobileAuthentication = mobileAuthentication;
-	}
-	public String getRegistrationDate() {
+	public Date getRegistrationDate() {
 		return registrationDate;
 	}
-	public void setRegistrationDate(String registrationDate) {
+	public void setRegistrationDate(Date registrationDate) {
 		this.registrationDate = registrationDate;
 	}
 	public String getProfilePhotoPath() {
@@ -80,12 +73,8 @@ public class Member {
 	public String toString() {
 		return "Member [id=" + id + ", email=" + email + ", password=" + password + ", firstName=" + firstName
 				+ ", lastName=" + lastName + ", birthDate=" + birthDate + ", mobilePhone=" + mobilePhone
-				+ ", mobileAuthentication=" + mobileAuthentication + ", registrationDate=" + registrationDate
-				+ ", profilePhotoPath=" + profilePhotoPath + "]";
+				+ ", registrationDate=" + registrationDate + ", profilePhotoPath=" + profilePhotoPath + "]";
 	}
-	
-	
-	
 	
 	
 	

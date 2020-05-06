@@ -8,11 +8,19 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 <title>숙소 상세보기</title>
 
 
 <link rel="stylesheet" href="css/reset.css" />
+<link rel="stylesheet" href="css/home.css" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
+
 <link rel="stylesheet" href="css/daterangepicker.css" />
 <style type="text/css">
 #wrap {
@@ -437,7 +445,8 @@ button {
 
 </head>
 <body>
-   <div id="wrap">
+	<jsp:include page="./header.jsp"></jsp:include>	
+   	<div id="wrap">
       <div class="postImgSlide">
          <!-- 사진 데이터 입력 시 반목문으로  >  .postImgSlide[0] 아래로 append
          <div class="postImg">
@@ -745,11 +754,20 @@ button {
 			</table>
 				<div id="dateCount"></div>
 				<input type="hidden" id="hostId" name="hostId" value="${host.id}">
-				<input type="hidden" id="userId" name="userId" value="${user.id}">
 				<input type="hidden" id="hostName" name="hostName" value="${host.name}">
 				<input type="hidden" id="hostPrice"	name="hostPrice" value="${host.price}">
 				<input type="hidden" id="dateCnt" name="dateCnt" value="">
-		        <input type="submit" id="goPurchase" value="예약하기" onclick="return gogo();"/>
+				
+				<c:set var="userId" value="${user.id}" />
+				<c:choose>
+					<c:when test="${userId != null}">
+		        		<input type="submit" id="goPurchase" value="예약하기" onclick="return gogo();"/>
+		        		<input type="hidden" id="userId" name="userId" value="${user.id}">
+		        	</c:when>
+		        	<c:otherwise>
+	        			<input type="button" id="goLogin" value="로그인"/>
+		        	</c:otherwise>
+		        </c:choose>
 			</form>
 		</div>
 </body>
@@ -950,7 +968,10 @@ button {
    }
    
    /* 캘린더 */
-
+	// 로그인 안되어있을시에 로그인 유도 
+	$('#goLogin').on('click', logInModalOn);
+   
+    // purchase으로 가시전 날짜 확인
    	function gogo() {
 		if(!flag){
 			alert("날짜를 선택하세요!");
@@ -1044,8 +1065,7 @@ button {
                "endDate" : "${endDate}",
                "minDate" : date,
                "maxDate" : date2,
-               "maxSpan" : {"days" : maximumStay}
-                ,
+               "maxSpan" : {"days" : maximumStay},
                "isInvalidDate" : function(ele) {
                    var currDate = moment(ele._d).format('YYYY-MM-DD');
                    return [${blocking}].indexOf(currDate) != -1;
