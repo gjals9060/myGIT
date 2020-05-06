@@ -130,7 +130,7 @@
 	<!-- 전화번호 인증에 사용되는 modal -->
 	<div id="blockingModal" class="user-info-modal">
 		<div id="blockingModalCon">
-			<img src="img/PopupLoader.gif" alt="" />
+			<img src="img/PopupLoader.gif" alt="" style="pointer-eventsm: none" />
 			<p>팝업창을 확인해주세요!</p>
 		</div>
 	</div>
@@ -253,11 +253,15 @@
 		var phoneURL = '/p5/phoneCertification';
 		var phoneOption =  "width=370, height=360, resizable=no, scrollbars=no, status=no;";
 
-		var windowPop = window.open(phoneURL,"",phoneOption);
+		var windowPop = window.open(phoneURL,"popwin",phoneOption);
 		
 		
 		$('#blockingModal').css("display","block");
-		window.focus();
+		
+		$('#blockingModal').on("click",function(){
+			windowPop.focus();
+		});
+		
 		
 		var intervalPop = window.setInterval(function() {
 			try{
