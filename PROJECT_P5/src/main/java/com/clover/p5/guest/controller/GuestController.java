@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.clover.p5.guest.service.GuestService;
 import com.clover.p5.guest.dto.HostInfoDTO;
+import com.clover.p5.guest.dto.ReservationInfoDTO;
 import com.clover.p5.guest.dto.SearchInputDTO;
 
 @Controller
@@ -42,5 +43,11 @@ public class GuestController {
 	public String reservationPurchase(HttpServletRequest request, Model model) {	
 		return guestService.reservationPurchase(request, model);
 	}
+	
+	@RequestMapping(value = "/reservationFinish", method = RequestMethod.POST)
+	public String reservationFinish(ReservationInfoDTO reservationInfoDTO, HttpServletRequest request, Model model) {	
+		return guestService.reservationFinish(reservationInfoDTO, request, model);
+	}
+	
 	
 }

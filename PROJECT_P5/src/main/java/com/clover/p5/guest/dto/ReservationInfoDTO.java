@@ -19,20 +19,20 @@ public class ReservationInfoDTO {
 	private int id;
 	private int hostId;
 	private int memberId;
-	private Date checkInDate;
-	private Date checkOutDate;
+	private String checkInDate;
+	private String checkOutDate;
 	private int guestCount;
 	private int payment;
-	private Date bookingDate;
-	private Date cancellation;
+	private String bookingDate;
+	private String cancellation;
 	private int refund;
 	
 	public ReservationInfoDTO() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ReservationInfoDTO(int id, int hostId, int memberId, Date checkInDate, Date checkOutDate, int guestCount,
-			int payment, Date bookingDate, Date cancellation, int refund) {
+	public ReservationInfoDTO(int id, int hostId, int memberId, String checkInDate, String checkOutDate, int guestCount,
+			int payment, String bookingDate, String cancellation, int refund) {
 		super();
 		this.id = id;
 		this.hostId = hostId;
@@ -44,6 +44,14 @@ public class ReservationInfoDTO {
 		this.bookingDate = bookingDate;
 		this.cancellation = cancellation;
 		this.refund = refund;
+	}
+
+	
+	@Override
+	public String toString() {
+		return "ReservationInfoDTO [id=" + id + ", hostId=" + hostId + ", memberId=" + memberId + ", checkInDate="
+				+ checkInDate + ", checkOutDate=" + checkOutDate + ", guestCount=" + guestCount + ", payment=" + payment
+				+ ", bookingDate=" + bookingDate + ", cancellation=" + cancellation + ", refund=" + refund + "]";
 	}
 
 	public int getId() {
@@ -70,19 +78,19 @@ public class ReservationInfoDTO {
 		this.memberId = memberId;
 	}
 
-	public Date getCheckInDate() {
+	public String getCheckInDate() {
 		return checkInDate;
 	}
 
-	public void setCheckInDate(Date checkInDate) {
+	public void setCheckInDate(String checkInDate) {
 		this.checkInDate = checkInDate;
 	}
 
-	public Date getCheckOutDate() {
+	public String getCheckOutDate() {
 		return checkOutDate;
 	}
 
-	public void setCheckOutDate(Date checkOutDate) {
+	public void setCheckOutDate(String checkOutDate) {
 		this.checkOutDate = checkOutDate;
 	}
 
@@ -102,19 +110,19 @@ public class ReservationInfoDTO {
 		this.payment = payment;
 	}
 
-	public Date getBookingDate() {
+	public String getBookingDate() {
 		return bookingDate;
 	}
 
-	public void setBookingDate(Date bookingDate) {
+	public void setBookingDate(String bookingDate) {
 		this.bookingDate = bookingDate;
 	}
 
-	public Date getCancellation() {
+	public String getCancellation() {
 		return cancellation;
 	}
 
-	public void setCancellation(Date cancellation) {
+	public void setCancellation(String cancellation) {
 		this.cancellation = cancellation;
 	}
 
@@ -125,7 +133,6 @@ public class ReservationInfoDTO {
 	public void setRefund(int refund) {
 		this.refund = refund;
 	}
-	
-	
+
 	
 }
