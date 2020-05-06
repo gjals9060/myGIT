@@ -420,7 +420,7 @@ button {
 											+ '=================================================='
 											+ '<br>';
 												
-										console.log(ss);
+										//console.log(ss);
 										
 										//마커 추가
 										var imageSrc1 = './img/marker3.png', // 마커이미지의 주소입니다    

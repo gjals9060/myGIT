@@ -1,4 +1,4 @@
-package com.clover.p5.host.dto;
+package com.clover.p5.guest.dto;
 
 import java.sql.Date;
 

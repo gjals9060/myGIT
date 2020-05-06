@@ -1,26 +1,11 @@
 package com.clover.p5.host.mapper;
 
-import java.util.Date;
-import java.util.List;
-
-
 import org.apache.ibatis.annotations.Param;
 
-import com.clover.p5.host.dto.HostInfoDTO;
-import com.clover.p5.host.dto.HostPhotoDTO;
 import com.clover.p5.host.dto.NewHostDTO;
-import com.clover.p5.host.dto.SearchHostDTO;
 
 public interface HostMapper {
 
-	HostInfoDTO selectHost(String id);
-	
-	List<HostInfoDTO> selectHostList(SearchHostDTO searchHostDto);
-
-	List<HostPhotoDTO> selectHostPhoto(String hostId);
-	
-	List<Date> selectBlocking(String hostId);
-	
 	// 아래부터 by 근형
 
 	

@@ -1,25 +1,17 @@
 package com.clover.p5.host.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.clover.p5.entity.Member;
-import com.clover.p5.host.dto.HostInfoDTO;
 import com.clover.p5.host.dto.NewHostDTO;
-import com.clover.p5.host.dto.SearchInputDTO;
 import com.clover.p5.host.service.HostService;
 
 @SessionAttributes("newHost")
@@ -29,41 +21,6 @@ public class HostController {
 	@Autowired
 	private HostService hostService;
 
-	@ResponseBody
-	@RequestMapping(value="/ajax/Hosts", method = RequestMethod.POST)
-	public List<HostInfoDTO> ajaxMap(@RequestBody SearchInputDTO searchInputDto) {	
-		return hostService.selectHostList(searchInputDto);
-	}
-
-	@RequestMapping("/reservationList")
-	public String reservationList(HttpServletRequest request, Model model) {
-		return hostService.reservationList(request, model);
-	}
-	
-	@RequestMapping("/postPage")
-	public String postPage(HttpServletRequest request, Model model) {	
-		return hostService.selectHost(request, model);
-	}
-	
-	@RequestMapping("/reservationPurchase")
-	public String reservationPurchase(HttpServletRequest request, Model model) {	
-		return hostService.reservationPurchase(request, model);
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-//////////아래부터 by 근형	
-//	등록한 숙소리스트
-//	hostReservationList
-	
-	
 	
 ///////////////////////////// 호스트 등록 ////////////////////////////////
 	
