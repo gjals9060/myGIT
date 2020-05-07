@@ -167,10 +167,7 @@
                   
                   // 조정중일때 주소검색시 초기화
                   if(toggle){
-	                  $('#map-save-btn').hide();
-	                  $('#map-set-btn').show();
-	                  toggle = false;
-	                  flag = true;
+                	  toggleFalse();
                   }
                   
                }
@@ -181,7 +178,9 @@
    }
    
       
-   $(document).on('click','#map-set-btn', function() {
+   $(document).on('click','#map-set-btn', toggleTrue);
+   
+   function toggleTrue() {
       
       $('#map-set-btn').hide();
       $('#map-save-btn').show();
@@ -197,9 +196,11 @@
 	  marker2.setMap(map);
 
       
-   });
+   }
    
-   $(document).on('click','#map-save-btn', function() {
+   $(document).on('click','#map-save-btn', toggleFalse);
+   
+   function toggleFalse() {
       
       $('#map-save-btn').hide();
       $('#map-set-btn').show();
@@ -224,7 +225,7 @@
       	  $('#next').prop("disabled", false);
 */
 		
-});
+	}
    
    
    
