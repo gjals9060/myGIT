@@ -78,5 +78,36 @@
 	
 	</select>
 	
+	<insert id="insertBooking" parameterType="ReservationInfoDTO">
+		
+		INSERT 
+		INTO
+			booking
+		VALUES(
+			SEQ_booking_id.nextval,
+			#{hostId},
+			#{memberId},
+			TO_DATE(#{checkInDate},'MM/DD/YYYY'),
+			TO_DATE(#{checkOutDate},'MM/DD/YYYY'),
+			#{guestCount},
+			#{payment},
+			TO_DATE(#{bookingDate},'MM/DD/YYYY HH24:MI:SS'),
+			NULL,
+			NULL		
+		)
+	
+	</insert>
+	
+	<insert id="insertBlocking" parameterType="">
+		
+		INSERT 
+		INTO
+			blocking
+		VALUES(
+			
+		)
+		
+	</insert>
+	
 </mapper>
 	

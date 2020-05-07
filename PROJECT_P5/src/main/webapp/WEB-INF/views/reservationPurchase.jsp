@@ -43,9 +43,12 @@
 <div>	<!-- 임시 결제 버튼 -->
 	<form action="reservationFinish" method="post">
 		<input type="hidden" id="hostId" name="hostId" value="${booking.hostId}">
-		<input type="hidden" id="" name="" value="">
-		<input type="hidden" id="" name="" value="">
-		<input type="hidden" id="" name="" value="">
+		<input type="hidden" id="memberId" name="memberId" value="${booking.memberId}">
+		<input type="hidden" id="checkInDate" name="checkInDate" value="${booking.checkInDate}" >
+		<input type="hidden" id="checkOutDate" name="checkOutDate" value="${booking.checkOutDate}">
+		<input type="hidden" id="guestCount" name="guestCount" value="${booking.guestCount}">
+		<input type="hidden" id="payment" name="payment" value="${booking.payment}">
+		
 		<input type="submit" value="결제">
 	</form>
 </div>

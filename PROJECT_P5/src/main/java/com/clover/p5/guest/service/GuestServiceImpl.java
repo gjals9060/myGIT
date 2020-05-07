@@ -174,19 +174,23 @@ public class GuestServiceImpl implements GuestService {
 		
 		String[] date = checkInDatecheckOutDate.split(" - ");
 		
-		Date checkInDate = null;
-		Date checkOutDate = null;
+//		Date checkInDate = null;
+//		Date checkOutDate = null;
+//		
+//		try {
+//			//String checkInDate = date[0];
+//			checkInDate = new SimpleDateFormat("MM/dd/yyyy").parse(date[0]);
+//			//String checkOutDate = date[1];
+//			checkOutDate = new SimpleDateFormat("MM/dd/yyyy").parse(date[1]);
+//
+//		} catch (ParseException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
-		try {
-			//String checkInDate = date[0];
-			checkInDate = new SimpleDateFormat("MM/dd/yyyy").parse(date[0]);
-			//String checkOutDate = date[1];
-			checkOutDate = new SimpleDateFormat("MM/dd/yyyy").parse(date[1]);
+		String checkInDate = date[0];
+		String checkOutDate = date[1];
 
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		System.out.println("checkInDate : " + checkInDate);
 		System.out.println("checkOutDate : " + checkOutDate);
 
@@ -218,4 +222,58 @@ public class GuestServiceImpl implements GuestService {
 		
 		return "reservationPurchase";
 	}
+
+
+	@Override
+	public String reservationFinish(ReservationInfoDTO reservationInfoDTO, HttpServletRequest request, Model model) {
+
+		System.out.println("reservationFinish 페이지 이동");
+		
+//		System.out.println("id : " + reservationInfoDTO.getHostId());
+//		System.out.println("checkIn : " + reservationInfoDTO.getCheckInDate());
+//		System.out.println("payment : " + reservationInfoDTO.getPayment());
+		
+		SimpleDateFormat format1 = new SimpleDateFormat ( "MM/dd/yyyy HH:mm:ss");
+		
+		Date today = new Date();
+		
+		String bookingDate = format1.format(today);
+		
+		reservationInfoDTO.setBookingDate(bookingDate);
+		
+		System.out.println("reservationInfoDTO : " + reservationInfoDTO.toString());
+
+		
+		
+		if(guestMapper.insertBooking(reservationInfoDTO) == 1) {
+			
+			System.out.println("DB booking insert 성공");
+			
+		}else {
+			
+			System.out.println("DB booking insert 실패");
+			
+		}
+		
+		// insertAll 사용해서 between checkIn and checkOut 전부 blocking ㄱㄱ
+		
+//		if(guestMapper.insertBlocking() == 1) {
+//			
+//			System.out.println("DB booking insert 성공");
+//
+//		}else {
+//			
+//			System.out.println("DB booking insert 실패");
+//
+//		}
+		
+		
+		
+		return "reservationFinish";
+	}
 }
+
+
+
+
+
