@@ -21,7 +21,5 @@ public interface HostMapper {
 	
 	int insertBlocking(
 			@Param("hostId") int hostId,
-			@Param("arrBlockingDate") String[] arrBlockingDate);
-	
-	
+			@Param("arrBlockingDate") String[] arrBlockingDate);	
 }

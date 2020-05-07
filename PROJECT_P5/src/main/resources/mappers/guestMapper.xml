@@ -97,17 +97,6 @@
 		)
 	
 	</insert>
-	
-	<insert id="insertBlocking" parameterType="">
-		
-		INSERT 
-		INTO
-			blocking
-		VALUES(
-			
-		)
-		
-	</insert>
-	
+
 </mapper>
 	

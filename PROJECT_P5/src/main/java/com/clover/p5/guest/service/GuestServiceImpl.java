@@ -2,6 +2,7 @@ package com.clover.p5.guest.service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import com.clover.p5.guest.dto.HostInfoDTO;
@@ -17,6 +19,7 @@ import com.clover.p5.guest.dto.ReservationInfoDTO;
 import com.clover.p5.guest.dto.SearchHostDTO;
 import com.clover.p5.guest.dto.SearchInputDTO;
 import com.clover.p5.guest.mapper.GuestMapper;
+import com.clover.p5.host.mapper.HostMapper;
 
 @Service
 public class GuestServiceImpl implements GuestService {
@@ -25,6 +28,8 @@ public class GuestServiceImpl implements GuestService {
 	@Autowired
 	private GuestMapper guestMapper;
 	
+	@Autowired
+	private HostMapper hostMapper;
 	
 	@Override
 	public String selectHost(HttpServletRequest request, Model model) {
@@ -223,7 +228,7 @@ public class GuestServiceImpl implements GuestService {
 		return "reservationPurchase";
 	}
 
-
+	@Transactional
 	@Override
 	public String reservationFinish(ReservationInfoDTO reservationInfoDTO, HttpServletRequest request, Model model) {
 
@@ -234,41 +239,73 @@ public class GuestServiceImpl implements GuestService {
 //		System.out.println("payment : " + reservationInfoDTO.getPayment());
 		
 		SimpleDateFormat format1 = new SimpleDateFormat ( "MM/dd/yyyy HH:mm:ss");
+		SimpleDateFormat format2 = new SimpleDateFormat ( "MM/dd/yyyy");
 		
 		Date today = new Date();
 		
-		String bookingDate = format1.format(today);
+		String bookingDate = format1.format(today);	// Date => String
+		//today = format1.parse(bookingDate);		// String => Date
 		
+		String checkInDate = reservationInfoDTO.getCheckInDate();
+		String checkOutDate = reservationInfoDTO.getCheckOutDate();
+		
+		List<String> listBlockingDate = new ArrayList<>();
+
 		reservationInfoDTO.setBookingDate(bookingDate);
 		
 		System.out.println("reservationInfoDTO : " + reservationInfoDTO.toString());
 
-		
-		
 		if(guestMapper.insertBooking(reservationInfoDTO) == 1) {
 			
 			System.out.println("DB booking insert 성공");
 			
+			try {
+				Date dCID = format2.parse(checkInDate);
+				Date dCOD = format2.parse(checkOutDate);
+				long diff = dCOD.getTime() - dCID.getTime();
+				//System.out.println(diff);
+				long diffDays = diff / (24 * 60 * 60 * 1000);	
+				//System.out.println("차이" + diffDays);
+				for(int i = 0;i<diffDays;i++ ) {
+					long day = dCID.getTime() + i * (24 * 60 * 60 * 1000);
+					String sDay = format2.format(day);
+					System.out.println(sDay);
+					listBlockingDate.add(sDay);
+				}//end - for
+				
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+
 		}else {
-			
 			System.out.println("DB booking insert 실패");
-			
 		}
 		
-		// insertAll 사용해서 between checkIn and checkOut 전부 blocking ㄱㄱ
 		
-//		if(guestMapper.insertBlocking() == 1) {
+		
+		String[] arrBlockingDate = listBlockingDate.toArray(new String[listBlockingDate.size()]);
+		
+
+		if(hostMapper.insertBlocking(reservationInfoDTO.getHostId(), arrBlockingDate) == arrBlockingDate.length) {
+			System.out.println("DB blocking insert 성공");
+		}else {
+			System.out.println("DB blocking insert 실패");
+		}
+		
+		
+		
+		/////////////테스트
+//		try {
 //			
-//			System.out.println("DB booking insert 성공");
-//
-//		}else {
-//			
-//			System.out.println("DB booking insert 실패");
-//
+//		int reselt = guestMapper.insertBooking(reservationInfoDTO);
+//		System.out.println(reselt);
+//		
+//		} catch (Exception e) {
+//			e.printStackTrace();
 //		}
-		
-		
-		
+//		System.out.println("완료");
+		/////////////
+
 		return "reservationFinish";
 	}
 }

@@ -20,6 +20,4 @@ public interface GuestMapper {
 	List<Date> selectBlocking(String hostId);
 	
 	int insertBooking(ReservationInfoDTO reservationInfoDTO);	//성공시 1
-	
-	int insertBlocking();
 }
