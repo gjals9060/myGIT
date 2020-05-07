@@ -300,7 +300,7 @@
                     split = val.split(this.locale.separator);
 
                 start = end = null;
-$('input').val('');
+/*$('input').val('');*/
                 if (split.length == 2) {
                     start = moment(split[0], this.locale.format);
                     end = moment(split[1], this.locale.format);
