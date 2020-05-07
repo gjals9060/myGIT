@@ -8,14 +8,14 @@ public class SearchHostDTO {
 	private double neLatitude;
 	private double swLongitude;
 	private double neLongitude;
-	private int capacity;
+	private int guestCount;
 	
 	public SearchHostDTO() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public SearchHostDTO(String sStartDate, String sEndDate, double swLatitude, double neLatitude, double swLongitude,
-			double neLongitude, int capacity) {
+			double neLongitude, int guestCount) {
 		super();
 		this.sStartDate = sStartDate;
 		this.sEndDate = sEndDate;
@@ -23,7 +23,7 @@ public class SearchHostDTO {
 		this.neLatitude = neLatitude;
 		this.swLongitude = swLongitude;
 		this.neLongitude = neLongitude;
-		this.capacity = capacity;
+		this.guestCount = guestCount;
 	}
 	
 	

@@ -14,18 +14,20 @@ public class HostPhotoDTO {
 	private String originalName;
 	private int fileSize;
 	private String path;
+	private int sortOrder;
 	
 	public HostPhotoDTO() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public HostPhotoDTO(int id, int hostId, String originalName, int fileSize, String path) {
+	public HostPhotoDTO(int id, int hostId, String originalName, int fileSize, String path, int sortOrder) {
 		super();
 		this.id = id;
 		this.hostId = hostId;
 		this.originalName = originalName;
 		this.fileSize = fileSize;
 		this.path = path;
+		this.sortOrder = sortOrder;
 	}
 
 	public int getId() {
@@ -66,6 +68,14 @@ public class HostPhotoDTO {
 
 	public void setPath(String path) {
 		this.path = path;
+	}
+
+	public int getSortOrder() {
+		return sortOrder;
+	}
+
+	public void setSortOrder(int sortOrder) {
+		this.sortOrder = sortOrder;
 	}
 	
 	
