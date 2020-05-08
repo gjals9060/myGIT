@@ -11,11 +11,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.clover.p5.member.dto.ErrorFieldDTO;
 import com.clover.p5.member.dto.NewMemberDTO;
 import com.clover.p5.member.dto.ProfilePhoto;
-import com.clover.p5.member.dto.ProfilePhotoVO;
 import com.clover.p5.member.service.MemberService;
 
 
@@ -135,28 +136,29 @@ public class MemberController {
 	
 	
 //********************************** 회원 프로필 사진 ******************************************	
-	@RequestMapping("/ajax/showProfilePhoto")
+	@RequestMapping("/ajax/getProfilePhotoList")
 	@ResponseBody // 회원 프로필 사진 목록을 가져온다.
-	public List<ProfilePhoto> getProfilePhotoList(HttpServletRequest req) {
-		return memberService.getProfilePhotoList(req);
+	public List<ProfilePhoto> getProfilePhotoList(@SessionAttribute("userId") int userId) {
+		return memberService.getProfilePhotoList(userId);
 	}
 	
-	@RequestMapping("/ajax/insertProfilePhoto")
+	@RequestMapping("/ajax/addProfilePhoto")
 	@ResponseBody // 회원 프로필 사진 등록(변경)
-	public boolean insertProfilePhoto(ProfilePhotoVO vo, HttpServletRequest req) {
-		return memberService.insertProfilePhoto(vo, req);
+	public boolean addProfilePhoto(MultipartFile photoFile, HttpServletRequest req) {
+		return memberService.addProfilePhoto(photoFile, req);
 	}
 	
 	@RequestMapping("/ajax/deleteProfilePhoto")
 	@ResponseBody // 회원 프로필 사진 삭제
-	public boolean deleteProfilePhoto(int photoId) {
-		return memberService.deleteProfilePhoto(photoId);
+	public boolean deleteProfilePhoto(HttpServletRequest req, int photoId) {
+		return memberService.deleteProfilePhoto(req, photoId);
 	}
 	
 	@RequestMapping("/ajax/changeProfilePhoto")
 	@ResponseBody // 회원 프로필 사진 변경
-	public boolean changeProfilePhoto(HttpServletRequest req) {
-		return memberService.changeProfilePhoto(req);
+	public boolean changeProfilePhoto(HttpServletRequest req, int photoId) {
+		System.out.println(photoId);
+		return memberService.changeProfilePhoto(req, photoId);
 	}
 //********************************** 회원 프로필 사진-END ******************************************	
 	

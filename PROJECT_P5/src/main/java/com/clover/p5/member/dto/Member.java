@@ -12,6 +12,7 @@ public class Member {
 	private Date birthDate;
 	private String mobilePhone;
 	private Date registrationDate;
+	private String profilePhotoPath;
 	
 	
 	public int getId() {
@@ -62,12 +63,19 @@ public class Member {
 	public void setRegistrationDate(Date registrationDate) {
 		this.registrationDate = registrationDate;
 	}
+	public String getProfilePhotoPath() {
+		return profilePhotoPath;
+	}
+	public void setProfilePhotoPath(String profilePhotoPath) {
+		this.profilePhotoPath = profilePhotoPath;
+	}
 	@Override
 	public String toString() {
 		return "Member [id=" + id + ", email=" + email + ", password=" + password + ", firstName=" + firstName
 				+ ", lastName=" + lastName + ", birthDate=" + birthDate + ", mobilePhone=" + mobilePhone
-				+ ", registrationDate=" + registrationDate + "]";
+				+ ", registrationDate=" + registrationDate + ", profilePhotoPath=" + profilePhotoPath + "]";
 	}
+	
 	
 	
 	

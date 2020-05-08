@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -168,7 +169,17 @@
 				<!-- <a href='host/registration/roomType'>호스트 등록</a> -->
 				<button onclick='isMobileAuthentication()'>호스트 등록</button>
 				<button class="user-drop-down-btn">
-					<span id="userImgBlock"><img id="userImg" src="img/p5_logo.png" alt="" /></span>
+					<span id="userImgBlock">
+						<c:set var="defaultProfilePhotoPath" value="img/defaultProfile.png" />
+						<c:choose>
+						    <c:when test="${empty user.profilePhotoPath}">
+						        <img id="userImg" src="${defaultProfilePhotoPath }" alt="" />
+						    </c:when>
+						    <c:otherwise>
+						        <img id="userImg" src="${user.profilePhotoPath }" alt="" />
+						    </c:otherwise>
+						</c:choose>
+					</span>
 					${user.firstName }
 				</button>
 				

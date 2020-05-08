@@ -1,5 +1,7 @@
 package com.clover.p5.member.service;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -7,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -21,8 +24,10 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.clover.p5.member.dto.ErrorFieldDTO;
 import com.clover.p5.member.dto.Member;
@@ -384,14 +389,14 @@ public class MemberServiceImpl implements MemberService {
 			}
 			
 		/***
-		** 통과했으면 DB에 결과를 적용
+		** 통과했으면 DB에 결과를 저장
 		***/
 			if(memberMapper.updateMobileAuthentication(userId) == 1) {
 				refreshUserSession(req, userId); // session 새로고침
-				System.out.println("휴대전화 인증 결과를 DB에 적용했습니다.");
+				System.out.println("휴대전화 인증 결과를 DB에 저장했습니다.");
 				return 1;
 			}
-			System.out.println("휴대전화 인증 결과를 DB에 적용하지 못했습니다.");
+			System.out.println("휴대전화 인증 결과를 DB에 저장하지 못했습니다.");
 			return 2;
 	}
 //******************************** 휴대전화 인증-END ********************************************
@@ -501,55 +506,148 @@ public class MemberServiceImpl implements MemberService {
 	
 	
 	
-
+//********************************** 프로필 사진 가져오기 *******************************************
 	@Override
-	public List<ProfilePhoto> getProfilePhotoList(HttpServletRequest req) {
-		int memberId = (int)req.getSession().getAttribute("userId");
-		
+	public List<ProfilePhoto> getProfilePhotoList(int memberId) {
 		List<ProfilePhoto> list = memberMapper.selectProfilePhotoList(memberId);
 		System.out.println(list.size() + "개의 프로필 사진이 등록되어 있습니다.");
 		
 		return list;
 	}
+//********************************** 프로필 사진 가져오기-END *******************************************
+	
+	
 
-
-
+//********************************** 프로필 사진 등록 *******************************************
+	@Transactional
 	@Override
-	public boolean insertProfilePhoto(ProfilePhotoVO vo, HttpServletRequest req) {
+	public boolean addProfilePhoto(MultipartFile photoFile, HttpServletRequest req) {
 		int memberId = (int)req.getSession().getAttribute("userId");
-		
-		if(memberMapper.selectProfilePhotoCount(memberId) != 0) {
-			if(memberMapper.updateIsProfileN(memberId) != 1) {
-				System.out.println("프로필 사진 등록 사전 작업 중에 오류 발생");
+		String defaultPath = req.getServletContext().getRealPath("/");
+		  
+	      //파일 기본경로 _ 상세경로
+	      String folderPath = defaultPath + "resources" + File.separator + "upload" + File.separator + "profile" + File.separator;
+	      System.out.println("저장 경로 : " + folderPath);
+	      
+		/**
+		** 파일을 저장할 폴더가 존재하지 않을 경우 폴더를 생성해준다.
+		**/
+			File folder = new File(folderPath);
+	        if(!folder.exists()) { // 존재하지 않으면
+	            if(folder.mkdirs()) { // 폴더를 생성하고 결과를 출력
+	            	System.out.println("폴더 생성 완료 : " + folderPath);
+	            }
+	        }
+	        
+	    /**
+	    ** 서버에 파일을 저장하고 DB에 저장할 정보를 생성.
+	    **/
+    		// 원본 파일명
+    		String originalName = photoFile.getOriginalFilename();
+    		// 파일 크기
+    		long fileSize = photoFile.getSize();
+    		// 파일 확장자
+    		String fileExtension =
+				originalName.substring(originalName.lastIndexOf("."));
+    		
+    		// 저장 파일명을 생성
+    		ZonedDateTime nowSeoul = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
+    		String saveName = (
+				nowSeoul.format(DateTimeFormatter.ofPattern("yyMMdd_HHmmssSSS_")) +
+				UUID.randomUUID() + fileExtension		).replace("-", "");
+    		
+    		// 서버에 저장될 실제 '저장' 경로
+    		String savePath = folderPath + saveName;
+    		
+    		// DB에 저장될 최종 path
+    		String path = req.getContextPath() + "/upload/profile/" + saveName;
+    		System.out.println("이미지 경로 : " + path);
+    		
+    		ProfilePhotoVO profilePhotoVo = new ProfilePhotoVO(memberId, originalName, fileSize, path);
+	    		
+	/***
+	 ** 서버에 파일 저장
+	 ***/
+    		File file = new File(savePath);
+    		try {
+				photoFile.transferTo(file);
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+				System.out.println("업로드 파일을 서버에 저장 중에 오류 발생");
 				return false;
 			}
-		}
-		if(memberMapper.insertProfilePhoto(vo) != 1) {
-			System.out.println("프로필 사진 등록 중에 오류 발생");
-			return false;
-		}
-		System.out.println("프로필 사진 등록(변경)을 완료했습니다.");
-		return true;
+    		
+	/***
+	** DB에 파일 정보 저장
+	***/
+			if(memberMapper.selectProfilePhotoCount(memberId) != 0) { // 기존에 프로필 사진이 있으면
+				if(memberMapper.updateIsProfileN(memberId) != 1) { // 프로필 해제시킨 뒤
+					System.out.println("프로필 사진 등록 사전 작업 중에 오류 발생");
+					return false;
+				}
+			}
+			if(memberMapper.insertProfilePhoto(profilePhotoVo) != 1) { // 프로필 등록과 동시에 변경
+				System.out.println("프로필 사진 등록 중에 오류 발생");
+				return false;
+			}
+			if(memberMapper.updateMemberProfilePhotoPath(memberId) != 1) { // 회원 테이블에 변동 사항 저장
+				System.out.println("프로필 사진 변동 사항을 회원 테이블에 저장 중에 오류 발생");
+				return false;
+			}
+				// 문제 없이 모든 작업을 마쳤으면
+			refreshUserSession(req, memberId); // 세션을 갱신
+			
+			System.out.println("프로필 사진 등록(변경)을 완료했습니다.");
+			return true;
 	}
+//********************************** 프로필 사진 등록-END *******************************************
 
-
-
+	
+	
+//********************************** 프로필 사진 삭제 *******************************************
+	@Transactional
 	@Override
-	public boolean deleteProfilePhoto(int photoId) {
+	public boolean deleteProfilePhoto(HttpServletRequest req, int photoId) {
+		int memberId = (int)req.getSession().getAttribute("userId");
+		
 		if(memberMapper.deleteProfilePhoto(photoId) != 1) {
 			System.out.println("프로필 사진 삭제 중에 오류 발생");
 			return false;
 		}
-		System.out.println(photoId + "번 프로필 사진 삭제를 완료했습니다.");
+			// 대체할 게 있나?
+		if(memberMapper.selectProfilePhotoCount(memberId) != 0) { // 있으면
+			if(memberMapper.updateAutoProfile(memberId) != 1) { // 대체에 실패
+				System.out.println("프로필 사진 삭제 이후 대체 중에 오류 발생");
+				return false;
+			} else { // 대체에 성공
+				System.out.println(photoId + "번 프로필 사진 삭제 + 대체를 완료했습니다.");
+				if(memberMapper.updateMemberProfilePhotoPath(memberId) != 1) {
+					System.out.println("결과를 회원 테이블에 저장 중에 오류 발생");
+					return false;
+				}
+			}
+		} else { // 없으면
+			System.out.println(photoId + "번 프로필 사진 삭제를 완료했습니다.");
+			if(memberMapper.updateMemberProfilePhotoPath(memberId) != 1) {
+				System.out.println("결과(NULL)를 회원 테이블에 저장 중에 오류 발생");
+				return false;
+			}
+		}
+			// 문제 없이 모든 작업을 마쳤으면
+		refreshUserSession(req, memberId); // 세션을 갱신
+		
+		System.out.println("회원 테이블에 결과 저장 완료.");
 		return true;
 	}
+//********************************** 프로필 사진 삭제-END *******************************************
 
-
-
+	
+	
+//********************************** 프로필 사진 변경 *******************************************
+	@Transactional
 	@Override
-	public boolean changeProfilePhoto(HttpServletRequest req) {
+	public boolean changeProfilePhoto(HttpServletRequest req, int photoId) {
 		int memberId = (int)req.getSession().getAttribute("userId");
-		int photoId = Integer.parseInt(req.getParameter("photoId"));
 		
 		if(memberMapper.updateIsProfileN(memberId) != 1) {
 			System.out.println("프로필 사진 변경 사전 작업 중에 오류 발생");
@@ -560,9 +658,18 @@ public class MemberServiceImpl implements MemberService {
 			return false;
 		}
 		System.out.println("프로필 사진 변경을 완료했습니다.");
+		
+		if(memberMapper.updateMemberProfilePhotoPath(memberId) != 1) {
+			System.out.println("결과를 회원 테이블에 저장 실패");
+			return false;
+		}
+			// 문제 없이 모든 작업을 마쳤으면
+		refreshUserSession(req, memberId);
+		
+		System.out.println("결과를 회원 테이블에 저장 성공");
 		return true;
 	}
-
+//********************************** 프로필 사진 변경-END *******************************************
 
 	
 	

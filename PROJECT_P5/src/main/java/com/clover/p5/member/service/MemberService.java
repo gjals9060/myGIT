@@ -7,11 +7,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.validation.Errors;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.clover.p5.member.dto.ErrorFieldDTO;
 import com.clover.p5.member.dto.NewMemberDTO;
 import com.clover.p5.member.dto.ProfilePhoto;
-import com.clover.p5.member.dto.ProfilePhotoVO;
 
 public interface MemberService {
 	
@@ -64,13 +64,13 @@ public interface MemberService {
 	
 	
 	// 프로필 사진 목록 가져오기
-	List<ProfilePhoto> getProfilePhotoList(HttpServletRequest req);
+	List<ProfilePhoto> getProfilePhotoList(int memberId);
 	// 프로필 사진 저장(서버 + DB) 및 적용
-	boolean insertProfilePhoto(ProfilePhotoVO vo, HttpServletRequest req);
+	boolean addProfilePhoto(MultipartFile photoFile, HttpServletRequest req);
 	// 프로필 사진 삭제
-	boolean deleteProfilePhoto(int photoId);
+	boolean deleteProfilePhoto(HttpServletRequest req, int photoId);
 	// 프로필 사진 변경
-	boolean changeProfilePhoto(HttpServletRequest req);
+	boolean changeProfilePhoto(HttpServletRequest req, int photoId);
 	
 	
 	

@@ -20,8 +20,10 @@ DROP TABLE review CASCADE CONSTRAINTS;
 DROP TABLE booking CASCADE CONSTRAINTS;
 DROP TABLE host_photo CASCADE CONSTRAINTS;
 DROP TABLE host CASCADE CONSTRAINTS;
+DROP TABLE host_type CASCADE CONSTRAINTS;
 DROP TABLE profile_photo CASCADE CONSTRAINTS;
 DROP TABLE member CASCADE CONSTRAINTS;
+DROP TABLE room_type CASCADE CONSTRAINTS;
 
 
 
@@ -85,11 +87,8 @@ CREATE TABLE host
 (
 	id number NOT NULL,
 	member_id number,
-	name varchar2(150),
-	description varchar2(1500),
-	description_etc varchar2(1500),
-	type char(1),
-	room_type char(1),
+	host_type_id char(2) NOT NULL,
+	room_type_id char(2) NOT NULL,
 	capacity number,
 	room_count number,
 	bed_count number,
@@ -107,6 +106,9 @@ CREATE TABLE host
 	is_washing_machine char(1),
 	is_elevator char(1),
 	is_parking_lot char(1),
+	description varchar2(1500),
+	description_etc varchar2(1500),
+	name varchar2(150),
 	minimum_stay number,
 	maximum_stay number,
 	price number,
@@ -124,6 +126,14 @@ CREATE TABLE host_photo
 	file_size number,
 	path varchar2(100),
 	sort_order number,
+	PRIMARY KEY (id)
+);
+
+
+CREATE TABLE host_type
+(
+	id char(2) NOT NULL,
+	name varchar2(30),
 	PRIMARY KEY (id)
 );
 
@@ -151,7 +161,7 @@ CREATE TABLE profile_photo
 	original_name varchar2(260),
 	file_size number,
 	path varchar2(100),
-	sort_order number,
+	is_profile char(1),
 	PRIMARY KEY (id)
 );
 
@@ -163,6 +173,14 @@ CREATE TABLE review
 	content varchar2(1500),
 	creation_date date,
 	PRIMARY KEY (booking_id)
+);
+
+
+CREATE TABLE room_type
+(
+	id char(2) NOT NULL,
+	name varchar2(30),
+	PRIMARY KEY (id)
 );
 
 
@@ -193,6 +211,12 @@ ALTER TABLE host_photo
 ;
 
 
+ALTER TABLE host
+	ADD FOREIGN KEY (host_type_id)
+	REFERENCES host_type (id)
+;
+
+
 ALTER TABLE booking
 	ADD FOREIGN KEY (member_id)
 	REFERENCES member (id)
@@ -208,6 +232,12 @@ ALTER TABLE host
 ALTER TABLE profile_photo
 	ADD FOREIGN KEY (member_id)
 	REFERENCES member (id)
+;
+
+
+ALTER TABLE host
+	ADD FOREIGN KEY (room_type_id)
+	REFERENCES room_type (id)
 ;
 
 

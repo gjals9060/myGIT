@@ -16,7 +16,8 @@
 			#{birthDate},
 			#{mobilePhone},
 			'N',
-			TO_DATE(#{registrationDate}, 'YYYY-MM-DD HH24:MI:SS')
+			TO_DATE(#{registrationDate}, 'YYYY-MM-DD HH24:MI:SS'),
+			NULL
 																	)
 	</insert>
 	
@@ -97,7 +98,7 @@
 	</select>
 	
 		<!-- 회원 프로필 사진 유무를 검색 -->
-	<select id="selectProfilePhotoCount">
+	<select id="selectProfilePhotoCount" resultType="int">
 		SELECT count(*)
 		FROM profile_photo
 		WHERE member_id = #{memberId}
@@ -124,6 +125,17 @@
 		WHERE id = #{photoId}
 	</delete>
 	
+		<!-- 프로필 삭제 이후 빈자리 채우기 -->
+	<update id="updateAutoProfile">
+		UPDATE profile_photo
+		SET is_profile = 'Y'
+		WHERE id = (
+						SELECT MIN(id)
+						FROM profile_photo
+						WHERE member_id = #{memberId}
+														)
+	</update>
+	
 		<!-- 프로필 사진 해제 -->
 	<update id="updateIsProfileN">
 		UPDATE profile_photo
@@ -138,8 +150,16 @@
 		WHERE id = #{photoId}
 	</update>
 
-
-
+	<!-- 프로필 사진 변경 이후 회원 테이블에 새 경로 저장 -->
+	<update id="updateMemberProfilePhotoPath">
+		UPDATE member
+		SET profile_photo_path = (			<!-- 서브쿼리 결과가 없으면 NULL로 저장됨^^(노렸음) -->
+									SELECT path
+									FROM profile_photo
+									WHERE member_id = #{memberId} AND is_profile = 'Y'
+																						)
+		WHERE id = #{memberId}
+	</update>
 
 
 

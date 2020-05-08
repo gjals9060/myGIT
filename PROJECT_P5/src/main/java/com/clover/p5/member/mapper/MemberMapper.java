@@ -47,11 +47,14 @@ public interface MemberMapper {
 	int insertProfilePhoto(ProfilePhotoVO vo);
 	// 프로필 사진 삭제
 	int deleteProfilePhoto(int photoId);
+	// 삭제된 프로필 사진 채우기
+	int updateAutoProfile(int memberId);
 	// 프로필 사진 해제
 	int updateIsProfileN(int memberId);
 	// 프로필 사진 적용
 	int updateIsProfileY(int photoId);
-	
+	// 프로필 변경 이후 회원 테이블에 새 경로 저장
+	int updateMemberProfilePhotoPath(int memberId);
 	
 	
 	

@@ -37,10 +37,11 @@
          <table>
             <tr>
                <td><div class="photo">
-                     <img src="img/berry.jpg" alt=""
-                        class="nowProfilePhoto select" />
+                     <!-- <img src="img/berry.jpg" alt=""
+                        class="nowProfilePhoto select" /> -->
                   </div></td>
                <td><div class="profilePhotolist">
+               <!-- 
                      <img src="img/berry.jpg" alt="" class="inputProfilePhoto select" /> <img
                         src="img/bedroom.jpg" alt="" class="inputProfilePhoto" /> <img
                         src="img/flower.jpg" alt="" class="inputProfilePhoto" />
@@ -56,30 +57,50 @@
                         src="img/berry.jpg" alt="" class="inputProfilePhoto" /> <img
                         src="img/bedroom.jpg" alt="" class="inputProfilePhoto" /> <img
                         src="img/flower.jpg" alt="" class="inputProfilePhoto" />
+                         -->
                   </div></td>
             </tr>
          </table>
       </div>
-      <button class="photoUpload">사진 등록</button>
+      <button class="photoUpload" onclick="$('#photoFile').trigger('click')">사진 등록</button>
+      <form id="fileUpload">
+      	<input type="file" id="photoFile" name="photoFile" accept="image/*" style="display: none" />
+      </form>
       <script type="text/javascript">
-   
+      
+function apply(){ // DB값으로 화면 갱신하고 적용시켜줘야 됨
+// 프사의 선택자
+var profilePhoto = $('img[data-isProfile="Y"]');
+// DB의 정보 = 프사의 이미지 경로.
+var profilePath = profilePhoto.attr("src");
+// DB의 정보 = 프사의 ID
+var profileId = profilePhoto.attr("data-id");
+	
+profilePhoto.attr("class", "inputProfilePhoto select");
+$(".photo").html('<img src="' + profilePath + '" alt="" class="nowProfilePhoto select" />');
+$("#userImg").attr("src", profilePath);
 
+
+	
    var menu = '<span class="photoButton">'
-         + '<button onclick="' + 'alert();' + '">'
+         + '<button onclick="' + 'deleteProfilePhoto(' + profileId + ');">'
          + '<i class="fas fa-times fa-2x"></i></button></span>';
 
    var list = document.getElementsByClassName("inputProfilePhoto");
+   
    
    $(".inputProfilePhoto").on({
       'mouseover' : function() {
          $(".photoButton").detach();
       },
       'click' : function() {
-         $(".inputProfilePhoto").attr("class", "inputProfilePhoto");
-         var index = $(this).index();
-         $(".inputProfilePhoto").eq(index).attr("class", "inputProfilePhoto select");
-         $(".photo").html('<img src="' + $(".inputProfilePhoto").eq(index).attr("src") + '" alt="" class="nowProfilePhoto select" />');
-         $("#userImg").attr("src", $(".inputProfilePhoto").eq(index).attr("src"));
+    	  changeProfilePhoto($(this).attr("data-id"));
+    	  
+ //        $(".inputProfilePhoto").attr("class", "inputProfilePhoto"); // ??
+ //        var index = $(this).index();
+ //        $(".inputProfilePhoto").eq(index).attr("class", "inputProfilePhoto select");
+ //        $(".photo").html('<img src="' + $(".inputProfilePhoto").eq(index).attr("src") + '" alt="" class="nowProfilePhoto select" />');
+ //        $("#userImg").attr("src", $(".inputProfilePhoto").eq(index).attr("src"));
       }
    })
    
@@ -95,6 +116,135 @@
         
    }
    })
+}   
+   
+   
+   
+//*************************************** 백엔드에서 ************************************************
+
+$(function(){
+	showProfilePhoto();
+})
+	// 프로필 사진 출력
+function showProfilePhoto(){
+	$.ajax({
+		
+		type: "POST",
+		url: 'ajax/getProfilePhotoList',
+		async: false,
+		success: function (photoList) {
+			$('.profilePhotolist').empty(); // 일단 비우고
+			
+			if(!photoList.length){ // 출력할 사진이 없다면
+				
+					// 기본 이미지 출력				
+				$(".photo").html('<img src="img/defaultProfile.png" alt="defaultProfile.png" class="nowProfilePhoto select" />');
+					// 헤더 이미지에도 기본 이미지 적용
+				$("#userImg").attr("src", "img/defaultProfile.png");
+			
+			} else{ // 있으면..
+				
+				var photoResult = '';
+				$.each(photoList, function(i, photo){
+					// 화면에 출력되는 사진
+					photoResult +=
+		        	'	<img src="' + photo.path + '" alt="' + photo.originalName + '"'
+	        		+'	data-id="' + photo.id + '" data-isProfile="' + photo.isProfile + '" class="inputProfilePhoto" />	'
+		        	;
+              	});
+				
+				// 내용을 넣고
+				$('.profilePhotolist').append(photoResult);
+				
+				// 효과 적용
+				apply();
+				
+			}
+		},
+		error: function (e) {
+			alert("통신 실패");
+		}
+	});
+}
+ 
+	// 파일 업로드 이벤트
+$("#photoFile").on("change", function(){
+	
+	var formData = new FormData($('#fileUpload')[0]);
+	addProfilePhoto(formData);
+	
+	$('#photoFile').val(""); // 초기화 - 취소를 누르면 작동하지 않는 효과를 줌 + 같은 이름의 파일 계속해서 업로드 가능
+});
+	// 사진 추가(변경)
+function addProfilePhoto(formData){
+$.ajax({
+		type: "POST",
+		url: 'ajax/addProfilePhoto',
+		enctype: 'multipart/form-data', // 필수 
+		data: formData, // 필수 
+		processData: false, // 필수 
+		contentType: false, // 필수
+		cache: false,
+		async: false,
+		success: function (result) {
+			if(result){ // 성공
+				
+				showProfilePhoto(); // 사진 갱신
+				
+			} else{
+				alert("사진 추가(변경) 실패..");
+			}
+		},
+		error: function (e) {
+			alert("통신 실패");
+		}
+	});
+}
+	// 사진 삭제
+function deleteProfilePhoto(profileId){
+	$.ajax({
+		type: "POST",
+		url: 'ajax/deleteProfilePhoto',
+		data: 'photoId=' + profileId,
+		async: false,
+		success: function (result) {
+			if(result){ // 성공
+				
+				showProfilePhoto(); // 사진 갱신
+				
+			} else{
+				alert("사진 삭제 실패..");
+			}
+		},
+		error: function (e) {
+			alert("통신 실패");
+		}
+	});
+}
+	
+	// 사진 선택 변경
+function changeProfilePhoto(profileId){
+	$.ajax({
+		type: "POST",
+		url: 'ajax/changeProfilePhoto',
+		data: 'photoId=' + profileId,
+		async: false,
+		success: function (result) {
+			if(result){ // 성공
+				
+				showProfilePhoto(); // 사진 갱신
+				
+			} else{
+				alert("사진 선택 변경 실패..");
+			}
+		},
+		error: function (e) {
+			alert("통신 실패");
+		}
+	});
+}
+   
+
    
 </script>
       
