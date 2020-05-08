@@ -128,23 +128,12 @@
 	  	</foreach>
 	</update>
 	
-	<!-- 대표 이미지 변경 결과 저장 -->
-	<update id="updateHostCoverImage">
-		DECLARE BEGIN
-		
-			UPDATE host_photo
-			SET sort_order = 1
-			WHERE id = #{choiceId}
-			;
-			
-			UPDATE host_photo
-			SET sort_order = #{choiceOrder}
-			WHERE id = #{coverId}
-			;
-			
-		END;
+	<!-- 대표 이미지 변경에 사용 -->
+	<update id="updateHostPhoto">
+		UPDATE host_photo
+		SET sort_order = #{sortOrder}
+		WHERE id = #{photoId}
 	</update>
-
 
 
 

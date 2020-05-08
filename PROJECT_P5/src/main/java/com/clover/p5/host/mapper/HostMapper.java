@@ -31,12 +31,12 @@ public interface HostMapper {
 	
 	int updateHostPhotoSort(int[] sortResult);
 	
-	int updateHostCoverImage(
-			@Param("choiceId") int choiceId,
-			@Param("coverId") int coverId,
-			@Param("choiceOrder") int choiceOrder);
 	
-	
+	int updateHostPhoto(
+			@Param("photoId") int photoId,
+			@Param("sortOrder") int sortOrder);
+			
+			
 	
 	
 	

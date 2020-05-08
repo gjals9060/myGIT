@@ -27,6 +27,8 @@ import org.springframework.validation.FieldError;
 import com.clover.p5.member.dto.ErrorFieldDTO;
 import com.clover.p5.member.dto.Member;
 import com.clover.p5.member.dto.NewMemberDTO;
+import com.clover.p5.member.dto.ProfilePhoto;
+import com.clover.p5.member.dto.ProfilePhotoVO;
 import com.clover.p5.member.mapper.MemberMapper;
 
 import net.nurigo.java_sdk.api.Message;
@@ -484,6 +486,82 @@ public class MemberServiceImpl implements MemberService {
         return list;
 	}
 //******************************** 백엔드 유효성 검사 결과-END ********************************************
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	@Override
+	public List<ProfilePhoto> getProfilePhotoList(HttpServletRequest req) {
+		int memberId = (int)req.getSession().getAttribute("userId");
+		
+		List<ProfilePhoto> list = memberMapper.selectProfilePhotoList(memberId);
+		System.out.println(list.size() + "개의 프로필 사진이 등록되어 있습니다.");
+		
+		return list;
+	}
+
+
+
+	@Override
+	public boolean insertProfilePhoto(ProfilePhotoVO vo, HttpServletRequest req) {
+		int memberId = (int)req.getSession().getAttribute("userId");
+		
+		if(memberMapper.selectProfilePhotoCount(memberId) != 0) {
+			if(memberMapper.updateIsProfileN(memberId) != 1) {
+				System.out.println("프로필 사진 등록 사전 작업 중에 오류 발생");
+				return false;
+			}
+		}
+		if(memberMapper.insertProfilePhoto(vo) != 1) {
+			System.out.println("프로필 사진 등록 중에 오류 발생");
+			return false;
+		}
+		System.out.println("프로필 사진 등록(변경)을 완료했습니다.");
+		return true;
+	}
+
+
+
+	@Override
+	public boolean deleteProfilePhoto(int photoId) {
+		if(memberMapper.deleteProfilePhoto(photoId) != 1) {
+			System.out.println("프로필 사진 삭제 중에 오류 발생");
+			return false;
+		}
+		System.out.println(photoId + "번 프로필 사진 삭제를 완료했습니다.");
+		return true;
+	}
+
+
+
+	@Override
+	public boolean changeProfilePhoto(HttpServletRequest req) {
+		int memberId = (int)req.getSession().getAttribute("userId");
+		int photoId = Integer.parseInt(req.getParameter("photoId"));
+		
+		if(memberMapper.updateIsProfileN(memberId) != 1) {
+			System.out.println("프로필 사진 변경 사전 작업 중에 오류 발생");
+			return false;
+		}
+		if(memberMapper.updateIsProfileY(photoId) != 1) {
+			System.out.println("프로필 사진 변경 중에 오류 발생");
+			return false;
+		}
+		System.out.println("프로필 사진 변경을 완료했습니다.");
+		return true;
+	}
 
 
 	

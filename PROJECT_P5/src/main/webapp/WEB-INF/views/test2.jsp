@@ -690,7 +690,7 @@ function updateHostPhotoSort(sortResult){
 	});
 }
 	
-	// 대표 이미지 바꾸기
+	// 대표 사진 변경
 function changeCoverImage(choiceOrder){
 	var choiceId = $('img[data-order="' + choiceOrder + '"]').attr("data-id");
 	var coverId = $('img[data-order="1"]').attr("data-id");
@@ -707,8 +707,11 @@ function changeCoverImage(choiceOrder){
 		data: params,
 		async: false,
 		success: function (result) { // boolean 결과
-//			alert(result);
+			if(result){
 			showHostPhoto(); // 사진 갱신
+			} else{
+				alert("사진 변경 실패..");
+			}
 		},
 		error: function (e) {
 			alert("통신 실패");

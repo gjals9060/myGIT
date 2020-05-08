@@ -107,7 +107,7 @@ public class HostController {
 	
 	@RequestMapping("/ajax/changeCoverImage") // 대표 사진 변경하기
 	@ResponseBody
-	public int changeCoverImage(HttpServletRequest req) {
+	public boolean changeCoverImage(HttpServletRequest req) {
 		return hostService.changeCoverImage(req);
 	}
 //****************************** 호스트 사진 등록(수정)-END ******************************************		

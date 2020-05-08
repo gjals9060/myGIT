@@ -32,7 +32,7 @@ public interface HostService {
 	int updateHostPhotoSort(int[] sortResult);
 	
 	// 호스트 사진 대표 이미지 변경
-	int changeCoverImage(HttpServletRequest req);
+	boolean changeCoverImage(HttpServletRequest req);
 	
 	
 	

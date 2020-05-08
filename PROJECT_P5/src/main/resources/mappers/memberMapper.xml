@@ -16,8 +16,7 @@
 			#{birthDate},
 			#{mobilePhone},
 			'N',
-			TO_DATE(#{registrationDate}, 'YYYY-MM-DD HH24:MI:SS'),
-			NULL
+			TO_DATE(#{registrationDate}, 'YYYY-MM-DD HH24:MI:SS')
 																	)
 	</insert>
 	
@@ -84,47 +83,60 @@
 		
 		
 		
-	<!-- 	
 		
-		회원 프로필 사진 유무 학인
-	<select id="selectProfilePhotoCount" resultType="int">
-		SELECT count(*)
-		FROM profile_photo
-		WHERE member_id = #{memberId}
-	</select>
-
-		회원 프로필 사진 목록을 검색
+		
+		
+		
+		
+		<!-- 회원 프로필 사진 목록을 검색 -->
 	<select id="selectProfilePhotoList" resultType="ProfilePhoto">
 		SELECT *
 		FROM profile_photo
 		WHERE member_id = #{memberId}
 		ORDER BY id
 	</select>
+	
+		<!-- 회원 프로필 사진 유무를 검색 -->
+	<select id="selectProfilePhotoCount">
+		SELECT count(*)
+		FROM profile_photo
+		WHERE member_id = #{memberId}
+	</select>
+	
+		<!-- 회원 프로필 사진을 등록  -->
+	<insert id="insertProfilePhoto" parameterType="ProfilePhotoVO">
+		INSERT INTO profile_photo
+		VALUES
+		(
+			SEQ_profile_photo_id.nextval,
+			#{memberId},
+			#{originalName},
+			#{fileSize},
+			#{path},
+			'Y'
+							)
+	</insert>
 
-		회원 프로필 사진 삭제
+		<!-- 회원 프로필 사진 삭제 -->
 	<delete id="deleteProfilePhoto">
 		DELETE
 		FROM profile_photo
 		WHERE id = #{photoId}
 	</delete>
 	
-		회원 프로필 사진 수정
-	<update id="updateProfilePhoto">
-		DECLARE BEGIN
-		
-			UPDATE profile_photo
-			SET is_profile = 'N'
-			WHERE member_id = #{memberId}
-			;
-			
-			UPDATE profile_photo
-			SET is_profile = 'Y'
-			WHERE id = #{photoId}
-			;
-			
-		END;
+		<!-- 프로필 사진 해제 -->
+	<update id="updateIsProfileN">
+		UPDATE profile_photo
+		SET is_profile = 'N'
+		WHERE is_profile = 'Y' AND member_id = #{memberId} 
 	</update>
- -->
+
+		<!-- 프로필 사진으로 적용 -->
+	<update id="updateIsProfileY">
+		UPDATE profile_photo
+		SET is_profile = 'Y'
+		WHERE id = #{photoId}
+	</update>
 
 
 

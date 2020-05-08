@@ -153,12 +153,21 @@ public class HostServiceImpl implements HostService {
 	
 //**************************** 대표 사진 변경 *****************************************
 	@Override
-	public int changeCoverImage(HttpServletRequest req) {
+	public boolean changeCoverImage(HttpServletRequest req) {
 		int choiceId = Integer.parseInt(req.getParameter("choiceId"));
 		int coverId = Integer.parseInt(req.getParameter("coverId"));
 		int choiceOrder = Integer.parseInt(req.getParameter("choiceOrder"));
 		
-		return hostMapper.updateHostCoverImage(choiceId, coverId, choiceOrder);
+		if(hostMapper.updateHostPhoto(coverId, choiceOrder) != 1) {
+			System.out.println("대표 사진 변경 사전 작업 중에 오류 발생");
+			return false;
+		}
+		if(hostMapper.updateHostPhoto(choiceId, 1) != 1) {
+			System.out.println("대표 사진 변경 중에 오류 발생");
+			return false;
+		}
+		System.out.println(coverId + " -> " + choiceId + "번 사진으로 대표사진 변경 완료.");
+		return true;
 	}
 //**************************** 대표 사진 변경-END ***************************************	
 	

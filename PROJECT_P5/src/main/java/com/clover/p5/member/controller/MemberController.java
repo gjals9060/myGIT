@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.clover.p5.member.dto.ErrorFieldDTO;
 import com.clover.p5.member.dto.NewMemberDTO;
+import com.clover.p5.member.dto.ProfilePhoto;
+import com.clover.p5.member.dto.ProfilePhotoVO;
 import com.clover.p5.member.service.MemberService;
 
 
@@ -130,6 +132,40 @@ public class MemberController {
 		return memberService.mobileAuthentication(req);
 	}
 //********************************** 휴대전화 인증-END ******************************************
+	
+	
+//********************************** 회원 프로필 사진 ******************************************	
+	@RequestMapping("/ajax/showProfilePhoto")
+	@ResponseBody // 회원 프로필 사진 목록을 가져온다.
+	public List<ProfilePhoto> getProfilePhotoList(HttpServletRequest req) {
+		return memberService.getProfilePhotoList(req);
+	}
+	
+	@RequestMapping("/ajax/insertProfilePhoto")
+	@ResponseBody // 회원 프로필 사진 등록(변경)
+	public boolean insertProfilePhoto(ProfilePhotoVO vo, HttpServletRequest req) {
+		return memberService.insertProfilePhoto(vo, req);
+	}
+	
+	@RequestMapping("/ajax/deleteProfilePhoto")
+	@ResponseBody // 회원 프로필 사진 삭제
+	public boolean deleteProfilePhoto(int photoId) {
+		return memberService.deleteProfilePhoto(photoId);
+	}
+	
+	@RequestMapping("/ajax/changeProfilePhoto")
+	@ResponseBody // 회원 프로필 사진 변경
+	public boolean changeProfilePhoto(HttpServletRequest req) {
+		return memberService.changeProfilePhoto(req);
+	}
+//********************************** 회원 프로필 사진-END ******************************************	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
