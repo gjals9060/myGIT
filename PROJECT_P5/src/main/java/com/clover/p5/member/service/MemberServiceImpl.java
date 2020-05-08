@@ -23,7 +23,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.support.SessionStatus;
 
 import com.clover.p5.member.dto.ErrorFieldDTO;
 import com.clover.p5.member.dto.Member;
@@ -78,25 +77,34 @@ public class MemberServiceImpl implements MemberService {
 //******************************** 인증 이메일 전송-END ********************************************
 	
 	
-//****************************** 회원 가입 **************************************************	
-	@Override
-	public int signUp(HttpServletRequest req, SessionStatus sessionStatus) {
+	
+//******************************** 이메일 인증 ********************************************
+	public boolean emailAuthentication(HttpServletRequest req) {
 		String authenticationCode = req.getParameter("authenticationCode");
 		String inputCode = req.getParameter("inputCode");
-		NewMemberDTO newMemberDto = (NewMemberDTO) req.getSession().getAttribute("newMember");
 		
 		/***
 		** 인증번호 입력값과 비교
 		***/
 			if(authenticationCode.isEmpty()) {
-				return 0;
+				return false;
 			}
 			if(!passwordEncoder.matches(inputCode, authenticationCode)) {
-				return 0;
+				return false;
 			}
-			
+		
+		return true;
+	}
+//******************************** 이메일 인증-END ******************************************
+	
+	
+	
+	
+//****************************** 회원 가입 **************************************************	
+	@Override
+	public boolean signUp(NewMemberDTO newMemberDto) {
 		/***
-		** 통과했으면 DB에 정보를 저장
+		** 회원 정보를 DB에 저장
 		***/
 			newMemberDto.setPassword( // DB에 저장 전에 암호 해시화
 					passwordEncoder.encode(newMemberDto.getPassword())
@@ -108,12 +116,11 @@ public class MemberServiceImpl implements MemberService {
 			);
 			if(memberMapper.insertMember(newMemberDto) == 1) { // DB에 저장
 				System.out.println("회원가입 완료^^");
-				sessionStatus.setComplete(); // 세션을 비워주고
-				return 1;
+				return true;
 			}
 					
 			System.out.println("회원정보 DB에 저장 실패");
-			return 2;
+			return false;
 	}
 //****************************** 회원 가입-END **************************************************		
 	

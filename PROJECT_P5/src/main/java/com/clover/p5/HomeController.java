@@ -32,7 +32,7 @@ public class HomeController {
 		
 		model.addAttribute("serverTime", formattedDate );
 		
-		return "test2";
+		return "home";
 	}
 	
 	
@@ -48,6 +48,10 @@ public class HomeController {
 	public void phoneCertification() {}
 	@RequestMapping("/hostReservationList")
 	public void hostReservationList() {}
+	
+	// 사진 등록 테스트 페이지(임시)
+	@RequestMapping("/test2")
+	public void test2() {}
 	
 	
 

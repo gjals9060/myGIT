@@ -216,7 +216,7 @@
 		
 		
 		
-		
+		<a href="/p5/test2">사진 등록 테스트</a>
 		
 <!-- 	<div style="margin: 10px; text-align: center;grid-column-start: 1;grid-column-end: 4;">
 		
@@ -507,10 +507,13 @@ function emailAuthenticationModalOn(){
 	$('#inputCode').focus();
 }
 	// 인증메일 발송
-function sendEmailAuthenticationCode(){
+function sendEmailAuthenticationCode(inputEmail){
+	$("#authenticationCode").val(""); // 인증번호 값을 초기화
+	
 	$.ajax({
 	    type: "POST",
 	    url: "ajax/sendEmailAuthenticationCode",
+	    data: "email=" + inputEmail,
 	    success:function(data){
 	 	   if(!data){
 	 		   alert("인증메일 발송에 실패했습니다.");
@@ -616,6 +619,7 @@ $('#makeshiftPasswordBtn').on('click',makeshiftPasswordModalOn);
 	// 회원가입 modal에서 '다음' 클릭
 $('#btnSendEmail').on('click', function(){
 	var params = $('form[name="newMember"]').serialize();
+	var inputEmail = $('#inputEmail').val();
 	
     $.ajax({
       type : "POST",
@@ -624,8 +628,8 @@ $('#btnSendEmail').on('click', function(){
       success : function(result) {
     	  if(!result.length){ // 유효성 탈락 항목이 없다.
     		  alert("통과");
+    		  sendEmailAuthenticationCode(inputEmail); // 인증메일 발송
     		  emailAuthenticationModalOn(); // 화면 전환
-    		  sendEmailAuthenticationCode(); // 인증메일 발송
     	  } else{ // 유효성 탈락 항목이 있을 때
     		  alert(result.length + "건의 유효성 탈락 항목 정보를 console.log에서 확인하세요.");
     		  $.each(result, function(index, field){    // 추가로 가져온 값들을 추가해준다
@@ -664,9 +668,10 @@ $('#makeshiftPasswordBack').on('click', function(){
 	
 	// 인증메일 재요청
 $("#rerequest").on("click", function(){
-	$("#authenticationCode").val(""); // 인증번호 값을 초기화
-	alert("인증번호를 재전송했습니다. 이전 번호는 사용 못함");
-	sendEmailAuthenticationCode(); // 인증메일 발송
+	var inputEmail = $('#inputEmail').val();
+	
+	sendEmailAuthenticationCode(inputEmail); // 인증메일 발송
+	alert("인증번호를 재전송합니다. 새로운 인증번호만 유효합니다.");
 });
 
 	
@@ -677,20 +682,38 @@ $("#completeSignUp").on("click", function(){ // 로딩이미지 필요
 		authenticationCode : $('#authenticationCode').val(), // 인증번호(해시)
 		inputCode : $('#inputCode').val().trim() // 입력값
 	};
+	var paramsNewMember = $('form[name="newMember"]').serialize(); // 방금 입력한 회원정보
 	
 	$.ajax({
 	   type: "POST",
-	   url: "ajax/completeSignUp",
+	   url: "ajax/emailAuthentication",
 	   data: params,
 	   async : false,
 	   success:function(result){
-			 if(result == 0){ // 인증번호 불일치
-					alert("인증번호가 일치하지 않습니다.");
-			} else if(result == 1){ // 인증번호 일치 , DB에 저장 성공
-					alert("회원가입을 완료했습니다.");
-					logInModalOn(); // 로그인 modal 전환
-			} else if(result == 2){ // 인증번호 일치, DB에 저장 실패
-					alert("회원가입을 정상적으로 완료하지 못했습니다.");
+			 if(result){ // 인증번호 일치(통과)
+		 		
+				 $.ajax({
+					   type: "POST",
+					   url: "ajax/completeSignUp",
+					   data: paramsNewMember,
+					   async : false,
+					   success:function(result){
+							 if(result){ // DB에 저장 성공 
+								 
+							 	alert("회원가입을 완료했습니다.");
+								logInModalOn(); // 로그인 modal 전환
+							 
+							} else { // DB에 저장 실패
+								alert("회원가입을 정상적으로 완료하지 못했습니다..");
+							}
+					   },
+					   error: function() {
+					        alert("통신 실패..");
+					   }
+					});
+			 
+			} else { // 인증번호 불일치
+				alert("인증번호가 일치하지 않습니다.");
 			}
 	   },
 	   error: function() {

@@ -8,11 +8,12 @@ import com.clover.p5.member.dto.NewMemberDTO;
 public interface MemberMapper {
 
 	int insertMember(NewMemberDTO newMemberDto);
+
+	
+	Member selectMemberByEmail(String email);
 	
 	
 	int selectMemberId(String userEmail);
-	
-	Member selectMemberByEmail(String email);
 	Member selectMember(int userId);
 	
 	

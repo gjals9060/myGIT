@@ -7,9 +7,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.support.SessionStatus;
 
 import com.clover.p5.member.dto.ErrorFieldDTO;
+import com.clover.p5.member.dto.NewMemberDTO;
 
 public interface MemberService {
 	
@@ -18,9 +18,20 @@ public interface MemberService {
 	// 이메일 인증번호 발송
 	String sendEmailCode(String email);
 	
-	// 회원가입(DB에 정보 입력)
-	int signUp(HttpServletRequest req, SessionStatus sessionStatus);
+	
+	// 이메일 인증
+	boolean emailAuthentication(HttpServletRequest req);
+	
+	
+	// 회원 가입(DB에 정보 입력)
+	boolean signUp(NewMemberDTO newMemberDto);
 		
+	
+	
+	
+	
+	
+	
 	// 로그인
 	int logIn(HttpServletRequest req, HttpServletResponse res);
 	

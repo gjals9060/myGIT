@@ -20,7 +20,7 @@
 <script src="//code.jquery.com/jquery-1.12.4.js"></script>
 <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-<link rel="stylesheet" href="css/reset.css" />
+<link rel="stylesheet" href="css/reset.css?ver0.1" />
 	
 </head>
 <body>
