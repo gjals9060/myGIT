@@ -4,7 +4,7 @@ public class SearchInputDTO {
 	
 	private String swLatlng;
 	private String neLatlng;
-	private String capacity;
+	private String guestCount;
 	private String startDate;
 	private String endDate;
 
@@ -14,11 +14,11 @@ public class SearchInputDTO {
 	
 	
 	
-	public SearchInputDTO(String swLatlng, String neLatlng, String capacity, String startDate, String endDate) {
+	public SearchInputDTO(String swLatlng, String neLatlng, String guestCount, String startDate, String endDate) {
 		super();
 		this.swLatlng = swLatlng;
 		this.neLatlng = neLatlng;
-		this.capacity = capacity;
+		this.guestCount = guestCount;
 		this.startDate = startDate;
 		this.endDate = endDate;
 	}
@@ -29,40 +29,59 @@ public class SearchInputDTO {
 		return swLatlng;
 	}
 
-	public void setSwLatLng(String swLatlng) {
+
+
+	public void setSwLatlng(String swLatlng) {
 		this.swLatlng = swLatlng;
 	}
+
+
 
 	public String getNeLatlng() {
 		return neLatlng;
 	}
 
+
+
 	public void setNeLatlng(String neLatlng) {
 		this.neLatlng = neLatlng;
 	}
+
+
+
+	public String getGuestCount() {
+		return guestCount;
+	}
+
+
+
+	public void setGuestCount(String guestCount) {
+		this.guestCount = guestCount;
+	}
+
+
 
 	public String getStartDate() {
 		return startDate;
 	}
 
+
+
 	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
+
+
 
 	public String getEndDate() {
 		return endDate;
 	}
 
+
+
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
 
-	public String getCapacity() {
-		return capacity;
-	}
-
-	public void setCapacity(String capacity) {
-		this.capacity = capacity;
-	}
 
 }

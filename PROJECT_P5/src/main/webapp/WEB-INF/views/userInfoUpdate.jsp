@@ -6,24 +6,100 @@
 <head>
 <meta charset="UTF-8">
 <title>회원정보수정</title>
+
 <link rel="stylesheet" href="css/userInfoUpdate.css?ver0.1" />
 
 <script type="text/javascript"
 	src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+	
+	<!--  -->
+	<link rel="stylesheet"
+   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+<link rel="stylesheet"
+   href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.12.4.js"></script>
+<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<link rel="stylesheet" href="css/reset.css" />
+	
 </head>
 <body>
-	<%-- <%@include file="header.jsp" %> --%>
-	<jsp:include page="header.jsp" />
+	<%@include file="header.jsp" %> 
+	
 	<div id="wrap">
 		<div class="user-info-update-container">
 			<div class="user-info-update-title">회원정보수정</div>
 
 			<!-- 프로필 사진  -->
 			<!-- ${user.profilePhotoPath } -->
-			<div class="user-info-update-profile-Photo">
-				<img id="userInfoProfilePhoto" src="img/p5_logo.png" alt="" /> <input
-					type="file" />
-			</div>
+			 <div class="profilePhotoTitle">프로필 사진</div>
+      <div class="profilePhoto">
+         <table>
+            <tr>
+               <td><div class="photo">
+                     <img src="img/berry.jpg" alt=""
+                        class="nowProfilePhoto select" />
+                  </div></td>
+               <td><div class="profilePhotolist">
+                     <img src="img/berry.jpg" alt="" class="inputProfilePhoto select" /> <img
+                        src="img/bedroom.jpg" alt="" class="inputProfilePhoto" /> <img
+                        src="img/flower.jpg" alt="" class="inputProfilePhoto" />
+                     <img src="img/bread.jpg" alt="" class="inputProfilePhoto" /> <img
+                        src="img/away.jpg" alt="" class="inputProfilePhoto" /> <img
+                        src="img/hair.png" alt="" class="inputProfilePhoto" /> <img
+                        src="img/berry.jpg" alt="" class="inputProfilePhoto" /> <img
+                        src="img/bedroom.jpg" alt="" class="inputProfilePhoto" /> <img
+                        src="img/flower.jpg" alt="" class="inputProfilePhoto" /> <img
+                        src="img/bread.jpg" alt="" class="inputProfilePhoto" /> <img
+                        src="img/away.jpg" alt="" class="inputProfilePhoto" /> <img
+                        src="img/hair.png" alt="" class="inputProfilePhoto" /> <img
+                        src="img/berry.jpg" alt="" class="inputProfilePhoto" /> <img
+                        src="img/bedroom.jpg" alt="" class="inputProfilePhoto" /> <img
+                        src="img/flower.jpg" alt="" class="inputProfilePhoto" />
+                  </div></td>
+            </tr>
+         </table>
+      </div>
+      <button class="photoUpload">사진 등록</button>
+      <script type="text/javascript">
+   
+
+   var menu = '<span class="photoButton">'
+         + '<button onclick="' + 'alert();' + '">'
+         + '<i class="fas fa-times fa-2x"></i></button></span>';
+
+   var list = document.getElementsByClassName("inputProfilePhoto");
+   
+   $(".inputProfilePhoto").on({
+      'mouseover' : function() {
+         $(".photoButton").detach();
+      },
+      'click' : function() {
+         $(".inputProfilePhoto").attr("class", "inputProfilePhoto");
+         var index = $(this).index();
+         $(".inputProfilePhoto").eq(index).attr("class", "inputProfilePhoto select");
+         $(".photo").html('<img src="' + $(".inputProfilePhoto").eq(index).attr("src") + '" alt="" class="nowProfilePhoto select" />');
+         $("#userImg").attr("src", $(".inputProfilePhoto").eq(index).attr("src"));
+      }
+   })
+   
+   $(".photo").on({
+      'mouseover' : function() {
+         $(".photoButton").detach();
+         $(this).after(menu);
+      
+      }, 
+      'click' : function() {
+         $(".photoButton").detach();
+         $(this).after(menu);
+        
+   }
+   })
+   
+</script>
+      
+      <!-- profilePhoto end -->
+
 
 			<!-- 계정 -->
 			<div class="user-info-update-value-block">
@@ -69,8 +145,8 @@
 				<div class="user-info-update-value">
 					<input class="user-info-update-value-input"
 						id="userInfoUpdateValuePhone" type="text"
-						value=${user.mobilePhone } disabled /> <input type="hidden"
-						name="mobileAuthentication" value="${user.mobileAuthentication }" />
+						value=${user.mobilePhone } disabled /> 
+						<%-- <input type="hidden" name="mobileAuthentication" value="${user.mobileAuthentication }" /> --%>
 					<span id="authenticationResult"></span>
 					<button id="mobileAuthenticationResult"></button>
 				</div>
@@ -306,7 +382,13 @@ function updateUserPassword(){
 		/* $('.modal').css("display","none") */
 		
 		var phoneURL = '/p5/phoneCertification';
-		var phoneOption =  "width=370, height=360, resizable=no, scrollbars=no, status=no;";
+		
+	    var left = Math.ceil(( window.screen.width - 370 )/2);
+	    var top = Math.ceil(( window.screen.height - 360 )/2)-100;
+
+
+		var phoneOption =  "width=370, height=360, resizable=no, scrollbars=no, status=no, top="+top+", left="+left+";";
+		
 
 		var windowPop = window.open(phoneURL,"popwin",phoneOption);
 		

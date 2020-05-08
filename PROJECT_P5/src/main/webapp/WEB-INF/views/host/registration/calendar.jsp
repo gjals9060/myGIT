@@ -32,7 +32,7 @@
 $("#check").val(dates);
 
 	$('#mdp-demo').multiDatesPicker({
-		dateFormat: "yy-mm-dd",
+		dateFormat: "yy.mm.dd",
 		altField: '#altField',
 		minDate: 0, // today
 		maxDate: 60, // +30 days from today

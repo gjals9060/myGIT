@@ -184,5 +184,106 @@
 #blockingModalCon img {
 	padding: 37%;
 }
+.profilePhotoTitle {
+   background: #ed2d55;
+   color: white;
+   text-align: center;
+   font-size: 25px;
+   font-weight: bolder;
+   width: 100%;
+   padding: 15px 0;
+   border-radius: 15px;
+   margin: 10px 0;
+}
 
+.profilePhoto {
+   width: 80%;
+   margin: 0 auto;
+}
 
+.profilePhoto td {
+   vertical-align: middle;
+   padding: 10px;
+}
+
+.profilePhotolist {
+    border: 1px #bbb dotted;
+    padding-left: 30px;
+    text-align: left;
+    max-width: 800px;
+    min-width: 600px;
+    min-height: 100px;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.inputProfilePhoto {
+   width: 65px;
+   height: 65px;
+   border-radius: 5px;
+   border: 2px dotted;
+   border-color: #bbb;
+   object-fit: cover;
+   object-position: center;
+   margin: 3px auto;
+   opacity: 0.5;
+   transition: 0.1s;
+   object-fit: cover;
+    object-position: center;
+    box-sizing: border-box;
+}
+
+.inputProfilePhoto:hover, .now, .select {
+   opacity: 1;
+}
+
+.nowProfilePhoto {
+   width: 150px;
+   height: 150px;
+   border-radius: 50px;
+   margin: 10px auto 20px;
+   border: 7px inset #ed2d55 !important;
+   object-fit: cover;
+    object-position: center;
+}
+
+.select {
+   border: 5px #bbb double;
+   /* border-color: #ed2d55; */
+}
+
+.photoButton {
+   display: inline-grid;
+   position: absolute;
+}
+
+.photoButton button:hover {
+   opacity: 0.8;
+}
+
+.photoUpload {
+   background: #ed2d55;
+   width: 200px;
+   padding: 10px 0;
+   border-radius: 10px;
+   color: white; 
+   font-size: 15px;
+   font-weight: bolder;
+   
+}
+
+ .photoButton button {
+   width: 30px;
+    height: 30px;
+    position: relative;
+    background: none;
+    border: none;
+    left: 38px;
+    top: -165px;
+    color: #ed2d55;
+    opacity: 0.7;
+}
+
+.photoButton button:hover {
+   opacity: 1;
+}

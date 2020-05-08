@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.ui.Model;
 
 import com.clover.p5.guest.dto.HostInfoDTO;
+import com.clover.p5.guest.dto.ReservationInfoDTO;
 import com.clover.p5.guest.dto.SearchInputDTO;
 
 public interface GuestService {
@@ -23,7 +24,8 @@ public interface GuestService {
 	// reservaionPurchase 이동
 	String reservationPurchase(HttpServletRequest request, Model model);
 	
-	
+	// reservationFinish 이동
+	String reservationFinish(ReservationInfoDTO reservationInfoDTO, HttpServletRequest request, Model model);
 	
 	
 	

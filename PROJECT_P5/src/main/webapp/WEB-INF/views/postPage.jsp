@@ -256,7 +256,7 @@ button {
 	width: 100%;
 }
 
-.personnel_input {
+.guestCount_input {
  	width: 60% !important;
  }
 
@@ -465,41 +465,6 @@ button {
          </c:forEach>
          
          <!-- end 호스트포토 리스트 출력 작업 by 허민 -->
-         
-<!-- 
-    	<div class="postImg">
-            <div class="postImgNumber">1 / 8</div>
-            <img src="img/room1.jpg" onclick="modalOn()">
-         </div>
-         <div class="postImg">
-            <div class="postImgNumber">2 / 8</div>
-            <img src="img/room1.jpg" onclick="modalOn()">
-         </div>
-         <div class="postImg">
-            <div class="postImgNumber">3 / 8</div>
-            <img src="img/room1.jpg" onclick="modalOn()">
-         </div>
-         <div class="postImg">
-            <div class="postImgNumber">4 / 8</div>
-            <img src="img/room1.jpg" onclick="modalOn()">
-         </div>
-         <div class="postImg">
-            <div class="postImgNumber">5 / 8</div>
-            <img src="img/room1.jpg" onclick="modalOn()">
-         </div>
-         <div class="postImg">
-            <div class="postImgNumber">6 / 8</div>
-            <img src="img/room1.jpg" onclick="modalOn()">
-         </div>
-         <div class="postImg">
-            <div class="postImgNumber">7 / 8</div>
-            <img src="img/room1.jpg" onclick="modalOn()">
-         </div>
-         <div class="postImg">
-            <div class="postImgNumber">8 / 8</div>
-            <img src="img/room1.jpg" onclick="modalOn()">
-         </div>
--->
 
          <div class="postImgSlideButton">
             <a class="prev" onclick="plusSlides(-1)">&#10094;</a> <a
@@ -525,47 +490,7 @@ button {
          </c:forEach>
          
          <!-- end 호스트포토 modal 출력 작업 by 허민 -->
-      
-         <!-- 사진 데이터 입력 시 반목문으로  >  .modalImgSlide[0] 아래로 append
-         <div class="modalImg">
-            <div class="modalImgNumber">(i값)/(전체 사진 갯수값)</div>
-            <img src="이미지 링크" onclick="modalOff()">
-         </div> -->
 
-<!--
-		 <div class="modalImg">
-            <div class="modalImgNumber">1 / 8</div>
-            <img src="img/room1.jpg" onclick="modalOff()">
-         </div>
-         <div class="modalImg">
-            <div class="modalImgNumber">2 / 8</div>
-            <img src="img/room1.jpg" onclick="modalOff()">
-         </div>
-         <div class="modalImg">
-            <div class="modalImgNumber">3 / 8</div>
-            <img src="img/room1.jpg" onclick="modalOff()">
-         </div>
-         <div class="modalImg">
-            <div class="modalImgNumber">4 / 8</div>
-            <img src="img/room1.jpg" onclick="modalOff()">
-         </div>
-         <div class="modalImg">
-            <div class="modalImgNumber">5 / 8</div>
-            <img src="img/room1.jpg" onclick="modalOff()">
-         </div>
-         <div class="modalImg">
-            <div class="modalImgNumber">6 / 8</div>
-            <img src="img/room1.jpg" onclick="modalOff()">
-         </div>
-         <div class="modalImg">
-            <div class="modalImgNumber">7 / 8</div>
-            <img src="img/room1.jpg" onclick="modalOff()">
-         </div>
-         <div class="modalImg">
-            <div class="modalImgNumber">8 / 8</div>
-            <img src="img/room1.jpg" onclick="modalOff()">
-         </div>
--->
          <div class="modalImgSlideButton">
             <a class="prev" onclick="plusSlides(-1)">&#10094;</a> <a
                class="next" onclick="plusSlides(1)">&#10095;</a>
@@ -745,8 +670,8 @@ button {
 					<input type="text" id="checkDate" name="checkInDatecheckOutDate" 
 						autocomplete="off" placeholder="날짜 선택" onchange="countDate()" /></td>
 					<td><div class="contentReservTitle">인원</div>
-					<span class="personInput"><input type='text' name='personnel'
-					class="personnel_input" value="${capacity}">
+					<span class="guestInput"><input type='text' name='guestCount'
+					class="guestCount_input" value="${guestCount}">
 					<!-- ${capacity}는 검색할때의 인원 설정 조건임, ${host.capacity} 와 다름 -->
 					<button id="increaseQuantity">▲</button>
 					<button id="decreaseQuantity">▼</button></span></td>
@@ -1056,25 +981,41 @@ button {
 	    day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
 	    return month + '/' + day + '/' +  year;
 	}
-
+	
+	// 받은 start, end 데이트 파싱
+	var startDate = '${startDate}';
+	var endDate = '${endDate}';
+	
+	function parse(str) {	// String -> Date 파싱
+	    var y = str.substr(0, 4);
+	    var m = str.substr(5, 2);
+	    var d = str.substr(8, 2);
+	    return new Date(y,m-1,d);
+	}
+	var sDate = parse(startDate);
+	var eDate = parse(endDate);
+	console.log("start : " + sDate);
+	console.log("end : " + eDate);
+	
    $(function() {
-      $('input[name="checkInDatecheckOutDate"]').daterangepicker(
-            {
+      $('input[name="checkInDatecheckOutDate"]').daterangepicker({	
+    	  // start,endDate 값 넣을 때는 Date 형식이 지켜져야함.
+    	  // YYYY.MM.DD 라는 형식이 원래 존재하지않기 때문...
                "autoApply" : true,
-               "startDate" : "${startDate}",
-               "endDate" : "${endDate}",
+               "startDate" : sDate,
+               "endDate" : eDate,
                "minDate" : date,
                "maxDate" : date2,
                "maxSpan" : {"days" : maximumStay},
                "isInvalidDate" : function(ele) {
-                   var currDate = moment(ele._d).format('YYYY-MM-DD');
+                   var currDate = moment(ele._d).format('YYYY.MM.DD');
                    return [${blocking}].indexOf(currDate) != -1;
             	}
             },
             function(start, end, label) {
             	
-            	var startDay = start.format("YYYY-MM-DD");
-            	var endDay = end.format("YYYY-MM-DD");
+            	var startDay = start.format("YYYY.MM.DD");
+            	var endDay = end.format("YYYY.MM.DD");
             	
             	//console.log("endDay값 : " + endDay);
             	//console.log("endDay의 타임스탬프 : " + end);
@@ -1139,9 +1080,9 @@ button {
 	 	
 	   	if(flag){
 			var date = $("#checkDate").val().split(" - ");
-			var checkInDate = date[0].split("/");
+			var checkInDate = date[0].split(".");
 			var checkInDate1 = new Date(checkInDate[2], checkInDate[0]-1, checkInDate[1]);
-			var checkOutDate = date[1].split("/");
+			var checkOutDate = date[1].split(".");
 			var checkOutDate1 = new Date(checkOutDate[2], checkOutDate[0]-1, checkOutDate[1]);
 			var dateCount = parseInt(checkOutDate1-checkInDate1)/(24*60*60*1000);
 			
@@ -1159,13 +1100,13 @@ button {
 	   		
 	   	}
 	}
-
+	
    
    /* 인원 선택 */
    $(function() {
       $('#decreaseQuantity').click(function(e) {
          e.preventDefault();
-         var stat = $('.personnel_input').val();
+         var stat = $('.guestCount_input').val();
          var num = parseInt(stat, 10);
          num--;
 
@@ -1174,13 +1115,13 @@ button {
             num = 1;
          }
 
-         $('.personnel_input').val(num);
+         $('.guestCount_input').val(num);
 
       }); /* click이벤트  */
 
       $('#increaseQuantity').click(function(e) {
          e.preventDefault();
-         var stat = $('.personnel_input').val();
+         var stat = $('.guestCount_input').val();
          var num = parseInt(stat, 10);
          var capacity
          num++;
@@ -1189,7 +1130,7 @@ button {
         	 alert("host의 최대 수용 인원 보다 많습니다.");
         	 num--;
          }
-         $('.personnel_input').val(num);
+         $('.guestCount_input').val(num);
 
       });
    });

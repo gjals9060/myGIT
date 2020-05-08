@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.clover.p5.guest.dto.HostInfoDTO;
 import com.clover.p5.guest.dto.HostPhotoDTO;
+import com.clover.p5.guest.dto.ReservationInfoDTO;
 import com.clover.p5.guest.dto.SearchHostDTO;
 
 public interface GuestMapper {
@@ -12,11 +13,11 @@ public interface GuestMapper {
 
 	HostInfoDTO selectHost(String id);
 	
-	List<HostInfoDTO> selectHostList(SearchHostDTO searchHostDto);
+	List<HostInfoDTO> selectHostList(SearchHostDTO searchHostDto);	// 검색할 때 인원은 guestCount => 출력시에는 호스트의 수용인원값(capacity)
 
 	List<HostPhotoDTO> selectHostPhoto(String hostId);
 	
 	List<Date> selectBlocking(String hostId);
 	
-	
+	int insertBooking(ReservationInfoDTO reservationInfoDTO);	//성공시 1
 }

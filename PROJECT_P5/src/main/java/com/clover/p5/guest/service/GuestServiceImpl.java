@@ -2,6 +2,7 @@ package com.clover.p5.guest.service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import com.clover.p5.guest.dto.HostInfoDTO;
@@ -17,6 +19,7 @@ import com.clover.p5.guest.dto.ReservationInfoDTO;
 import com.clover.p5.guest.dto.SearchHostDTO;
 import com.clover.p5.guest.dto.SearchInputDTO;
 import com.clover.p5.guest.mapper.GuestMapper;
+import com.clover.p5.host.mapper.HostMapper;
 
 @Service
 public class GuestServiceImpl implements GuestService {
@@ -25,6 +28,8 @@ public class GuestServiceImpl implements GuestService {
 	@Autowired
 	private GuestMapper guestMapper;
 	
+	@Autowired
+	private HostMapper hostMapper;
 	
 	@Override
 	public String selectHost(HttpServletRequest request, Model model) {
@@ -42,8 +47,8 @@ public class GuestServiceImpl implements GuestService {
 		
 		
 		
-		String capacity = request.getParameter("capacity");
-		System.out.println("호출된 capacity : " + capacity);
+		String guestCount = request.getParameter("guestCount");
+		System.out.println("호출된 guestCount : " + guestCount);
 		
 		// 호스트 정보
 		HostInfoDTO hostInfoDto = guestMapper.selectHost(id);
@@ -67,7 +72,7 @@ public class GuestServiceImpl implements GuestService {
 		StringBuffer sbBlocking = new StringBuffer();
 		
 		for(Date d : blocking) {
-			SimpleDateFormat form1 = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat form1 = new SimpleDateFormat("yyyy.MM.dd");
 			System.out.println("블로킹 날짜 : " + form1.format(d));
 			sbBlocking.append("'" + form1.format(d) + "',");
 		}
@@ -78,7 +83,7 @@ public class GuestServiceImpl implements GuestService {
 		model.addAttribute("host", hostInfoDto);
 		model.addAttribute("startDate", startDate);
 		model.addAttribute("endDate", endDate);
-		model.addAttribute("capacity", capacity);
+		model.addAttribute("guestCount", guestCount);
 		
 		model.addAttribute("hostPhoto", hostPhotoDto);
 		model.addAttribute("blocking", sBlocking);
@@ -95,7 +100,7 @@ public class GuestServiceImpl implements GuestService {
 		// 받아온 HostParamVO를 SearchHostDTO에 맞게 데이터셋
 		String swLatlng = dto.getSwLatlng();
 		String neLatlng = dto.getNeLatlng();
-		int capacity = Integer.parseInt(dto.getCapacity());
+		int guestCount = Integer.parseInt(dto.getGuestCount());
 		String sStartDate = dto.getStartDate();
 		String sEndDate = dto.getEndDate();
 		
@@ -118,11 +123,11 @@ public class GuestServiceImpl implements GuestService {
 		System.out.println(neLatlngStr[1]);	//북동 경도
 		double neLongitude = Double.parseDouble(neLatlngStr[1]);
 		
-		System.out.println("capacity : " + capacity);
+		System.out.println("guestCount : " + guestCount);
 		System.out.println("sStartDate : " + sStartDate);
 		System.out.println("sEndDate : " + sEndDate);
 		
-		SearchHostDTO searchHostDto = new SearchHostDTO(sStartDate, sEndDate, swLatitude, neLatitude, swLongitude, neLongitude, capacity);
+		SearchHostDTO searchHostDto = new SearchHostDTO(sStartDate, sEndDate, swLatitude, neLatitude, swLongitude, neLongitude, guestCount);
 				
 		return guestMapper.selectHostList(searchHostDto);
 	}
@@ -135,7 +140,7 @@ public class GuestServiceImpl implements GuestService {
 		
 		String address = request.getParameter("address");
 		String checkInDatecheckOutDate = request.getParameter("checkInDatecheckOutDate");
-		String capacity = request.getParameter("capacity");
+		String guestCount = request.getParameter("guestCount");
 
 		
 		String[] date = checkInDatecheckOutDate.split(" - ");
@@ -144,13 +149,13 @@ public class GuestServiceImpl implements GuestService {
 		
 		System.out.println("키워드:" + address);
 		System.out.println("날짜:" + checkInDatecheckOutDate);
-		System.out.println("인원:" + capacity);
+		System.out.println("인원:" + guestCount);
 		System.out.println("시작날:" + startDate);
 		System.out.println("끝날:" + endDate);
 				
 		model.addAttribute("address", address);
 		model.addAttribute("checkInDatecheckOutDate", checkInDatecheckOutDate);
-		model.addAttribute("capacity", capacity);
+		model.addAttribute("guestCount", guestCount);
 		model.addAttribute("startDate", startDate);
 		model.addAttribute("endDate", endDate);
 				
@@ -165,7 +170,7 @@ public class GuestServiceImpl implements GuestService {
 		System.out.println("reservationPurchase 페이지 이동");
 
 		String checkInDatecheckOutDate = request.getParameter("checkInDatecheckOutDate");
-		int guestCount = Integer.parseInt(request.getParameter("personnel"));
+		int guestCount = Integer.parseInt(request.getParameter("guestCount"));
 		int hostId = Integer.parseInt(request.getParameter("hostId"));
 		int memberId = Integer.parseInt(request.getParameter("userId"));
 		String hostName = request.getParameter("hostName");
@@ -174,19 +179,23 @@ public class GuestServiceImpl implements GuestService {
 		
 		String[] date = checkInDatecheckOutDate.split(" - ");
 		
-		Date checkInDate = null;
-		Date checkOutDate = null;
+//		Date checkInDate = null;
+//		Date checkOutDate = null;
+//		
+//		try {
+//			//String checkInDate = date[0];
+//			checkInDate = new SimpleDateFormat("MM/dd/yyyy").parse(date[0]);
+//			//String checkOutDate = date[1];
+//			checkOutDate = new SimpleDateFormat("MM/dd/yyyy").parse(date[1]);
+//
+//		} catch (ParseException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
-		try {
-			//String checkInDate = date[0];
-			checkInDate = new SimpleDateFormat("MM/dd/yyyy").parse(date[0]);
-			//String checkOutDate = date[1];
-			checkOutDate = new SimpleDateFormat("MM/dd/yyyy").parse(date[1]);
+		String checkInDate = date[0];
+		String checkOutDate = date[1];
 
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		System.out.println("checkInDate : " + checkInDate);
 		System.out.println("checkOutDate : " + checkOutDate);
 
@@ -218,4 +227,90 @@ public class GuestServiceImpl implements GuestService {
 		
 		return "reservationPurchase";
 	}
+
+	@Transactional
+	@Override
+	public String reservationFinish(ReservationInfoDTO reservationInfoDTO, HttpServletRequest request, Model model) {
+
+		System.out.println("reservationFinish 페이지 이동");
+		
+//		System.out.println("id : " + reservationInfoDTO.getHostId());
+//		System.out.println("checkIn : " + reservationInfoDTO.getCheckInDate());
+//		System.out.println("payment : " + reservationInfoDTO.getPayment());
+		
+		SimpleDateFormat format1 = new SimpleDateFormat ( "MM/dd/yyyy HH:mm:ss");
+		SimpleDateFormat format2 = new SimpleDateFormat ( "MM/dd/yyyy");
+		
+		Date today = new Date();
+		
+		String bookingDate = format1.format(today);	// Date => String
+		//today = format1.parse(bookingDate);		// String => Date
+		
+		String checkInDate = reservationInfoDTO.getCheckInDate();
+		String checkOutDate = reservationInfoDTO.getCheckOutDate();
+		
+		List<String> listBlockingDate = new ArrayList<>();
+
+		reservationInfoDTO.setBookingDate(bookingDate);
+		
+		System.out.println("reservationInfoDTO : " + reservationInfoDTO.toString());
+
+		if(guestMapper.insertBooking(reservationInfoDTO) == 1) {
+			
+			System.out.println("DB booking insert 성공");
+			
+			try {
+				Date dCID = format2.parse(checkInDate);
+				Date dCOD = format2.parse(checkOutDate);
+				long diff = dCOD.getTime() - dCID.getTime();
+				//System.out.println(diff);
+				long diffDays = diff / (24 * 60 * 60 * 1000);	
+				//System.out.println("차이" + diffDays);
+				for(int i = 0;i<diffDays;i++ ) {
+					long day = dCID.getTime() + i * (24 * 60 * 60 * 1000);
+					String sDay = format2.format(day);
+					System.out.println(sDay);
+					listBlockingDate.add(sDay);
+				}//end - for
+				
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+
+		}else {
+			System.out.println("DB booking insert 실패");
+		}
+		
+		
+		
+		String[] arrBlockingDate = listBlockingDate.toArray(new String[listBlockingDate.size()]);
+		
+
+		if(hostMapper.insertBlocking(reservationInfoDTO.getHostId(), arrBlockingDate) == arrBlockingDate.length) {
+			System.out.println("DB blocking insert 성공");
+		}else {
+			System.out.println("DB blocking insert 실패");
+		}
+		
+		
+		
+		/////////////테스트
+//		try {
+//			
+//		int reselt = guestMapper.insertBooking(reservationInfoDTO);
+//		System.out.println(reselt);
+//		
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		System.out.println("완료");
+		/////////////
+
+		return "reservationFinish";
+	}
 }
+
+
+
+
+

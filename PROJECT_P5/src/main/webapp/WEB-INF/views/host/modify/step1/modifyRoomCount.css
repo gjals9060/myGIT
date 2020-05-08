@@ -1,0 +1,20 @@
+@charset "UTF-8";
+
+#wrap {
+	width: 1100px;
+	margin: auto;
+}
+
+input {
+	border: none;
+	font-size: 20px;
+}
+
+.room-count-btn {
+	border: none;
+}
+
+.room-count-btn-block {
+	position: fixed;
+	bottom: 20%;
+}
