@@ -7,10 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="stayDate" method="post">
-<h1>숙소의 이름과 설명을 적어주세요!</h1>
-<h3>숙소명</h3>
-<input type="text" name="name" placeholder="숙소 이름" />
+<form action="title" method="post">
+<h1>숙소설명을 적어주세요!</h1>
+
 <h3>숙소 설명</h3>
 <textarea name="description"  rows="10" cols="50"></textarea>
 <h3>기타사항(선택)</h3>
