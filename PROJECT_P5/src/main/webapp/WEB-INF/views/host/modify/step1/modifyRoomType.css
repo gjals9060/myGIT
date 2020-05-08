@@ -1,0 +1,56 @@
+@charset "UTF-8";
+
+#wrap {
+	width: 1100px;
+	margin: auto;
+}
+
+h4 {
+	margin-bottom: 30px;
+	margin-left: 35px;
+}
+
+h2 {
+	color: #6E6E6E;
+	font-size: 20px;
+}
+
+select {
+	width: 380px;
+	height: 80px;
+	font-size: 20px;
+}
+
+/*셀렉트 화살표 이미지로 대체*/
+select {
+	-webkit-appearance: none; /* 네이티브 외형 감추기 */
+	-moz-appearance: none;
+	appearance: none;
+	background: url(../img/checklist.png) no-repeat 95% 30%;
+	/* 화살표 모양의 이미지 */
+	background-size: 30px;
+	border-color: #E8E8E8;
+}
+
+input[type="submit"] {
+	background-color: #008489;
+	border-color: #008489;
+	color: white;
+	height: 50px;
+	width: 100px;
+	border-radius: 20%;
+	top: 300px;
+	position: relative;
+}
+
+img[src="../../img/vase.png"] {
+	height: 900px;
+	display: inline;
+	float: right;
+	width: 500px;
+}
+
+.roomtype-btn-block {
+	position: fixed;
+	bottom: 20%;
+}
