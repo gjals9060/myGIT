@@ -67,21 +67,83 @@
 		</foreach>
 	</insert>
 	
-	
 	<!-- 호스트 사진 저장 -->
 	<insert id="insertHostPhoto">
-			INSERT INTO host_photo
-			VALUES
+		<foreach collection="list" item="photo"
+		 separator=" " open="INSERT ALL " close="SELECT * FROM DUAL">
+			INTO host_photo
 			(
-				SEQ_host_photo_id.nextval,
-				#{hostId},
-				#{originalName},
-				#{fileSize},
-				#{path}
+				host_id,
+				original_name,
+				file_size,
+				path,
+				sort_order
+								)
+			VALUES
+			(	
+				#{photo.hostId},
+				#{photo.originalName},
+				#{photo.fileSize},
+				#{photo.path},
+				#{photo.sortOrder}
 									)
+		</foreach>
 	</insert>
 	
+	<!-- 호스트(숙소) 사진이 있나 확인 -->
+	<select id="selectHostPhotoCount" resultType="int">
+		SELECT count(*)
+		FROM host_photo
+		WHERE host_id = #{hostId}
+	</select>
+	<!-- 사진이 있다면 사진의 index 최댓값 구함 -->
+	<select id="selectHostPhotoSortOrderMax" resultType="int">
+		SELECT max(sort_order)
+		FROM host_photo
+		WHERE host_id = #{hostId}
+	</select>
 	
+	<!-- 호스트에 등록된 사진 목록을 검색 -->
+	<select id="selectHostPhotoList" resultType="HostPhoto">
+		SELECT *
+		FROM host_photo
+		WHERE host_id = #{hostId}
+		ORDER BY sort_order
+	</select>
+	
+	<!-- 호스트에 등록된 사진을 삭제 -->
+	<delete id="deleteHostPhoto"> <!-- 파라미터 타입은 안써줘도 되는가 -->
+		DELETE
+		FROM host_photo
+		WHERE id = #{hostPhotoId}
+	</delete>
+	
+	<!-- 호스트 사진 정렬 순서 저장 -->
+	<update id="updateHostPhotoSort">
+		<foreach collection="array" item="photoId" index="index" 
+      		separator=";" open="DECLARE BEGIN" close="; END;" >
+		 UPDATE host_photo
+		 SET sort_order = #{index} + 1
+		 WHERE id = #{photoId}
+	  	</foreach>
+	</update>
+	
+	<!-- 대표 이미지 변경 결과 저장 -->
+	<update id="updateHostCoverImage">
+		DECLARE BEGIN
+		
+			UPDATE host_photo
+			SET sort_order = 1
+			WHERE id = #{choiceId}
+			;
+			
+			UPDATE host_photo
+			SET sort_order = #{choiceOrder}
+			WHERE id = #{coverId}
+			;
+			
+		END;
+	</update>
 
 
 

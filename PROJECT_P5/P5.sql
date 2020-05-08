@@ -9,6 +9,7 @@ DROP TRIGGER TRI_host_photo_id;
 DROP TRIGGER TRI_member_id;
 DROP TRIGGER TRI_place_id;
 DROP TRIGGER TRI_place_photo_id;
+DROP TRIGGER TRI_profile_photo_id;
 
 
 
@@ -19,6 +20,7 @@ DROP TABLE review CASCADE CONSTRAINTS;
 DROP TABLE booking CASCADE CONSTRAINTS;
 DROP TABLE host_photo CASCADE CONSTRAINTS;
 DROP TABLE host CASCADE CONSTRAINTS;
+DROP TABLE profile_photo CASCADE CONSTRAINTS;
 DROP TABLE member CASCADE CONSTRAINTS;
 
 
@@ -33,6 +35,7 @@ DROP SEQUENCE SEQ_host_photo_id;
 DROP SEQUENCE SEQ_member_id;
 DROP SEQUENCE SEQ_place_id;
 DROP SEQUENCE SEQ_place_photo_id;
+DROP SEQUENCE SEQ_profile_photo_id;
 
 
 
@@ -47,6 +50,7 @@ CREATE SEQUENCE SEQ_host_photo_id INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE SEQ_member_id INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE SEQ_place_id INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE SEQ_place_photo_id INCREMENT BY 1 START WITH 1;
+CREATE SEQUENCE SEQ_profile_photo_id INCREMENT BY 1 START WITH 1;
 
 
 
@@ -119,6 +123,7 @@ CREATE TABLE host_photo
 	original_name varchar2(260),
 	file_size number,
 	path varchar2(100),
+	sort_order number,
 	PRIMARY KEY (id)
 );
 
@@ -135,6 +140,18 @@ CREATE TABLE member
 	mobile_authentication char(1),
 	registration_date date,
 	profile_photo_path varchar2(100),
+	PRIMARY KEY (id)
+);
+
+
+CREATE TABLE profile_photo
+(
+	id number NOT NULL,
+	member_id number,
+	original_name varchar2(260),
+	file_size number,
+	path varchar2(100),
+	sort_order number,
 	PRIMARY KEY (id)
 );
 
@@ -183,6 +200,12 @@ ALTER TABLE booking
 
 
 ALTER TABLE host
+	ADD FOREIGN KEY (member_id)
+	REFERENCES member (id)
+;
+
+
+ALTER TABLE profile_photo
 	ADD FOREIGN KEY (member_id)
 	REFERENCES member (id)
 ;
@@ -265,6 +288,16 @@ CREATE OR REPLACE TRIGGER TRI_place_photo_id BEFORE INSERT ON place_photo
 FOR EACH ROW
 BEGIN
 	SELECT SEQ_place_photo_id.nextval
+	INTO :new.id
+	FROM dual;
+END;
+
+/
+
+CREATE OR REPLACE TRIGGER TRI_profile_photo_id BEFORE INSERT ON profile_photo
+FOR EACH ROW
+BEGIN
+	SELECT SEQ_profile_photo_id.nextval
 	INTO :new.id
 	FROM dual;
 END;

@@ -1,4 +1,4 @@
-package com.clover.p5.entity;
+package com.clover.p5.member.dto;
 
 import java.sql.Date;
 

@@ -25,8 +25,8 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.support.SessionStatus;
 
-import com.clover.p5.entity.Member;
 import com.clover.p5.member.dto.ErrorFieldDTO;
+import com.clover.p5.member.dto.Member;
 import com.clover.p5.member.dto.NewMemberDTO;
 import com.clover.p5.member.mapper.MemberMapper;
 

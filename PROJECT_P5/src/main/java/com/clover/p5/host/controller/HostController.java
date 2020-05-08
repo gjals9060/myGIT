@@ -1,20 +1,19 @@
 package com.clover.p5.host.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
-import com.clover.p5.entity.Member;
-import com.clover.p5.host.dto.NewHostDTO;
+import com.clover.p5.host.dto.HostPhoto;
 import com.clover.p5.host.service.HostService;
 
-@SessionAttributes("newHost")
+//@SessionAttributes("newHost")
 @Controller
 public class HostController {
 	
@@ -24,7 +23,7 @@ public class HostController {
 	
 ///////////////////////////// 호스트 등록 ////////////////////////////////
 	
-	@ModelAttribute("newHost")
+	/*@ModelAttribute("newHost")
 	public NewHostDTO newHost(@SessionAttribute("user") Member user) {
 		return new NewHostDTO(user.getId());
 	}	
@@ -77,11 +76,41 @@ public class HostController {
 			sessionStatus.setComplete(); // 호스트 등록 세션 초기화
 			System.out.println("호스트 등록 성공!");
 		}
+	}*/
+	
+	
+	
+//****************************** 호스트 사진 등록(수정) ******************************************	
+	@RequestMapping("/ajax/getHostPhotoList") // 사진 목록 가져오기
+	@ResponseBody
+	public List<HostPhoto> getHostPhotoList(int hostId) {
+		return hostService.getHostPhotoList(hostId);
 	}
 	
+	@RequestMapping("/ajax/addHostPhoto") // 사진 추가
+	@ResponseBody
+	public boolean addHostPhoto(List<MultipartFile> photoFiles, HttpServletRequest req) {
+		return hostService.insertHostPhoto(77, photoFiles, req);
+	}
 	
+	@RequestMapping("/ajax/deleteHostPhoto") // 사진 삭제
+	@ResponseBody
+	public boolean deleteHostPhoto(int hostPhotoId) {
+		return hostService.deleteHostPhoto(hostPhotoId);
+	}
 	
+	@RequestMapping("/ajax/updateHostPhotoSort") // 사진 정렬 내용 적용
+	@ResponseBody
+	public int updateHostPhotoSort(int[] sortResult) {
+		return hostService.updateHostPhotoSort(sortResult);
+	}
 	
+	@RequestMapping("/ajax/changeCoverImage") // 대표 사진 변경하기
+	@ResponseBody
+	public int changeCoverImage(HttpServletRequest req) {
+		return hostService.changeCoverImage(req);
+	}
+//****************************** 호스트 사진 등록(수정)-END ******************************************		
 	
 	
 	

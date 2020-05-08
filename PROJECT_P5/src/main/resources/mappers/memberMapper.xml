@@ -80,6 +80,65 @@
 		WHERE id = #{userId}
 	</update>
 		
+		
+		
+		
+		
+		
+		
+		<!-- 회원 프로필 사진 유무 학인 -->
+	<select id="selectProfilePhotoCount" resultType="int">
+		SELECT count(*)
+		FROM profile_photo
+		WHERE member_id = #{memberId}
+	</select>
+
+		<!-- 회원 프로필 사진 목록을 검색 -->
+	<select id="selectProfilePhotoList" resultType="ProfilePhoto">
+		SELECT *
+		FROM profile_photo
+		WHERE member_id = #{memberId}
+		ORDER BY id
+	</select>
+
+		<!-- 회원 프로필 사진 삭제 -->
+	<delete id="deleteProfilePhoto">
+		DELETE
+		FROM profile_photo
+		WHERE id = #{photoId}
+	</delete>
+	
+		<!-- 회원 프로필 사진 수정 -->
+	<update id="updateProfilePhoto">
+		DECLARE BEGIN
+		
+			UPDATE profile_photo
+			SET is_profile = 'N'
+			WHERE member_id = #{memberId}
+			;
+			
+			UPDATE profile_photo
+			SET is_profile = 'Y'
+			WHERE id = #{photoId}
+			;
+			
+		END;
+	</update>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

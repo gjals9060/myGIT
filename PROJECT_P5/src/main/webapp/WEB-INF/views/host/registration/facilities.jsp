@@ -11,7 +11,7 @@
 <h1>편의시설이 어떤게 있나요?</h1>
 <input type="checkbox" name="isTv" value="Y" />TV<br>
 <input type="hidden" name="isTv" value="N" />
-<input type="checkbox" name="isWifi" value="Y" />WIFI<br>
+<input type="checkbox" name="isWifi" value="Y" />WiFi<br>
 <input type="hidden" name="isWifi" value="N" />
 <input type="checkbox" name="isAirConditioner" value="Y" />에어컨<br>
 <input type="hidden" name="isAirConditioner" value="N" />
