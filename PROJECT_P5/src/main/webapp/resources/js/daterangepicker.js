@@ -672,11 +672,11 @@
                 calendar[row][col] = curDate.clone().hour(hour).minute(minute).second(second);
                 curDate.hour(12);
 
-                if (this.minDate && calendar[row][col].format('YYYY-MM-DD') == this.minDate.format('YYYY-MM-DD') && calendar[row][col].isBefore(this.minDate) && side == 'left') {
+                if (this.minDate && calendar[row][col].format('YYYY.MM.DD') == this.minDate.format('YYYY.MM.DD') && calendar[row][col].isBefore(this.minDate) && side == 'left') {
                     calendar[row][col] = this.minDate.clone();
                 }
 
-                if (this.maxDate && calendar[row][col].format('YYYY-MM-DD') == this.maxDate.format('YYYY-MM-DD') && calendar[row][col].isAfter(this.maxDate) && side == 'right') {
+                if (this.maxDate && calendar[row][col].format('YYYY.MM.DD') == this.maxDate.format('YYYY.MM.DD') && calendar[row][col].isAfter(this.maxDate) && side == 'right') {
                     calendar[row][col] = this.maxDate.clone();
                 }
 
@@ -829,11 +829,11 @@
                         classes.push('off', 'disabled');
 
                     // highlight the currently selected start date
-                    if (calendar[row][col].format('YYYY-MM-DD') == this.startDate.format('YYYY-MM-DD'))
+                    if (calendar[row][col].format('YYYY.MM.DD') == this.startDate.format('YYYY.MM.DD'))
                         classes.push('active', 'start-date');
 
                     // highlight the currently selected end date
-                    if (this.endDate != null && calendar[row][col].format('YYYY-MM-DD') == this.endDate.format('YYYY-MM-DD'))
+                    if (this.endDate != null && calendar[row][col].format('YYYY.MM.DD') == this.endDate.format('YYYY.MM.DD'))
                         classes.push('active', 'end-date');
 
                     // highlight dates in-between the selected dates
@@ -1412,7 +1412,7 @@ var a=new Date("2020-05-01");
             var i = 0;
             for (var range in this.ranges) {
               if (this.timePicker) {
-                    var format = this.timePickerSeconds ? "YYYY-MM-DD HH:mm:ss" : "YYYY-MM-DD HH:mm";
+                    var format = this.timePickerSeconds ? "YYYY.MM.DD HH:mm:ss" : "YYYY.MM.DD HH:mm";
                     // ignore times when comparing dates if time picker seconds
 					// is not enabled
                     if (this.startDate.format(format) == this.ranges[range][0].format(format) && this.endDate.format(format) == this.ranges[range][1].format(format)) {
@@ -1423,7 +1423,7 @@ var a=new Date("2020-05-01");
                 } else {
                     // ignore times when comparing dates if time picker is not
 					// enabled
-                    if (this.startDate.format('YYYY-MM-DD') == this.ranges[range][0].format('YYYY-MM-DD') && this.endDate.format('YYYY-MM-DD') == this.ranges[range][1].format('YYYY-MM-DD')) {
+                    if (this.startDate.format('YYYY.MM.DD') == this.ranges[range][0].format('YYYY.MM.DD') && this.endDate.format('YYYY.MM.DD') == this.ranges[range][1].format('YYYY.MM.DD')) {
                         customRange = false;
                         this.chosenLabel = this.container.find('.ranges li:eq(' + i + ')').addClass('active').attr('data-range-key');
                         break;
@@ -1523,7 +1523,7 @@ var a=new Date("2020-05-01");
                 this.setStartDate(start);
                 if (this.singleDatePicker) {
                     this.endDate = this.startDate.clone();
-                } else if (this.endDate && this.endDate.format('YYYY-MM-DD') == start.format('YYYY-MM-DD') && this.endDate.isBefore(start)) {
+                } else if (this.endDate && this.endDate.format('YYYY.MM.DD') == start.format('YYYY.MM.DD') && this.endDate.isBefore(start)) {
                     this.setEndDate(start.clone());
                 }
             } else if (this.endDate) {
@@ -1590,9 +1590,9 @@ var a=new Date("2020-05-01");
 
         updateElement: function() {
             if (this.element.is('input') && this.autoUpdateInput) {
-                var newValue = this.startDate.format('YYYY-MM-DD');
+                var newValue = this.startDate.format('YYYY.MM.DD');
                 if (!this.singleDatePicker) {
-                    newValue += this.locale.separator + this.endDate.format('YYYY-MM-DD');
+                    newValue += this.locale.separator + this.endDate.format('YYYY.MM.DD');
                 }
                 if (newValue !== this.element.val()) {
                     this.element.val(newValue).trigger('change');

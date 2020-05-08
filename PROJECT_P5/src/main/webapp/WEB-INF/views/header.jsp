@@ -31,7 +31,7 @@
 		
 		<!-- 정보입력-->
 		<div class="input-info">
-			<form action="reservationList">
+			<form action="reservationList" method="post">
 			<!--지역 입력  -->
 			<div class="input-search-value-input">
 			<div class="input-location-block">				
@@ -42,33 +42,91 @@
 				
 				<!--  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" /> --> 
 				<div class="input-date-block">
-				<span class="input-text">날짜</span><input class="input-serach-value" type="text" name="checkInDatecheckOutDate"  />
+				<span class="input-text">날짜</span>
+				<!-- <input class="input-serach-value" type="text" name="checkInDatecheckOutDate"  /> -->
+				<input class="input-serach-value" type="text" id="checkDate" name="checkInDatecheckOutDate" 
+						autocomplete="off" placeholder="날짜 선택" onchange="countDate()" />
 				</div>	
 					
 		<script type="text/javascript">
+			var flag = true;	// 날짜 출력 여부
+		
             var date=new Date();
             var maxDate=new Date();
+            
+            
             maxDate.setMonth(date.getMonth()+3);
-               $(function() {
-                 $('input[name="checkInDatecheckOutDate"]').daterangepicker({
-                    "autoApply": true,
-                
-                      "minDate": date,
-                      "maxDate":maxDate
-                  }, function(start, end, label) {
-                    console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
-                    console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
-                    
-                  });
-               });
-            </script>
+            
+            $(function() {
+				$('input[name="checkInDatecheckOutDate"]').daterangepicker({
+		            "autoApply": true,
+		              "minDate": date,
+		              "maxDate":maxDate
+		          }, function(start, end, label) {
+
+            		var startDay = start.format("YYYY.MM.DD");
+        			var endDay = end.format("YYYY.MM.DD");
+        	                	
+        	
+        			// start 선택하고 end로 min 또는 자신 선택못함 
+					if(startDay == endDay) {
+						$('input[name="checkInDatecheckOutDate"]').data('daterangepicker').setStartDate(moment().subtract(1, 'days'));
+						$('input[name="checkInDatecheckOutDate"]').data('daterangepicker').setEndDate(moment().subtract(3, 'days'));
+		        		alert("호스트의 최소 숙박일 수가 1박 2일 부터 입니다." );
+			
+		        		flag = false;
+		
+		        	}else{
+		        		flag = true;
+		        	}
+        	
+          		});
+             
+	            var checkInDatecheckOutDate = '${checkInDatecheckOutDate}';
+
+				var startDate = '${startDate}';
+				var endDate = '${endDate}';
+				
+				function parse(str) {	// String -> Date 파싱
+				    var y = str.substr(0, 4);
+				    var m = str.substr(5, 2);
+				    var d = str.substr(8, 2);
+				    return new Date(y,m-1,d);
+				}
+				var date1 = parse(startDate);
+				var date2 = parse(endDate);
+				console.log("start : " + date1);
+				console.log("end : " + date2);
+
+				
+				if(checkInDatecheckOutDate != ''){
+					$("#checkDate").val(checkInDatecheckOutDate);
+				}else{
+				  	$("#checkDate").val('');	// 초기 입력 없으면 '날짜 선택' 값 = null
+				}
+				
+				if(startDate != '' && endDate != ''){
+					
+					$('input[name="checkInDatecheckOutDate"]').data('daterangepicker').setStartDate(date1);
+					$('input[name="checkInDatecheckOutDate"]').data('daterangepicker').setEndDate(date2);
+				}
+			});
+
+			function countDate() {
+			
+				if(!flag){
+					$("#checkDate").val('');
+				}
+			}
+               
+		</script>
 					
 					
 				<!--인원  -->
-				<div class="input-personnel-block">
+				<div class="input-guestCount-block">
 				<span class="input-text">인원</span> 
 				<button id="increaseQuantity">+</button>
-				<input  type='text' name='capacity' class="personnel_input" value="0" >
+				<input  type='text' id="guestCount" name='guestCount' class="guestCount_input" value="0" >
 				<button id="decreaseQuantity">-</button>
 				</div>
 					        <!--인원 카운트 다운 0미만은 줄일수 없게함  -->
@@ -79,7 +137,20 @@
 				 </div>
 			 </form>
 		 </div>
+		
+		<script type="text/javascript">
+			var address = '${address}';	
+			var guestCount = '${guestCount}';
 			
+			if(address != ''){
+				$('#address').val(address);
+			}
+			
+			if(guestCount != ''){
+				$('#guestCount').val(guestCount);
+			}
+			
+		</script>	
 	
 
 		<div class="useradd-login-form">
@@ -328,7 +399,7 @@
 $(function(){
 	$('#decreaseQuantity').click(function(e){
 	   	e.preventDefault();
-	   	var stat = $('.personnel_input').val();
+	   	var stat = $('.guestCount_input').val();
 	   	var num = parseInt(stat,10);
 	   	num--;
 	  
@@ -337,17 +408,17 @@ $(function(){
 		   num =1;
 	   	}
 	   
-		$('.personnel_input').val(num);
+		$('.guestCount_input').val(num);
 		
 	}); /* click이벤트  */
 
 	$('#increaseQuantity').click(function(e){
 		e.preventDefault();
-		var stat = $('.personnel_input').val();
+		var stat = $('.guestCount_input').val();
 		var num = parseInt(stat,10);
 		num++;
 
-	   $('.personnel_input').val(num);
+	   $('.guestCount_input').val(num);
 	});
 });
 

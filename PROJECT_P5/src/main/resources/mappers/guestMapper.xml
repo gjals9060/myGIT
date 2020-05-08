@@ -28,7 +28,7 @@
 		WHERE
 			host_id = #{hostId}
 		ORDER BY
-			id
+			sort_order ASC
 			
 		
 	</select>
@@ -58,17 +58,17 @@
 			FROM 
 				host h FULL OUTER JOIN blocking b ON(h.id = b.host_id), member m
 			WHERE 
-				(NOT b.blocking_date BETWEEN TO_DATE(#{sStartDate},'MM/DD/YYYY') 
-			AND
-				TO_DATE(#{sEndDate},'MM/DD/YYYY')
-			OR
-				b.blocking_date IS NULL)
+				(NOT b.blocking_date BETWEEN TO_DATE(#{sStartDate},'YYYY.MM.DD') 
+					AND
+						TO_DATE(#{sEndDate},'YYYY.MM.DD')
+				OR
+					b.blocking_date IS NULL)
 			AND
 				(h.latitude BETWEEN #{swLatitude} AND #{neLatitude})
 			AND
 				(h.longitude BETWEEN #{swLongitude} AND #{neLongitude})
 			AND
-				h.capacity >= #{capacity}
+				h.capacity >= #{guestCount}
 			AND
 				(m.id = h.member_id)
 			ORDER BY

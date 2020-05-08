@@ -47,8 +47,8 @@ public class GuestServiceImpl implements GuestService {
 		
 		
 		
-		String capacity = request.getParameter("capacity");
-		System.out.println("호출된 capacity : " + capacity);
+		String guestCount = request.getParameter("guestCount");
+		System.out.println("호출된 guestCount : " + guestCount);
 		
 		// 호스트 정보
 		HostInfoDTO hostInfoDto = guestMapper.selectHost(id);
@@ -72,7 +72,7 @@ public class GuestServiceImpl implements GuestService {
 		StringBuffer sbBlocking = new StringBuffer();
 		
 		for(Date d : blocking) {
-			SimpleDateFormat form1 = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat form1 = new SimpleDateFormat("yyyy.MM.dd");
 			System.out.println("블로킹 날짜 : " + form1.format(d));
 			sbBlocking.append("'" + form1.format(d) + "',");
 		}
@@ -83,7 +83,7 @@ public class GuestServiceImpl implements GuestService {
 		model.addAttribute("host", hostInfoDto);
 		model.addAttribute("startDate", startDate);
 		model.addAttribute("endDate", endDate);
-		model.addAttribute("capacity", capacity);
+		model.addAttribute("guestCount", guestCount);
 		
 		model.addAttribute("hostPhoto", hostPhotoDto);
 		model.addAttribute("blocking", sBlocking);
@@ -100,7 +100,7 @@ public class GuestServiceImpl implements GuestService {
 		// 받아온 HostParamVO를 SearchHostDTO에 맞게 데이터셋
 		String swLatlng = dto.getSwLatlng();
 		String neLatlng = dto.getNeLatlng();
-		int capacity = Integer.parseInt(dto.getCapacity());
+		int guestCount = Integer.parseInt(dto.getGuestCount());
 		String sStartDate = dto.getStartDate();
 		String sEndDate = dto.getEndDate();
 		
@@ -123,11 +123,11 @@ public class GuestServiceImpl implements GuestService {
 		System.out.println(neLatlngStr[1]);	//북동 경도
 		double neLongitude = Double.parseDouble(neLatlngStr[1]);
 		
-		System.out.println("capacity : " + capacity);
+		System.out.println("guestCount : " + guestCount);
 		System.out.println("sStartDate : " + sStartDate);
 		System.out.println("sEndDate : " + sEndDate);
 		
-		SearchHostDTO searchHostDto = new SearchHostDTO(sStartDate, sEndDate, swLatitude, neLatitude, swLongitude, neLongitude, capacity);
+		SearchHostDTO searchHostDto = new SearchHostDTO(sStartDate, sEndDate, swLatitude, neLatitude, swLongitude, neLongitude, guestCount);
 				
 		return guestMapper.selectHostList(searchHostDto);
 	}
@@ -140,7 +140,7 @@ public class GuestServiceImpl implements GuestService {
 		
 		String address = request.getParameter("address");
 		String checkInDatecheckOutDate = request.getParameter("checkInDatecheckOutDate");
-		String capacity = request.getParameter("capacity");
+		String guestCount = request.getParameter("guestCount");
 
 		
 		String[] date = checkInDatecheckOutDate.split(" - ");
@@ -149,13 +149,13 @@ public class GuestServiceImpl implements GuestService {
 		
 		System.out.println("키워드:" + address);
 		System.out.println("날짜:" + checkInDatecheckOutDate);
-		System.out.println("인원:" + capacity);
+		System.out.println("인원:" + guestCount);
 		System.out.println("시작날:" + startDate);
 		System.out.println("끝날:" + endDate);
 				
 		model.addAttribute("address", address);
 		model.addAttribute("checkInDatecheckOutDate", checkInDatecheckOutDate);
-		model.addAttribute("capacity", capacity);
+		model.addAttribute("guestCount", guestCount);
 		model.addAttribute("startDate", startDate);
 		model.addAttribute("endDate", endDate);
 				
@@ -170,7 +170,7 @@ public class GuestServiceImpl implements GuestService {
 		System.out.println("reservationPurchase 페이지 이동");
 
 		String checkInDatecheckOutDate = request.getParameter("checkInDatecheckOutDate");
-		int guestCount = Integer.parseInt(request.getParameter("personnel"));
+		int guestCount = Integer.parseInt(request.getParameter("guestCount"));
 		int hostId = Integer.parseInt(request.getParameter("hostId"));
 		int memberId = Integer.parseInt(request.getParameter("userId"));
 		String hostName = request.getParameter("hostName");
