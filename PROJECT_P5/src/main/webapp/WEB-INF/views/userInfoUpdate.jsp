@@ -36,9 +36,11 @@
       <div class="profilePhoto">
          <table>
             <tr>
-               <td><div class="photo">
+               <td><div id="forMouseOut">
+               		<div class="photo">
                      <!-- <img src="img/berry.jpg" alt=""
                         class="nowProfilePhoto select" /> -->
+                  </div>
                   </div></td>
                <td><div class="profilePhotolist">
                <!-- 
@@ -80,7 +82,7 @@ profilePhoto.attr("class", "inputProfilePhoto select");
 $(".photo").html('<img src="' + profilePath + '" alt="" class="nowProfilePhoto select" />');
 $("#userImg").attr("src", profilePath);
 
-
+$(".photoButton").detach(); // 버튼 갱신을 위해
 	
    var menu = '<span class="photoButton">'
          + '<button onclick="' + 'deleteProfilePhoto(' + profileId + ');">'
@@ -90,12 +92,12 @@ $("#userImg").attr("src", profilePath);
    
    
    $(".inputProfilePhoto").on({
-      'mouseover' : function() {
-         $(".photoButton").detach();
-      },
+ //     'mouseover' : function() {
+  //       $(".photoButton").detach();
+  //    },
       'click' : function() {
-    	  changeProfilePhoto($(this).attr("data-id"));
     	  
+    	  changeProfilePhoto($(this).attr("data-id"));
  //        $(".inputProfilePhoto").attr("class", "inputProfilePhoto"); // ??
  //        var index = $(this).index();
  //        $(".inputProfilePhoto").eq(index).attr("class", "inputProfilePhoto select");
@@ -114,13 +116,30 @@ $("#userImg").attr("src", profilePath);
          $(".photoButton").detach();
          $(this).after(menu);
         
-   }
+	  }
    })
-}   
+   
+   $("#forMouseOut").on({
+	 'mouseleave' : function(){
+	 	$(".photoButton").detach();
+	 }
+   })
+   
+}
    
    
    
 //*************************************** 백엔드에서 ************************************************
+function unapply(){
+	$(".photo").on({
+	      'mouseover' : function() {
+	         $(".photoButton").detach();
+	      }, 
+	      'click' : function() {
+	    	 $(".photoButton").detach();
+		  }
+   });
+}
 
 $(function(){
 	showProfilePhoto();
@@ -141,6 +160,8 @@ function showProfilePhoto(){
 				$(".photo").html('<img src="img/defaultProfile.png" alt="defaultProfile.png" class="nowProfilePhoto select" />');
 					// 헤더 이미지에도 기본 이미지 적용
 				$("#userImg").attr("src", "img/defaultProfile.png");
+					
+				unapply(); // 버튼 생성 해제(지우는 효과만 적용)
 			
 			} else{ // 있으면..
 				
@@ -220,6 +241,7 @@ function deleteProfilePhoto(profileId){
 			alert("통신 실패");
 		}
 	});
+	$(".photoButton").remove();
 }
 	
 	// 사진 선택 변경
