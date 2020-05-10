@@ -20,10 +20,10 @@
 <img src="img/bedroom.jpg" alt="사진" />
 </div>
 <div class="description">
-<div class="text">개인실</div>
-<div class="title">경복궁 아름다운 한옥집</div>
-<div class="date">2020.04.20~2020.04.22</div>
-<div class="personel">인원 1명</div>
+	<div class="text">${host.type} / ${host.roomType}</div>
+	<div class="title">${host.name}</div>
+	<div class="date">${booking.checkInDate} ~ ${booking.checkOutDate}</div>
+	<div class="guestCount">${booking.guestCount}명</div>
 </div>
 <div class="finish-img">
 <img src="img/reservationFinsh.png" alt="" />
@@ -32,7 +32,7 @@
 
 
 <div class="message">즐거운 여행 되세요!</div>
-<a href="roomList.jsp" class="move">확인</a>
+<a href="/p5" class="move">확인</a>
 
 </div>
 </body>

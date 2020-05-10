@@ -301,9 +301,10 @@ button {
 				var guestCount = $('#guestCount').val();
 				var startDate = "${startDate}";
 				var endDate = "${endDate}";
+				var address = "${address}";
 				
 				
-				location.href = "postPage?id=" + id + "&startDate=" + startDate + "&endDate=" + endDate + "&guestCount=" + guestCount;
+				location.href = "postPage?id=" + id + "&address=" + address + "&startDate=" + startDate + "&endDate=" + endDate + "&guestCount=" + guestCount;
 			}
 			
 			function mapInfo() {

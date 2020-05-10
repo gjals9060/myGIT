@@ -51,30 +51,43 @@
 		CDATA 사용 이유!
 		https://epthffh.tistory.com/entry/Mybatis-%EC%97%90%EC%84%9C-CDATA-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0
 		-->
-		
-		<![CDATA[
 			SELECT 
-				DISTINCT h.*, m.first_name, m.last_name
+			    h.*, m.first_name, m.last_name
 			FROM 
-				host h FULL OUTER JOIN blocking b ON(h.id = b.host_id), member m
-			WHERE 
-				(NOT b.blocking_date BETWEEN TO_DATE(#{sStartDate},'YYYY.MM.DD') 
-					AND
-						TO_DATE(#{sEndDate},'YYYY.MM.DD')
-				OR
-					b.blocking_date IS NULL)
+			    host h
+			        LEFT JOIN member m
+			        ON h.member_id = m.id
+			WHERE
+			    h.name IS NOT NULL
+			AND 
+			    m.id IS NOT NULL
 			AND
 				(h.latitude BETWEEN #{swLatitude} AND #{neLatitude})
 			AND
 				(h.longitude BETWEEN #{swLongitude} AND #{neLongitude})
+			<if test="guestCount != 0">
 			AND
-				h.capacity >= #{guestCount}
-			AND
-				(m.id = h.member_id)
+				h.capacity <![CDATA[>=]]> #{guestCount}
+			</if>
+			AND 
+			    h.id NOT IN(        
+			        SELECT 
+			            DISTINCT h.id
+			        FROM 
+			            host h
+			                INNER JOIN 
+			                blocking b 
+			                ON h.id = b.host_id
+			        WHERE 
+			            (b.blocking_date BETWEEN TO_DATE(#{sStartDate},'YYYY.MM.DD') 
+			                AND
+			                    TO_DATE(#{sEndDate},'YYYY.MM.DD'))
+				)
 			ORDER BY
-				h.id
+				h.id	
+				
 
-		]]>
+		
 	
 	</select>
 	
@@ -87,11 +100,11 @@
 			SEQ_booking_id.nextval,
 			#{hostId},
 			#{memberId},
-			TO_DATE(#{checkInDate},'MM/DD/YYYY'),
-			TO_DATE(#{checkOutDate},'MM/DD/YYYY'),
+			TO_DATE(#{checkInDate},'YYYY.MM.DD'),
+			TO_DATE(#{checkOutDate},'YYYY.MM.DD'),
 			#{guestCount},
 			#{payment},
-			TO_DATE(#{bookingDate},'MM/DD/YYYY HH24:MI:SS'),
+			TO_DATE(#{bookingDate},'YYYY.MM.DD HH24:MI:SS'),
 			NULL,
 			NULL		
 		)
