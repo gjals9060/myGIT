@@ -43,6 +43,18 @@ nav {
 .step1-tab:hover {
 	background: #bbb;
 }
+
+/* 다른 숙소수정에도 사용할 css */
+#wrap {
+	width: 1100px;
+	margin: auto;
+}
+
+.btn-block {
+	position: fixed;
+	bottom: 20%;
+}
+
 </style>
 <script type="text/javascript"
 	src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
@@ -63,10 +75,10 @@ nav {
 	</div>
 	
 	<nav>
-		<a  class="step1-tab" href="" id="tabRoomType">숙소형태</a>
-		<a class="step1-tab" href="" id="tabRoomCount">인원</a>
-		<a class="step1-tab" href="" id="tabAddress">위치</a>
-		<a class="step1-tab" href="" id="tabFacilities">편의시설</a>
+		<a  class="step1-tab" href="./modifyRoomType.jsp" id="tabRoomType">숙소형태</a>
+		<a class="step1-tab" href="./modifyRoomCount.jsp" id="tabRoomCount">인원</a>
+		<a class="step1-tab" href="./modifyAddress.jsp" id="tabAddress">위치</a>
+		<a class="step1-tab" href="./modifyFacilities.jsp" id="tabFacilities">편의시설</a>
 	</nav>
 	
 </header>
