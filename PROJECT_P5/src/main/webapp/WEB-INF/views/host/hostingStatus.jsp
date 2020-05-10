@@ -17,6 +17,8 @@
 		<div class="hosting-status-title">
 			등록한 단계에 따라 변함. 
 		</div>
+		${userId }<br>
+		${hostId }
 		
 		
 	</div>

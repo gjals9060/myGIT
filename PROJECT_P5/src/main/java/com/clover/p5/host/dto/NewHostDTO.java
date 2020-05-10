@@ -1,27 +1,26 @@
 package com.clover.p5.host.dto;
 
-import java.util.List;
+public class NewHostDTO { // 숙소 등록 1단계(세션)에서만 사용
 
-import org.springframework.web.multipart.MultipartFile;
-
-public class NewHostDTO {
-
-	private int MemberId;
-	private String name; // 이름(제목)
-	private String description; // 설명
-	private String descriptionEtc; // 기타 설명
+//************** 로그인 세션 *******************
+	private int memberId; // 회원번호
 	
-	private char type;
-	private char roomType;
-	private int capacity;
-	private int roomCount;
-	private int bedCount;
-	private int bathroomCount;
+//************** roomType.jsp ********************	
+	private String hostTypeId; // 호스트 종류 번호
+	private String roomTypeId; // 호스트 유형 번호
 	
-	private String address;
+//************** roomCount.jsp ********************	
+	private int capacity; // 수용 인원
+	private int roomCount; // 방 수
+	private int bedCount; // 침대 수
+	private int bathroomCount; // 욕실 수
+	
+//***************** address.jsp *************************	
+	private String address; // API주소 + 상세주소(직접 입력)
 	private double latitude; // 위도(y)
 	private double longitude; // 경도(x)
 	
+//***************** facilities.jsp **********************
 	private char isTv;
 	private char isWifi;
 	private char isAirConditioner;
@@ -34,73 +33,58 @@ public class NewHostDTO {
 	private char isElevator;
 	private char isParkingLot;
 	
-	private int minimumStay;
-	private int maximumStay;
-	private int price; // 1박 가격
-	
-	private String creationDate; // 호스트 등록일
-	
-	private String blockingDate; // 예약 차단일
-	
-	private List<MultipartFile> photo; // 사진
-	
 	// 생성자
 	public NewHostDTO(int memberId) {
-		MemberId = memberId;
+		this.memberId = memberId;
+		
+		hostTypeId = "";
+		roomTypeId = "";
+		
+		capacity = 1;
+		roomCount = 1;
+		bedCount = 0;
+		bathroomCount = 1;
+		
+		address = "";
+		latitude = 0;
+		longitude = 0;
+		
+		isTv = 'N';
+		isWifi = 'N';
+		isAirConditioner = 'N';
+		isAirPurifier = 'N';
+		isHairDryer = 'N';
+		isIron = 'N';
+		
+		isKitchen = 'N';
+		isWashingMachine = 'N';
+		isElevator = 'N';
+		isParkingLot = 'N';
 	}
 
-	
-	
-	
-	
-/////////////////////////////////////////////////////////////////	
-	
+
 	public int getMemberId() {
-		return MemberId;
+		return memberId;
 	}
 
 	public void setMemberId(int memberId) {
-		MemberId = memberId;
+		this.memberId = memberId;
 	}
 
-	public String getName() {
-		return name;
+	public String getHostTypeId() {
+		return hostTypeId;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setHostTypeId(String hostTypeId) {
+		this.hostTypeId = hostTypeId;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getRoomTypeId() {
+		return roomTypeId;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public String getDescriptionEtc() {
-		return descriptionEtc;
-	}
-
-	public void setDescriptionEtc(String descriptionEtc) {
-		this.descriptionEtc = descriptionEtc;
-	}
-
-	public char getType() {
-		return type;
-	}
-
-	public void setType(char type) {
-		this.type = type;
-	}
-
-	public char getRoomType() {
-		return roomType;
-	}
-
-	public void setRoomType(char roomType) {
-		this.roomType = roomType;
+	public void setRoomTypeId(String roomTypeId) {
+		this.roomTypeId = roomTypeId;
 	}
 
 	public int getCapacity() {
@@ -238,83 +222,36 @@ public class NewHostDTO {
 	public void setIsParkingLot(char isParkingLot) {
 		this.isParkingLot = isParkingLot;
 	}
-
-	public int getMinimumStay() {
-		return minimumStay;
-	}
-
-	public void setMinimumStay(int minimumStay) {
-		this.minimumStay = minimumStay;
-	}
-
-	public int getMaximumStay() {
-		return maximumStay;
-	}
-
-	public void setMaximumStay(int maximumStay) {
-		this.maximumStay = maximumStay;
-	}
-
-	public int getPrice() {
-		return price;
-	}
-
-	public void setPrice(int price) {
-		this.price = price;
-	}
-
-	public String getCreationDate() {
-		return creationDate;
-	}
-
-	public void setCreationDate(String creationDate) {
-		this.creationDate = creationDate;
-	}
-
-	public String getBlockingDate() {
-		return blockingDate;
-	}
-
-	public void setBlockingDate(String blockingDate) {
-		this.blockingDate = blockingDate;
-	}
-
-	public List<MultipartFile> getPhoto() {
-		return photo;
-	}
-
-	public void setPhoto(List<MultipartFile> photo) {
-		this.photo = photo;
-	}
-
-
-
-
-
+	
+	
+	
+	
 	@Override
 	public String toString() {
-		return "NewHostDTO [MemberId=" + MemberId + ", name=" + name + ", description=" + description
-				+ ", descriptionEtc=" + descriptionEtc + ", type=" + type + ", roomType=" + roomType + ", capacity="
-				+ capacity + ", roomCount=" + roomCount + ", bedCount=" + bedCount + ", bathroomCount=" + bathroomCount
-				+ ", address=" + address + ", latitude=" + latitude + ", longitude=" + longitude + ", isTv=" + isTv
-				+ ", isWifi=" + isWifi + ", isAirConditioner=" + isAirConditioner + ", isAirPurifier=" + isAirPurifier
-				+ ", isHairDryer=" + isHairDryer + ", isIron=" + isIron + ", isKitchen=" + isKitchen
-				+ ", isWashingMachine=" + isWashingMachine + ", isElevator=" + isElevator + ", isParkingLot="
-				+ isParkingLot + ", minimumStay=" + minimumStay + ", maximumStay=" + maximumStay + ", price=" + price
-				+ ", creationDate=" + creationDate + ", blockingDate=" + blockingDate + ", photo=" + photo + "]";
+		return 	"memberId: " + memberId + "\n"
+				+ "hostTypeId: " + hostTypeId + "\n"
+				+ "roomTypeId: " + roomTypeId + "\n"
+				+ "capacity: " + capacity + "\n"
+				+ "roomCount: " + roomCount + "\n"
+				+ "bedCount: " + bedCount + "\n"
+				+ "bathroomCount: " + bathroomCount + "\n"
+				+ "address: " + address + "\n"
+				+ "latitude: " + latitude + "\n"
+				+ "longitude: " + longitude + "\n"
+				+ "isTv: " + isTv + "\n"
+				+ "isWifi: " + isWifi + "\n"
+				+ "isAirConditioner: " + isAirConditioner + "\n"
+				+ "isAirPurifier: " + isAirPurifier + "\n"
+				+ "isHairDryer: " + isHairDryer + "\n"
+				+ "isIron: " + isIron + "\n"
+				+ "isKitchen: " + isKitchen + "\n"
+				+ "isWashingMachine: " + isWashingMachine + "\n"
+				+ "isElevator: " + isElevator + "\n"
+				+ "isParkingLot: " + isParkingLot;
 	}
-
-	
-
-	
-
-	
-
 	
 	
 
-	
-	
 	
 	
 	

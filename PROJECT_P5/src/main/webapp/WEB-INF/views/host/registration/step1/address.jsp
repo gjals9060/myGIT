@@ -26,18 +26,19 @@
    <div id="result"></div>
 
 
-   <form action="facilities" method="post" name="formAddress">
-      <input type="hidden" name="address" />
-      <input type="hidden" name="latitude" />
-      <input type="hidden" name="longitude" />
-   </form>
+  <!--  <form action="facilities" method="post" name="formAddress"> -->
+      <input type="text" name="address" readonly />
+      <input type="text" name="latitude" readonly />
+      <input type="text" name="longitude" readonly />
+   <!-- </form> -->
    
    <div id="addressInfo"></div>
    
    <!--임시 이동  -->
-  <!--  <a href="facilities">다음</a> -->
    <a href="roomCount">이전</a>
-   <button id="next" onclick="inputAddress();">다음</button>
+   <a href="facilities">다음</a>
+   
+   <!-- <button id="next" onclick="inputAddress();">다음</button> -->
 </body>
 
 
@@ -220,6 +221,12 @@
 	  marker1.setMap(map);
       marker2.setMap(null);
       
+      var address2 = $('#address2').val().trim();
+	   if(!address2){ // 상세주소가 없으면
+		   $('input[name="address"]').val($('#address1').text()); // 입력된 도로명 주소만
+	   } else{ // 있으면
+		   $('input[name="address"]').val($('#address1').text() + " " + address2); // 그 뒤에 붙여서
+	   }
 /* 
       // 다음 버튼 활성화
       	  $('#next').prop("disabled", false);
@@ -269,7 +276,7 @@
        }
    });
    
-   function inputAddress(){
+  /*  function inputAddress(){
 	   if(flag){
 		   var address2 = $('#address2').val().trim();
 		   if(!address2){ // 상세주소가 없으면
@@ -282,7 +289,7 @@
 	   }else{
 			  alert("주소 조정이 끝났으면 '완료'를 눌러주세요!");
 	   }
-   }
+   } */
 	
    function panTo() {
 	    // 이동할 위도 경도 위치를 생성합니다 -> 마커 위치로
@@ -295,4 +302,5 @@
 
 
 </script>
+<script src="/p5/js/host.js"></script>
 </html>
