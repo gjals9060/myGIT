@@ -679,7 +679,7 @@ hr {
 								<!-- header 와 구분 -->
 							</td>
 							<td><div class="contentReservTitle">인원</div>
-							<span class="guestInput"><input type='text' name='guestCount'
+							<span class="guestInput"><input type='text' name='guestCount' id="guestCount_input"
 							class="guestCount_input" value="${guestCount}">
 						
 							<button id="increaseQuantity" onclick="return increase();">▲</button>
@@ -939,13 +939,13 @@ hr {
    
    console.log("최소 숙박 : " + minimumStay + ", 최대 숙박 : " + maximumStay);
    
-   function getFormatDate(date){	// YYYY-MM-DD형태로
+   function getFormatDate(date){	// YYYY.MM.DD형태로
 	    var year = date.getFullYear();              //yyyy
 	    var month = (1 + date.getMonth());          //M
 	    month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
 	    var day = date.getDate();                   //d
 	    day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
-	    return  year + '-' + month + '-' + day;
+	    return  year + '.' + month + '.' + day;
 	}
 
 	function getFormatPrevDate(date){	// YYYY-MM-DD형태로
@@ -994,18 +994,24 @@ hr {
 	    return year + '.' + month + '.' + day;
 	}
 	
-	// 받은 start, end 데이트 파싱
-	var startDate = '${startDate}';
-	var endDate = '${endDate}';
-	
 	function parse(str) {	// String -> Date 파싱
 	    var y = str.substr(0, 4);
 	    var m = str.substr(5, 2);
 	    var d = str.substr(8, 2);
 	    return new Date(y,m-1,d);
 	}
+	
+	// 받은 start, end 데이트 파싱
+	var	startDate = '${startDate}';
+	var endDate = '${endDate}';
+	
+	if((startDate == '' || startDate == null) && (endDate == '' || endDate == null)) {
+		startDate = endDate = getFormatDate(new Date());		 
+	}
+
 	var sDate = parse(startDate);
 	var eDate = parse(endDate);
+	
 	console.log("start : " + sDate);
 	console.log("end : " + eDate);
 	
@@ -1050,8 +1056,8 @@ hr {
     			
             	// start 선택하고 end로 min 또는 자신 선택못함 
 				if(startDay == endDay) {
-					$('#reservationDate').data('daterangepicker').setStartDate(moment().subtract(1, 'days'));
-					$('#reservationDate').data('daterangepicker').setEndDate(moment().subtract(3, 'days'));
+					$('#reservationDate').data('daterangepicker').setStartDate(sDate);
+					$('#reservationDate').data('daterangepicker').setEndDate(eDate);
             		alert("호스트의 최소 숙박일 수가 " + minimumStay + "박" + (minimumStay+1) + "일 부터 입니다." );
 					sw = false;
             	}else{
@@ -1070,8 +1076,8 @@ hr {
 	            		var koreanDate = getKoreanFormat(new Date(blockDate));	// yyyy년 MM월 DD일
 	            		
 	            		//$('#reservationDate').data('daterangepicker').setEndDate(setTypeXDate);
-	            		$('#reservationDate').data('daterangepicker').setStartDate(moment().subtract(1, 'days'));
-						$('#reservationDate').data('daterangepicker').setEndDate(moment().subtract(3, 'days'));
+	            		$('#reservationDate').data('daterangepicker').setStartDate(sDate);
+						$('#reservationDate').data('daterangepicker').setEndDate(eDate);
 	            		
 	            		alert("호스트의 사정으로 " + koreanDate + "는 예약이 불가능합니다.");
 	            		sw = false;
@@ -1095,6 +1101,8 @@ hr {
 			}
 			var date1 = parse(startDate);
 			var date2 = parse(endDate);
+			
+			console.log("date 확인 : " + checkInDatecheckOutDate);
 			
 			if(checkInDatecheckOutDate != ''){
 				$("#reservationDate").val(checkInDatecheckOutDate);
@@ -1132,15 +1140,21 @@ hr {
 	
 	/* 인원 선택 */
 	/* button 태그 사용하면 submit되서 input 태그 또는 button태그 내에 button 타입을 부여했으나 버튼 적용이 안되서 정정함 */
-	
+	$(document).ready(function() {
+		var guestCountVal = $('#guestCount_input').val();
+			
+		if(guestCountVal == -1 || guestCountVal == null || guestCountVal == ''){
+			$('#guestCount_input').val(0);
+		}
+	});
 	function decrease() {
 		var stat = $('.guestCount_input').val();
 		var num = parseInt(stat, 10);
 		num--;
 		
-		if (num < 1) {
+		if (num < 0) {
 		   alert('1명미만으로 예약할 수 없습니다');
-		   num = 1;
+		   num = 0;
 		}
 		
 		$('.guestCount_input').val(num);
@@ -1151,11 +1165,10 @@ hr {
 	function increase() {
 		var stat = $('.guestCount_input').val();
         var num = parseInt(stat, 10);
-        var capacity
         num++;
-        
-        if(num > ${host.capacity}){
-       	 alert("해당 host의 최대 수용 인원은 " + ${host.capacity} + "명 입니다.");
+        var capacity = "${host.capacity}";
+        if(num > capacity){
+       	 alert("해당 host의 최대 수용 인원은 " + capacity + "명 입니다.");
        	 num--;
         }
         $('.guestCount_input').val(num);

@@ -65,10 +65,11 @@
 				(h.latitude BETWEEN #{swLatitude} AND #{neLatitude})
 			AND
 				(h.longitude BETWEEN #{swLongitude} AND #{neLongitude})
-			<if test="guestCount != 0">
+			<if test="guestCount != -1">
 			AND
 				h.capacity <![CDATA[>=]]> #{guestCount}
 			</if>
+			<if test="sStartDate != null and sEndDate != null">
 			AND 
 			    h.id NOT IN(        
 			        SELECT 
@@ -83,6 +84,7 @@
 			                AND
 			                    TO_DATE(#{sEndDate},'YYYY.MM.DD'))
 				)
+			</if>
 			ORDER BY
 				h.id	
 				
