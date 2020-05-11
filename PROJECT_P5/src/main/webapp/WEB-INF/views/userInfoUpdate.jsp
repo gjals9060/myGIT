@@ -64,7 +64,9 @@
             </tr>
          </table>
       </div>
+      <div class="photoUploadButton">
       <button class="photoUpload" onclick="$('#photoFile').trigger('click')">사진 등록</button>
+      </div>
       <form id="fileUpload">
       	<input type="file" id="photoFile" name="photoFile" accept="image/*" style="display: none" />
       </form>

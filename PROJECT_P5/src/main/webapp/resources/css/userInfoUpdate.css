@@ -287,3 +287,7 @@
 .photoButton button:hover {
    opacity: 1;
 }
+
+.photoUploadButton {
+	text-align: center;	
+}
