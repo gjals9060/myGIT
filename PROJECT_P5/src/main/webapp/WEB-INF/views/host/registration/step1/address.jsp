@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <!-- services와 clusterer, drawing 라이브러리 불러오기 -->
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c57fda7695336028646dd43a52736a17&libraries=services"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6252091adcb28726fdb95ebdf0b78361&libraries=services"></script>
 
 </head>
 <body>
@@ -27,9 +27,9 @@
 
 
   <!--  <form action="facilities" method="post" name="formAddress"> -->
-      <input type="text" name="address" />
-      <input type="text" name="latitude" />
-      <input type="text" name="longitude" />
+      <input type="text" name="address" readonly="readonly"/>
+      <input type="text" name="latitude" readonly="readonly"/>
+      <input type="text" name="longitude" readonly="readonly"/>
    <!-- </form> -->
    
    <div id="addressInfo"></div>
@@ -44,13 +44,12 @@
 
 
 
-<script
-   src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="/p5/js/jquery-3.4.1.js"></script>
 
 <script>
-   var toggle = true;   // 버튼 활성화
-   var flag = false;		 // 조정중일때 false => 다음버튼, 주소입력 비활성화
+   var toggle = true;   	// 버튼 활성화
+   var flag = false;		// 조정중일때 false => 다음버튼, 주소입력 비활성화
    
    $('#map-set-btn').hide();   // 기본적으로  조정하기 버튼 숨김
    $('#map-save-btn').hide();   // 기본적으로  저장하기 버튼 숨김
@@ -129,10 +128,63 @@
         fillColor: '#CFE7FF', // 채우기 색깔입니다
         fillOpacity: 0.7  // 채우기 불투명도 입니다   
     });
- 
+	// ================ 0511 수정 시작단  by 허민 =================
+	var memoryAddress;
+	var memoryLatitude;
+    var memoryLongitude;
+    
+    var beforePoint;
+    var afterPointl;
+    var memory;
+    
+	var timer = setInterval(function() { 
+		//실행할 스크립트 
+		memoryAddress = $('input[name="address"]').val();
+		memoryLatitude = $('input[name="latitude"]').val();
+	    memoryLongitude = $('input[name="longitude"]').val();
+	    
+	    console.log(memoryAddress + "/" + memoryLatitude + "/" + memoryLongitude);
+	    
+	    clearInterval(timer);
+	    
+	    if(memoryLatitude!=0 && memoryLongitude!=0){
+	    	inputValue();
+	    }
+	    
+	}, 1000);
+	
+	function inputValue() {
+		
+		$('#map-save-btn').show();		
+		// 지도 출력할 값들
+		map.setLevel(1);
+
+        // 해당 주소에 대한 좌표를 받아서
+        var coords = new daum.maps.LatLng(memoryLatitude, memoryLongitude);
+                          
+        // 지도를 보여준다.
+        mapContainer.style.display = "block";
+        map.relayout();
+        // 지도 중심을 변경한다.
+        map.setCenter(coords);
+        
+        // 마커를 결과값으로 받은 위치로 옮긴다.
+        marker2.setPosition(coords);
+        // 지도에 원을 표시합니다 
+        circle.setMap(map);
+
+        toggleTrue();
+		
+	}
+	// ================ 0511 수정   끝 단 by 허민 =================
+
    // 주소검색
    function sample5_execDaumPostcode() {
 	  
+	  if(!toggle){
+		  toggleTrue();
+	  }
+		
       new daum.Postcode({
          oncomplete : function(data) {
             
@@ -158,6 +210,10 @@
                   // 지도 중심을 변경한다.
                   map.setCenter(coords);
                   
+              	// ================ 0511 수정 시작단  by 허민 =================
+            	  //memory = "";
+            	// ================ 0511 수정   끝 단 by 허민 =================
+
                   // 마커를 결과값으로 받은 위치로 옮긴다.
                   marker2.setPosition(coords);
                   // 지도에 원을 표시합니다 
@@ -171,8 +227,20 @@
                   $('input[name="latitude"]').val(result.y);
                   $('input[name="longitude"]').val(result.x);
                   
-                  toggleTrue();
+                  //toggleTrue();
+            	  // ================ 0511 수정 시작단  by 허민 =================
+
+            	  $('input[name="address"]').val(""); // 초기화
+                  $('#map-set-btn').hide();
+                  $('#map-save-btn').show();
+                  toggle = true;   // 이벤트 활성화
+                  flag = false;
+                  map.setDraggable(true);
                   
+            	  marker1.setMap(null);
+            	  marker2.setMap(map);
+            	  // ================ 0511 수정   끝 단 by 허민 =================
+
                   // 조정중일때 주소검색시 초기화
         //          if(toggle){
         //        	  toggleFalse();
@@ -187,9 +255,15 @@
    
       
    $(document).on('click','#map-set-btn', toggleTrue);
-   
+
    function toggleTrue() {
-      
+	  // ================ 0511 수정 시작단  by 허민 =================
+	  beforePoint = map.getCenter();
+	  memory = $('input[name="address"]').val();
+	  console.log(beforePoint);
+	  console.log(memory);
+
+	  // ================ 0511 수정   끝 단 by 허민 =================
 	  $('input[name="address"]').val(""); // 초기화
       $('#map-set-btn').hide();
       $('#map-save-btn').show();
@@ -199,7 +273,7 @@
       
 	  marker1.setMap(null);
 	  marker2.setMap(map);
-      
+
       //map.setZoomable(true);
 /*       
       // 조정중에 다음 버튼 비활성화
@@ -212,26 +286,45 @@
    $(document).on('click','#map-save-btn', toggleFalse);
    
    function toggleFalse() {
-	   
-	  var radioCount = $('input:radio[name="address1"]').length;
-	      
-      var address1;
-      if(!radioCount){
-    	  address1 = $('#address1').text(); // 선택 주소 or 지번 주소
-      } else{
-    	  address1 = $('input:radio[name="address1"]:checked').val();
-    	  if(!address1){
-    		  alert("주소를 선택하세요.");
-    		  return false;
-    	  }
-      }
-      var address2 = $('#address2').val().trim(); // 상세 주소(선택 사항)
-	  var address = (address1 + " " + address2).trim();
-	  $('input[name="address"]').val(address);
+		// ================ 0511 수정 시작단  by 허민 =================
+
+	  afterPoint = map.getCenter();
+	  console.log(afterPoint);
+
+	  if(beforePoint.equals(afterPoint) && (memory != '')){
+		  console.log("안움직임");
+		  $('input[name="address"]').val(memory);
+		  console.log(memory);
+	  }else{
+		  console.log("움직임");
+		  
+		  beforePoint = null;
+		  afterPoint = null;
+	  	  memory = '';	
+		// ================ 0511 수정   끝 단 by 허민 =================
+
 	  
-	  $('#addressInfo').empty();
-      $('#addressInfo').append( '확정 주소 : ' + address);
-	   
+		  var radioCount = $('input:radio[name="address1"]').length;
+		      
+	      var address1;
+	      if(!radioCount){
+	    	  address1 = $('#address1').text(); // 선택 주소 or 지번 주소
+	      } else{
+	    	  address1 = $('input:radio[name="address1"]:checked').val();
+	    	  if(!address1){
+	    		  alert("주소를 선택하세요.");
+	    		  return false;
+	    	  }
+	      }
+	      var address2 = $.trim($('#address2').val()); // 상세 주소(선택 사항)	// jquery.trim(str) 수정
+		  var address = $.trim((address1 + " " + address2));
+		  $('input[name="address"]').val(address);
+		  
+		  $('#addressInfo').empty();
+	      $('#addressInfo').append( '확정 주소 : ' + address);
+	// ================ 0511 수정 시작단  by 허민 =================
+	  }//end - if by 허민 
+	// ================ 0511 수정   끝 단 by 허민 =================
       
       $('#map-save-btn').hide();
       $('#map-set-btn').show();
@@ -251,7 +344,7 @@
 	  marker1.setMap(map);
       marker2.setMap(null);
       
-      
+	  
 	  
 	  
 /* 
@@ -350,4 +443,22 @@
 
 </script>
 <script src="/p5/js/host.js"></script>
+<script type="text/javascript">
+
+/* 	var timer = setInterval(function() { 
+		//실행할 스크립트 
+		var memoryAddress = $('input[name="address"]').val();
+		var memoryLatitude = $('input[name="latitude"]').val();
+	    var memoryLongitude = $('input[name="longitude"]').val();
+	    
+	    console.log(memoryAddress + "/" + memoryLatitude + "/" + memoryLongitude);
+	    
+		if(memoryAddress != null || memoryAddress != ''){
+			clearInterval(timer);
+			//console.log("stop");
+		}
+	}, 100);
+ */
+
+</script>
 </html>
