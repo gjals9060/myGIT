@@ -264,7 +264,8 @@ hr {
 	width: 100%;
 }
 
-.guestCount_input {
+.guestCount_reserve {
+	/* header 랑 간섭이 있어서 guestCount_input이 였던걸 guestCount_reserve 으로 바꿨습니다. by 허민 */
  	width: 60% !important;
  }
 
@@ -693,8 +694,8 @@ hr {
 								<!-- header 와 구분 -->
 							</td>
 							<td><div class="contentReservTitle">인원</div>
-							<span class="guestInput"><input type='text' name='guestCount' id="guestCount_input"
-							class="guestCount_input" value="${guestCount}">
+							<span class="guestInput"><input type='text' name='guestCount' id="guestCount_reserve"
+							class="guestCount_reserve" value="">
 						
 							<button id="increaseQuantity" onclick="return increase();">▲</button>
 							<button id="decreaseQuantity" onclick="return decrease();">▼</button>
@@ -1159,29 +1160,30 @@ hr {
 	/* 인원 선택 */
 	/* button 태그 사용하면 submit되서 input 태그 또는 button태그 내에 button 타입을 부여했으나 버튼 적용이 안되서 정정함 */
 	$(document).ready(function() {
-		var guestCountVal = $('#guestCount_input').val();
+		var guestCountVal = ${guestCount};
 			
 		if(guestCountVal == -1 || guestCountVal == null || guestCountVal == ''){
-			$('#guestCount_input').val(0);
+			$('#guestCount_reserve').val(0);
+		}else{
+			$('#guestCount_reserve').val(guestCountVal);
 		}
 	});
 	function decrease() {
-		var stat = $('.guestCount_input').val();
+		var stat = $('#guestCount_reserve').val();
 		var num = parseInt(stat, 10);
-		num--;
 		
-		if (num < 0) {
-		   alert('1명미만으로 예약할 수 없습니다');
-		   num = 0;
+		if (num >= 1) {
+		   //alert('1명미만으로 예약할 수 없습니다');
+			num--;
 		}
 		
-		$('.guestCount_input').val(num);
+		$('#guestCount_reserve').val(num);
 
 		return false;
 	}
 	
 	function increase() {
-		var stat = $('.guestCount_input').val();
+		var stat = $('#guestCount_reserve').val();
         var num = parseInt(stat, 10);
         num++;
         var capacity = "${host.capacity}";
@@ -1189,7 +1191,7 @@ hr {
        	 alert("해당 host의 최대 수용 인원은 " + capacity + "명 입니다.");
        	 num--;
         }
-        $('.guestCount_input').val(num);
+        $('#guestCount_reserve').val(num);
         
         return false;
         
