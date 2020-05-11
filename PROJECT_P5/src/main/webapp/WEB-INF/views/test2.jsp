@@ -43,14 +43,21 @@ img:hover {
    border-radius: 0px;
 }
 
+.addPhoto.last {
+    border: 3px #eb2b55 outset !important;
+    overflow: hidden !important;
+    border-radius: 10px !important;
+    box-sizing: border-box;
+}
+
 .photoList img {
    width: 300px;
    height : 200px;
    margin: 5px 0;
    overflow: hidden;
    object-fit: cover;
-    object-position: center;   
-    border: 1.5px #bbb dashed;
+   object-position: center;   
+   border: 1.5px #bbb dashed;
    border-radius: 15px;
 }
 
@@ -121,13 +128,13 @@ img:hover {
    background: black;
 }
 
-.postImg, .modalImg {
+.modalImg {
    display: none;
    text-align: center;
 }
 
 
-.postImg img, .modalImg img {
+.modalImg img {
    max-width: 500px;
    cursor: pointer;
    transition: 0.3s;
@@ -184,23 +191,22 @@ img:hover {
    margin: 0 auto;
 }
 
-.postImgThumbnails, .modalImgThumbnails {
+.modalImgThumbnails {
    width: 90%;
    margin: 0 auto;
 }
 
-.postImgThumbnails:after, .modalImgThumbnails:after {
+.modalImgThumbnails:after {
    content: "";
    display: table;
    clear: both;
 }
 
-.postImgThumbnail.active img, .postImgThumbnail img:hover,
-   .modalImgThumbnail.active img, .modalImgThumbnail img:hover {
+.modalImgThumbnail.active img, .modalImgThumbnail img:hover {
    opacity: 1;
 }
 
-.postImgThumbnail img, .modalImgThumbnail img {
+.modalImgThumbnail img {
    cursor: pointer;
    float: left;
    opacity: 0.6;
@@ -216,13 +222,13 @@ img:hover {
 </head>
 <body>
    <div id="wrap">
-   		
+         
       <div class="photoUpload">
       
          <!-- <label for="photoFiles">
-      		<img src="img/imgUpload.png" alt="" class="addPhoto" width="900px" height="600px"/>
-      	 </label> -->
-      	 
+            <img src="img/imgUpload.png" alt="" class="addPhoto" width="900px" height="600px"/>
+          </label> -->
+          
          <!-- <div id="mainPhoto">대표 이미지</div>
          <div class="photoList">
             <img src="img/bedroom.jpg" alt="" class="inputPhoto" />
@@ -233,18 +239,18 @@ img:hover {
             <img src="img/hair.png" alt="" class="inputPhoto" />
             <img src="img/away.jpg" alt="" class="inputPhoto" />
             
-			<label for="photoFiles">
-				<img src="img/imgUpload2.png" alt="" class="addPhoto" />
-			</label>
+         <label for="photoFiles">
+            <img src="img/imgUpload2.png" alt="" class="addPhoto" />
+         </label>
          </div> -->
          
       </div> <!-- photoUpload end -->
       
       
-		<form id="uploadPhoto">
-			<input type="file" id="photoFiles" name="photoFiles" multiple
-			 accept="image/*" style="display: none" />
-		</form>
+      <form id="uploadPhoto">
+         <input type="file" id="photoFiles" name="photoFiles" multiple
+          accept="image/*" style="display: none" />
+      </form>
       
       
       <div class="modalImgSlide">
@@ -301,28 +307,26 @@ img:hover {
 <script type="text/javascript">
 
 function apply(){
-	
       $(".photoList").sortable({
             items: "img:not(.addPhoto)",
-            
-           	// 정렬 후(내용 변동이 있으 시에)에 시행
-			update: function(event, ui){
-				var sortResult = $(".photoList").sortable("toArray", {attribute:"data-id"});
-				updateHostPhotoSort(sortResult);
-			}
+
+            // 정렬 후(내용 변동이 있으 시에)에 시행
+         update: function(event, ui){
+            var sortResult = $(".photoList").sortable("toArray", {attribute:"data-id"});
+            updateHostPhotoSort(sortResult);
+         }
       });
-   
 
    var menu = '<span class="photoButton first">'
       + '<button onclick="deleteHostPhoto($(this).parent().prev().attr(\'data-id\'))">'
-   	  + '<i class="fas fa-trash-alt fa-2x"></i></button>'
-      + '<button onclick="modalOn()"><i class="fas fa-external-link-alt fa-2x"></i></button></span>';
+        + '<i class="fas fa-trash-alt fa-2x"></i></button>'
+      + '<button onclick="modalOn($(this).parent().prev().index())"><i class="fas fa-external-link-alt fa-2x"></i></button></span>';
    var menu2 = '<span class="photoButton">'
-   	  + '<button onclick="changeCoverImage($(this).parent().prev().attr(\'data-order\'))">'
-   	  + '<i class="fas fa-check"></i></button>'
+        + '<button onclick="changeCoverImage($(this).parent().prev().attr(\'data-order\'))">'
+        + '<i class="fas fa-check"></i></button>'
       + '<button onclick="deleteHostPhoto($(this).parent().prev().attr(\'data-id\'))">'
-   	  + '<i class="fas fa-trash-alt"></i></button>'
-      + '<button onclick="modalOn()"><i class="fas fa-external-link-alt"></i></button></span>';
+        + '<i class="fas fa-trash-alt"></i></button>'
+      + '<button onclick="modalOn($(this).parent().prev().index())"><i class="fas fa-external-link-alt"></i></button></span>';
       
    $(".inputPhoto").on({
       'mouseover': function() {
@@ -345,24 +349,14 @@ function apply(){
    }
       })
 }    
-   /* 
-   $(".photoList").mouseleave(function() {
-       $(".photoButton").detach();
-    })
-    
-    $(".photoButton button").click(function() {
-       $(".photoButton").detach();
-    })
-     */
      
-
        /* 이미지 슬라이드 */
        var slideIndex = 1;
        showSildes(slideIndex);
 
        function showSildes(n) {
           var i;
-          
+
           var Mslides = document.getElementsByClassName("modalImg");
           var MslidesList = document.getElementsByClassName("modalImgSlide");
           var Mthumb = document.getElementsByClassName("modalImgThumbnail");
@@ -391,14 +385,12 @@ function apply(){
           for (var i = -3; i < 2; i++) {
              if (slideIndex + i < 0) {
                 MthumbList.innerHTML += '<div class="modalImgThumbnail"><img src="'
-                      + Mslides[slideIndex + i + Mslides.length]
-                            .getElementsByTagName("img")[0].src
+                      + Mslides[slideIndex + i + Mslides.length].getElementsByTagName("img")[0].src
                       + '" onclick="currentSlide('
                       + (slideIndex + i + Mslides.length + 1) + ')" /></div>';
              } else if (slideIndex + i >= Mslides.length) {
                 MthumbList.innerHTML += '<div class="modalImgThumbnail"><img src="'
-                      + Mslides[slideIndex + i - Mslides.length]
-                            .getElementsByTagName("img")[0].src
+                      + Mslides[slideIndex + i - Mslides.length].getElementsByTagName("img")[0].src
                       + '" onclick="currentSlide('
                       + (slideIndex + i - Mslides.length + 1) + ')" /></div>';
              } else {
@@ -411,10 +403,6 @@ function apply(){
           }
           Mthumb[2].className += " active";
        }
-
-       
-       
-       
        
        function plusSlides(n) {
           showSildes(slideIndex += n);
@@ -425,8 +413,10 @@ function apply(){
        }
 
        /* 모달 이미지 */
-
-       function modalOn() {
+       function modalOn(n) {
+          var a = parseInt(n) + 1;
+          slideIndex = a;
+          showSildes(slideIndex);
           var modalImgSlide = document.getElementsByClassName("modalImgSlide");
           modalImgSlide[0].style.display = "block";
        }
@@ -436,139 +426,132 @@ function apply(){
           modalImgSlide[0].style.display = "none";
        }
        
-       
-       
-       
-       
-       
-       
-       
 //**************************** 백엔드 기능.. ***********************************************************
 
 $(function(){
-	// 화면에 사진 출력
-	showHostPhoto();
-	
-	// 파일 드롭 다운
+   // 화면에 사진 출력
+   showHostPhoto();
+   
+   // 파일 드롭 다운
     fileDropDown();
 });
 
 
-	// 사진 출력
+   // 사진 출력
 function showHostPhoto(){
-	var hostPhoto = $(".photoUpload");
-	var hostPhotoModal = $(".modalImgSlide");
-	
-	$.ajax({
-		type: "POST",
-		url: 'ajax/getHostPhotoList',
-		data: 'hostId=' + 77,
-		async: true,
-		success: function (photoList) {
-			if(!photoList.length){ // 출력할 사진이 없다면
-				hostPhoto.empty(); // 비우고
-				
-					// 큰 버튼 하나만
-				var result =
-					'	<label for="photoFiles">	'
-			      	+'		<img src="img/imgUpload.png" alt="" class="addPhoto" width="900px" height="600px"/>	'
-			      	+' 	</label>	'
-		      	 	;
-		     	
-		      	hostPhoto.append(result); // 영역에 생성
-				
-			} else { // 출력할 게 있으면
-				hostPhoto.empty(); // 비우고
-				hostPhotoModal.empty(); // modal 역시 비움
+   var hostPhoto = $(".photoUpload");
+   var hostPhotoModal = $(".modalImgSlide");
+   
+   $.ajax({
+      type: "POST",
+      url: 'ajax/getHostPhotoList',
+      data: 'hostId=' + 77,
+      async: true,
+      success: function (photoList) {
+         if(!photoList.length){ // 출력할 사진이 없다면
+            hostPhoto.empty(); // 비우고
+            
+               // 큰 버튼 하나만
+            var result =
+               '   <label for="photoFiles">   '
+                  +'      <img src="img/imgUpload.png" alt="" class="addPhoto" width="900px" height="600px"/>   '
+                  +'    </label>   '
+                   ;
+              
+               hostPhoto.append(result); // 영역에 생성
+            
+         } else { // 출력할 게 있으면
+            hostPhoto.empty(); // 비우고
+            hostPhotoModal.empty(); // modal 역시 비움
 
-				
-				
-//************************** 머리 ***************************************		
-					// 사진
-				var photoResult =
-					'	<div id="mainPhoto">대표 이미지</div>	'
-				    +'     <div class="photoList">	'
-				    ;
-			    
-				    // modal
-			    var modalResult = '';
-//************************** 머리-END **********************************		
+            
+            
+//************************** 머리 ***************************************      
+               // 사진
+            var photoResult =
+               '   <div id="mainPhoto">대표 이미지</div>   '
+                +'     <div class="photoList">   '
+                ;
+             
+                // modal
+             var modalResult = '';
+//************************** 머리-END **********************************      
 
 
 //************************** 몸통 제조(반복문) ********************************
-				    // 사진 개수
-				var total = photoList.length;
-				$.each(photoList, function(i, photo){
-					// 화면에 출력되는 사진
-					photoResult +=
-		        	'	<img src="' + photo.path + '" alt="' + photo.originalName + '"'
-	        		+'	data-id="' + photo.id + '" data-order="' + photo.sortOrder + '" class="inputPhoto" />	'
-		        	;
-		        	
-		        	i++;
-		        	// modal의 사진
-					modalResult +=
-					'	<div class="modalImg">	'
-		            +'		<div class="modalImgNumber">' + i + '/' + total + '</div>	'
-		            +'		<img src="' + photo.path + '" onclick="modalOff()">	'
-		            +'	</div>	'
-		            ;
-              	});
-//************************** 몸통 제조(반복문)-END ********************************		
+                // 사진 개수
+            var total = photoList.length;
+            $.each(photoList, function(i, photo){
+               // 화면에 출력되는 사진
+               photoResult +=
+                 '   <img src="' + photo.path + '" alt="' + photo.originalName + '"'
+                 +'   data-id="' + photo.id + '" data-order="' + photo.sortOrder + '" class="inputPhoto" />   '
+                 ;
+                 
+                 i++;
+                 // modal의 사진
+               modalResult +=
+               '   <div class="modalImg">   '
+                  +'      <div class="modalImgNumber">' + i + '/' + total + '</div>   '
+                  +'      <img src="' + photo.path + '" onclick="modalOff()">   '
+                  +'   </div>   '
+                  ;
+                 });
+//************************** 몸통 제조(반복문)-END ********************************      
 
 
 //******************************** 꼬리 달기 ****************************************
-				photoResult +=
-				'	<label for="photoFiles">	'
-				+'		<img src="img/imgUpload2.png" alt="" class="addPhoto" />	'
-				+'	</label>	'
-				+'	</div>	'
-				;
-		        
-				modalResult +=
-				'	<div class="modalImgSlideButton">	'
-			    +'        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>	'
-			    +'        <a class="next" onclick="plusSlides(1)">&#10095;</a>	'
-			    +' 	</div>	'
-			    +'  <div class="modalImgThumbnails">	'
-			    +'    	  <div class="modalImgThumbnail"></div>	'
-	            +'  </div>		'
-				;
-//******************************** 꼬리 달기-END ****************************************					
-					
-					
-					// 내용 갱신
-				hostPhoto.append(photoResult);
-				hostPhotoModal.append(modalResult);
-				
-			} // else-END
-			
-			apply(); // 기능 적용**
-		},
-		error: function (e) {
-			alert("통신 실패");
-		}
-	});
+            photoResult +=
+            '   <label for="photoFiles">   '
+            +'      <img src="img/imgUpload2.png" alt="" class="addPhoto last" />   '
+            +'   </label>   '
+            +'   </div>   '
+            ;
+              
+            modalResult +=
+            '   <div class="modalImgSlideButton">   '
+             +'        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>   '
+             +'        <a class="next" onclick="plusSlides(1)">&#10095;</a>   '
+             +'    </div>   '
+             +'  <div class="modalImgThumbnails">   '
+             +'         <div class="modalImgThumbnail"></div>   '
+               +'  </div>      '
+            ;
+//******************************** 꼬리 달기-END ****************************************               
+               
+               
+               // 내용 갱신
+            hostPhoto.append(photoResult);
+            hostPhotoModal.append(modalResult);
+            
+         } // else-END
+         
+         apply(); // 기능 적용**
+      },
+      error: function (e) {
+         alert("통신 실패");
+      }
+   });
 } // showHostPhoto-END
 
 
 
 
-	// 선택 파일 업로드
+   // 선택 파일 업로드
 $("#photoFiles").on("change", function(){
-	if(!$('#photoFiles').val()){
-		return;
-	}		
-	
-	var formData = new FormData($('#uploadPhoto')[0]);
-	addHostPhoto(formData);
-	
-	$('#photoFiles').val(""); // 초기화
+   if(!$('#photoFiles').val()){
+      return;
+   }
+   
+   var formData = new FormData($('#uploadPhoto')[0]);
+   addHostPhoto(formData);
+   
+   $('#photoFiles').val(""); // 초기화
 });
 
-	
-	
-	// 파일 드롭 다운
+   
+   
+   // 파일 드롭 다운
 function fileDropDown(){
     var dropZone = $(".photoUpload");
     //Drag기능
@@ -603,9 +586,9 @@ function fileDropDown(){
                 return;
             }
             
-            	// 확장자 유효성 검사
+               // 확장자 유효성 검사
             for(i=0; i<files.length; i++){
-            	if(!files[i].type.match("image/*")) {	   
+               if(!files[i].type.match("image/*")) {      
                     alert("이미지 파일만 가능합니다.");   
                     return;   
                 }
@@ -616,7 +599,7 @@ function fileDropDown(){
         
         var formData = new FormData();
         for(i=0; i<files.length; i++){
-        	formData.append('photoFiles', files[i]);
+           formData.append('photoFiles', files[i]);
         }
         
         addHostPhoto(formData);
@@ -624,119 +607,103 @@ function fileDropDown(){
 }
        
 
-	// 사진 추가(서버와 DB에 저장)
+   // 사진 추가(서버와 DB에 저장)
 function addHostPhoto(formData){
-	$.ajax({
-		
-		type: "POST",
-		url: 'ajax/addHostPhoto',
-		enctype: 'multipart/form-data', // 필수 
-		data: formData, // 필수 
-		processData: false, // 필수 
-		contentType: false, // 필수
-		cache: false,
-		async: false,
-		success: function (result) {
-			if(result){ // 성공
-				showHostPhoto(); // 사진 갱신
-			} else{
-				alert("사진 추가 실패..");
-			}
-		},
-		error: function (e) {
-			alert("통신 실패");
-		}
-	});
+   $.ajax({
+      
+      type: "POST",
+      url: 'ajax/addHostPhoto',
+      enctype: 'multipart/form-data', // 필수 
+      data: formData, // 필수 
+      processData: false, // 필수 
+      contentType: false, // 필수
+      cache: false,
+      async: false,
+      success: function (result) {
+         if(result){ // 성공
+            showHostPhoto(); // 사진 갱신
+         } else{
+            alert("사진 추가 실패..");
+         }
+      },
+      error: function (e) {
+         alert("통신 실패");
+      }
+   });
 }
 
 
-	// 사진 삭제
+   // 사진 삭제
 function deleteHostPhoto(hostPhotoId){
-//	alert(hostPhotoId);
-		
-	$.ajax({
-		type: "POST",
-		url: 'ajax/deleteHostPhoto',
-		data: 'hostPhotoId=' + hostPhotoId,
-		async: false,
-		success: function (result) { // boolean 결과
-			if(result){ // 성공
-				showHostPhoto(); // 사진 갱신
-			} else{
-				alert("사진 삭제 실패..");
-			}
-		},
-		error: function (e) {
-			alert("통신 실패");
-		}
-	});
+//   alert(hostPhotoId);
+      
+   $.ajax({
+      type: "POST",
+      url: 'ajax/deleteHostPhoto',
+      data: 'hostPhotoId=' + hostPhotoId,
+      async: false,
+      success: function (result) { // boolean 결과
+         if(result){ // 성공
+            showHostPhoto(); // 사진 갱신
+         } else{
+            alert("사진 삭제 실패..");
+         }
+      },
+      error: function (e) {
+         alert("통신 실패");
+      }
+   });
 }       
      
-	// 정렬 결과를 DB에 적용
+   // 정렬 결과를 DB에 적용
 function updateHostPhotoSort(sortResult){
-	
-	$.ajax({
-		type: "POST",
-		url: 'ajax/updateHostPhotoSort',
-		data: 'sortResult=' + sortResult,
-		async: false,
-		success: function (result) { // boolean 결과
-//			alert(result);
-			showHostPhoto(); // 사진 갱신
-		},
-		error: function (e) {
-			alert("통신 실패");
-		}
-	});
+   
+   $.ajax({
+      type: "POST",
+      url: 'ajax/updateHostPhotoSort',
+      data: 'sortResult=' + sortResult,
+      async: false,
+      success: function (result) { // boolean 결과
+//         alert(result);
+         showHostPhoto(); // 사진 갱신
+      },
+      error: function (e) {
+         alert("통신 실패");
+      }
+   });
 }
-	
-	// 대표 사진 변경
+   
+   // 대표 이미지 바꾸기
 function changeCoverImage(choiceOrder){
-	var choiceId = $('img[data-order="' + choiceOrder + '"]').attr("data-id");
-	var coverId = $('img[data-order="1"]').attr("data-id");
-	
-	var params = { // 보따리
-		choiceId : choiceId, // 선택 이미지의 ID
-		coverId : coverId, // 대표 이미지의 ID
-		choiceOrder : choiceOrder // 선택 이미지의 순번
-	}
-	
-	$.ajax({
-		type: "POST",
-		url: 'ajax/changeCoverImage',
-		data: params,
-		async: false,
-		success: function (result) { // boolean 결과
-			if(result){
-			showHostPhoto(); // 사진 갱신
-			} else{
-				alert("사진 변경 실패..");
-			}
-		},
-		error: function (e) {
-			alert("통신 실패");
-		}
-	});
+   var choiceId = $('img[data-order="' + choiceOrder + '"]').attr("data-id");
+   var coverId = $('img[data-order="1"]').attr("data-id");
+   
+   var params = { // 보따리
+      choiceId : choiceId, // 선택 이미지의 ID
+      coverId : coverId, // 대표 이미지의 ID
+      choiceOrder : choiceOrder // 선택 이미지의 순번
+   }
+   
+   $.ajax({
+      type: "POST",
+      url: 'ajax/changeCoverImage',
+      data: params,
+      async: false,
+      success: function (result) { // boolean 결과
+    	  if(result){
+         	showHostPhoto(); // 사진 갱신
+    	  } else{
+   		  	alert("대표 이미지 바꾸기 실패..");
+    	  }
+      
+      },
+      error: function (e) {
+         alert("통신 실패");
+      }
+   });
 }
        
-       
-       
-       
-       
-       
-       
-       
-       
-       
-       
-       
-       
-       
-       
-       
-       
-       
+     
    </script>
 
 </html>
-
