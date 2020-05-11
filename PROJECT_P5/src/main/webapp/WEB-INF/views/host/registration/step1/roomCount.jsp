@@ -7,7 +7,7 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 </head>
 <body>
-	<form action="address" method="post">
+	<!-- <form action="address" method="post"> -->
 		최대 숙박인원 <br><input type="text" name="capacity" class="maximum-stay" readonly value="1"/>
 		<button id="maximum-increase-quantity">▲</button>
 		<button id="maximum-decrease-quantity">▼</button><br>
@@ -118,10 +118,14 @@
 				});
 			});
 		</script>
-		<input type="submit" value="다음" />
-	</form>
+		<!-- <input type="submit" value="다음" /> -->
+	<!-- </form> -->
 	<!--페이지 넘어가기(임시방안)  -->
 <a href="roomType">이전</a>
-<!-- <a href="address">다음</a> -->
+<a href="address">다음</a>
+
+
+<script src="/p5/js/jquery-3.4.1.js"></script>
+<script src="/p5/js/host.js"></script>
 </body>
 </html>

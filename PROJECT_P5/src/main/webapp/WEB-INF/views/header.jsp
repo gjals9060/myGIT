@@ -599,7 +599,7 @@ function isMobileAuthentication(){
 		async : false,
 		success : function(data){
 			if(data){ // 휴대전화 인증자이면
-				location.href="/p5/host/registration/roomType";
+				location.href="/p5/host/hostingList";
 			} else{ // 아니면
 				alert("휴대전화 인증 이후에 이용 가능한 서비스입니다.");
 			////////// 팝업창
@@ -1058,7 +1058,6 @@ $('#inputTel').val(inputTelCheckValue);
 
 
 */
-
 
 
 

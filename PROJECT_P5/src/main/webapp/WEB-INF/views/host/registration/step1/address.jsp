@@ -13,7 +13,7 @@
 
 
 
-   지번/도로명 : <input type="text" id="sample5_address" onclick="sample5_execDaumPostcode()" placeholder="주소">
+   도로명/지번 : <input type="text" id="sample5_address" onclick="sample5_execDaumPostcode()" placeholder="주소 검색하기" readonly>
    <!-- <input type="button" onclick="sample5_execDaumPostcode()" value="주소 검색"> -->
    <br>
    <div id="map" style="width: 300px; height: 300px; margin-top: 10px; display: none">
@@ -26,29 +26,31 @@
    <div id="result"></div>
 
 
-   <form action="facilities" method="post" name="formAddress">
-      <input type="hidden" name="address" />
-      <input type="hidden" name="latitude" />
-      <input type="hidden" name="longitude" />
-   </form>
+  <!--  <form action="facilities" method="post" name="formAddress"> -->
+      <input type="text" name="address" />
+      <input type="text" name="latitude" />
+      <input type="text" name="longitude" />
+   <!-- </form> -->
    
    <div id="addressInfo"></div>
    
+   
    <!--임시 이동  -->
-  <!--  <a href="facilities">다음</a> -->
    <a href="roomCount">이전</a>
-   <button id="next" onclick="inputAddress();">다음</button>
+   <a href="facilities">다음</a>
+   
+   <!-- <button id="next" onclick="inputAddress();">다음</button> -->
 </body>
 
 
 
 <script
    src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script src="../../js/jquery-3.4.1.js"></script>
+<script src="/p5/js/jquery-3.4.1.js"></script>
 
 <script>
-   var toggle = false;   // 버튼 활성화
-   var flag = true;		 // 조정중일때 false => 다음버튼, 주소입력 비활성화
+   var toggle = true;   // 버튼 활성화
+   var flag = false;		 // 조정중일때 false => 다음버튼, 주소입력 비활성화
    
    $('#map-set-btn').hide();   // 기본적으로  조정하기 버튼 숨김
    $('#map-save-btn').hide();   // 기본적으로  저장하기 버튼 숨김
@@ -78,7 +80,7 @@
 	    imageOption1 = {offset: new kakao.maps.Point(30, 60)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
 	
 	var markerImage1 = new kakao.maps.MarkerImage(imageSrc1, imageSize1, imageOption1),
-	    markerPosition1 = new kakao.maps.LatLng(37.537187, 127.005476); // 마커가 표시될 위치입니다
+	    markerPosition1 = new kakao.maps.LatLng(37.5710194900321, 126.992526739499); // 마커가 표시될 위치입니다
 	
 	// 빨간 마커
 	var marker1 = new daum.maps.Marker({
@@ -87,7 +89,7 @@
 		map : map,
 		zIndex: 3
 	});
-	marker1.setMap(map); // 지도에 올린다.
+//	marker1.setMap(null); // 지도에 올린다.
     
    
 	// 이동 마커를 생성합니다
@@ -106,18 +108,20 @@
 		zIndex: 4
 
 	});
-	marker2.setMap(null); // 지도에 제거.
+
+//	marker2.setMap(map);
+//	marker2.setMap(null); // 지도에 제거.
     
 	    
 	
    
-   map.setDraggable(false);   //드래그 비활성화
+//   map.setDraggable(true);   //드래그 비활성화
    map.setZoomable(false);      //줌 비활성화
    
    // 지도에 표시할 원을 생성합니다
     var circle = new kakao.maps.Circle({
-        center : new kakao.maps.LatLng(37.537187, 127.005476),  // 원의 중심좌표 입니다 
-        radius: 30, // 미터 단위의 원의 반지름입니다 
+        center : new kakao.maps.LatLng(37.5710194900321, 126.992526739499),  // 원의 중심좌표 입니다 
+        radius: 20, // 미터 단위의 원의 반지름입니다 
         strokeWeight: 5, // 선의 두께입니다 
         strokeColor: '#75B8FA', // 선의 색깔입니다
         strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
@@ -133,7 +137,7 @@
          oncomplete : function(data) {
             
             var addr = data.address; // 최종 주소 변수
-            $('#map-set-btn').show();
+            $('#map-save-btn').show();
 
             // 주소 정보를 해당 필드에 넣는다.
             document.getElementById("sample5_address").value = addr;
@@ -141,6 +145,7 @@
             geocoder.addressSearch(data.address, function(results, status) {
                // 정상적으로 검색이 완료됐으면
                if (status === daum.maps.services.Status.OK) {
+                  map.setLevel(1);
 
                   var result = results[0]; //첫번째 결과의 값을 활용
 
@@ -154,21 +159,24 @@
                   map.setCenter(coords);
                   
                   // 마커를 결과값으로 받은 위치로 옮긴다.
-                  marker1.setPosition(coords);
+                  marker2.setPosition(coords);
                   // 지도에 원을 표시합니다 
-                  circle.setPosition(coords);
+            //      circle.setPosition(coords);
                   circle.setMap(map);
  
                   $('#addressInfo').empty();
-                  $('#addressInfo').append('주소 : <span id="address1">' + result.address.address_name + '</span><br />');
-                  $('#addressInfo').append('상세주소 : <input id="address2" type="text" />');
+                  $('#addressInfo').append(' 선택 주소 : <span id="address1">' + result.address.address_name + '</span><br />');
+                  $('#addressInfo').append(' 상세 주소 : <input id="address2" type="text" placeholder="선택 사항" />');
+                  
                   $('input[name="latitude"]').val(result.y);
                   $('input[name="longitude"]').val(result.x);
                   
+                  toggleTrue();
+                  
                   // 조정중일때 주소검색시 초기화
-                  if(toggle){
-                	  toggleFalse();
-                  }
+        //          if(toggle){
+        //        	  toggleFalse();
+         //         }
                   
                }
             });
@@ -182,18 +190,21 @@
    
    function toggleTrue() {
       
+	  $('input[name="address"]').val(""); // 초기화
       $('#map-set-btn').hide();
       $('#map-save-btn').show();
       toggle = true;   // 이벤트 활성화
       flag = false;
       map.setDraggable(true);
+      
+	  marker1.setMap(null);
+	  marker2.setMap(map);
+      
       //map.setZoomable(true);
 /*       
       // 조정중에 다음 버튼 비활성화
       $('#next').prop("disabled", true);
 */
-	  
-	  marker2.setMap(map);
 
       
    }
@@ -201,6 +212,26 @@
    $(document).on('click','#map-save-btn', toggleFalse);
    
    function toggleFalse() {
+	   
+	  var radioCount = $('input:radio[name="address1"]').length;
+	      
+      var address1;
+      if(!radioCount){
+    	  address1 = $('#address1').text(); // 선택 주소 or 지번 주소
+      } else{
+    	  address1 = $('input:radio[name="address1"]:checked').val();
+    	  if(!address1){
+    		  alert("주소를 선택하세요.");
+    		  return false;
+    	  }
+      }
+      var address2 = $('#address2').val().trim(); // 상세 주소(선택 사항)
+	  var address = (address1 + " " + address2).trim();
+	  $('input[name="address"]').val(address);
+	  
+	  $('#addressInfo').empty();
+      $('#addressInfo').append( '확정 주소 : ' + address);
+	   
       
       $('#map-save-btn').hide();
       $('#map-set-btn').show();
@@ -220,12 +251,16 @@
 	  marker1.setMap(map);
       marker2.setMap(null);
       
+      
+	  
+	  
 /* 
       // 다음 버튼 활성화
       	  $('#next').prop("disabled", false);
 */
 		
 	}
+	
    
    
    
@@ -255,9 +290,28 @@
          var callback = function(result, status) {
              if (status === kakao.maps.services.Status.OK) {
                  //console.log('도로명 : ' + result[0].address.address_name);
+               var addressName = result[0].address.address_name;
+               var resultAddress = '';
+               if(!!result[0].road_address){
+            	   var roadAddressName = result[0].road_address.address_name;
+            	   
+            	   resultAddress +=
+            		 '  <label><input type="radio" name="address1" value="' + roadAddressName + '" />	'
+            		+' 도로명 주소 : ' + roadAddressName + '</label><br />	'
+            		+'  <label><input type="radio" name="address1" value="' + addressName + '" />	'
+             		+' 지번 주소 : ' + addressName + '</label><br />	'
+             		+' 상세 주소 : <input id="address2" type="text" placeholder="선택 사항" />'
+             		;
+               } else{
+            	   resultAddress +=
+           		     ' 지번 주소 : <span id="address1">' + addressName + '</span><br />'
+    			 	+' 상세 주소 : <input id="address2" type="text" placeholder="선택 사항" />'
+    			 	;
+               }
+                 
                $('#addressInfo').empty();
-               $('#addressInfo').append('주소 : <span id="address1">' + result[0].address.address_name + '</span><br />');
-               $('#addressInfo').append('상세주소 : <input id="address2" type="text" />');
+               $('#addressInfo').append(resultAddress);
+               
                $('input[name="latitude"]').val(latlng.getLat());
                $('input[name="longitude"]').val(latlng.getLng());
              }
@@ -269,7 +323,7 @@
        }
    });
    
-   function inputAddress(){
+  /*  function inputAddress(){
 	   if(flag){
 		   var address2 = $('#address2').val().trim();
 		   if(!address2){ // 상세주소가 없으면
@@ -282,17 +336,18 @@
 	   }else{
 			  alert("주소 조정이 끝났으면 '완료'를 눌러주세요!");
 	   }
-   }
+   } */
 	
-   function panTo() {
+    function panTo() {
 	    // 이동할 위도 경도 위치를 생성합니다 -> 마커 위치로
 	    var moveLatLon = marker1.getPosition();
 	    
 	    // 지도 중심을 부드럽게 이동시킵니다
 	    // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
 	    map.panTo(moveLatLon);            
-	}
+	} 
 
 
 </script>
+<script src="/p5/js/host.js"></script>
 </html>

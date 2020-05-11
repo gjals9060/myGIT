@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.clover.p5.host.dto.HostPhoto;
 import com.clover.p5.host.service.HostService;
 
-//@SessionAttributes("newHost")
+
 @Controller
 public class HostController {
 	
@@ -21,62 +22,34 @@ public class HostController {
 	private HostService hostService;
 
 	
-///////////////////////////// 호스트 등록 ////////////////////////////////
 	
-	/*@ModelAttribute("newHost")
-	public NewHostDTO newHost(@SessionAttribute("user") Member user) {
-		return new NewHostDTO(user.getId());
-	}	
-	@RequestMapping("/host/registration/roomType") // 등록 첫 페이지 - 단순 이동
-	public void inputRoomType() {}
 	
-	 /////////////// 이때부터 세션에 정보를 저장 ////////////////
-	@RequestMapping("/host/registration/roomCount") // 룸타입 저장
-	public void inputRoomType(@ModelAttribute("newHost") NewHostDTO newHostDto) {
-		System.out.println(newHostDto);
-	}
-	@RequestMapping("/host/registration/address") // 룸카운트 저장
-	public void inputRoomCount(@ModelAttribute("newHost") NewHostDTO newHostDto) {
-		System.out.println(newHostDto);
-	}
-	@RequestMapping("/host/registration/facilities") // 주소 저장
-	public void inputAddress(@ModelAttribute("newHost") NewHostDTO newHostDto) {
-		System.out.println(newHostDto);
-	}
-	@RequestMapping("/host/registration/photo") // 편의시설 저장
-	public void inputFacilities(@ModelAttribute("newHost") NewHostDTO newHostDto) {
-		System.out.println(newHostDto);
-	}
-	@RequestMapping("/host/registration/description") // 사진 저장
-	public void inputPhoto(@ModelAttribute("newHost") NewHostDTO newHostDto) {
-		System.out.println(newHostDto + "\n사진 " + newHostDto.getPhoto().size() + "개 넘어옴");
-		for(int i = 0; i < newHostDto.getPhoto().size(); i++) {
-			if(newHostDto.getPhoto().get(i).isEmpty()) {
-				System.out.println(i+1+"번째 파일이 비었습니다.");
-			}
+	
+	
+	
+	
+	
+		// 헤더의 '호스트 등록'을 눌렀을 때 해당 페이지로 이동시킨다.
+	@RequestMapping("/host/hostingList")
+	public void hostingList() {}
+	
+	
+	// 선택 호스팅(호스트 등록) 화면으로 이동
+	@RequestMapping("/host/hostingStatus")
+	public String hostingStatus(int hostId, Model model) {
+		if(hostId == 0) { // '새로 등록'을 선택했으면
+			return "forward:registration/reset";
 		}
+			// 등록중(미완료)를 선택했으면 해당 호스트ID를 가지고 이동
+		model.addAttribute("hostId", hostId);
+		return "host/hostingStatus";
 	}
-	@RequestMapping("/host/registration/stayDate") // 설명 저장
-	public void inputDescription(@ModelAttribute("newHost") NewHostDTO newHostDto) {
-		System.out.println(newHostDto);
-	}
-	@RequestMapping("/host/registration/calendar") // 숙박일 저장
-	public void inputStayDate(@ModelAttribute("newHost") NewHostDTO newHostDto) {
-		System.out.println(newHostDto);
-	}
-	@RequestMapping("/host/registration/price") // 달력 저장
-	public void inputCalendar(@ModelAttribute("newHost") NewHostDTO newHostDto) {
-		System.out.println(newHostDto);
-	}
-	@RequestMapping("/host/registration/finish") // 가격 저장
-	public void inputPrice
-	(@ModelAttribute("newHost") NewHostDTO newHostDto, SessionStatus sessionStatus, HttpServletRequest request) {
-		System.out.println(newHostDto);
-		if(hostService.insertHost(newHostDto, request)) {
-			sessionStatus.setComplete(); // 호스트 등록 세션 초기화
-			System.out.println("호스트 등록 성공!");
-		}
-	}*/
+	
+	
+	
+	
+	
+	
 	
 	
 	
