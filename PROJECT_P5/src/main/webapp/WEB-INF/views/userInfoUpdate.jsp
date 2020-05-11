@@ -28,8 +28,6 @@
 	
 	<div id="wrap">
 		<div class="user-info-update-container">
-			<div class="user-info-update-title">회원정보수정</div>
-
 			<!-- 프로필 사진  -->
 			<!-- ${user.profilePhotoPath } -->
 			 <div class="profilePhotoTitle">프로필 사진</div>
@@ -71,211 +69,210 @@
       	<input type="file" id="photoFile" name="photoFile" accept="image/*" style="display: none" />
       </form>
       <script type="text/javascript">
-      
-function apply(){ // DB값으로 화면 갱신하고 적용시켜줘야 됨
-// 프사의 선택자
-var profilePhoto = $('img[data-isProfile="Y"]');
-// DB의 정보 = 프사의 이미지 경로.
-var profilePath = profilePhoto.attr("src");
-// DB의 정보 = 프사의 ID
-var profileId = profilePhoto.attr("data-id");
+	      
+	function apply(){ // DB값으로 화면 갱신하고 적용시켜줘야 됨
+	// 프사의 선택자
+	var profilePhoto = $('img[data-isProfile="Y"]');
+	// DB의 정보 = 프사의 이미지 경로.
+	var profilePath = profilePhoto.attr("src");
+	// DB의 정보 = 프사의 ID
+	var profileId = profilePhoto.attr("data-id");
+		
+	profilePhoto.attr("class", "inputProfilePhoto select");
+	$(".photo").html('<img src="' + profilePath + '" alt="" class="nowProfilePhoto select" />');
+	$("#userImg").attr("src", profilePath);
 	
-profilePhoto.attr("class", "inputProfilePhoto select");
-$(".photo").html('<img src="' + profilePath + '" alt="" class="nowProfilePhoto select" />');
-$("#userImg").attr("src", profilePath);
-
-$(".photoButton").detach(); // 버튼 갱신을 위해
+	$(".photoButton").detach(); // 버튼 갱신을 위해
+		
+	   var menu = '<span class="photoButton">'
+	         + '<button onclick="' + 'deleteProfilePhoto(' + profileId + ');">'
+	         + '<i class="fas fa-times fa-2x"></i></button></span>';
 	
-   var menu = '<span class="photoButton">'
-         + '<button onclick="' + 'deleteProfilePhoto(' + profileId + ');">'
-         + '<i class="fas fa-times fa-2x"></i></button></span>';
-
-   var list = document.getElementsByClassName("inputProfilePhoto");
-   
-   
-   $(".inputProfilePhoto").on({
- //     'mouseover' : function() {
-  //       $(".photoButton").detach();
-  //    },
-      'click' : function() {
-    	  
-    	  changeProfilePhoto($(this).attr("data-id"));
- //        $(".inputProfilePhoto").attr("class", "inputProfilePhoto"); // ??
- //        var index = $(this).index();
- //        $(".inputProfilePhoto").eq(index).attr("class", "inputProfilePhoto select");
- //        $(".photo").html('<img src="' + $(".inputProfilePhoto").eq(index).attr("src") + '" alt="" class="nowProfilePhoto select" />');
- //        $("#userImg").attr("src", $(".inputProfilePhoto").eq(index).attr("src"));
-      }
-   })
-   
-   $(".photo").on({
-      'mouseover' : function() {
-         $(".photoButton").detach();
-         $(this).after(menu);
-      
-      }, 
-      'click' : function() {
-         $(".photoButton").detach();
-         $(this).after(menu);
-        
-	  }
-   })
-   
-   $("#forMouseOut").on({
-	 'mouseleave' : function(){
-	 	$(".photoButton").detach();
-	 }
-   })
-   
-}
-   
-   
-   
-//*************************************** 백엔드에서 ************************************************
-function unapply(){
-	$(".photo").on({
+	   var list = document.getElementsByClassName("inputProfilePhoto");
+	   
+	   
+	   $(".inputProfilePhoto").on({
+	 //     'mouseover' : function() {
+	  //       $(".photoButton").detach();
+	  //    },
+	      'click' : function() {
+	    	  
+	    	  changeProfilePhoto($(this).attr("data-id"));
+	 //        $(".inputProfilePhoto").attr("class", "inputProfilePhoto"); // ??
+	 //        var index = $(this).index();
+	 //        $(".inputProfilePhoto").eq(index).attr("class", "inputProfilePhoto select");
+	 //        $(".photo").html('<img src="' + $(".inputProfilePhoto").eq(index).attr("src") + '" alt="" class="nowProfilePhoto select" />');
+	 //        $("#userImg").attr("src", $(".inputProfilePhoto").eq(index).attr("src"));
+	      }
+	   })
+	   
+	   $(".photo").on({
 	      'mouseover' : function() {
 	         $(".photoButton").detach();
+	         $(this).after(menu);
+	      
 	      }, 
 	      'click' : function() {
-	    	 $(".photoButton").detach();
+	         $(".photoButton").detach();
+	         $(this).after(menu);
+	        
 		  }
-   });
-}
-
-$(function(){
-	showProfilePhoto();
-})
-	// 프로필 사진 출력
-function showProfilePhoto(){
-	$.ajax({
-		
-		type: "POST",
-		url: 'ajax/getProfilePhotoList',
-		async: false,
-		success: function (photoList) {
-			$('.profilePhotolist').empty(); // 일단 비우고
+	   })
+	   
+	   $("#forMouseOut").on({
+		 'mouseleave' : function(){
+		 	$(".photoButton").detach();
+		 }
+	   })
+	   
+	}
+	   
+	   
+	   
+	//*************************************** 백엔드에서 ************************************************
+	function unapply(){
+		$(".photo").on({
+		      'mouseover' : function() {
+		         $(".photoButton").detach();
+		      }, 
+		      'click' : function() {
+		    	 $(".photoButton").detach();
+			  }
+	   });
+	}
+	
+	$(function(){
+		showProfilePhoto();
+	})
+		// 프로필 사진 출력
+	function showProfilePhoto(){
+		$.ajax({
 			
-			if(!photoList.length){ // 출력할 사진이 없다면
+			type: "POST",
+			url: 'ajax/getProfilePhotoList',
+			async: false,
+			success: function (photoList) {
+				$('.profilePhotolist').empty(); // 일단 비우고
 				
-					// 기본 이미지 출력				
-				$(".photo").html('<img src="img/defaultProfile.png" alt="defaultProfile.png" class="nowProfilePhoto select" />');
-					// 헤더 이미지에도 기본 이미지 적용
-				$("#userImg").attr("src", "img/defaultProfile.png");
+				if(!photoList.length){ // 출력할 사진이 없다면
 					
-				unapply(); // 버튼 생성 해제(지우는 효과만 적용)
-			
-			} else{ // 있으면..
+						// 기본 이미지 출력				
+					$(".photo").html('<img src="img/defaultProfile.png" alt="defaultProfile.png" class="nowProfilePhoto select" />');
+						// 헤더 이미지에도 기본 이미지 적용
+					$("#userImg").attr("src", "img/defaultProfile.png");
+						
+					unapply(); // 버튼 생성 해제(지우는 효과만 적용)
 				
-				var photoResult = '';
-				$.each(photoList, function(i, photo){
-					// 화면에 출력되는 사진
-					photoResult +=
-		        	'	<img src="' + photo.path + '" alt="' + photo.originalName + '"'
-	        		+'	data-id="' + photo.id + '" data-isProfile="' + photo.isProfile + '" class="inputProfilePhoto" />	'
-		        	;
-              	});
-				
-				// 내용을 넣고
-				$('.profilePhotolist').append(photoResult);
-				
-				// 효과 적용
-				apply();
-				
+				} else{ // 있으면..
+					
+					var photoResult = '';
+					$.each(photoList, function(i, photo){
+						// 화면에 출력되는 사진
+						photoResult +=
+			        	'	<img src="' + photo.path + '" alt="' + photo.originalName + '"'
+		        		+'	data-id="' + photo.id + '" data-isProfile="' + photo.isProfile + '" class="inputProfilePhoto" />	'
+			        	;
+	              	});
+					
+					// 내용을 넣고
+					$('.profilePhotolist').append(photoResult);
+					
+					// 효과 적용
+					apply();
+					
+				}
+			},
+			error: function (e) {
+				alert("통신 실패");
 			}
-		},
-		error: function (e) {
-			alert("통신 실패");
-		}
+		});
+	}
+	 
+		// 파일 업로드 이벤트
+	$("#photoFile").on("change", function(){
+		
+		var formData = new FormData($('#fileUpload')[0]);
+		addProfilePhoto(formData);
+		
+		$('#photoFile').val(""); // 초기화 - 취소를 누르면 작동하지 않는 효과를 줌 + 같은 이름의 파일 계속해서 업로드 가능
 	});
-}
- 
-	// 파일 업로드 이벤트
-$("#photoFile").on("change", function(){
-	
-	var formData = new FormData($('#fileUpload')[0]);
-	addProfilePhoto(formData);
-	
-	$('#photoFile').val(""); // 초기화 - 취소를 누르면 작동하지 않는 효과를 줌 + 같은 이름의 파일 계속해서 업로드 가능
-});
-	// 사진 추가(변경)
-function addProfilePhoto(formData){
-$.ajax({
-		type: "POST",
-		url: 'ajax/addProfilePhoto',
-		enctype: 'multipart/form-data', // 필수 
-		data: formData, // 필수 
-		processData: false, // 필수 
-		contentType: false, // 필수
-		cache: false,
-		async: false,
-		success: function (result) {
-			if(result){ // 성공
-				
-				showProfilePhoto(); // 사진 갱신
-				
-			} else{
-				alert("사진 추가(변경) 실패..");
-			}
-		},
-		error: function (e) {
-			alert("통신 실패");
-		}
-	});
-}
-	// 사진 삭제
-function deleteProfilePhoto(profileId){
+		// 사진 추가(변경)
+	function addProfilePhoto(formData){
 	$.ajax({
-		type: "POST",
-		url: 'ajax/deleteProfilePhoto',
-		data: 'photoId=' + profileId,
-		async: false,
-		success: function (result) {
-			if(result){ // 성공
-				
-				showProfilePhoto(); // 사진 갱신
-				
-			} else{
-				alert("사진 삭제 실패..");
+			type: "POST",
+			url: 'ajax/addProfilePhoto',
+			enctype: 'multipart/form-data', // 필수 
+			data: formData, // 필수 
+			processData: false, // 필수 
+			contentType: false, // 필수
+			cache: false,
+			async: false,
+			success: function (result) {
+				if(result){ // 성공
+					
+					showProfilePhoto(); // 사진 갱신
+					
+				} else{
+					alert("사진 추가(변경) 실패..");
+				}
+			},
+			error: function (e) {
+				alert("통신 실패");
 			}
-		},
-		error: function (e) {
-			alert("통신 실패");
-		}
-	});
-	$(".photoButton").remove();
-}
-	
-	// 사진 선택 변경
-function changeProfilePhoto(profileId){
-	$.ajax({
-		type: "POST",
-		url: 'ajax/changeProfilePhoto',
-		data: 'photoId=' + profileId,
-		async: false,
-		success: function (result) {
-			if(result){ // 성공
-				
-				showProfilePhoto(); // 사진 갱신
-				
-			} else{
-				alert("사진 선택 변경 실패..");
+		});
+	}
+		// 사진 삭제
+	function deleteProfilePhoto(profileId){
+		$.ajax({
+			type: "POST",
+			url: 'ajax/deleteProfilePhoto',
+			data: 'photoId=' + profileId,
+			async: false,
+			success: function (result) {
+				if(result){ // 성공
+					
+					showProfilePhoto(); // 사진 갱신
+					
+				} else{
+					alert("사진 삭제 실패..");
+				}
+			},
+			error: function (e) {
+				alert("통신 실패");
 			}
-		},
-		error: function (e) {
-			alert("통신 실패");
-		}
-	});
-}
-   
-
+		});
+		$(".photoButton").remove();
+	}
+		
+		// 사진 선택 변경
+	function changeProfilePhoto(profileId){
+		$.ajax({
+			type: "POST",
+			url: 'ajax/changeProfilePhoto',
+			data: 'photoId=' + profileId,
+			async: false,
+			success: function (result) {
+				if(result){ // 성공
+					
+					showProfilePhoto(); // 사진 갱신
+					
+				} else{
+					alert("사진 선택 변경 실패..");
+				}
+			},
+			error: function (e) {
+				alert("통신 실패");
+			}
+		});
+	}
    
 </script>
       
       <!-- profilePhoto end -->
 
-
+			 <div class="profilePhotoTitle">회원 정보 수정</div>
 			<!-- 계정 -->
+			<div class="userUpdateContent">
 			<div class="user-info-update-value-block">
 				<div class="user-info-update-value-title">계정</div>
 				<div class="user-info-update-value">${user.email }</div>
@@ -291,9 +288,9 @@ function changeProfilePhoto(profileId){
 						class="user-info-update-value-input"
 						id="userInfoUpdateValueLastName" type="text"
 						value=${user.lastName } disabled />
-					<button class="user-info-update-value-cancel"
+					<button class="user-info-update-value-cancel btnTheme"
 						id="userInfoNameCancelBtn">취소</button>
-					<button class="user-info-update-value-btn"
+					<button class="user-info-update-value-btn btnTheme"
 						id="userInfoUpdateValueNameBtn">수정하기</button>
 				</div>
 			</div>
@@ -305,9 +302,9 @@ function changeProfilePhoto(profileId){
 					<input class="user-info-update-value-input"
 						id="userInfoUpdateValueBirthDate" type="date"
 						value=${user.birthDate } disabled />
-					<button class="user-info-update-value-cancel" 
+					<button class="user-info-update-value-cancel btnTheme" 
 						id="userInfoDateCancelBtn">취소</button>
-					<button class="user-info-update-value-btn"
+					<button class="user-info-update-value-btn btnTheme"
 						id="userInfoUpdateValueBirthDateBtn">수정하기</button>
 				</div>
 			</div>
@@ -322,7 +319,7 @@ function changeProfilePhoto(profileId){
 						value=${user.mobilePhone } disabled /> 
 						<%-- <input type="hidden" name="mobileAuthentication" value="${user.mobileAuthentication }" /> --%>
 					<span id="authenticationResult"></span>
-					<button id="mobileAuthenticationResult"></button>
+					<button id="mobileAuthenticationResult" class="btnTheme"></button>
 				</div>
 			</div>
 
@@ -330,10 +327,10 @@ function changeProfilePhoto(profileId){
 			<div class="user-info-update-value-block">
 				<div class="user-info-update-value-title">
 					비밀번호 변경
-					<button id="modalBtn">수정하기</button>
 				</div>
+				<button id="modalBtn" class="btnTheme">수정하기</button>
 			</div>
-
+</div>
 		</div>
 
 	</div>
@@ -383,7 +380,7 @@ function changeProfilePhoto(profileId){
 				</div>
 				<div class="user-info-update-password-error"></div>
 
-				<button onclick="updateUserPassword()">변경</button>
+				<button onclick="updateUserPassword()" class="btnTheme">변경</button>
 			</div>
 		</div>
 	</div>
