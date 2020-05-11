@@ -64,6 +64,7 @@ hr {
 /* --- postImgSlide --- */
 .postImgSlide {
 	position: relative;
+	width: 75%;
 }
 
 .postImg, .modalImg {
@@ -72,17 +73,16 @@ hr {
 }
 
 .postImg img, .modalImg img {
-	max-width: 500px;
+	height: 300px;
 	cursor: pointer;
 	transition: 0.3s;
 	padding-top: 0.5%;
 }
 
 .modalImg img {
-	width: 100%;
-	height: auto;
-	min-width: 600px;
-	max-width: 900px;
+	height: 600px;
+/* 	min-width: 600px;
+	max-width: 900px; */
 }
 
 .postImg:hover {
@@ -122,18 +122,17 @@ hr {
 .postImgNumber, .modalImgNumber {
 	font-size: 12px;
 	top: 0px;
-	padding-top: 0.5%;
+	padding-top: 1%;
 }
 
 .postImgThumbnails, .modalImgThumbnails {
-	width: 100%;
+	width: 85%;
 	min-width: 500px;
 	margin: 0 auto;
 }
 
-.postImgThumbnails, .modalImgThumbnails {
+.modalImgThumbnails {
 	width: 90%;
-	margin: 0 auto;
 }
 
 .postImgThumbnails:after, .modalImgThumbnails:after {
@@ -154,12 +153,17 @@ hr {
 	object-fit: cover;
 	object-position: center;
 	width: 20%;
+	height: 80px;
+}
+
+.modalImgThumbnail img {
 	height: 100px;
 }
 
 /* --- postContent --- */
 .postContent {
 	min-width: 320px;
+	padding-left: 30px;
 }
 
 .postContentTable td:first-child {
@@ -237,10 +241,11 @@ hr {
 	position: sticky;
 	top: 10%;
 	bottom: 25%;
-	left: 75%;
+	left: 75vw;
 	text-align: center;
-	width: 15%;
-	min-width: 120px;
+	width: 10%;
+	min-width: 150px;
+	background: #eee;
 }
 
 .contentReservTitle {
@@ -263,7 +268,7 @@ hr {
  	width: 60% !important;
  }
 
-.contentReserv input[type=submit] {
+.contentReserv input[type=submit], .contentReserv input[type=button] {
 	border: none;
 	width: 100%;
 	background: #ed2d55;
@@ -273,7 +278,6 @@ hr {
 	padding: 5px;
 	margin: 10px 0 0 0;
 }
-
 
 #dateCount {
 	margin: 20px 0 10px;
@@ -290,7 +294,7 @@ hr {
  	width: 500px; 
 	height: 400px;
 	margin-top: 10px;
-	z-index: 3;
+	z-index: 0;
 	text-align: center;
 	margin: 0 auto;
 	margin-bottom: 30px;
@@ -320,8 +324,17 @@ hr {
 		max-width: 880px;
 	}
 	
+	.postImgSlide {
+		width: 100%;
+	}
+	
+	.postContent {
+		padding: 0;
+	}
+	
 	.postContent div {
 		width: 85vw;
+		margin: 0 auto;
 	}
 	
 	.contentTitle {
@@ -337,7 +350,6 @@ hr {
 	}
 		
 	.postImg img, .modalImg img {
-		max-width: 400px;
 		padding-top: 0.5%;
 	}
 	
@@ -386,8 +398,17 @@ hr {
 		min-width: 360px;
 	}
 	
+	.postImgSlide {
+		width: 100%;
+	}
+	
+	.postContent {
+		padding: 0;
+	}
+	
 	.postContent div {
 		width: 85vw;
+		margin: 0 auto;
 	
 	}
 	
@@ -401,7 +422,6 @@ hr {
 	
 	
 	.postImg img, .modalImg img {
-		max-width: 360px;
 		padding-top: 0.5%;
 	}
 	
@@ -657,12 +677,6 @@ hr {
 		</div>
 <!-- postContent end-->
 
-
-
-
-	</div>
-   <!-- wrap end -->
-
 		<div class="contentReserv">
 						
 			<c:set var="userId" value="${user.id}" />
@@ -685,8 +699,6 @@ hr {
 							<button id="increaseQuantity" onclick="return increase();">▲</button>
 							<button id="decreaseQuantity" onclick="return decrease();">▼</button>
 							
-	
-							
 							</span></td>
 						</tr>
 					</table>
@@ -704,12 +716,18 @@ hr {
 	        	<c:otherwise>
 	        		<div class="contentReservTitle">예약</div>
 	        		<br>
-	        		<div><p>로그인 후에 이용가능합니다.</p></div>
+	        		<div>로그인 후에<br>이용가능합니다.</div>
 	        		<br>
-        			<input type="button" id="goLogin" value="로그인"/>
+        			<input type="button" id="goLogin" value="로그인" />
 	        	</c:otherwise>
 	        </c:choose>
 		</div>
+
+
+
+	</div>
+   <!-- wrap end -->
+
 </body>
 
 <script type="text/javascript">
