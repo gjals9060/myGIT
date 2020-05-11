@@ -11,13 +11,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 <title>숙소 상세보기</title>
 
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="js/jquery-3.4.1.js"></script>
+
 
 <link rel="stylesheet" href="css/reset.css" />
 <link rel="stylesheet" href="css/home.css" />
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+<link rel="stylesheet" href="css/header.css?ver0.1" />
 
-<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 
 <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
 
@@ -37,7 +40,7 @@ hr {
 	margin: 20px 0 20px;
 }
 
-button {
+ button {
 	border: none;
 	width: 15px;
 	background: none;
@@ -661,46 +664,54 @@ button {
    <!-- wrap end -->
 
 		<div class="contentReserv">
-			<form action="reservationPurchase" method="post" onsubmit="return isMobileAuthentication();">
-			<table>
-				<tr>
-					<td><div class="contentReservTitle">예약</div>
-					${host.price}/1박</td>
-					<td><div class="contentReservTitle">날짜</div>
-					<input type="text" id="checkDate" name="checkInDatecheckOutDate" 
-						autocomplete="off" placeholder="날짜 선택" onchange="countDate()" /></td>
-					<td><div class="contentReservTitle">인원</div>
-					<span class="guestInput"><input type='text' name='guestCount'
-					class="guestCount_input" value="${guestCount}">
-					<!-- ${capacity}는 검색할때의 인원 설정 조건임, ${host.capacity} 와 다름 -->
-					<button id="increaseQuantity">▲</button>
-					<button id="decreaseQuantity">▼</button></span></td>
-				</tr>
-			</table>
-				<div id="dateCount"></div>
-				<input type="hidden" id="hostId" name="hostId" value="${host.id}">
-				<input type="hidden" id="hostName" name="hostName" value="${host.name}">
-				<input type="hidden" id="hostPrice"	name="hostPrice" value="${host.price}">
-				<input type="hidden" id="dateCnt" name="dateCnt" value="">
-				
-				<c:set var="userId" value="${user.id}" />
-				<c:choose>
-					<c:when test="${userId != null}">
-		        		<input type="submit" id="goPurchase" value="예약하기" onclick="return gogo();"/>
-		        		<input type="hidden" id="userId" name="userId" value="${user.id}">
-		        	</c:when>
-		        	<c:otherwise>
-	        			<input type="button" id="goLogin" value="로그인"/>
-		        	</c:otherwise>
-		        </c:choose>
-			</form>
+						
+			<c:set var="userId" value="${user.id}" />
+			<c:choose>
+				<c:when test="${userId != null}">
+				<form action="reservationPurchase" method="post" onsubmit="return isMobileAuthentication();">
+					<table>
+						<tr>
+							<td><div class="contentReservTitle">예약</div>
+							${host.price}/1박</td>
+							<td>
+								<div class="contentReservTitle">날짜</div>
+								<input type="text" id="reservationDate" name="checkInDatecheckOutDate" autocomplete="off" placeholder="날짜 선택" onchange="countRDate()" />
+								<!-- header 와 구분 -->
+							</td>
+							<td><div class="contentReservTitle">인원</div>
+							<span class="guestInput"><input type='text' name='guestCount'
+							class="guestCount_input" value="${guestCount}">
+						
+							<button id="increaseQuantity" onclick="return increase();">▲</button>
+							<button id="decreaseQuantity" onclick="return decrease();">▼</button>
+							
+	
+							
+							</span></td>
+						</tr>
+					</table>
+					<div id="dateCount"></div>
+					<input type="hidden" id="hostId" name="hostId" value="${host.id}">
+					<input type="hidden" id="hostName" name="hostName" value="${host.name}">
+					<input type="hidden" id="hostPrice"	name="hostPrice" value="${host.price}">
+					<input type="hidden" id="dateCnt" name="dateCnt" value="">
+	
+	        		<input type="submit" id="goPurchase" value="예약하기" onclick="return gogo();"/>
+	        		<input type="hidden" id="userId" name="userId" value="${user.id}">
+	
+					</form>
+	        	</c:when>
+	        	<c:otherwise>
+	        		<div class="contentReservTitle">예약</div>
+	        		<br>
+	        		<div><p>로그인 후에 이용가능합니다.</p></div>
+	        		<br>
+        			<input type="button" id="goLogin" value="로그인"/>
+	        	</c:otherwise>
+	        </c:choose>
 		</div>
 </body>
 
-<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="js/jquery-3.4.1.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <script type="text/javascript">
 
    /* 이미지 슬라이드 */
@@ -893,12 +904,13 @@ button {
    }
    
    /* 캘린더 */
+   
 	// 로그인 안되어있을시에 로그인 유도 
 	$('#goLogin').on('click', logInModalOn);
    
     // purchase으로 가시전 날짜 확인
    	function gogo() {
-		if(!flag){
+		if(!sw){
 			alert("날짜를 선택하세요!");
 			return false;
 		}else{
@@ -906,11 +918,11 @@ button {
 		}
 	}
    
-   var flag = true;	// 날짜 출력 여부
+   var sw = true;	// 날짜 출력 여부
    
-   var date = new Date();
+   var date1 = new Date();
    var date2 = new Date();
-   date2.setMonth(date.getMonth() + 3);
+   date2.setMonth(date1.getMonth() + 3);
     
    	var blockingStr = "${blocking}";
    	console.log(blockingStr);
@@ -979,7 +991,7 @@ button {
 	    month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
 	    var day = date.getDate() + minimumStay;                   //d
 	    day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
-	    return month + '/' + day + '/' +  year;
+	    return year + '.' + month + '.' + day;
 	}
 	
 	// 받은 start, end 데이트 파싱
@@ -998,25 +1010,26 @@ button {
 	console.log("end : " + eDate);
 	
    $(function() {
-      $('input[name="checkInDatecheckOutDate"]').daterangepicker({	
+      $('#reservationDate').daterangepicker({	
     	  // start,endDate 값 넣을 때는 Date 형식이 지켜져야함.
     	  // YYYY.MM.DD 라는 형식이 원래 존재하지않기 때문...
                "autoApply" : true,
                "startDate" : sDate,
                "endDate" : eDate,
-               "minDate" : date,
+               "minDate" : date1,
                "maxDate" : date2,
                "maxSpan" : {"days" : maximumStay},
                "isInvalidDate" : function(ele) {
                    var currDate = moment(ele._d).format('YYYY.MM.DD');
                    return [${blocking}].indexOf(currDate) != -1;
             	}
-            },
-            function(start, end, label) {
+               
+            }, function(start, end, label) {
             	
+            	sw = true;
             	var startDay = start.format("YYYY.MM.DD");
             	var endDay = end.format("YYYY.MM.DD");
-            	
+				
             	//console.log("endDay값 : " + endDay);
             	//console.log("endDay의 타임스탬프 : " + end);
 
@@ -1032,21 +1045,18 @@ button {
             	//var koreanDate = getKoreanFormat(new Date(tsNewDate));	// yyyy년 MM월 DD일
             	//console.log(setTypeXDate);
             	
-            	var setTypeMinDate = getMinDateFormat(new Date(start));
-            	console.log("start : " + setTypeMinDate);
-
-				
+            	//var setTypeMinDate = getMinDateFormat(new Date(start));
+            	//console.log("start : " + setTypeMinDate);
+    			
             	// start 선택하고 end로 min 또는 자신 선택못함 
 				if(startDay == endDay) {
-					$('input[name="checkInDatecheckOutDate"]').data('daterangepicker').setStartDate(moment().subtract(1, 'days'));
-					$('input[name="checkInDatecheckOutDate"]').data('daterangepicker').setEndDate(moment().subtract(3, 'days'));
+					$('#reservationDate').data('daterangepicker').setStartDate(moment().subtract(1, 'days'));
+					$('#reservationDate').data('daterangepicker').setEndDate(moment().subtract(3, 'days'));
             		alert("호스트의 최소 숙박일 수가 " + minimumStay + "박" + (minimumStay+1) + "일 부터 입니다." );
-					flag = false;
+					sw = false;
             	}else{
-            		flag = true;
+            		sw = true;
             	}
-            	
-            	
             	
 				// endDate가 비활성날짜보다 클 때 비활성 이전 날짜로 알림 후 맞춰짐(x)
 				// 그냥 오늘 날짜로 초기화 하기로 함.
@@ -1059,31 +1069,50 @@ button {
 	            		
 	            		var koreanDate = getKoreanFormat(new Date(blockDate));	// yyyy년 MM월 DD일
 	            		
-	            		//$('input[name="checkInDatecheckOutDate"]').data('daterangepicker').setEndDate(setTypeXDate);
-	            		$('input[name="checkInDatecheckOutDate"]').data('daterangepicker').setStartDate(moment().subtract(1, 'days'));
-						$('input[name="checkInDatecheckOutDate"]').data('daterangepicker').setEndDate(moment().subtract(3, 'days'));
+	            		//$('#reservationDate').data('daterangepicker').setEndDate(setTypeXDate);
+	            		$('#reservationDate').data('daterangepicker').setStartDate(moment().subtract(1, 'days'));
+						$('#reservationDate').data('daterangepicker').setEndDate(moment().subtract(3, 'days'));
 	            		
 	            		alert("호스트의 사정으로 " + koreanDate + "는 예약이 불가능합니다.");
-	            		flag = false;
+	            		sw = false;
 	            	}
 	            	
 				});
+				
+				
 
-            }	            
+            });	   
+      		var checkInDatecheckOutDate = '${checkInDatecheckOutDate}';
 
-      );
+			var startDate = '${startDate}';
+			var endDate = '${endDate}';
+			
+			function parse(str) {	// String -> Date 파싱
+			    var y = str.substr(0, 4);
+			    var m = str.substr(5, 2);
+			    var d = str.substr(8, 2);
+			    return new Date(y,m-1,d);
+			}
+			var date1 = parse(startDate);
+			var date2 = parse(endDate);
+			
+			if(checkInDatecheckOutDate != ''){
+				$("#reservationDate").val(checkInDatecheckOutDate);
+			}else{
+			  	$("#reservationDate").val('');	// 초기 입력 없으면 '날짜 선택' 값 = null
+			}
 
    });
    
-   function countDate() {
+   function countRDate() {
 
 	 	
-	   	if(flag){
-			var date = $("#checkDate").val().split(" - ");
+	   	if(sw){
+			var date = $("#reservationDate").val().split(" - ");
 			var checkInDate = date[0].split(".");
-			var checkInDate1 = new Date(checkInDate[2], checkInDate[0]-1, checkInDate[1]);
+			var checkInDate1 = new Date(checkInDate[0], checkInDate[1]-1, checkInDate[2]);
 			var checkOutDate = date[1].split(".");
-			var checkOutDate1 = new Date(checkOutDate[2], checkOutDate[0]-1, checkOutDate[1]);
+			var checkOutDate1 = new Date(checkOutDate[0], checkOutDate[1]-1, checkOutDate[2]);
 			var dateCount = parseInt(checkOutDate1-checkInDate1)/(24*60*60*1000);
 			
 			$('#dateCnt').val(dateCount);
@@ -1092,49 +1121,49 @@ button {
 			
 	   	}else{
 	   		
-	   		$("#checkDate").val('');
+	   		$("#reservationDate").val('');
 	   		$('#dateCnt').val('');
 	   		$("#dateCount").empty();
-			$("#dateCount").html("날짜 선택해주세요.");
+			$("#dateCount").html("날짜 선택해주세요."); 
 			
 	   		
 	   	}
 	}
 	
-   
-   /* 인원 선택 */
-   $(function() {
-      $('#decreaseQuantity').click(function(e) {
-         e.preventDefault();
-         var stat = $('.guestCount_input').val();
-         var num = parseInt(stat, 10);
-         num--;
+	/* 인원 선택 */
+	/* button 태그 사용하면 submit되서 input 태그 또는 button태그 내에 button 타입을 부여했으나 버튼 적용이 안되서 정정함 */
+	
+	function decrease() {
+		var stat = $('.guestCount_input').val();
+		var num = parseInt(stat, 10);
+		num--;
+		
+		if (num < 1) {
+		   alert('1명미만으로 예약할 수 없습니다');
+		   num = 1;
+		}
+		
+		$('.guestCount_input').val(num);
 
-         if (num < 0) {
-            alert('더이상 줄일수 없습니다.');
-            num = 1;
-         }
-
-         $('.guestCount_input').val(num);
-
-      }); /* click이벤트  */
-
-      $('#increaseQuantity').click(function(e) {
-         e.preventDefault();
-         var stat = $('.guestCount_input').val();
-         var num = parseInt(stat, 10);
-         var capacity
-         num++;
-         
-         if(num > ${host.capacity }){
-        	 alert("host의 최대 수용 인원 보다 많습니다.");
-        	 num--;
-         }
-         $('.guestCount_input').val(num);
-
-      });
-   });
-   
+		return false;
+	}
+	
+	function increase() {
+		var stat = $('.guestCount_input').val();
+        var num = parseInt(stat, 10);
+        var capacity
+        num++;
+        
+        if(num > ${host.capacity}){
+       	 alert("해당 host의 최대 수용 인원은 " + ${host.capacity} + "명 입니다.");
+       	 num--;
+        }
+        $('.guestCount_input').val(num);
+        
+        return false;
+        
+	}
+	
    /* 페이징 */
    
    var nowCommentPage = 1;
@@ -1198,7 +1227,7 @@ button {
 				$("#reviewList").children("tbody").children("tr:last").after('<tr>'+'<td><img src="' + commentWriterImgList[startNum+2] +'" alt="" /><br>' + commentWriterList[startNum+2] + ' </td>'
 			            + '<td>★' + commentStarList[startNum+2] +'<br>'+ commentContentList[startNum+2] +'</td></tr>');
  */
- }
+	}
  
 	
 	

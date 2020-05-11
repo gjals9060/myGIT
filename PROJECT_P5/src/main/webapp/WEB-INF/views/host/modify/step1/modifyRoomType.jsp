@@ -33,7 +33,7 @@
 			<option value="2">다인실</option>
 		</select>
 
-		<div class="roomtype-btn-block">
+		<div class="btn-block">
 			<a href="hostStatus.jsp">이전</a>
 			<button id="roomTypeNextBtn">다음</button>
 		</div>

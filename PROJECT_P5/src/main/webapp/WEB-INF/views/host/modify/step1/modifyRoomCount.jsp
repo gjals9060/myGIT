@@ -44,7 +44,7 @@
 		<button class="room-count-btn" id="bathroom-decrease-quantity">▼</button>
 		<!--index.jsp랑 똑같음  침대개수는 0이 낮은값 나머지는 1이 낮은값 그이상을줄일수 없음 -->
 
-		<div class="room-count-btn-block">
+		<div class="btn-block">
 			<a href="hostStatus.jsp">이전</a>
 			<button id="roomCountNextBtn">다음</button>
 		</div>

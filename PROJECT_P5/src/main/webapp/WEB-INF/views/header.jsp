@@ -26,7 +26,7 @@
 
 <header>
 		<div class="title-logo-img">
-			<img src="img/p5_logo.png" id="titleLogoImg" /> <!-- 로고 이미지 들어갈 자리 -->
+			<a href="/p5"><img src="img/p5_logo.png" id="titleLogoImg" /></a> <!-- 로고 이미지 들어갈 자리 -->
 		</div>	
 		
 		
@@ -59,7 +59,7 @@
             maxDate.setMonth(date.getMonth()+3);
             
             $(function() {
-				$('input[name="checkInDatecheckOutDate"]').daterangepicker({
+				$('#checkDate').daterangepicker({
 		            "autoApply": true,
 		              "minDate": date,
 		              "maxDate":maxDate
@@ -71,8 +71,8 @@
         	
         			// start 선택하고 end로 min 또는 자신 선택못함 
 					if(startDay == endDay) {
-						$('input[name="checkInDatecheckOutDate"]').data('daterangepicker').setStartDate(moment().subtract(1, 'days'));
-						$('input[name="checkInDatecheckOutDate"]').data('daterangepicker').setEndDate(moment().subtract(3, 'days'));
+						$('#checkDate').data('daterangepicker').setStartDate(moment().subtract(1, 'days'));
+						$('#checkDate').data('daterangepicker').setEndDate(moment().subtract(3, 'days'));
 		        		alert("호스트의 최소 숙박일 수가 1박 2일 부터 입니다." );
 			
 		        		flag = false;
@@ -108,8 +108,8 @@
 				
 				if(startDate != '' && endDate != ''){
 					
-					$('input[name="checkInDatecheckOutDate"]').data('daterangepicker').setStartDate(date1);
-					$('input[name="checkInDatecheckOutDate"]').data('daterangepicker').setEndDate(date2);
+					$('#checkDate').data('daterangepicker').setStartDate(date1);
+					$('#checkDate').data('daterangepicker').setEndDate(date2);
 				}
 			});
 

@@ -48,7 +48,7 @@
 		<input type="hidden" id="checkOutDate" name="checkOutDate" value="${booking.checkOutDate}">
 		<input type="hidden" id="guestCount" name="guestCount" value="${booking.guestCount}">
 		<input type="hidden" id="payment" name="payment" value="${booking.payment}">
-		
+				
 		<input type="submit" value="결제">
 	</form>
 </div>

@@ -34,10 +34,13 @@ public class GuestServiceImpl implements GuestService {
 	@Override
 	public String selectHost(HttpServletRequest request, Model model) {
 		
-		System.out.println("postPage 페이지 이동");
+		System.out.println("\n postPage 페이지 이동");
 		
 		String id = request.getParameter("id");
 		System.out.println("호출된 id :" + id);
+		
+		String address = request.getParameter("address");
+		System.out.println("호출된 address : " + address);
 		
 		String startDate = request.getParameter("startDate");
 		System.out.println("호출된 startDate : " + startDate);
@@ -45,7 +48,7 @@ public class GuestServiceImpl implements GuestService {
 		String endDate = request.getParameter("endDate");
 		System.out.println("호출된 endDate : " + endDate);
 		
-		
+		String checkInDatecheckOutDate = startDate + " - " + endDate;
 		
 		String guestCount = request.getParameter("guestCount");
 		System.out.println("호출된 guestCount : " + guestCount);
@@ -55,7 +58,7 @@ public class GuestServiceImpl implements GuestService {
 		
 		// 호스트 사진 리스트
 		List<HostPhotoDTO> hostPhotoDto = guestMapper.selectHostPhoto(id);
-		System.out.println(hostPhotoDto.get(0).getPath());
+		//System.out.println(hostPhotoDto.get(0).getPath());
 		
 		// 호스트 block 날짜 리스트
 		List<Date> blocking = guestMapper.selectBlocking(id);
@@ -81,8 +84,10 @@ public class GuestServiceImpl implements GuestService {
 		System.out.println("sBlocking : " + sBlocking);
 		
 		model.addAttribute("host", hostInfoDto);
+		model.addAttribute("address", address);
 		model.addAttribute("startDate", startDate);
 		model.addAttribute("endDate", endDate);
+		model.addAttribute("checkInDatecheckOutDate", checkInDatecheckOutDate);
 		model.addAttribute("guestCount", guestCount);
 		
 		model.addAttribute("hostPhoto", hostPhotoDto);
@@ -95,7 +100,7 @@ public class GuestServiceImpl implements GuestService {
 	@Override
 	public List<HostInfoDTO> selectHostList(SearchInputDTO dto) {
 		
-		System.out.println("ajaxHosts 요청!");	
+		System.out.println("\n ajaxHosts 요청!");	
 		
 		// 받아온 HostParamVO를 SearchHostDTO에 맞게 데이터셋
 		String swLatlng = dto.getSwLatlng();
@@ -136,13 +141,12 @@ public class GuestServiceImpl implements GuestService {
 	@Override
 	public String reservationList(HttpServletRequest request, Model model) {
 
-		System.out.println("reservationList 페이지 이동");
+		System.out.println("\n reservationList 페이지 이동");
 		
 		String address = request.getParameter("address");
 		String checkInDatecheckOutDate = request.getParameter("checkInDatecheckOutDate");
 		String guestCount = request.getParameter("guestCount");
 
-		
 		String[] date = checkInDatecheckOutDate.split(" - ");
 		String startDate = date[0];
 		String endDate = date[1];
@@ -167,7 +171,7 @@ public class GuestServiceImpl implements GuestService {
 	@Override
 	public String reservationPurchase(HttpServletRequest request, Model model) {
 
-		System.out.println("reservationPurchase 페이지 이동");
+		System.out.println("\n reservationPurchase 페이지 이동");
 
 		String checkInDatecheckOutDate = request.getParameter("checkInDatecheckOutDate");
 		int guestCount = Integer.parseInt(request.getParameter("guestCount"));
@@ -232,14 +236,14 @@ public class GuestServiceImpl implements GuestService {
 	@Override
 	public String reservationFinish(ReservationInfoDTO reservationInfoDTO, HttpServletRequest request, Model model) {
 
-		System.out.println("reservationFinish 페이지 이동");
-		
+		System.out.println("\n reservationFinish 페이지 이동");
+				
 //		System.out.println("id : " + reservationInfoDTO.getHostId());
 //		System.out.println("checkIn : " + reservationInfoDTO.getCheckInDate());
 //		System.out.println("payment : " + reservationInfoDTO.getPayment());
-		
-		SimpleDateFormat format1 = new SimpleDateFormat ( "MM/dd/yyyy HH:mm:ss");
-		SimpleDateFormat format2 = new SimpleDateFormat ( "MM/dd/yyyy");
+		SimpleDateFormat format0 = new SimpleDateFormat ( "MM/dd/yyyy");
+		SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy.MM.dd HH:mm:ss");
+		SimpleDateFormat format2 = new SimpleDateFormat ( "yyyy.MM.dd");
 		
 		Date today = new Date();
 		
@@ -268,7 +272,9 @@ public class GuestServiceImpl implements GuestService {
 				//System.out.println("차이" + diffDays);
 				for(int i = 0;i<diffDays;i++ ) {
 					long day = dCID.getTime() + i * (24 * 60 * 60 * 1000);
-					String sDay = format2.format(day);
+//					String sDay = format2.format(day);	// yyyy.MM.dd
+					String sDay = format0.format(day);	// MM/dd/yyyy
+					
 					System.out.println(sDay);
 					listBlockingDate.add(sDay);
 				}//end - for
@@ -292,20 +298,11 @@ public class GuestServiceImpl implements GuestService {
 			System.out.println("DB blocking insert 실패");
 		}
 		
+		HostInfoDTO host = guestMapper.selectHost(reservationInfoDTO.getHostId()+"");
 		
+		model.addAttribute("booking", reservationInfoDTO);
+		model.addAttribute("host", host);
 		
-		/////////////테스트
-//		try {
-//			
-//		int reselt = guestMapper.insertBooking(reservationInfoDTO);
-//		System.out.println(reselt);
-//		
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		System.out.println("완료");
-		/////////////
-
 		return "reservationFinish";
 	}
 }
