@@ -48,8 +48,12 @@ public class GuestServiceImpl implements GuestService {
 		String endDate = request.getParameter("endDate");
 		System.out.println("호출된 endDate : " + endDate);
 		
-		String checkInDatecheckOutDate = startDate + " - " + endDate;
-		
+		String checkInDatecheckOutDate;
+		if((startDate == null || startDate == "") && (endDate == null || endDate == "")) {
+			checkInDatecheckOutDate = "";
+		}else {
+			checkInDatecheckOutDate = startDate + " - " + endDate;
+		}
 		String guestCount = request.getParameter("guestCount");
 		System.out.println("호출된 guestCount : " + guestCount);
 		
@@ -105,7 +109,14 @@ public class GuestServiceImpl implements GuestService {
 		// 받아온 HostParamVO를 SearchHostDTO에 맞게 데이터셋
 		String swLatlng = dto.getSwLatlng();
 		String neLatlng = dto.getNeLatlng();
-		int guestCount = Integer.parseInt(dto.getGuestCount());
+		
+		int guestCount;
+		if(dto.getGuestCount() != "") {
+			guestCount = Integer.parseInt(dto.getGuestCount());
+		}else {
+			guestCount = -1;	// 조건 비활성 값
+		}
+		
 		String sStartDate = dto.getStartDate();
 		String sEndDate = dto.getEndDate();
 		
@@ -146,11 +157,18 @@ public class GuestServiceImpl implements GuestService {
 		String address = request.getParameter("address");
 		String checkInDatecheckOutDate = request.getParameter("checkInDatecheckOutDate");
 		String guestCount = request.getParameter("guestCount");
-
-		String[] date = checkInDatecheckOutDate.split(" - ");
-		String startDate = date[0];
-		String endDate = date[1];
 		
+		String startDate;
+		String endDate;
+		
+		if(checkInDatecheckOutDate != "" && checkInDatecheckOutDate != null) {
+			String[] date = checkInDatecheckOutDate.split(" - ");
+			startDate = date[0];
+			endDate = date[1];
+		}else {
+			startDate = null;
+			endDate = null;
+		}
 		System.out.println("키워드:" + address);
 		System.out.println("날짜:" + checkInDatecheckOutDate);
 		System.out.println("인원:" + guestCount);

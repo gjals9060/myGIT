@@ -13,8 +13,15 @@ public class Member {
 	private String mobilePhone;
 	private Date registrationDate;
 	private String profilePhotoPath;
+	private String mobileAuthentication;
 	
 	
+	public String getMobileAuthentication() {
+		return mobileAuthentication;
+	}
+	public void setMobileAuthentication(String mobileAuthentication) {
+		this.mobileAuthentication = mobileAuthentication;
+	}
 	public int getId() {
 		return id;
 	}

@@ -36,7 +36,7 @@
 			<!--지역 입력  -->
 			<div class="input-search-value-input">
 			<div class="input-location-block">				
-				<span class="input-text">지역</span><input class="input-serach-value" type="text" name="address" id="address" placeholder="Add city, landmark, or address"/>
+				<span class="input-text">지역</span><input class="input-serach-value" type="text" name="address" id="address" placeholder="어디로 여행가세요?"/>
 				
 				</div>
 				<!--달력에 필요할 jquery plugin  -->
@@ -46,7 +46,8 @@
 				<span class="input-text">날짜</span>
 				<!-- <input class="input-serach-value" type="text" name="checkInDatecheckOutDate"  /> -->
 				<input class="input-serach-value" type="text" id="checkDate" name="checkInDatecheckOutDate" 
-						autocomplete="off" placeholder="날짜 선택" onchange="countDate()" />
+						autocomplete="off" placeholder="날짜 추가" onchange="countDate()" />
+				<input type="button" id="dateReset" value="x"><!-- 임시버튼 -->
 				</div>	
 					
 		<script type="text/javascript">
@@ -55,6 +56,10 @@
             var date=new Date();
             var maxDate=new Date();
             
+            var checkInDatecheckOutDate = '${checkInDatecheckOutDate}';
+
+			var startDate = '${startDate}';
+			var endDate = '${endDate}';
             
             maxDate.setMonth(date.getMonth()+3);
             
@@ -71,8 +76,8 @@
         	
         			// start 선택하고 end로 min 또는 자신 선택못함 
 					if(startDay == endDay) {
-						$('#checkDate').data('daterangepicker').setStartDate(moment().subtract(1, 'days'));
-						$('#checkDate').data('daterangepicker').setEndDate(moment().subtract(3, 'days'));
+						$('#checkDate').data('daterangepicker').setStartDate();
+						$('#checkDate').data('daterangepicker').setEndDate();
 		        		alert("호스트의 최소 숙박일 수가 1박 2일 부터 입니다." );
 			
 		        		flag = false;
@@ -80,13 +85,14 @@
 		        	}else{
 		        		flag = true;
 		        	}
+        			
+        			if(checkInDatecheckOutDate == null || checkInDatecheckOutDate == ''){
+        				$('#checkDate').val('');
+        				
+        			}
         	
           		});
              
-	            var checkInDatecheckOutDate = '${checkInDatecheckOutDate}';
-
-				var startDate = '${startDate}';
-				var endDate = '${endDate}';
 				
 				function parse(str) {	// String -> Date 파싱
 				    var y = str.substr(0, 4);
@@ -100,7 +106,7 @@
 				console.log("end : " + date2);
 
 				
-				if(checkInDatecheckOutDate != ''){
+				if(checkInDatecheckOutDate != '' || checkInDatecheckOutDate != null){
 					$("#checkDate").val(checkInDatecheckOutDate);
 				}else{
 				  	$("#checkDate").val('');	// 초기 입력 없으면 '날짜 선택' 값 = null
@@ -127,16 +133,59 @@
 				<div class="input-guestCount-block">
 				<span class="input-text">인원</span> 
 				<button id="increaseQuantity">+</button>
-				<input  type='text' id="guestCount" name='guestCount' class="guestCount_input" value="0" >
+				<input  type='text' id="guestCount" name='guestCount' class="guestCount_input" 
+					autocomplete="off" placeholder="인원 추가" readonly="readonly" value="" >
 				<button id="decreaseQuantity">-</button>
+				<input type="button" id="guestCountReset" value="x"><!-- 임시버튼 -->
 				</div>
 					        <!--인원 카운트 다운 0미만은 줄일수 없게함  -->
 				
 				
 					<!-- <i class="fa fa-search" aria-hidden="true"></i> -->
-				 	<input type="submit" id="searchBtn" value="검색" />
+				 	<input type="submit" id="searchBtn" value="검색" onclick="return checkValue();"/>
 				 </div>
 			 </form>
+				<script type="text/javascript">
+					
+					$('#dateReset').click(function() {
+						$('#checkDate').val('');
+					});
+				
+					$('#guestCountReset').click(function() {
+						$('#guestCount').val('');
+					});
+					
+					$('#guestCount').click(function() {
+						if($('#guestCount').val() == '' || $('#guestCount').val() == null ){
+							$('#guestCount').val(0);
+						}
+					});
+					$('html').click(function(e) { 
+						var guestCount = $('#guestCount').val();
+						if(!$(e.target).hasClass("guestCount_input")  && guestCount == 0) {	// 다른곳 클릭시  값이 부적절하면 리셋
+							$('#guestCount').val('');
+						} 
+					});
+					
+					$('html').click(function(e) { 
+						var guestCount = $('#guestCount').val();
+						if(!$(e.target).hasClass("guestCount_input")  && guestCount == 0) {	// 다른곳 클릭시  값이 0이면 리셋
+							$('#guestCount').val('');
+						} 
+					});
+					
+					function checkValue() {
+						
+						if($('#address').val() == '' || $('#address').val() == null){
+							
+							$('#address').focus();
+							return false;
+						}else{
+							return true;
+						}
+						
+					}
+				</script>
 		 </div>
 		
 		<script type="text/javascript">
@@ -410,26 +459,31 @@
 $(function(){
 	$('#decreaseQuantity').click(function(e){
 	   	e.preventDefault();
-	   	var stat = $('.guestCount_input').val();
-	   	var num = parseInt(stat,10);
-	   	num--;
-	  
-	  	if(num<0){
-		   alert('더이상 줄일수 없습니다.');
-		   num =1;
-	   	}
-	   
-		$('.guestCount_input').val(num);
+	   	
+		if($('#guestCount').val() != ''){
+		   	var stat = $('.guestCount_input').val();
+		   	var num = parseInt(stat,10);
+		   	num--;
+		  
+		  	if(num<0){
+			   alert('더이상 줄일수 없습니다.');
+			   num = 0;
+		   	}
+		   
+			$('.guestCount_input').val(num);
+		}	
 		
 	}); /* click이벤트  */
 
 	$('#increaseQuantity').click(function(e){
 		e.preventDefault();
-		var stat = $('.guestCount_input').val();
-		var num = parseInt(stat,10);
-		num++;
-
-	   $('.guestCount_input').val(num);
+		if($('#guestCount').val() != ''){
+			var stat = $('.guestCount_input').val();
+			var num = parseInt(stat,10);
+			num++;
+	
+		   	$('.guestCount_input').val(num);
+		}
 	});
 });
 
