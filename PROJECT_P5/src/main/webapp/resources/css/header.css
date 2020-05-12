@@ -9,7 +9,7 @@
 
 header {
 	display: grid !important;
-	grid-template-columns: 20% 60% 20%;
+	grid-template-columns: 15% 70% 15%;
 	top: 0px;
 	background: white;
 	width: 100%;
@@ -17,6 +17,7 @@ header {
 	z-index: 9;
 	text-align: center;
 	vertical-align: middle;
+	margin-top: 10px;
 }
 
 herder>* {
@@ -43,23 +44,38 @@ herder>* {
 	flex-direction: row;
 	flex-wrap: wrap;
 	justify-content: space-around;
-}
-
-.block {
-	width: 25%;
-}
-
-/* 검색 input  */
-.input-info input[type="text"] {
-	width: -webkit-fill-available;
-	height: 30%;
-	vertical-align: middle;
-	text-align: center;
 	margin-top: 10px;
 }
 
-.guestCount_input {
-	
+/* 검색 input  */
+
+.input-text {
+	height: 30px;	
+}
+.input-info input[type="text"] {
+	width: -webkit-fill-available;
+    height: 30%;
+    vertical-align: middle;
+    text-align: center;
+    margin: 5px 0px;
+    margin-top: 10px;
+    padding-right: 15px;
+    border: none;
+    border-bottom: 2px solid black;
+}
+
+.input-location-block{
+	width: 40%;
+}
+
+.input-date-block {
+	width: 30%;
+	min-width: 200px;
+}
+
+.input-guestCount-block {
+	width: 15%;
+	min-width: 85px;
 }
 
 .useradd-login-form {
@@ -71,7 +87,6 @@ herder>* {
 	width: 100px;
 	padding: 10px 16px;
 	border: 0;
-	background-color: #eee;
 	border-radius: 100px; outline : none;
 	transition: 0.3s;
 	outline: none;
@@ -90,7 +105,47 @@ herder>* {
 	text-align: center;
 	font-size: 20px;
 	vertical-align: middle;
+	color: #bbb;
+	padding: 0;
+	margin: 0;
 }
+
+.input-info input[type="button"] {
+    font-family: "FontAwesome";
+    font-size: unset;
+    font-weight: 900;
+}
+
+.fa-xs {
+    font-size: 2px !important;
+}
+
+#dateReset, #guestCountReset, #decreaseQuantity, #increaseQuantity {
+	position: relative;
+	top: -33px;
+	width: 20px;
+	height: 20px;
+}
+
+#dateReset {
+	left: 40%;	
+}
+
+#guestCountReset {
+	left: 71%;
+}
+
+#decreaseQuantity{
+    left: -38%;
+    top: -36px;
+}
+
+#increaseQuantity {
+	left: -1%;
+	top: -36px;	
+}
+    
+
 
 /* 이름을 눌렀을 때 dropdown */
 .user-drop-down-btn {
@@ -231,12 +286,13 @@ to {
 
 /* 예약 */
 #searchBtn {
+	font-family: "FontAwesome";
 	border-radius: 15px;
 	background-color: #E51E51;
 	color: WHITE;
-	width: 105px;
-	height: 50px;
+	width: 8%;
 	outline: none;
+	font-size: 150%;
 }
 
 #userImg {
