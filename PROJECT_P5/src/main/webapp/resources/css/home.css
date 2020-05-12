@@ -79,20 +79,20 @@ section {
 }
 
 
-/*swiper css  */
+ /*swiper css  */
+ 
 .swiper-container {
 	width: 90%;
     height: 100%;
-    margin: 100px;
-    z-index: -1 !important;
-}
+    margin-bottom: 100px;
+} 
 
 .swiper-slide {
 	text-align: center;
     font-size: 18px;
     background: #fff;
 
-    /* Center slide text vertically */
+    /*Center slide text vertically */
    	display: -webkit-box;
     display: -ms-flexbox;
     display: -webkit-flex;
@@ -116,4 +116,7 @@ section {
     padding: 20px;
     border-radius: 5px;
 }
+
+
+
 

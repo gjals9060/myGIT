@@ -231,8 +231,8 @@
    opacity: 0.5;
    transition: 0.1s;
    object-fit: cover;
-    object-position: center;
-    box-sizing: border-box;
+   object-position: center;
+   box-sizing: border-box;
 }
 
 .inputProfilePhoto:hover, .now, .select {

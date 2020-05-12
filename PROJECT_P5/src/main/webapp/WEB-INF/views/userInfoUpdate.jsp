@@ -317,7 +317,7 @@
 					<input class="user-info-update-value-input"
 						id="userInfoUpdateValuePhone" type="text"
 						value=${user.mobilePhone } disabled /> 
-						<%-- <input type="hidden" name="mobileAuthentication" value="${user.mobileAuthentication }" /> --%>
+						<input type="hidden" name="mobileAuthentication" value="${user.mobileAuthentication }" />
 					<span id="authenticationResult"></span>
 					<button id="mobileAuthenticationResult" class="btnTheme"></button>
 				</div>
@@ -398,20 +398,16 @@
 </body>
 
 <script>
-	////////////// 모든 취소 버튼 ///////////////	
-	var cancelBtn = $(".user-info-update-value-cancel");
-	
-	cancelBtn.on("click", function() {
-		$('.user-info-update-value-input').attr("disabled",true);
-		cancelBtn.css("display","none");
-	});
-	
 	
 	/////////////////// 이름 수정하기 /////////////////////
 	var cancleName=$('#userInfoNameCancelBtn');
 	
+
+	
+	
 	var firstNameInput = $("#userInfoUpdateValueFirstName");
 	var lastNameInput = $("#userInfoUpdateValueLastName");
+	
 
 	$("#userInfoUpdateValueNameBtn").on('click',function(){
 		if(firstNameInput.is(":disabled")){ //// firstName이 disabled라면 
@@ -419,10 +415,7 @@
 			lastNameInput.attr("disabled",false);
 			cancleName.css("display","inline");
 		}else{
-			/////// ajax로 값 처리
-			
-			/*
-			/// 임시 ajax
+	
 			var firstName = firstNameInput.val();
 			var lastName= lastNameInput.val();
 			
@@ -441,7 +434,7 @@
 				error:function(result){
 					alert("통신실패")
 				}
-			}); */
+			}); 
 			
 			firstNameInput.attr("disabled",true);
 			lastNameInput.attr("disabled",true);
@@ -454,20 +447,40 @@
 	/////이름 수정하기 끝 
 	
 	////////////////// 생년월일 /////////////////
-	var birthDate = $("#userInfoUpdateValueBirthDate"); // input
+	var birthDateInput = $("#userInfoUpdateValueBirthDate"); // input
 	var birthDateBtn = $("#userInfoUpdateValueBirthDateBtn"); // 수정 
 	var cancelDate = $("#userInfoDateCancelBtn");
 	
 	birthDateBtn.on("click", function() {
 		
-		if(birthDate.is(":disabled")){
-			birthDate.attr("disabled",false);
+		if(birthDateInput.is(":disabled")){
+			birthDateInput.attr("disabled",false);
 			cancelDate.css("display","inline");
 		}else{
 			////// ajax 처리 후 
-			birthDate.attr("disabled",true);
+			birthDateInput.attr("disabled",true);
 			cancelDate.css("display","none");
 		}
+	});
+	
+	
+	////////////// 모든 취소 버튼 ///////////////	
+	var cancelBtn = $(".user-info-update-value-cancel");
+	
+	/// user의 정보를 저장 ( 이름, 성, 생년월일,전화번호)
+	var firstName = '${user.firstName}';
+	var lastName= '${user.lastName}';
+	var birthDate = '${user.birthDate}';
+	var phoneNumber = '${user.mobilePhone}';
+	
+	cancelBtn.on("click", function() {
+		firstNameInput.val(firstName);
+		lastNameInput.val(lastName);
+		birthDateInput.val(birthDate);
+		
+		
+		$('.user-info-update-value-input').attr("disabled",true);
+		cancelBtn.css("display","none");
 	});
 	
 
@@ -481,6 +494,8 @@ $('document').ready(function(){
 });
 
 
+
+/// 비밀번호 변경하기 
 function updateUserPassword(){
 	alert($("#userInputPassword").val());
 	var params = {
@@ -521,19 +536,11 @@ function updateUserPassword(){
 			$("#userInfoUpdatePasswordModify").css("display","block");
 		});
 	
-	
-	/// 비밀번호 변경을 눌렀을 때
-		$("#passwrodModifyBtn").on('click',function(){
-			alert("ㅇㅇ");
-		});
-	
 	////////////// 닫기 버튼 ///////////////
 		$(".close").on("click",function(){
 			$("#userInfoUpdatePasswordModify").css("display","none");
 		});
 
-
-   
    ///// 전화번호 인증을 한 사용자라면 인증완료를 보여주고 아니라면 인증하기 버튼을 보여준다.
    $(document).ready(function(){
       var authentication = $('input[name="mobileAuthentication"]').val();
