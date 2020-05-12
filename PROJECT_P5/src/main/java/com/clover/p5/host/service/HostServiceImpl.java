@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.clover.p5.host.dto.HostPhoto;
 import com.clover.p5.host.dto.HostPhotoVO;
+import com.clover.p5.host.dto.NewHostDTO;
 import com.clover.p5.host.mapper.HostMapper;
 
 @Service
@@ -170,6 +171,8 @@ public class HostServiceImpl implements HostService {
 		return true;
 	}
 //**************************** 대표 사진 변경-END ***************************************	
+
+
 	
 	
 	
@@ -178,11 +181,21 @@ public class HostServiceImpl implements HostService {
 	
 	
 	
-	
-	
-	
-	
+
 	@Override
+	public int completeStep1(NewHostDTO newHost) {
+		if(hostMapper.insertHost(newHost) == 1) {
+			System.out.println("newHost를 DB에 저장했습니다.");
+				// 작성자 ID로 방금 DB에 등록된 호스트의 ID를 검색
+			return hostMapper.selectNewHostId(newHost.getMemberId());
+		}
+		System.out.println("newHost를 DB에 저장 실패했습니다.");
+		return 0;
+	}
+	
+	
+	
+	/*@Override
 	public boolean insertBlocking(int hostId, String blockingDate) {
 		// 날짜를 배열에 담는다
 		String[] arrBlockingDate = blockingDate.split(",");
@@ -200,7 +213,7 @@ public class HostServiceImpl implements HostService {
 		
 		System.out.println("예약 차단일 저장 중에 오류 발생");
 		return false;
-	}
+	}*/
 
 
 

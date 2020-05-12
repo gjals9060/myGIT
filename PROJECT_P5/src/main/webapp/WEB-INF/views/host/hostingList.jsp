@@ -50,7 +50,18 @@ function next(){
 	
 } // next-END
 
-
+	$(window).bind("pageshow", function (event) {
+		$.ajax({
+			type : "POST",
+			url : "registration/reset",
+			success : function(){
+				alert("newHost세션 초기화");
+			},	
+			error : function(){
+				alert("newHost세션 초기화 실패..");
+			}
+		}); // AJAX-END
+	});
 
 
 

@@ -9,8 +9,8 @@
 
 		// 알아서 저장하겠다우~
 	$(window).bind("pagehide", function (event) {
-		var url = setSaveURL(urlInfo); // 정보를 처리할 적절한 곳으로 보낸다.
-		var params = setParams(urlInfo); // 저장할 정보를 담은 보따리를 받아서
+		var url = setSaveURL(); // 정보를 처리할 적절한 곳으로 보낸다.
+		var params = setParams(); // 저장할 정보를 담은 보따리를 받아서
 		$.ajax({
 			type : "POST",
 			url : url,
@@ -20,11 +20,12 @@
 		// 최신 정보만 보여주게써~
 	$(window).bind("pageshow", function (event) {
 	//	alert(urlInfo);
-		var url = setRefreshURL(urlInfo);
+		var url = setRefreshURL();
 		$.ajax({
 			type : "POST",
 			url : url,
 			success : function(host){
+//				alert(JSON.stringify(host)); // 내용 확인
 				refresh(host); // 화면 갱신
 			},	
 			error : function(){
@@ -36,7 +37,7 @@
 
 	
 //////////////////////////////// setParams-END ///////////////////////////////////////////
-function setParams(urlInfo){
+function setParams(){
 	
 	
 //========================= roomType.jsp 값 세팅-END ====================================
@@ -150,7 +151,7 @@ function setParams(urlInfo){
 
 
 //////////////////////////////////////// setSaveURL /////////////////////////////////////////////
-function setSaveURL(urlInfo){
+function setSaveURL(){
 
 //******************* 등록 1단계에서 보낼 URL(newHost 세션 사용) ****************************
 	if(urlInfo == '/p5/host/registration/roomType'){return "save/newHost";}
@@ -164,7 +165,7 @@ function setSaveURL(urlInfo){
 
 
 /////////////////////////////////////setRefreshURL /////////////////////////////////////////////
-function setRefreshURL(urlInfo){
+function setRefreshURL(){
 	
 //******************* 등록 1단계에서 보낼 URL(newHost 세션 사용) ****************************
 	if(urlInfo == '/p5/host/registration/roomType'){return "refresh/newHost";}
@@ -185,6 +186,9 @@ function setRefreshURL(urlInfo){
 
 ///////////////////////////////////// refresh /////////////////////////////////////////////////
 function refresh(host){
+if(urlInfo == '/p5/host/registration/facilities' && !host.address){
+	alert("등록 완료했자너 왜 뒤루 와~");
+}
 	
 //************************************ 1 단계 **********************************************
 	$('select[name="hostTypeId"]').val(host.hostTypeId);

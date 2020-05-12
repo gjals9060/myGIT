@@ -349,5 +349,5 @@
 
 
 </script>
-<script src="/p5/js/host.js"></script>
+<script src="/p5/js/host.js?v=<%=System.currentTimeMillis() %>"></script>
 </html>

@@ -62,7 +62,8 @@ CREATE TABLE blocking
 (
 	id number NOT NULL,
 	host_id number,
-	blocking_date date,
+	check_in_date date,
+	who char(1),
 	PRIMARY KEY (id)
 );
 
@@ -149,7 +150,6 @@ CREATE TABLE member
 	mobile_phone varchar2(11),
 	mobile_authentication char(1),
 	registration_date date,
-	profile_photo_path varchar2(100),
 	PRIMARY KEY (id)
 );
 

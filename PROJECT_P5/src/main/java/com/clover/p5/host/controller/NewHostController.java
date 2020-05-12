@@ -27,6 +27,9 @@ public class NewHostController {
 	
 	
 	
+	
+		
+		
 	@ModelAttribute("newHost")
 	public NewHostDTO newHost(@SessionAttribute("userId") int memberId) {
 		return new NewHostDTO(memberId);
@@ -52,13 +55,15 @@ public class NewHostController {
 	
 //************************** 호스트 등록 1단계(완료하면 DB에 저장) ******************************
 	
-		// '새로 등록'을 선택 - 첫 화면으로 이동 전에 세션을 초기화
+	// newHost세션을 초기화 - hostingList.jsp, hostStatus.jsp
 	@RequestMapping("/host/registration/reset")
-	public String reset(SessionStatus status) {
-		status.setComplete(); // 세션(newHost) 초기화
-		System.out.println("새 호스트 등록을 위한 세션(newHost) 초기화 완료.");
-		return "redirect:registration/roomType";
+	@ResponseBody
+	public void reset(SessionStatus status) {
+		status.setComplete();
+		System.out.println("세션(newHost) 초기화 완료.");
 	}
+	
+	
 		// roomType.jsp로 이동
 	@RequestMapping("/host/registration/roomType")
 	public String roomType() {
@@ -82,13 +87,11 @@ public class NewHostController {
 		// 1단계 등록을 완료하면 DB에 저장
 	@RequestMapping("/host/registration/step1/complete")
 	public String inputFacilities
-	(@ModelAttribute("newHost") NewHostDTO newHost, SessionStatus status) {
+	(@ModelAttribute("newHost") NewHostDTO newHost) {
+			// DB에 저장하고 등록된 새 호스트 ID 받기
+		int newHostId = hostService.completeStep1(newHost);
 		
-		
-		// DB에 저장하고 hostId 받아서 넘기기
-		// 서비스 로직에서 처리
-		
-		return "redirect:host/hostingStatus?";
+		return "redirect:../../hostingStatus?hostId=" + newHostId;
 	}
 	
 	
@@ -101,41 +104,7 @@ public class NewHostController {
 	
 	
 	
-	
-	
-	/*@RequestMapping("/host/registration/description") // 사진 저장
-	public void inputPhoto(@ModelAttribute("newHost") NewHostDTO newHostDto) {
-		System.out.println(newHostDto + "\n사진 " + newHostDto.getPhoto().size() + "개 넘어옴");
-		for(int i = 0; i < newHostDto.getPhoto().size(); i++) {
-			if(newHostDto.getPhoto().get(i).isEmpty()) {
-				System.out.println(i+1+"번째 파일이 비었습니다.");
-			}
-		}
-	}
-	@RequestMapping("/host/registration/stayDate") // 설명 저장
-	public void inputDescription(@ModelAttribute("newHost") NewHostDTO newHostDto) {
-		System.out.println(newHostDto);
-	}
-	@RequestMapping("/host/registration/calendar") // 숙박일 저장
-	public void inputStayDate(@ModelAttribute("newHost") NewHostDTO newHostDto) {
-		System.out.println(newHostDto);
-	}
-	@RequestMapping("/host/registration/price") // 달력 저장
-	public void inputCalendar(@ModelAttribute("newHost") NewHostDTO newHostDto) {
-		System.out.println(newHostDto);
-	}
-	@RequestMapping("/host/registration/finish") // 가격 저장
-	public void inputPrice
-	(@ModelAttribute("newHost") NewHostDTO newHostDto, SessionStatus sessionStatus, HttpServletRequest request) {
-		System.out.println(newHostDto);
-		if(hostService.insertHost(newHostDto, request)) {
-			sessionStatus.setComplete(); // 호스트 등록 세션 초기화
-			System.out.println("호스트 등록 성공!");
-		}
-	}
-	
-	*/
-	
+
 	
 	
 

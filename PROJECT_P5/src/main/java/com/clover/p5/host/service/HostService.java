@@ -7,12 +7,13 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.clover.p5.host.dto.HostPhoto;
+import com.clover.p5.host.dto.NewHostDTO;
 
 public interface HostService {
 	
 	
-	// 숙소 등록
-//	boolean insertHost(NewHostDTO newHostDto, HttpServletRequest req);
+	// 숙소 등록 1단계 완료
+	int completeStep1(NewHostDTO newHost);
 	
 
 	
@@ -42,7 +43,7 @@ public interface HostService {
 	
 	
 	// 숙소 등록시 설정한 예약 차단일 저장
-	boolean insertBlocking(int hostId, String blockingDate);
+	/*boolean insertBlocking(int hostId, String blockingDate);*/
 	
 	
 	

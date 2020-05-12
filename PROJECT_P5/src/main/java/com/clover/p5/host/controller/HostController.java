@@ -38,7 +38,7 @@ public class HostController {
 	@RequestMapping("/host/hostingStatus")
 	public String hostingStatus(int hostId, Model model) {
 		if(hostId == 0) { // '새로 등록'을 선택했으면
-			return "forward:registration/reset";
+			return "redirect:registration/roomType";
 		}
 			// 등록중(미완료)를 선택했으면 해당 호스트ID를 가지고 이동
 		model.addAttribute("hostId", hostId);
