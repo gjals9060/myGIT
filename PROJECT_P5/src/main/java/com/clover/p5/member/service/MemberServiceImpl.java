@@ -16,7 +16,6 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -180,10 +179,9 @@ public class MemberServiceImpl implements MemberService {
 		if(!passwordEncoder.matches(password, member.getPassword())) {
 			return 1; // 비밀번호 불일치
 		}
-		HttpSession session = req.getSession();
-		session.setAttribute("user", member); // 세션에 정보 저장
 		
-		session.setAttribute("userId", member.getId()); // 자주 쓰여서 따로 저장
+		req.getSession().setAttribute("user", member); // 세션에 정보 저장
+		
 		return 2; // 로그인 성공
 	}
 //******************************** 로그인-END ********************************************
@@ -193,12 +191,31 @@ public class MemberServiceImpl implements MemberService {
 	
 	
 	
-	
+//******************************** 임시 비밀번호 생성 ********************************************	
+	@Override
+	public String randomPassword(int length) {
+		int index = 0;
+		char[] charSet = new char[] {
+				'0','1','2','3','4','5','6','7','8','9'
+				,'A','B','C','D','E','F','G','H','I','J','K','L','M'
+				,'N','O','P','Q','R','S','T','U','V','W','X','Y','Z'
+				,'a','b','c','d','e','f','g','h','i','j','k','l','m'
+				,'n','o','p','q','r','s','t','u','v','w','x','y','z'};
+		
+		StringBuffer sb = new StringBuffer();
+		for (int i=0; i<length; i++) {
+			index =  (int) (charSet.length * Math.random());
+			sb.append(charSet[index]);
+		}
+		
+		return sb.toString();
+	}
+//******************************** 임시 비밀번호 생성-END ********************************************
 	
 	
 //******************************** 임시 비밀번호 발급 ***************************************	
 	@Override
-	public String sendTemporaryPassword(String userEmail) {
+	public String sendTemporaryPassword(String email) {
 			// 16자리 숫자, 영문 대, 소문자 조합 난수 생성
 		String temporaryPassword = randomPassword(16);
 		System.out.println("임시 비밀번호 생성 - " + temporaryPassword);
@@ -217,7 +234,7 @@ public class MemberServiceImpl implements MemberService {
            messageHelper.setSubject("P5에서 임시 비밀번호 발급 안내드립니다."); // 메일제목은 생략이 가능하다
            messageHelper.setText(content); // 메일 내용
            messageHelper.setFrom("p5.email.temporary-password"); // 보내는사람 생략하면 정상작동을 안함
-           messageHelper.setTo(userEmail); // 받는사람 이메일
+           messageHelper.setTo(email); // 받는사람 이메일
            
            javaMailSender.send(message);
 		} catch (MessagingException e) {
@@ -257,14 +274,12 @@ public class MemberServiceImpl implements MemberService {
 		}
 		
 	/***
-	** 갱신된 회원정보(비밀번호 변경)를 session에 등록한다. - 로그인
+	** 회원정보를 session에 등록한다. - 로그인
 	***/
 		Member member = memberMapper.selectMember(userId);
 		
-		HttpSession session = req.getSession();
-		session.setAttribute("user", member); // 세션에 정보 저장
+		req.getSession().setAttribute("user", member); // 세션에 정보 저장
 		
-		session.setAttribute("userId", member.getId()); // 자주 쓰여서 따로 저장
 		return true; // 로그인 성공
 	}
 //******************************** 임시 로그인-END ******************************************
@@ -275,7 +290,7 @@ public class MemberServiceImpl implements MemberService {
 	public int updateUserPassword(HttpServletRequest req) {
 		String userPassword = req.getParameter("userPassword");
 		String newPassword = req.getParameter("newPassword");
-		int userId = (int)req.getSession().getAttribute("userId");
+		int userId = getSessionUserId(req);
 		
 		Member member = memberMapper.selectMember(userId);
 		if(!passwordEncoder.matches(userPassword, member.getPassword())) {
@@ -307,9 +322,8 @@ public class MemberServiceImpl implements MemberService {
 
 //******************************** 휴대전화 인증 여부 확인 ********************************************
 	@Override
-	public boolean isMobileAuthentication(HttpSession session) {
-		int userId = (int)session.getAttribute("userId");
-		String result = memberMapper.selectMobileAuthentication(userId);
+	public boolean isMobileAuthentication(HttpServletRequest req) {
+		String result = memberMapper.selectMobileAuthentication(getSessionUserId(req));
 		if(result.equals("Y")) {
 			return true;
 		}
@@ -337,8 +351,8 @@ public class MemberServiceImpl implements MemberService {
 	    params.put("type", "SMS"); // Message type ( SMS, LMS, MMS, ATA )
 	    params.put("text", content); // 문자내용    
 	    
-	    // 적용이 안된다..
-	    params.put("mode", "test"); // 'test' 모드. 실제로 발송되지 않으며 전송내역에 60 오류코드로 뜹니다. 차감된 캐쉬는 다음날 새벽에 충전 됩니다.
+	    // 적용이 안된다.. 'test' 모드..
+	    //params.put("mode", "test"); // 'test' 모드. 실제로 발송되지 않으며 전송내역에 60 오류코드로 뜹니다. 차감된 캐쉬는 다음날 새벽에 충전 됩니다.
 	   // params.put("app_version", "JAVA SDK v1.2"); // application name and version
 
 	    // Optional parameters for your own needs
@@ -379,7 +393,7 @@ public class MemberServiceImpl implements MemberService {
 	public int mobileAuthentication(HttpServletRequest req) {
 		String authenticationCode = req.getParameter("authenticationCode");
 		String inputCode = req.getParameter("inputCode");
-		int userId = (int)req.getSession().getAttribute("userId");
+		int userId = getSessionUserId(req);
 		
 		/***
 		** 인증번호 입력값과 비교
@@ -392,7 +406,7 @@ public class MemberServiceImpl implements MemberService {
 		** 통과했으면 DB에 결과를 저장
 		***/
 			if(memberMapper.updateMobileAuthentication(userId) == 1) {
-				refreshUserSession(req, userId); // session 새로고침
+				refreshUserSession(req); // session 새로고침
 				System.out.println("휴대전화 인증 결과를 DB에 저장했습니다.");
 				return 1;
 			}
@@ -438,61 +452,12 @@ public class MemberServiceImpl implements MemberService {
 	
 	
 	
-
-//******************************** 임시 비밀번호 생성 ********************************************	
-	@Override
-	public String randomPassword(int length) {
-		int index = 0;
-		char[] charSet = new char[] {
-				'0','1','2','3','4','5','6','7','8','9'
-				,'A','B','C','D','E','F','G','H','I','J','K','L','M'
-				,'N','O','P','Q','R','S','T','U','V','W','X','Y','Z'
-				,'a','b','c','d','e','f','g','h','i','j','k','l','m'
-				,'n','o','p','q','r','s','t','u','v','w','x','y','z'};
-		
-		StringBuffer sb = new StringBuffer();
-		for (int i=0; i<length; i++) {
-			index =  (int) (charSet.length * Math.random());
-			sb.append(charSet[index]);
-		}
-		
-		return sb.toString();
-	}
-//******************************** 임시 비밀번호 생성-END ********************************************
-
-
-//******************************** session 갱신 ********************************************
-	@Override
-	public void refreshUserSession(HttpServletRequest req, int userId) {
-		Member member = memberMapper.selectMember(userId);
-		req.getSession().setAttribute("user", member); // session을 갱신
-		System.out.println("session 갱신 완료.");
-	}
-//******************************** session 갱신-END ********************************************
+	
+	
 
 	
 	
-//******************************** 백엔드 유효성 검사 결과 ********************************************
-	@Override
-	public List<ErrorFieldDTO> validationResult(Errors errors) {
-		ArrayList<ErrorFieldDTO> list = new ArrayList<>();
-		
-		if(errors.hasErrors()) {
-			for(FieldError error : errors.getFieldErrors()) {
-				String name = error.getField();
-				String message = error.getDefaultMessage();
-				ErrorFieldDTO dto = new ErrorFieldDTO(name, message);
-				System.out.println(dto);
-				
-				list.add(dto);
-			}
-		}
-		System.out.println("유효성 검사 탈락 : " + list.size() + "건");
-        return list;
-	}
-//******************************** 백엔드 유효성 검사 결과-END ********************************************
-
-
+	
 	
 	
 	
@@ -508,8 +473,8 @@ public class MemberServiceImpl implements MemberService {
 	
 //********************************** 프로필 사진 가져오기 *******************************************
 	@Override
-	public List<ProfilePhoto> getProfilePhotoList(int memberId) {
-		List<ProfilePhoto> list = memberMapper.selectProfilePhotoList(memberId);
+	public List<ProfilePhoto> getProfilePhotoList(HttpServletRequest req) {
+		List<ProfilePhoto> list = memberMapper.selectProfilePhotoList(getSessionUserId(req));
 		System.out.println(list.size() + "개의 프로필 사진이 등록되어 있습니다.");
 		
 		return list;
@@ -522,7 +487,7 @@ public class MemberServiceImpl implements MemberService {
 	@Transactional
 	@Override
 	public boolean addProfilePhoto(MultipartFile photoFile, HttpServletRequest req) {
-		int memberId = (int)req.getSession().getAttribute("userId");
+		int memberId = getSessionUserId(req);
 		String defaultPath = req.getServletContext().getRealPath("/");
 		  
 	      //파일 기본경로 _ 상세경로
@@ -590,12 +555,8 @@ public class MemberServiceImpl implements MemberService {
 				System.out.println("프로필 사진 등록 중에 오류 발생");
 				return false;
 			}
-			if(memberMapper.updateMemberProfilePhotoPath(memberId) != 1) { // 회원 테이블에 변동 사항 저장
-				System.out.println("프로필 사진 변동 사항을 회원 테이블에 저장 중에 오류 발생");
-				return false;
-			}
 				// 문제 없이 모든 작업을 마쳤으면
-			refreshUserSession(req, memberId); // 세션을 갱신
+			refreshUserSession(req); // 세션을 갱신
 			
 			System.out.println("프로필 사진 등록(변경)을 완료했습니다.");
 			return true;
@@ -607,8 +568,9 @@ public class MemberServiceImpl implements MemberService {
 //********************************** 프로필 사진 삭제 *******************************************
 	@Transactional
 	@Override
-	public boolean deleteProfilePhoto(HttpServletRequest req, int photoId) {
-		int memberId = (int)req.getSession().getAttribute("userId");
+	public boolean deleteProfilePhoto(HttpServletRequest req) {
+		int memberId = getSessionUserId(req);
+		int photoId = Integer.parseInt(req.getParameter("photoId"));
 		
 		if(memberMapper.deleteProfilePhoto(photoId) != 1) {
 			System.out.println("프로필 사진 삭제 중에 오류 발생");
@@ -619,24 +581,14 @@ public class MemberServiceImpl implements MemberService {
 			if(memberMapper.updateAutoProfile(memberId) != 1) { // 대체에 실패
 				System.out.println("프로필 사진 삭제 이후 대체 중에 오류 발생");
 				return false;
-			} else { // 대체에 성공
-				System.out.println(photoId + "번 프로필 사진 삭제 + 대체를 완료했습니다.");
-				if(memberMapper.updateMemberProfilePhotoPath(memberId) != 1) {
-					System.out.println("결과를 회원 테이블에 저장 중에 오류 발생");
-					return false;
-				}
 			}
+			System.out.println(photoId + "번 프로필 사진 삭제 + 대체를 완료했습니다.");
 		} else { // 없으면
 			System.out.println(photoId + "번 프로필 사진 삭제를 완료했습니다.");
-			if(memberMapper.updateMemberProfilePhotoPath(memberId) != 1) {
-				System.out.println("결과(NULL)를 회원 테이블에 저장 중에 오류 발생");
-				return false;
-			}
 		}
 			// 문제 없이 모든 작업을 마쳤으면
-		refreshUserSession(req, memberId); // 세션을 갱신
+		refreshUserSession(req); // 세션을 갱신
 		
-		System.out.println("회원 테이블에 결과 저장 완료.");
 		return true;
 	}
 //********************************** 프로필 사진 삭제-END *******************************************
@@ -646,8 +598,9 @@ public class MemberServiceImpl implements MemberService {
 //********************************** 프로필 사진 변경 *******************************************
 	@Transactional
 	@Override
-	public boolean changeProfilePhoto(HttpServletRequest req, int photoId) {
-		int memberId = (int)req.getSession().getAttribute("userId");
+	public boolean changeProfilePhoto(HttpServletRequest req) {
+		int memberId = getSessionUserId(req);
+		int photoId = Integer.parseInt(req.getParameter("photoId"));
 		
 		if(memberMapper.updateIsProfileN(memberId) != 1) {
 			System.out.println("프로필 사진 변경 사전 작업 중에 오류 발생");
@@ -657,16 +610,10 @@ public class MemberServiceImpl implements MemberService {
 			System.out.println("프로필 사진 변경 중에 오류 발생");
 			return false;
 		}
-		System.out.println("프로필 사진 변경을 완료했습니다.");
-		
-		if(memberMapper.updateMemberProfilePhotoPath(memberId) != 1) {
-			System.out.println("결과를 회원 테이블에 저장 실패");
-			return false;
-		}
 			// 문제 없이 모든 작업을 마쳤으면
-		refreshUserSession(req, memberId);
+		refreshUserSession(req); // 세션 갱신
 		
-		System.out.println("결과를 회원 테이블에 저장 성공");
+		System.out.println(photoId + "번 사진으로 프로필 사진을 변경했습니다.");
 		return true;
 	}
 //********************************** 프로필 사진 변경-END *******************************************
@@ -677,11 +624,75 @@ public class MemberServiceImpl implements MemberService {
 	
 
 	
+
+	
+	
+	
+	
+	
 	
 
 
 
+
 	
+	
+	
+	
+//************************** 로그인 세션(user)의 회원정보 ID 검색 ***************************************
+	public static int getSessionUserId(HttpServletRequest req) {
+		return ((Member)req.getSession().getAttribute("user")).getId();
+	}
+//************************ 로그인 세션(user)의 회원정보 ID 검색-END ************************************
+	
+	
+//********************************** session 갱신 ********************************************
+	public void refreshUserSession(HttpServletRequest req) {
+		Member member = memberMapper.selectMember(getSessionUserId(req));
+		req.getSession().setAttribute("user", member); // session을 갱신
+		System.out.println("session 갱신 완료.");
+	}
+//******************************** session 갱신-END ******************************************
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//******************************** 백엔드 유효성 검사 결과 ********************************************
+	@Override
+	public List<ErrorFieldDTO> validationResult(Errors errors) {
+		ArrayList<ErrorFieldDTO> list = new ArrayList<>();
+		
+		if(errors.hasErrors()) {
+			for(FieldError error : errors.getFieldErrors()) {
+				String name = error.getField();
+				String message = error.getDefaultMessage();
+				ErrorFieldDTO dto = new ErrorFieldDTO(name, message);
+				System.out.println(dto);
+				
+				list.add(dto);
+			}
+		}
+		System.out.println("유효성 검사 탈락 : " + list.size() + "건");
+        return list;
+	}
+//******************************** 백엔드 유효성 검사 결과-END ********************************************
+
+
+
 	
 
 	

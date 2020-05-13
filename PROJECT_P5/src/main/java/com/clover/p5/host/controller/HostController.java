@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.clover.p5.host.dto.Host;
 import com.clover.p5.host.dto.HostPhoto;
+import com.clover.p5.host.dto.HostingDTO;
 import com.clover.p5.host.service.HostService;
+import com.clover.p5.member.service.MemberServiceImpl;
 
 
 @Controller
@@ -38,12 +41,36 @@ public class HostController {
 	@RequestMapping("/host/hostingStatus")
 	public String hostingStatus(int hostId, Model model) {
 		if(hostId == 0) { // '새로 등록'을 선택했으면
-			return "forward:registration/reset";
+			return "redirect:registration/roomType";
 		}
 			// 등록중(미완료)를 선택했으면 해당 호스트ID를 가지고 이동
 		model.addAttribute("hostId", hostId);
 		return "host/hostingStatus";
 	}
+	
+	// 호스트 등록중 목록 검색
+	@RequestMapping("/host/getHostingList")
+	@ResponseBody
+	public List<HostingDTO> getHostingList(HttpServletRequest req) {
+		return hostService.getHostingList(MemberServiceImpl.getSessionUserId(req));
+	}
+	
+	// 호스트 수정 페이지 본인 식별
+	@RequestMapping("/ajax/isIdentified")
+	@ResponseBody
+	public boolean isIdentified(HttpServletRequest req) {
+		return hostService.isIdentified(req);
+	}
+	
+	
+	@RequestMapping("/host/*/getHost")
+	@ResponseBody
+	public Host getHost(int hostId) {
+		return hostService.getHost(hostId);
+	}
+	
+	
+	
 	
 	
 	
@@ -63,13 +90,13 @@ public class HostController {
 	@RequestMapping("/ajax/addHostPhoto") // 사진 추가
 	@ResponseBody
 	public boolean addHostPhoto(List<MultipartFile> photoFiles, HttpServletRequest req) {
-		return hostService.insertHostPhoto(77, photoFiles, req);
+		return hostService.insertHostPhoto(photoFiles, req);
 	}
 	
 	@RequestMapping("/ajax/deleteHostPhoto") // 사진 삭제
 	@ResponseBody
-	public boolean deleteHostPhoto(int hostPhotoId) {
-		return hostService.deleteHostPhoto(hostPhotoId);
+	public boolean deleteHostPhoto(HttpServletRequest req) {
+		return hostService.deleteHostPhoto(req);
 	}
 	
 	@RequestMapping("/ajax/updateHostPhotoSort") // 사진 정렬 내용 적용
@@ -87,6 +114,109 @@ public class HostController {
 	
 	
 	
+	
+		// photo.jsp로 이동
+	@RequestMapping("/host/registration/photo")
+	public String photo(int hostId, Model model) {
+		model.addAttribute("hostId", hostId);
+		return "host/registration/step2/photo";
+	}	// description.jsp로 이동
+	@RequestMapping("/host/registration/description")
+	public String description(int hostId, Model model) {
+		model.addAttribute("hostId", hostId);
+		return "host/registration/step2/description";
+	}	// name.jsp로 이동
+	@RequestMapping("/host/registration/name")
+	public String name(int hostId, Model model) {
+		model.addAttribute("hostId", hostId);
+		return "host/registration/step2/name";
+	}
+	
+	
+	
+		// stayDate.jsp로 이동
+	@RequestMapping("/host/registration/stayDate")
+	public String stayDate(int hostId, Model model) {
+		model.addAttribute("hostId", hostId);
+		return "host/registration/step3/stayDate";
+	}	// calendar.jsp로 이동
+	@RequestMapping("/host/registration/calendar")
+	public String calendar(int hostId, Model model) {
+		model.addAttribute("hostId", hostId);
+		return "host/registration/step3/calendar";
+	}	// price.jsp로 이동
+	@RequestMapping("/host/registration/price")
+	public String price(int hostId, Model model) {
+		model.addAttribute("hostId", hostId);
+		return "host/registration/step3/price";
+	}
+	@RequestMapping("/host/registration/finish")
+	public void finish(int hostId, Model model) {
+		model.addAttribute("hostId", hostId);
+		return;
+		//return "host/registration/finish";
+	}
+	
+	
+		// roomType.jsp로 이동
+	@RequestMapping("/host/modification/roomType")
+	public String roomType2(int hostId, Model model) {
+		model.addAttribute("hostId", hostId);
+		return "host/modification/step1/roomType";
+	}	// roomCount.jsp로 이동
+	@RequestMapping("/host/modification/roomCount")
+	public String roomCount2(int hostId, Model model) {
+		model.addAttribute("hostId", hostId);
+		return "host/modification/step1/roomCount";
+	}	// address.jsp로 이동
+	@RequestMapping("/host/modification/address")
+	public String address2(int hostId, Model model) {
+		model.addAttribute("hostId", hostId);
+		return "host/modification/step1/address";
+	}	// facilities.jsp로 이동
+	@RequestMapping("/host/modification/facilities")
+	public String facilities2(int hostId, Model model) {
+		model.addAttribute("hostId", hostId);
+		return "host/modification/step1/facilities";
+	}
+	
+	
+	
+		// photo.jsp로 이동
+	@RequestMapping("/host/modification/photo")
+	public String photo2(int hostId, Model model) {
+		model.addAttribute("hostId", hostId);
+		return "host/modification/step2/photo";
+	}	// description.jsp로 이동
+	@RequestMapping("/host/modification/description")
+	public String description2(int hostId, Model model) {
+		model.addAttribute("hostId", hostId);
+		return "host/modification/step2/description";
+	}	// name.jsp로 이동
+	@RequestMapping("/host/modification/name")
+	public String name2(int hostId, Model model) {
+		model.addAttribute("hostId", hostId);
+		return "host/modification/step2/name";
+	}
+	
+	
+	
+		// stayDate.jsp로 이동
+	@RequestMapping("/host/modification/stayDate")
+	public String stayDate2(int hostId, Model model) {
+		model.addAttribute("hostId", hostId);
+		return "host/modification/step3/stayDate";
+	}	// calendar.jsp로 이동
+	@RequestMapping("/host/modification/calendar")
+	public String calendar2(int hostId, Model model) {
+		model.addAttribute("hostId", hostId);
+		return "host/modification/step3/calendar";
+	}	// price.jsp로 이동
+	@RequestMapping("/host/modification/price")
+	public String price2(int hostId, Model model) {
+		model.addAttribute("hostId", hostId);
+		return "host/modification/step3/price";
+	}
 	
 	
 	

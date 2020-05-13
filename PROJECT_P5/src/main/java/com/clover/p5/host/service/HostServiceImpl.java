@@ -13,11 +13,16 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.clover.p5.host.dto.Host;
 import com.clover.p5.host.dto.HostPhoto;
 import com.clover.p5.host.dto.HostPhotoVO;
+import com.clover.p5.host.dto.HostingDTO;
+import com.clover.p5.host.dto.NewHostDTO;
 import com.clover.p5.host.mapper.HostMapper;
+import com.clover.p5.member.service.MemberServiceImpl;
 
 @Service
 public class HostServiceImpl implements HostService {
@@ -44,8 +49,8 @@ public class HostServiceImpl implements HostService {
 
 //********************************** 호스트 사진 등록 ***********************************************
 	@Override
-	public boolean insertHostPhoto(int hostId, List<MultipartFile> photos, HttpServletRequest request) {
-		
+	public boolean insertHostPhoto(List<MultipartFile> photos, HttpServletRequest request) {
+	  int hostId = Integer.parseInt(request.getParameter("hostId"));
 	  String defaultPath = request.getServletContext().getRealPath("/");
 	  
       //파일 기본경로 _ 상세경로
@@ -130,15 +135,26 @@ public class HostServiceImpl implements HostService {
 
 
 
-//********************************** 호스트 사진 삭제 ***********************************************
+//********************************** 호스트 사진 삭제(수정 필요) ***********************************************
+	@Transactional
 	@Override
-	public boolean deleteHostPhoto(int hostPhotoId) {
-		if(hostMapper.deleteHostPhoto(hostPhotoId) == 1) {
-			System.out.println(hostPhotoId + "번 사진 삭제 성공");
-			
-			return true; // 삭제 성공
+	public boolean deleteHostPhoto(HttpServletRequest req) {
+		int photoId = Integer.parseInt(req.getParameter("photoId"));
+		int photoOrder = Integer.parseInt(req.getParameter("photoOrder"));
+		int photoCount = Integer.parseInt(req.getParameter("photoCount"));
+		int hostId = Integer.parseInt(req.getParameter("hostId"));
+		if(hostMapper.deleteHostPhoto(photoId) != 1) {
+			System.out.println(photoId + "번 사진 삭제 실패");
+			return false;
 		}
-		return false; // 삭제 실패
+		if(photoOrder == 1 && photoCount > 1) { // 삭제한 사진이 커버사진이고 다른 사진이 존재했을 때
+			if(hostMapper.updateCoverPhotoOrder(hostId) != 1) {
+				System.out.println("커버 사진 order 대체 실패");
+				return false;
+			}
+		}
+		System.out.println(photoId + "번 사진 삭제 성공");
+		return true; // 삭제 성공
 	}
 //********************************** 호스트 사진 삭제-END ***********************************************
 	
@@ -170,6 +186,8 @@ public class HostServiceImpl implements HostService {
 		return true;
 	}
 //**************************** 대표 사진 변경-END ***************************************	
+
+
 	
 	
 	
@@ -178,11 +196,53 @@ public class HostServiceImpl implements HostService {
 	
 	
 	
-	
-	
-	
-	
+
 	@Override
+	public int completeStep1(NewHostDTO newHost) {
+		if(hostMapper.insertHost(newHost) == 1) {
+			System.out.println("newHost를 DB에 저장했습니다.");
+				// 작성자 ID로 방금 DB에 등록된 호스트의 ID를 검색
+			return hostMapper.selectNewHostId(newHost.getMemberId());
+		}
+		System.out.println("newHost를 DB에 저장 실패했습니다.");
+		return 0;
+	}
+
+
+
+	@Override
+	public Host getHost(int hostId) {
+		Host host = hostMapper.selectHost(hostId);
+		System.out.println("=============== " + hostId + "번 호스트 ==============");
+		System.out.println(host);
+		System.out.println("===================================");
+		return host;
+	}
+
+
+
+	@Override
+	public List<HostingDTO> getHostingList(int memberId) {
+		List<HostingDTO> list = hostMapper.selectHostingList(memberId);
+		System.out.println(memberId + "번 회원의 등록중인 호스트 : " + list.size() + "개");
+		return list;
+	}
+
+
+
+	@Override
+	public boolean isIdentified(HttpServletRequest req) {
+		int hostId = Integer.parseInt(req.getParameter("hostId"));
+		int memberId = MemberServiceImpl.getSessionUserId(req);
+		if(hostMapper.selectIsIdentified(hostId, memberId) != 1) {
+			return false;
+		}
+		return true;
+	}
+	
+	
+	
+	/*@Override
 	public boolean insertBlocking(int hostId, String blockingDate) {
 		// 날짜를 배열에 담는다
 		String[] arrBlockingDate = blockingDate.split(",");
@@ -200,7 +260,7 @@ public class HostServiceImpl implements HostService {
 		
 		System.out.println("예약 차단일 저장 중에 오류 발생");
 		return false;
-	}
+	}*/
 
 
 

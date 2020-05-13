@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="./modifyRoomCount.css" />
 </head>
 <body>
+<input type="hidden" id="hostId" value="${hostId }" />
 	<%@include file="../headerStep.jsp"%>
 
 	<div id="wrap">
@@ -45,11 +46,12 @@
 		<!--index.jsp랑 똑같음  침대개수는 0이 낮은값 나머지는 1이 낮은값 그이상을줄일수 없음 -->
 
 		<div class="btn-block">
-			<a href="hostStatus.jsp">이전</a>
-			<button id="roomCountNextBtn">다음</button>
+			<a href="./roomType?hostId=${hostId }">이전</a>
+			<a href="./address?hostId=${hostId }">다음</a>
+			<!-- <button id="roomCountNextBtn">다음</button> -->
 		</div>
 	</div>
-
+<script src="/p5/js/host.js?v=<%=System.currentTimeMillis() %>"></script>
 </body>
 
 <script>

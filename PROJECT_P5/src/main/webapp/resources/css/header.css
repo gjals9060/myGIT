@@ -1,23 +1,23 @@
 @charset "UTF-8";
-
+/* 
 #wrap {
 	max-width: 1100px;
 	width: 100%;
 	margin: 0 auto;
 	vertical-align: middle;
-}
+} */
 
 header {
 	display: grid !important;
-	grid-template-columns: 15% 70% 15%;
+	grid-template-columns: 15% 73% 12%;
 	top: 0px;
 	background: white;
-	width: 100%;
 	box-shadow: 0px 0px;
 	z-index: 9;
 	text-align: center;
 	vertical-align: middle;
-	margin-top: 10px;
+	padding: 10px 0;
+	width: 100%;
 }
 
 herder>* {
@@ -26,6 +26,7 @@ herder>* {
 
 .title-logo-img {
 	height: 100px;
+	margin: 0 auto;
 }
 
 #titleLogoImg {
@@ -45,62 +46,91 @@ herder>* {
 	flex-wrap: wrap;
 	justify-content: space-around;
 	margin-top: 10px;
+	width: 100%;
+	margin: auto;
 }
 
 /* 검색 input  */
 
 .input-text {
-	height: 30px;	
+	/* height: 30px;	 */
 }
+
+.inputWrap {
+	display: block;
+	/* width: -webkit-fill-available; */ 	
+}
+
+.pad {
+	padding-left: 20px;	
+}
+
 .input-info input[type="text"] {
-	width: -webkit-fill-available;
-    height: 30%;
+    height: 30px;
     vertical-align: middle;
     text-align: center;
     margin: 5px 0px;
     margin-top: 10px;
-    padding-right: 15px;
     border: none;
     border-bottom: 2px solid black;
+    padding-right: 10px;
+}
+
+.input-serach-value {
+	min-width: 150px;
+	width: 70%;	
+}
+
+.guestCount_input {
+	max-width: 90px;
 }
 
 .input-location-block{
-	width: 40%;
+/* 	width: 40%; */
+	flex: 15 auto;
+	margin: auto 0;
 }
 
 .input-date-block {
-	width: 30%;
-	min-width: 200px;
+/* 	width: 30%; */
+	flex: 5 auto;
+	margin: auto 0;
+	max-width: 250px;
+/* 	min-width: 200px; */
 }
 
 .input-guestCount-block {
-	width: 15%;
-	min-width: 85px;
+/* 	width: 15%; */
+	flex: 0 auto;
+	margin: auto 0;
+/* 	min-width: 85px; */
 }
 
 .useradd-login-form {
-	margin: auto 0px;
+	margin: auto 10px;
 }
 
 /* 로그인 회원가입 버튼 */
 .btn {
-	width: 100px;
+	width: 70%;
+	min-width: max-content;
 	padding: 10px 16px;
 	border: 0;
 	border-radius: 100px; outline : none;
 	transition: 0.3s;
 	outline: none;
+	font-size: 80%
 }
 
 .btn:hover {
 	border: 1px solid #bbb;
 }
 
-/* 인원 + 버튼  ,- 벼튼*/
 .input-info button, .input-info input[type="button"] {
 	outline: none;
 	background: none;
-	width: 20px;
+	width: 15px;
+	height : 15px;
 	border: none;
 	text-align: center;
 	font-size: 20px;
@@ -108,6 +138,7 @@ herder>* {
 	color: #bbb;
 	padding: 0;
 	margin: 0;
+	position: relative;
 }
 
 .input-info input[type="button"] {
@@ -117,35 +148,50 @@ herder>* {
 }
 
 .fa-xs {
-    font-size: 2px !important;
+    font-size: 50% !important;
 }
 
-#dateReset, #guestCountReset, #decreaseQuantity, #increaseQuantity {
-	position: relative;
-	top: -33px;
-	width: 20px;
-	height: 20px;
+#searchBtn {
+	flex: 10 auto;
+	max-width: 100px;
+	font-family: "FontAwesome";
+	border-radius: 15px;
+	background-color: #E51E51;
+	color: WHITE;
+/* 	width: 8%; */
+	outline: none;
+	font-size: 150%;
 }
 
-#dateReset {
-	left: 40%;	
-}
-
-#guestCountReset {
-	left: 71%;
-}
-
-#decreaseQuantity{
-    left: -38%;
-    top: -36px;
+#decreaseQuantity {
+	top: -4px;
+	left: 26px;
 }
 
 #increaseQuantity {
-	left: -1%;
-	top: -36px;	
+    top: -4px;
+    left: -41px;
 }
-    
 
+#dateReset {
+	top: 1px;
+	left: -16px;	
+}
+
+#guestCountReset {
+	top: 1px;
+	left: -41px;
+}
+
+
+/* 
+#dateReset, #guestCountReset {
+	position: relative;
+	top: -33px;
+	left: 40%;
+	
+}
+ */
 
 /* 이름을 눌렀을 때 dropdown */
 .user-drop-down-btn {
@@ -284,15 +330,6 @@ to {
 }
 
 /* 예약 */
-#searchBtn {
-	font-family: "FontAwesome";
-	border-radius: 15px;
-	background-color: #E51E51;
-	color: WHITE;
-	width: 8%;
-	outline: none;
-	font-size: 150%;
-}
 
 #userImg {
 	border-radius: 50%;
@@ -303,8 +340,52 @@ to {
 	object-position: center;
 }
 
+@media screen and (max-width: 880px) {
+	
+	header {
+		display: block !important;
+		max-width: 880px;
+		padding: 10px;
+		margin: 0 auto;
+	}
+	
+	.input-search-value-input {
+		margin: 20px 0;
+	}
+	
+	#searchBtn { 
+	    margin-top: 20px;
+	    min-width: 300px;
+	    max-width: 80%;
+	    height: 40px;
+	}
+	
+	.useradd-login-form {
+		position: absolute;
+		top: 0;
+		right: 0;
+	}
+}
+/* 
 @media screen and (max-width: 768px) {
 }
-
+ */
+ 
 @media screen and (max-width : 480px) {
+	
+	header {
+		display: block !important;
+		max-width: 480px;
+		padding: 10px;
+		margin: 0 auto;
+	}
+	
+	.input-search-value-input {
+		display: grid;
+	}
+	
+	.input-location-block {
+		min-width: 300px; 
+	} 
+	
 }

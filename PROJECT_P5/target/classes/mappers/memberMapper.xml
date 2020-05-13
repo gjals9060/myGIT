@@ -16,8 +16,7 @@
 			#{birthDate},
 			#{mobilePhone},
 			'N',
-			TO_DATE(#{registrationDate}, 'YYYY-MM-DD HH24:MI:SS'),
-			NULL
+			TO_DATE(#{registrationDate}, 'YYYY-MM-DD HH24:MI:SS')
 																	)
 	</insert>
 	
@@ -28,8 +27,9 @@
 	
 	<!-- 로그인에만 사용 -->
 	<select id="selectMemberByEmail" parameterType="String" resultType="Member">
-		SELECT *
-		FROM member
+		SELECT member.*, profile_photo.path AS profile_photo_path
+		FROM member LEFT JOIN profile_photo ON member.id = profile_photo.member_id
+												AND profile_photo.is_profile = 'Y'
 		WHERE email = #{email}
 	</select>
 	
@@ -37,13 +37,14 @@
 	<select id="selectMemberId" parameterType="String" resultType="int">
 		SELECT id
 		FROM member
-		WHERE email = #{userEmail}
+		WHERE email = #{email}
 	</select>
 	<!-- 임시 로그인, session 갱신 등에 사용 -->
-	<select id="selectMember" parameterType="int" resultType="Member">
-		SELECT *
-		FROM member
-		WHERE id = #{userId}
+	<select id="selectMember" resultType="Member">
+		SELECT member.*, profile_photo.path AS profile_photo_path
+		FROM member LEFT JOIN profile_photo ON member.id = profile_photo.member_id
+												AND profile_photo.is_profile = 'Y'
+		WHERE member.id = #{memberId}
 	</select>
 	
 	
@@ -55,7 +56,7 @@
 	<update id="updatePassword">
 		UPDATE member
 		SET password = #{newPassword}
-		WHERE id = #{userId}
+		WHERE id = #{memberId}
 	</update>
 
 
@@ -67,17 +68,17 @@
 
 
 	<!-- 휴대전화 인증 여부를 검색 -->
-	<select id="selectMobileAuthentication" parameterType="int" resultType="String">
+	<select id="selectMobileAuthentication" resultType="String">
 		SELECT mobile_authentication
 		FROM member
-		WHERE id = #{userId}
+		WHERE id = #{memberId}
 	</select>
 	
 	<!-- 휴대전화 인증 결과를 DB에 적용 -->
-	<update id="updateMobileAuthentication" parameterType="int">
+	<update id="updateMobileAuthentication">
 		UPDATE member
 		SET mobile_authentication = 'Y'
-		WHERE id = #{userId}
+		WHERE id = #{memberId}
 	</update>
 		
 		
@@ -122,7 +123,7 @@
 	<delete id="deleteProfilePhoto">
 		DELETE
 		FROM profile_photo
-		WHERE id = #{photoId}
+		WHERE id = #{profilePhotoId}
 	</delete>
 	
 		<!-- 프로필 삭제 이후 빈자리 채우기 -->
@@ -147,19 +148,11 @@
 	<update id="updateIsProfileY">
 		UPDATE profile_photo
 		SET is_profile = 'Y'
-		WHERE id = #{photoId}
+		WHERE id = #{profilePhotoId}
 	</update>
 
-	<!-- 프로필 사진 변경 이후 회원 테이블에 새 경로 저장 -->
-	<update id="updateMemberProfilePhotoPath">
-		UPDATE member
-		SET profile_photo_path = (			<!-- 서브쿼리 결과가 없으면 NULL로 저장됨^^(노렸음) -->
-									SELECT path
-									FROM profile_photo
-									WHERE member_id = #{memberId} AND is_profile = 'Y'
-																						)
-		WHERE id = #{memberId}
-	</update>
+
+
 
 
 

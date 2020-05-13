@@ -78,9 +78,9 @@ span {
 }
 </style>
 </head>
-<body>
+<body>	
+<%@include file="modification/headerStep.jsp" %>
 
-	<%@include file="../header.jsp" %>
 
 	<div id="wrap">
 		<h2>등록한 숙소 몇 개</h2>

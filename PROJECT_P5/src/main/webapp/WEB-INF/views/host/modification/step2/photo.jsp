@@ -4,13 +4,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>사진 등록</title>
+<title>사진 수정</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
 <script src="//code.jquery.com/jquery-1.12.4.js"></script>
 <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-<link rel="stylesheet" href="css/reset.css" />
+<link rel="stylesheet" href="/p5/css/reset.css" />
 <style type="text/css">
 #wrap {
    width: 90%;
@@ -221,6 +221,8 @@ img:hover {
 </style>
 </head>
 <body>
+
+<%-- <%@include file="../headerStep.jsp"%> --%>
    <div id="wrap">
          
       <div class="photoUpload">
@@ -248,6 +250,7 @@ img:hover {
       
       
       <form id="uploadPhoto">
+   		 <input type="hidden" id="hostId" name="hostId" value="${hostId }" />
          <input type="file" id="photoFiles" name="photoFiles" multiple
           accept="image/*" style="display: none" />
       </form>
@@ -262,31 +265,31 @@ img:hover {
 
        <div class="modalImg">
             <div class="modalImgNumber">1 / 8</div>
-            <img src="img/bedroom.jpg" onclick="modalOff()">
+            <img src="/p5/img/bedroom.jpg" onclick="modalOff()">
          </div>
          <div class="modalImg">
             <div class="modalImgNumber">2 / 8</div>
-            <img src="img/berry.jpg" onclick="modalOff()">
+            <img src="/p5/img/berry.jpg" onclick="modalOff()">
          </div>
          <div class="modalImg">
             <div class="modalImgNumber">3 / 8</div>
-            <img src="img/flower.jpg" onclick="modalOff()">
+            <img src="/p5/img/flower.jpg" onclick="modalOff()">
          </div>
          <div class="modalImg">
             <div class="modalImgNumber">4 / 8</div>
-            <img src="img/coffee.jpg" onclick="modalOff()">
+            <img src="/p5/img/coffee.jpg" onclick="modalOff()">
          </div>
          <div class="modalImg">
             <div class="modalImgNumber">5 / 8</div>
-            <img src="img/bread.jpg" onclick="modalOff()">
+            <img src="/p5/img/bread.jpg" onclick="modalOff()">
          </div>
          <div class="modalImg">
             <div class="modalImgNumber">6 / 8</div>
-            <img src="img/hair.png" onclick="modalOff()">
+            <img src="/p5/img/hair.png" onclick="modalOff()">
          </div>
          <div class="modalImg">
             <div class="modalImgNumber">7 / 8</div>
-            <img src="img/away.jpg" onclick="modalOff()">
+            <img src="/p5/img/away.jpg" onclick="modalOff()">
          </div>
 
          <div class="modalImgSlideButton">
@@ -302,8 +305,39 @@ img:hover {
 
    </div>
    <!-- wrap end -->
-</body>
+   <a href="../hostingStatus?hostId=${hostId }">이전</a>
+        <a href="description?hostId=${hostId }">다음</a>
 
+<script>
+
+	// 2단계의 헤더 내용을 변경한다. 
+	
+	//2단계를 설명하는 설명문을 넣음. 
+	var stepDescription = $('.step1-description');
+	stepDescription.empty(); // 값을 지우고
+	stepDescription.text('2단계 : 상세정보를 입력하세요'); // 값을 넣고
+
+	/// nav안에 있는 내용을 지움
+	$('nav *').remove();
+
+	//nav grid를 다시 설정
+	var nav = $('nav');
+
+	//3칸씩 전체 넓이에 맞춰서 균등분할
+	nav.css('grid-template-columns', 'repeat(3,1fr)');
+
+	//nav의 내용에 2단계 tab을 추가
+	nav.append(
+		'<a  class="step1-tab" href="./modifyPhoto.jsp" id="tabPhoto">사진등록</a>'
+		+ '<a  class="step1-tab" href="./modifyDescription.jsp" id="tabDescription">숙소설명</a>'
+		+ '<a  class="step1-tab" href="./modifyTitle.jsp" id="tabTitle">숙소명</a>'
+	);
+	
+	// 사진등록 페이지라면 
+	$('#tabPhoto').css('background','#bbb');
+	
+	
+</script>
 <script type="text/javascript">
 
 function apply(){
@@ -318,13 +352,13 @@ function apply(){
       });
 
    var menu = '<span class="photoButton first">'
-      + '<button onclick="deleteHostPhoto($(this).parent().prev().attr(\'data-id\'))">'
+      + '<button onclick="deleteHostPhoto($(this).parent().prev().attr(\'data-id\'), $(this).parent().prev().attr(\'data-order\'))">'
         + '<i class="fas fa-trash-alt fa-2x"></i></button>'
       + '<button onclick="modalOn($(this).parent().prev().index())"><i class="fas fa-external-link-alt fa-2x"></i></button></span>';
    var menu2 = '<span class="photoButton">'
         + '<button onclick="changeCoverImage($(this).parent().prev().attr(\'data-order\'))">'
         + '<i class="fas fa-check"></i></button>'
-      + '<button onclick="deleteHostPhoto($(this).parent().prev().attr(\'data-id\'))">'
+      + '<button onclick="deleteHostPhoto($(this).parent().prev().attr(\'data-id\'), $(this).parent().prev().attr(\'data-order\'))">'
         + '<i class="fas fa-trash-alt"></i></button>'
       + '<button onclick="modalOn($(this).parent().prev().index())"><i class="fas fa-external-link-alt"></i></button></span>';
       
@@ -427,8 +461,24 @@ function apply(){
        }
        
 //**************************** 백엔드 기능.. ***********************************************************
-
+$(window).bind("pageshow", function (event) {
+		$.ajax({
+			type : "POST",
+			url : "/p5/ajax/isIdentified",
+			data : "hostId=" + $('#hostId').val(),
+			success : function(result){
+				if(!result){
+					alert("접근 권한이 없는 페이지입니다.");
+					location.replace("/p5"); // 홈으로 이동
+				}
+			},	
+			error : function(){
+				alert("접근 권한 확인에 실패..");
+			}
+		}); // AJAX-END
+});
 $(function(){
+	
    // 화면에 사진 출력
    showHostPhoto();
    
@@ -444,8 +494,8 @@ function showHostPhoto(){
    
    $.ajax({
       type: "POST",
-      url: 'ajax/getHostPhotoList',
-      data: 'hostId=' + 77,
+      url: '/p5/ajax/getHostPhotoList',
+      data: 'hostId=' + $('#hostId').val(),
       async: true,
       success: function (photoList) {
          if(!photoList.length){ // 출력할 사진이 없다면
@@ -454,7 +504,7 @@ function showHostPhoto(){
                // 큰 버튼 하나만
             var result =
                '   <label for="photoFiles">   '
-                  +'      <img src="img/imgUpload.png" alt="" class="addPhoto" width="900px" height="600px"/>   '
+                  +'      <img src="/p5/img/imgUpload.png" alt="" class="addPhoto" width="900px" height="600px"/>   '
                   +'    </label>   '
                    ;
               
@@ -503,7 +553,7 @@ function showHostPhoto(){
 //******************************** 꼬리 달기 ****************************************
             photoResult +=
             '   <label for="photoFiles">   '
-            +'      <img src="img/imgUpload2.png" alt="" class="addPhoto last" />   '
+            +'      <img src="/p5/img/imgUpload2.png" alt="" class="addPhoto last" />   '
             +'   </label>   '
             +'   </div>   '
             ;
@@ -529,7 +579,7 @@ function showHostPhoto(){
          apply(); // 기능 적용**
       },
       error: function (e) {
-         alert("통신 실패");
+         alert("통신 실패..");
       }
    });
 } // showHostPhoto-END
@@ -588,7 +638,7 @@ function fileDropDown(){
             
                // 확장자 유효성 검사
             for(i=0; i<files.length; i++){
-               if(!files[i].type.match("image/*")) {      
+               if(!files[i].type.match("image/*")) {
                     alert("이미지 파일만 가능합니다.");   
                     return;   
                 }
@@ -598,6 +648,7 @@ function fileDropDown(){
         }
         
         var formData = new FormData();
+        formData.append('hostId', $('#hostId').val());
         for(i=0; i<files.length; i++){
            formData.append('photoFiles', files[i]);
         }
@@ -612,7 +663,7 @@ function addHostPhoto(formData){
    $.ajax({
       
       type: "POST",
-      url: 'ajax/addHostPhoto',
+      url: '/p5/ajax/addHostPhoto',
       enctype: 'multipart/form-data', // 필수 
       data: formData, // 필수 
       processData: false, // 필수 
@@ -634,13 +685,18 @@ function addHostPhoto(formData){
 
 
    // 사진 삭제
-function deleteHostPhoto(hostPhotoId){
-//   alert(hostPhotoId);
-      
+function deleteHostPhoto(photoId, photoOrder){
+	   var params = {
+   			photoId : photoId,
+   			photoOrder : photoOrder,
+ 			photoCount : $(".inputPhoto").length,
+			hostId : $('#hostId').val()
+	   }
+ //   alert(JSON.stringify(params));
    $.ajax({
       type: "POST",
-      url: 'ajax/deleteHostPhoto',
-      data: 'hostPhotoId=' + hostPhotoId,
+      url: '/p5/ajax/deleteHostPhoto',
+      data: params,
       async: false,
       success: function (result) { // boolean 결과
          if(result){ // 성공
@@ -660,7 +716,7 @@ function updateHostPhotoSort(sortResult){
    
    $.ajax({
       type: "POST",
-      url: 'ajax/updateHostPhotoSort',
+      url: '/p5/ajax/updateHostPhotoSort',
       data: 'sortResult=' + sortResult,
       async: false,
       success: function (result) { // boolean 결과
@@ -686,7 +742,7 @@ function changeCoverImage(choiceOrder){
    
    $.ajax({
       type: "POST",
-      url: 'ajax/changeCoverImage',
+      url: '/p5/ajax/changeCoverImage',
       data: params,
       async: false,
       success: function (result) { // boolean 결과
@@ -705,5 +761,6 @@ function changeCoverImage(choiceOrder){
        
      
    </script>
+</body>
 
 </html>

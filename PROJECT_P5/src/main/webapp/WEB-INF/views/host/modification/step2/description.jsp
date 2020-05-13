@@ -4,31 +4,33 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>2단계-사진등록</title>
+<title>2단계-숙소설명</title>
+
 </head>
 <body>
+<input type="hidden" id="hostId" value="${hostId }" />
 	<%@include file="../headerStep.jsp"%>
-	
-	<!-- 사진이미지는 월요일에 정정  -->
+
 	<div id="wrap">
+		<h1>숙소설명을 수정합니다</h1>
 	
-	
-	
-	
+		<h3>숙소 설명</h3>
+		<textarea name="description" rows="10" cols="50"></textarea>
+		<h3>기타사항(선택)</h3>
+		<textarea name="descriptionEtc" rows="10" cols="50"></textarea>
+
 		<div class="btn-block">
-			<a href="">이전</a>
-			<button>다음</button>
+			<a href="./photo?hostId=${hostId }">이전</a>
+			<a href="./name?hostId=${hostId }">다음</a>
 		</div>
+		
+		
 	</div>
-
-
-
+<script src="/p5/js/host.js?v=<%=System.currentTimeMillis() %>"></script>
 </body>
-
 <script>
-
 	// 2단계의 헤더 내용을 변경한다. 
-	
+
 	//2단계를 설명하는 설명문을 넣음. 
 	var stepDescription = $('.step1-description');
 	stepDescription.empty(); // 값을 지우고
@@ -50,8 +52,8 @@
 		+ '<a  class="step1-tab" href="./modifyTitle.jsp" id="tabTitle">숙소명</a>'
 	);
 	
-	// 사진등록 페이지라면 
-	$('#tabPhoto').css('background','#bbb');
+	// 숙소 설명 탭에 색추가 
+	$('#tabDescription').css('background','#bbb');
 	
 	
 </script>

@@ -7,6 +7,7 @@
 <title>3단계-숙박일지정</title>
 </head>
 <body>
+<input type="hidden" id="hostId" value="${hostId }" />
 	<%@include file="../headerStep.jsp"%>
 	
 	<div id="wrap">
@@ -26,12 +27,12 @@
 		<div id="maximum-warning"></div>
 
 		<div class="btn-block">
-			<a href="">이전</a>
-			<button>다음</button>
+			<a href="../hostingStatus?hostId=${hostId }">이전</a>
+			<a href="./calendar?hostId=${hostId }">다음</a>
 		</div>
 	</div>
+<script src="/p5/js/host.js?v=<%=System.currentTimeMillis() %>"></script>
 </body>
-
 <script>
 	// 3단계의 헤더 내용을 변경한다. 
 
