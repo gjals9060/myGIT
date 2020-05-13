@@ -23,13 +23,49 @@
  <!--0부터 9까지 숫자를 입력하지않으면 ""로 replace됨  -->
     금액 <input type="text" name="price" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>  
  <div id="warning"></div>
- <input type="submit" value="다음" />
+<!--  <input type="submit" value="다음" /> -->
 <!-- </form> -->
 <a href="calendar?hostId=${hostId }">이전</a>
-	<a href="finish?hostId=${hostId }">완료</a>
+<button onclick="completeStep3()">완료</button>
+	<%-- <a href="finish?hostId=${hostId }">완료</a> --%>
 	
 	
 <script src="/p5/js/host.js?v=<%=System.currentTimeMillis() %>"></script>
+<script>
+function completeStep3(){
+	var price = $('input[name="price"]').val();
+	if(!price || price == 0){
+		alert("가격을 입력해주세요.");
+		$('input[name="price"]').val("");
+		$('input[name="price"]').focus();
+		return;
+	}
+	var params = {
+		hostId : $('#hostId').val(),
+		price : price
+	}
+	 $.ajax({
+		type : "POST",
+		url : "/p5/ajax/completeStep3",
+		data : params,
+		success : function(result){
+			if(result){
+				alert("호스트 등록 완료!");
+				location.href="finish?hostId=" + $('#hostId').val();
+			} else{
+				alert("완료 실패..");
+			}
+		},	
+		error : function(){
+			alert("통신에 실패..");
+		}
+	}); // AJAX-END 
+}
+
+
+
+
+</script>
  </body>
  
 </html>

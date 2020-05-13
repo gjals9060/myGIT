@@ -12,12 +12,46 @@
 <h3>숙소명</h3>
 <!--2단계마지막  -->
 <input type="text" name="name" placeholder="숙소 이름" id="inputText"/>
-<input type="submit" value="다음" />
  <a href="description?hostId=${hostId }">이전</a>
- <a href="../hostingStatus?hostId=${hostId }">다음</a>
+ <button onclick="completeStep2()">다음</button>
  
 <script src="/p5/js/jquery-3.4.1.js"></script>
 <script src="/p5/js/host.js?v=<%=System.currentTimeMillis() %>"></script>
+<script>
+function completeStep2(){
+	var name = $('input[name="name"]').val();
+	if(!name.trim()){
+		alert("숙소 이름을 입력해주세요.");
+		$('input[name="name"]').val("");
+		$('input[name="name"]').focus();
+		return;
+	}
+	var params = {
+		hostId : $('#hostId').val(),
+		name : name
+	}
+	$.ajax({
+		type : "POST",
+		url : "saveName",
+		data : params,
+		success : function(result){
+			if(result){
+				alert("호스트 등록 2단계 완료~");
+				location.href="../hostingStatus?hostId=" + $('#hostId').val();
+			} else{
+				alert("등록 2단계 완료 실패..");
+			}
+		},	
+		error : function(){
+			alert("통신에 실패..");
+		}
+	}); // AJAX-END
+}
+
+
+
+
+</script>
 </body>
 <!-- <script>
 $(document).on('keydown', '#inputText', function() {

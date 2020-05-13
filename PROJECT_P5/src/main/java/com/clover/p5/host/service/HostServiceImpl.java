@@ -241,6 +241,124 @@ public class HostServiceImpl implements HostService {
 	}
 	
 	
+
+
+
+	@Override
+	public boolean modifyRoomType(Host host) {
+		if(hostMapper.updateRoomType(host) == 1) {
+			System.out.println("roomType.jsp 수정 완료했습니다.");
+			return true;
+		}
+		System.out.println("roomType.jsp 수정 실패했습니다.");
+		return false;
+	}
+	@Override
+	public boolean modifyRoomCount(Host host) {
+		if(hostMapper.updateRoomCount(host) == 1) {
+			System.out.println("roomCount.jsp 수정 완료했습니다.");
+			return true;
+		}
+		System.out.println("roomCount.jsp 수정 실패했습니다.");
+		return false;
+	}
+	@Override
+	public boolean modifyAddress(Host host) {
+		if(hostMapper.updateAddress(host) == 1) {
+			System.out.println("address.jsp 수정 완료했습니다.");
+			return true;
+		}
+		System.out.println("address.jsp 수정 실패했습니다.");
+		return false;
+	}
+	@Override
+	public boolean modifyFacilities(Host host) {
+		if(hostMapper.updateFacilities(host) == 1) {
+			System.out.println("facilities.jsp 수정 완료했습니다.");
+			return true;
+		}
+		System.out.println("facilities.jsp 수정 실패했습니다.");
+		return false;
+	}
+	@Override
+	public boolean updateDescription(Host host) {
+		if(hostMapper.updateDescription(host) == 1) {
+			System.out.println("description.jsp 수정 완료했습니다.");
+			return true;
+		}
+		System.out.println("description.jsp 수정 실패했습니다.");
+		return false;
+	}
+	@Override
+	public boolean updateName(Host host) {
+		if(hostMapper.updateName(host) == 1) {
+			System.out.println("name.jsp 수정 완료했습니다.");
+			return true;
+		}
+		System.out.println("name.jsp 수정 실패했습니다.");
+		return false;
+	}
+	@Override
+	public boolean updateStayDate(Host host) {
+		if(hostMapper.updateStayDate(host) == 1) {
+			System.out.println("stayDate.jsp 수정 완료했습니다.");
+			return true;
+		}
+		System.out.println("stayDate.jsp 수정 실패했습니다.");
+		return false;
+	}
+	@Override
+	public boolean updatePrice(Host host) {
+		if(hostMapper.updatePrice(host) == 1) {
+			System.out.println("price.jsp 수정 완료했습니다.");
+			return true;
+		}
+		System.out.println("price.jsp 수정 실패했습니다.");
+		return false;
+	}
+
+
+
+	@Override
+	public boolean completeRegistration(int price, int hostId) {
+	/***
+	** 서버시간에 서울의 타임존을 적용한 DateTime을 얻는다.
+	***/
+		ZonedDateTime nowSeoul = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
+		String creationDate =
+			nowSeoul.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+										
+		if(hostMapper.updateCreationDate(price, creationDate, hostId) != 1) {
+			System.out.println("호스트 등록(3단계)을 완료하지 못했습니다.");
+			return false;
+		}
+		System.out.println("호스트 등록(3단계)을 완료했습니다.");
+		return true;
+	}
+	
+	
+	
+	public boolean modifyHost(int hostId) {
+		
+		if(hostMapper.selectCreationDate(hostId) != null) { // 등록 완료된 글이면
+		/***
+		 ** 서버시간에 서울의 타임존을 적용한 DateTime을 얻는다.
+		 ***/
+			ZonedDateTime nowSeoul = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
+			String modificationDate =
+				nowSeoul.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+			
+			if(hostMapper.updateModificationDate(modificationDate, hostId) == 1) {
+				System.out.println(hostId + "번 호스트 - 수정일 업데이트 완료.");
+				return true;
+			} else {
+				System.out.println(hostId + "번 호스트 - 수정일 업데이트 실패.");
+				return false;
+			}
+		}
+		System.out.println(hostId + "번 호스트 - 수정일 업데이트 불필요.(등록 미완료)");
+		return false;					
+	}
 	
 	/*@Override
 	public boolean insertBlocking(int hostId, String blockingDate) {
@@ -268,68 +386,7 @@ public class HostServiceImpl implements HostService {
 
 	
 	
-	
-	
-	/*@Transactional
-	@Override
-	public boolean insertHost(NewHostDTO newHostDto, HttpServletRequest request) {
-		
-	*//***
-	** 서버시간에 서울의 타임존을 적용한 DateTime을 얻는다.
-	***//*
-		ZonedDateTime nowSeoul = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
-		newHostDto.setCreationDate( // 필요한 형식으로 변경하여 세팅
-			nowSeoul.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
-																				);
-	*//***																	
-	** 호스트를 등록한다.
-	***//*
-		if(hostMapper.insertHost(newHostDto) == 1) { // 호스트 등록에 성공하면
-			
-			System.out.println("호스트 정보를 성공적으로 저장했습니다.");
-			
-			// 작성자 ID로 방금 DB에 등록된 호스트의 ID를 검색
-			int hostId = hostMapper.selectNewHostId(newHostDto.getMemberId());
-			// 서버와 DB에 저장할 사진파일 정보
-			List<MultipartFile> photos = newHostDto.getPhoto();
-			// DB에 저장할 예약 차단일 정보
-			String blockingDate = newHostDto.getBlockingDate();
-			
-		*//***
-		** 저장할 사진 파일이 있으면 서버와 DB에 저장한다.
-		***//*
-			if(photos.size() == 1 && photos.get(0).isEmpty()) { // 없으면
-				
-				System.out.println("업로드한 파일이 존재하지 않습니다.");
-				
-			} else { // 있으면 저장을 시도
-				
-				if(!insertHostPhoto(hostId, photos, request)) { // 문제 발생 시에만
-					return false;
-				}
-				
-			}
-			
-		*//***		계속해서..
-		** 등록할 예약불가 날짜가 있으면 DB에 저장한다.
-		***//*
-			if(blockingDate.isEmpty()) { // 없으면
-				
-				System.out.println("등록할 예약불가 날짜가 없습니다.");
-				return true; // 호스트 등록을 마침.
-				
-			} else { // 있으면 저장을 시도
-				
-				return insertBlocking(hostId, blockingDate);
-				// 결과 반환으로 호스트 등록을 마침.
-			}
-			
-		} // if(호스트 등록 성공)-END
-		
-		System.out.println("호스트 등록 실패");
-		return false;
-	}
-	*/
+
 	
 	
 	

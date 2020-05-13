@@ -69,7 +69,57 @@ public class HostController {
 		return hostService.getHost(hostId);
 	}
 	
+	@RequestMapping("/host/modification/saveRoomType")
+	@ResponseBody
+	public boolean saveRoomType(Host host) {
+		return hostService.modifyRoomType(host);
+	}
+	@RequestMapping("/host/modification/saveRoomCount")
+	@ResponseBody
+	public boolean saveRoomCount(Host host) {
+		return hostService.modifyRoomCount(host);
+	}
+	@RequestMapping("/host/modification/saveAddress")
+	@ResponseBody
+	public boolean saveAddress(Host host) {
+		return hostService.modifyAddress(host);
+	}
+	@RequestMapping("/host/modification/saveFacilities")
+	@ResponseBody
+	public boolean saveFacilities(Host host) {
+		return hostService.modifyFacilities(host);
+	}
 	
+	
+	@RequestMapping("/host/*/saveDescription")
+	@ResponseBody
+	public boolean saveDescription(Host host) {
+		return hostService.updateDescription(host);
+	}
+	@RequestMapping("/host/*/saveName")
+	@ResponseBody
+	public boolean saveName(Host host) {
+		return hostService.updateName(host);
+	}
+	
+	
+	@RequestMapping("/host/*/saveStayDate")
+	@ResponseBody
+	public boolean saveStayDate(Host host) {
+		return hostService.updateStayDate(host);
+	}
+	@RequestMapping("/host/modification/savePrice")
+	@ResponseBody
+	public boolean savePrice(Host host) {
+		return hostService.updatePrice(host);
+	}
+	
+	
+	@RequestMapping("ajax/completeStep3")
+	@ResponseBody
+	public boolean completeStep3(int price, int hostId) {
+		return hostService.completeRegistration(price, hostId);
+	}
 	
 	
 	
@@ -154,7 +204,6 @@ public class HostController {
 	public void finish(int hostId, Model model) {
 		model.addAttribute("hostId", hostId);
 		return;
-		//return "host/registration/finish";
 	}
 	
 	

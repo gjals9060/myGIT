@@ -20,12 +20,44 @@
 
 		<div class="btn-block">
 			<a href="./calendar?hostId=${hostId }">이전</a>
-			<a href="../hostingStatus?hostId=${hostId }">다음</a>
+			<button onclick="modifyPrice()">다음</button>
 		</div>
 	</div>
 	
 	
 	<script src="/p5/js/host.js?v=<%=System.currentTimeMillis() %>"></script>
+<script>
+function modifyPrice(){
+	var price = $('input[name="price"]').val();
+	if(!price || price == 0){
+		alert("수정 가격을 입력해주세요.");
+		$('input[name="price"]').val("");
+		$('input[name="price"]').focus();
+		return;
+	}
+	var params = {
+		hostId : $('#hostId').val(),
+		price : $('input[name="price"]').val()
+	}
+	$.ajax({
+		type : "POST",
+		url : "savePrice",
+		data : params,
+		success : function(result){
+			if(result){
+				alert("가격 수정 성공^^");
+				location.href="../hostingStatus?hostId=" + $('#hostId').val();
+			} else{
+				alert("가격 수정 실패..");
+			}
+		},	
+		error : function(){
+			alert("통신에 실패..");
+		}
+	}); // AJAX-END
+}
+
+</script>
 </body>
 <script>
 	//3단계의 헤더 내용을 변경한다. 

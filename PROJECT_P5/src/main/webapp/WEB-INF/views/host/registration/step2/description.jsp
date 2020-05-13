@@ -15,7 +15,6 @@
 <textarea name="description"  rows="10" cols="50"></textarea>
 <h3>기타사항(선택)</h3>
 <textarea name="descriptionEtc" rows="10" cols="50"></textarea>
-<input type="submit" value="다음" />
 <!-- </form> -->
  <a href="photo?hostId=${hostId }">이전</a>
  <a href="name?hostId=${hostId }">다음</a>

@@ -13,7 +13,6 @@ display:block;
 </style>
 <body>
 <input type="hidden" id="hostId" value="${hostId }" />
-<form action="calendar" method="post">
 	<h1>최대,최소 숙박일을 정해주세요</h1>
 	최소 숙박
 	<input type="number" name="minimumStay" class="minimum-date" readonly value="1" />
@@ -28,8 +27,6 @@ display:block;
 	<button id="maximum-date-decrease-quantity">▼</button>
 	<br>
 	<div id="maximum-warning"></div>
-<input type="submit" value="다음" />
-</form>
 <a href="../hostingStatus?hostId=${hostId }">이전</a>
         <a href="./calendar?hostId=${hostId }">다음</a>
 <!-- <a href="calendar">다음</a> -->
