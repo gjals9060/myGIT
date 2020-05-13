@@ -8,7 +8,7 @@
 <!--[if IE]><link rel="shortcut icon" href="favicon.ico" /><![endif]-->
 <title>숙소등록</title>
 <script src="/p5/js/jquery-3.4.1.js"></script>
-<script src="/p5/jquery-ui.min.js"></script>
+<script src="/p5/js/jquery-ui.min.js"></script>
 <script src="/p5/js/Calendar.js"></script>
 <link rel="stylesheet" href="/p5/css/reservationCalendar.css" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
