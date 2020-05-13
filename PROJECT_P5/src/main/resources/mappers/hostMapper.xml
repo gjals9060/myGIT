@@ -157,7 +157,8 @@
 		SET sort_order = #{sortOrder}
 		WHERE id = #{photoId}
 	</update>
-
+	
+	
 
 
 

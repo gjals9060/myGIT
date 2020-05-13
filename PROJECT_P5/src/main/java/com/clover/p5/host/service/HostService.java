@@ -33,7 +33,7 @@ public interface HostService {
 	boolean insertHostPhoto(List<MultipartFile> photos, HttpServletRequest req);
 	
 	// 호스트 사진 삭제
-	boolean deleteHostPhoto(int hostPhotoId);
+	boolean deleteHostPhoto(HttpServletRequest req);
 	
 	// 호스트 사진 정렬 결과 저장
 	int updateHostPhotoSort(int[] sortResult);

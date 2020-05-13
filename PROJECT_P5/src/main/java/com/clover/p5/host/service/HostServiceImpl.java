@@ -135,10 +135,12 @@ public class HostServiceImpl implements HostService {
 
 //********************************** 호스트 사진 삭제(수정 필요) ***********************************************
 	@Override
-	public boolean deleteHostPhoto(int hostPhotoId) {
+	public boolean deleteHostPhoto(HttpServletRequest req) {
+		int hostId = Integer.parseInt(req.getParameter("hostId"));
+		int hostPhotoId = Integer.parseInt(req.getParameter("hostPhotoId"));
 		if(hostMapper.deleteHostPhoto(hostPhotoId) == 1) {
 			System.out.println(hostPhotoId + "번 사진 삭제 성공");
-			
+			hostMapper.selectHostPhotoCount(hostId)
 			return true; // 삭제 성공
 		}
 		return false; // 삭제 실패

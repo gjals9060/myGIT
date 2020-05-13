@@ -4,26 +4,28 @@
 	max-width: 1100px;
 	width: 100%;
 	margin: 0 auto;
-	vertical-align: middle; 
+	vertical-align: middle;
 }
 
-header{
+header {
 	display: grid !important;
-	grid-template-columns: 20% 60% 20%;
+	grid-template-columns: 15% 70% 15%;
 	top: 0px;
 	background: white;
-	width:100%;
+	width: 100%;
 	box-shadow: 0px 0px;
 	z-index: 9;
+	text-align: center;
+	vertical-align: middle;
+	padding-top: 10px;
 }
 
-herder > * {
+herder>* {
 	font-family: "Malgun Gothic";
 }
 
 .title-logo-img {
 	height: 100px;
-	text-align: center;
 }
 
 #titleLogoImg {
@@ -33,6 +35,7 @@ herder > * {
 /* 검색창 틀 */
 .input-info {
 	margin: auto;
+	width: 100%;
 }
 
 /* 검색 block */
@@ -41,11 +44,42 @@ herder > * {
 	flex-direction: row;
 	flex-wrap: wrap;
 	justify-content: space-around;
+	margin-top: 10px;
+	max-width: 1000px;
+	min-width: 600px;
+	width: 100%;
+	margin: auto;
 }
 
 /* 검색 input  */
+
 .input-text {
-	margin-right: 10px;
+	height: 30px;	
+}
+.input-info input[type="text"] {
+	width: -webkit-fill-available;
+    height: 30%;
+    vertical-align: middle;
+    text-align: center;
+    margin: 5px 0px;
+    margin-top: 10px;
+    padding-right: 15px;
+    border: none;
+    border-bottom: 2px solid black;
+}
+
+.input-location-block{
+	width: 40%;
+}
+
+.input-date-block {
+	width: 30%;
+	min-width: 200px;
+}
+
+.input-guestCount-block {
+	width: 15%;
+	min-width: 85px;
 }
 
 .useradd-login-form {
@@ -54,63 +88,86 @@ herder > * {
 
 /* 로그인 회원가입 버튼 */
 .btn {
- 	width: 100px;
-    height: 50px;
-    padding: 14px 16px;
-    border: 0;
-    background-color: white;
-    outline: none;
-    transition:0.3s;
+	width: 100px;
+	padding: 10px 16px;
+	border: 0;
+	border-radius: 100px; outline : none;
+	transition: 0.3s;
+	outline: none;
 }
 
 .btn:hover {
 	border: 1px solid #bbb;
 }
 
-/* 지역 날짜 input */
-.input-serach-value {
-	width: 180px;
-	text-align: center;
-} 
-
-/* 인원 input */
-.personnel_input {
-	width: 50px;
-	text-align: center;
-	border: none;
-	font-size: 20px;
-}
-
-
-
 /* 인원 + 버튼  ,- 벼튼*/
-#decreaseQuantity,
-#increaseQuantity {
+.input-info button, .input-info input[type="button"] {
 	outline: none;
 	background: none;
 	width: 20px;
 	border: none;
 	text-align: center;
 	font-size: 20px;
+	vertical-align: middle;
+	color: #bbb;
+	padding: 0;
+	margin: 0;
 }
+
+.input-info input[type="button"] {
+    font-family: "FontAwesome";
+    font-size: unset;
+    font-weight: 900;
+}
+
+.fa-xs {
+    font-size: 2px !important;
+}
+
+#dateReset, #guestCountReset, #decreaseQuantity, #increaseQuantity {
+	position: relative;
+	top: -33px;
+	width: 20px;
+	height: 20px;
+}
+
+#dateReset {
+	left: 45%;	
+}
+
+#guestCountReset {
+	left: 60%;
+}
+
+#decreaseQuantity{
+    left: -38%;
+    top: -36px;
+}
+
+#increaseQuantity {
+	left: -1%;
+	top: -36px;	
+}
+    
+
 
 /* 이름을 눌렀을 때 dropdown */
 .user-drop-down-btn {
 	border-radius: 10px;
 	vertical-align: middle;
 	background: white;
-	outline: none;	
+	outline: none;
 	position: static;
 }
 /* 드롭다운 화면  */
 .user-drop-down {
 	position: absolute;
-    width: 200px;
-    height: 250px;
-    border: 1px solid;
-    right: 100px;
-    display: none;
-    background: white;
+	width: 200px;
+	height: 250px;
+	border: 1px solid;
+	right: 100px;
+	display: none;
+	background: white;
 }
 
 /* user label  */
@@ -123,7 +180,7 @@ herder > * {
 
 /* 메뉴 버튼 */
 .user-drop-down-menu-btn {
-	cursor: pointer;	
+	cursor: pointer;
 	padding: 8px;
 }
 
@@ -131,162 +188,128 @@ herder > * {
 	background: #bbb;
 }
 
-
- /* modal 화면 */
+/* modal 화면 */
 .modal {
-   display: none;
-   position: fixed;
-   background-color: rgb(0, 0, 0, 0.9);
-   width: 100%;
-   height: 105%;
-   top: 0;
-   right: 0;
-   padding: auto;
-   top: 0;
-   z-index: 10;
+	display: none;
+	position: fixed;
+	background-color: rgb(0, 0, 0, 0.9);
+	width: 100%;
+	height: 105%;
+	top: 0;
+	right: 0;
+	padding: auto;
+	top: 0;
+	z-index: 10;
 }
 
 .modal-popup {
-   display: block;
-   width: 50%;
-   height: 700px;
-   margin: 0 auto;
-   background: white;
-   text-align: center;
+	display: block;
+	width: 50%;
+	height: 700px;
+	margin: 0 auto;
+	background: white;
+	text-align: center;
 }
 
 /* login 경고문  */
 .loginCheck {
 	width: 30%;
-    height: 25px;
-    text-align: center;
-    margin: 0 auto;
+	height: 25px;
+	text-align: center;
+	margin: 0 auto;
 }
 
 /* 회원가입 경고문 */
 .form-input-check {
 	height: 10px;
-    text-align: center;
-    padding-top: 10px;
+	text-align: center;
+	padding-top: 10px;
 }
-
 
 /* 애니메이션  */
-
 .modal, .modal-popup {
-   animation: zoom 0.3s ease-out;
+	animation: zoom 0.3s ease-out;
 }
 
-@keyframes zoom {
-   from {
-      transform: translateY(-5%);
-      opacity: 0.2;
-   }
-   to {
-      transform: translateY(0%);
-      opacity: 1;
-   }
+@
+keyframes zoom {from { transform:translateY(-5%);
+	opacity: 0.2;
 }
 
+to {
+	transform: translateY(0%);
+	opacity: 1;
+}
+
+}
 .login-modal-table {
-   margin: auto;
+	margin: auto;
 }
 
 .close {
-   display: block;
-   position: absolute;
-   top: 0;
-   right: 10px;
-   cursor: pointer;
-   font-size: 50px;
-   font-style: bold;
-   color: rgb(255, 255, 255);
+	display: block;
+	position: absolute;
+	top: 0;
+	right: 10px;
+	cursor: pointer;
+	font-size: 50px;
+	font-style: bold;
+	color: rgb(255, 255, 255);
 }
 
 /* 돌아가기  */
 .back {
-   display: block;
-   position: absolute;
-   top: 0;
-   left: 10px;
-   cursor: pointer;
-   font-size: 50px;
-   font-style: bold;
-   color: rgb(255, 255, 255);
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 10px;
+	cursor: pointer;
+	font-size: 50px;
+	font-style: bold;
+	color: rgb(255, 255, 255);
 }
 
 /*  임시 비밀번호 wrap*/
 .makeshift-password-input-wrap {
 	margin: 10px auto;
-    width: 50%;
+	width: 50%;
 }
 
 /* 임시비빌번호 block */
-.makeshift-password-input-block{
+.makeshift-password-input-block {
 	display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    vertical-align: middle;
-    align-self: flex-start;
+	flex-direction: column;
+	justify-content: space-evenly;
+	vertical-align: middle;
+	align-self: flex-start;
 }
 
 .makeshift-password-input-error {
 	margin: 10px 0px;
 }
 
-
 /* 예약 */
-
-/* input[type="text"]{
-	border-radius: 25px;
-} */
-
 #searchBtn {
+	font-family: "FontAwesome";
 	border-radius: 15px;
 	background-color: #E51E51;
 	color: WHITE;
-	width:105px;
-	height: 50px;
+	width: 8%;
 	outline: none;
+	font-size: 150%;
 }
 
 #userImg {
-    border-radius: 50%;
-    width: 30px;
-    vertical-align: sub;
-    height: 30px;
-    object-fit: cover;
-    object-position: center;
+	border-radius: 50%;
+	width: 30px;
+	vertical-align: sub;
+	height: 30px;
+	object-fit: cover;
+	object-position: center;
 }
-
-
 
 @media screen and (max-width: 768px) {
-
-	#titleLogoImg {
-		height: 60%;
-	}
-	
-	
-	
-	
 }
 
-@media screen and (max-width : 480px){
-	
-	
+@media screen and (max-width : 480px) {
 }
-
-
-@media screen and (max-width : 1416px){
-	
-	#searchBtn {
-		border-radius: 15px;
-		background-color: #E51E51;
-		color: WHITE;
-		width:75px;
-		height: 50px;
-		outline: none;
-	}
-}
- 

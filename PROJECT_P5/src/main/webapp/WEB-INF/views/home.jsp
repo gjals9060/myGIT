@@ -12,10 +12,12 @@
 <meta charset="utf-8">
 <title>p5 메인 홈페이지</title>
 
+<!-- css  -->
 <link rel="stylesheet" href="css/reset.css" />
 <link rel="stylesheet" href="css/home.css" />
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 
+<!--javascript  -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 	
@@ -23,41 +25,52 @@
 <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
 
 
+
+<!-- viewport  -->
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 
 </head>
 <body>
 	<jsp:include page="./header.jsp"></jsp:include>	
-	<div id="wrap" >
 		
 		<div id="presentationTitle">Peace / Place / Pleasure / Present / People </div>
 
- <!--이미지  -->
-	 <article>
-		<img src="img/cafe.jpg" alt="" class="presentation-img" id="presenttationImg"/>
-		<img src="img/coffee.jpg" alt="" class="presentation-img"/>
-		<img src="img/elevator.png" alt="" class="presentation-img"/>
-		<img src="img/iron.png" alt="" class="presentation-img"/>
-		<img src="img/fox.jpg" alt="" class="presentation-img"/>
-	 </article>
-	 
-	<!--  <script>
-	 	$('#presenttationImg').on("mouseover", function() {
 
-	 		$('#presenttationImg').css({
-	 			"opacity":"0.4",
-	 			"transition":"0.5s"
-	 		});
-	 	});
-	 	
-	 	$('#presenttationImg').on('mouseout', function(){
-	 		$('#presenttationImg').css({
-	 			"opacity":"1",
-	 			"transition":"0.5s"
-	 		});
-	 	})
-	 </script> -->
 	 
+	 <div id="backgroundColor">
+		 <section>
+			
+			<div class="pop-img-block" id="fristBlock">
+		 		<img src="img/bedroom.jpg" alt="" class="push-area-img" id="fristImg" />
+		 		<div class="figcaption" >여기는 종로구 입니다.</div>
+		 	</div>
+		 
+		 	<div class="pop-img-block">
+		 		<img src="img/cafe.jpg" alt="" class="push-area-img" />
+		 		<div class="figcaption">경복궁</div>
+		 	</div>
+		 		
+		 	<div class="pop-img-block">
+		 		<img src="img/berry.jpg" alt="" class="push-area-img" />
+		 		<div class="figcaption">연신내</div>
+		 	</div>
+		 	
+		 	<div class="pop-img-block">
+		 	<img src="img/juice.jpg" alt="" class="push-area-img" />
+		 		<div class="figcaption">신림</div>
+		 	</div>
+		 	
+		 	<div class="pop-img-block">
+		 		<img src="img/back.jpg" alt="" class="push-area-img" />
+		 		<div class="figcaption">을지로</div>
+		 	</div>
+
+		 </section>
+	 </div>
+	
+
+	 
+	<div id="wrap" >
 
 	 <!-- 스와이퍼 이미지   -->
 	  <!-- Swiper -->
@@ -151,8 +164,6 @@
 	
 	</div>
 	<jsp:include page="./footer.jsp" />
-
-
 
 </body>
 </html>

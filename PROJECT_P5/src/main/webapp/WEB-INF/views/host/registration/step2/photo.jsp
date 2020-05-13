@@ -639,12 +639,16 @@ function addHostPhoto(formData){
 
    // 사진 삭제
 function deleteHostPhoto(hostPhotoId){
-//   alert(hostPhotoId);
+	   var params = {
+   			hostPhotoId : hostPhotoId
+ 			hostPhotoCount : $(".inputPhoto").length,
+			   hostId : $('#hostId').val(),
+	   }
       
    $.ajax({
       type: "POST",
       url: '/p5/ajax/deleteHostPhoto',
-      data: 'hostPhotoId=' + hostPhotoId,
+      data: params,
       async: false,
       success: function (result) { // boolean 결과
          if(result){ // 성공

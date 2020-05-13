@@ -90,8 +90,8 @@ public class HostController {
 	
 	@RequestMapping("/ajax/deleteHostPhoto") // 사진 삭제
 	@ResponseBody
-	public boolean deleteHostPhoto(int hostPhotoId) {
-		return hostService.deleteHostPhoto(hostPhotoId);
+	public boolean deleteHostPhoto(HttpServletRequest req) {
+		return hostService.deleteHostPhoto(req);
 	}
 	
 	@RequestMapping("/ajax/updateHostPhotoSort") // 사진 정렬 내용 적용
