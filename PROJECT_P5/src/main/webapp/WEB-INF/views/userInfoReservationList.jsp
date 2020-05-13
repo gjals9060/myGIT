@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +18,7 @@
 
 .reservation-list-main-title {
 	font-size: 30px;
-    margin-bottom: 30px;
+	margin-bottom: 30px;
 }
 
 /* 예약 컨테이너 */
@@ -35,10 +40,10 @@
 	border-radius: 5px;
 	margin: 5px auto;
 	box-sizing: border-box;
-	grid-gap:1px;
+	grid-gap: 1px;
 }
 
-.resercation-list-block:hover  {
+.resercation-list-block:hover {
 	border: 1px solid red;
 }
 
@@ -62,9 +67,6 @@
 	padding: 5px;
 }
 
-
-
-
 /* 예약한 게시물 제목 */
 .reservation-list-title {
 	font-size: 20px;
@@ -74,25 +76,24 @@
 	overflow: hidden;
 }
 
-
 /* 편의사항 */
-.reservation-list-facilities {
-
+.reservation-list-guestCount {
+	
 }
 
 /* 예약한 날짜 */
 .reservation-list-date {
-
+	
 }
 
 /* 결제일 */
-.reservation-list-buy-date{ 
-
+.reservation-list-buy-date {
+	
 }
 
 /* 총 가격 */
 .reservation-list-price {
-
+	
 }
 
 /* 예약한 게시물 환불 */
@@ -102,18 +103,18 @@
 
 /* 예약한 게시물 환불 버튼 */
 .reservation-list-refund-btn {
-
+	
 }
-
 </style>
 
 </head>
 <body>
 	<div id="wrap">
-	<!-- 예약 container -->
+		<!-- 예약 container -->
 		<div class="reservation-list-main-title">예약하신 숙소리스트 입니다.</div>
 		<div class="reservation-list-container">
-		<!-- 예약 리스트 블럭 (1개의 예약상태) 반복문을 돌려서 리스트 처리-->
+			<!-- 예약 리스트 블럭 (1개의 예약상태) 반복문을 돌려서 리스트 처리-->
+<!-- 
 			<div class="resercation-list-block">
 				<div class="reservation-list-num">
 					<p>12345</p>
@@ -122,9 +123,9 @@
 					<img src="./img/어린왕자.jpg" alt="" />
 				</div>
 				<div class="reservaion-list-value">
-					<!-- 숙소 정보  -->
+					숙소 정보 
 					<div class="reservation-list-title">경복궁</div>
-					<div class="reservation-list-facilities"> 아파트 침대 1 욕실 1</div>
+					<div class="reservation-list-guestCount">아파트 침대 1 욕실 1</div>
 					<div class="reservation-list-date">2020.04.02 ~ 2020.04.05</div>
 					<div class="reservation-list-buy-date">2020.04.01</div>
 					<div class="reservation-list-price">50000 원</div>
@@ -134,7 +135,37 @@
 					<button class="reservation-list-refund-btn">환불</button>
 				</div>
 			</div>
+-->
+
+			<c:forEach var="booking" items="${bookingList}">
 			
+				<div class="resercation-list-block">
+					<div class="reservation-list-num">
+						<p>12345</p>
+					</div>
+					<div class="reservation-list-img">
+						<img src="./img/room1.jpg" alt="대표이미지" />
+					</div>
+					<div class="reservaion-list-value">
+						<!-- 숙소 정보  -->
+						<div class="reservation-list-title">이름</div>
+						<script type="text/javascript">
+							//날짜 변환	
+							console
+						</script>
+						<div class="reservation-list-date">체크 인 : ${booking.checkInDate} / 체크 아웃 : ${booking.checkOutDate}</div>
+						<div class="reservation-list-buy-date">예약일 : ${booking.bookingDate}</div>
+						<div class="reservation-list-price">결제금액 : ${booking.payment}원</div>
+						<div class="reservation-list-guestCount"> 예약인원 : ${booking.guestCount}</div>
+					</div>
+					<div class="reservation-list-refund">
+						<button class="reservation-list-refund-btn">후기등록</button>
+						<button class="reservation-list-refund-btn">환불</button>
+					</div>
+				</div>
+
+			</c:forEach>
+
 		</div>
 	</div>
 </body>

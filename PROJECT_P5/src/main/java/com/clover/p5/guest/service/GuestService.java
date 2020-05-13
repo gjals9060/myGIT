@@ -5,9 +5,10 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.ui.Model;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.clover.p5.guest.dto.HostInfoDTO;
-import com.clover.p5.guest.dto.ReservationInfoDTO;
+import com.clover.p5.guest.dto.BookingEntity;
 import com.clover.p5.guest.dto.SearchInputDTO;
 
 public interface GuestService {
@@ -25,8 +26,8 @@ public interface GuestService {
 	String reservationPurchase(HttpServletRequest request, Model model);
 	
 	// reservationFinish 이동
-	String reservationFinish(ReservationInfoDTO reservationInfoDTO, HttpServletRequest request, Model model);
+	String reservationFinish(BookingEntity booking, HttpServletRequest request, Model model);
 	
-	
+	ModelAndView userInfoReservationList(HttpServletRequest request, ModelAndView mv);
 	
 }
