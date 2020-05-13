@@ -43,36 +43,37 @@
 				<div class="input-search-value-input">
 					<div class="input-location-block">
 						<span class="input-text"><i
-							class="fas fa-map-marked-alt fa-2x"></i></span><input
-							class="input-serach-value" type="text" name="address"
+							class="fas fa-map-marked-alt fa-2x"></i></span> <span class="inputWrap">
+							<input class="input-serach-value" type="text" name="address"
 							id="address" placeholder="어디로 여행가세요?" />
+						</span>
 					</div>
 
 					<!--날짜 입력  -->
-					<div class="input-date-block">
+					<div class="input-date-block pad">
 						<span class="input-text"> <i
 							class="fas fa-calendar-alt fa-2x"></i>
-						</span>
-						<!-- <input class="input-serach-value" type="text" name="checkInDatecheckOutDate"  /> -->
-						<input class="input-serach-value" type="text" id="checkDate"
-							name="checkInDatecheckOutDate" autocomplete="off"
-							placeholder="날짜는?" onchange="countDate()" />
+						</span> <span class="inputWrap pad"> <input class="input-serach-value"
+							type="text" id="checkDate" name="checkInDatecheckOutDate"
+							autocomplete="off" placeholder=" 날짜는?" onchange="countDate()" />
 							<input type="button" id="dateReset" value="&#xf01e">
+						</span>
 					</div>
 
 					<!--인원  -->
 					<div class="input-guestCount-block">
-						<span class="input-text"> <i class="fas fa-user-alt fa-2x"></i>
-						</span> <input type='text' id="guestCount" name='guestCount'
-							class="guestCount_input" autocomplete="off" placeholder="인원은?"
-							readonly="readonly" value="">
-							<input type="button" id="guestCountReset" value="&#xf01e">
+						<span class="input-text"> <i
+							class="fas fa-user-alt fa-2x"></i>
+						</span> <span class="inputWrap pad">
 							<button id="decreaseQuantity">
 								<i class="fas fa-minus fa-xs"></i>
-							</button>
+							</button> <input type='text' id="guestCount" name='guestCount'
+							class="guestCount_input" autocomplete="off" placeholder="  인원은?"
+							readonly="readonly" value="">
 							<button id="increaseQuantity">
 								<i class="fas fa-plus fa-xs"></i>
-							</button>
+							</button> <input type="button" id="guestCountReset" value="&#xf01e">
+						</span>
 					</div>
 					<!--인원 카운트 다운 0미만은 줄일수 없게함  -->
 
@@ -477,6 +478,9 @@
 				num++;
 
 				$('.guestCount_input').val(num);
+			} else {
+				num = parseInt("1");
+				$('.guestCount_input').val(num);
 			}
 		});
 	});
@@ -494,12 +498,19 @@
 			});
 
 			$('.title-logo-img ').css("height", "80px");
+			
+			$('.fa-2x').css("font-size", "1em");
+			$('.inputWrap').css("display", "contents");
+			
 		} else { /// 80보다 낮은 위치라면 
 			$("header").css({
 				"position" : "static",
 				"box-shadow" : "0px 0px"
 			});
 			$('.title-logo-img ').css("height", "100px");
+			
+			$('.fa-2x').css("font-size", "2em");
+			$('.inputWrap').css("display", "block");
 
 		}
 
