@@ -467,7 +467,7 @@
 
 				$('.guestCount_input').val(num);
 			}
-
+ 
 		}); /* click이벤트  */
 
 		$('#increaseQuantity').click(function(e) {
