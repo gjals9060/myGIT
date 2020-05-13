@@ -7,6 +7,7 @@
 <title>2단계-사진등록</title>
 </head>
 <body>
+<input type="hidden" id="hostId" value="${hostId }" />
 	<%@include file="../headerStep.jsp"%>
 	
 	<!-- 사진이미지는 월요일에 정정  -->
@@ -16,8 +17,8 @@
 	
 	
 		<div class="btn-block">
-			<a href="">이전</a>
-			<button>다음</button>
+			<a href="../hostingStatus?hostId=${hostId }">이전</a>
+			<a href="./description?hostId=${hostId }">다음</a>
 		</div>
 	</div>
 

@@ -25,10 +25,29 @@
 <!-- <input type="submit" value="다음" /> -->
 <!-- </form> -->
 <a href="address">이전</a>
-<a href="step1/complete">다음</a>
+<button onclick="completeStep1()">다음</button>
 
 
 <script src="/p5/js/jquery-3.4.1.js"></script>
 <script src="/p5/js/host.js?v=<%=System.currentTimeMillis() %>"></script>
+<script>
+function completeStep1(){
+	var params = setParams();
+	 $.ajax({
+		type : "POST",
+		url : "step1/complete",
+		data : params,
+		success : function(hostId){
+			location.href="../hostingStatus?hostId=" + hostId;
+		},	
+		error : function(){
+			alert("통신 오류..");
+		}
+	}); // AJAX-END
+}
+
+
+
+</script>
 </body>
 </html>

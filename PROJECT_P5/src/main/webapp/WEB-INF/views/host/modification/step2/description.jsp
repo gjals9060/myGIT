@@ -4,27 +4,30 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>2단계-숙소명</title>
+<title>2단계-숙소설명</title>
+
 </head>
 <body>
+<input type="hidden" id="hostId" value="${hostId }" />
 	<%@include file="../headerStep.jsp"%>
 
 	<div id="wrap">
-		<div> 숙소명을 수정합니다</div>
-		<div class='title-block'>
-			<input type="text" name='title' id="modifyTitle"/>
+		<h1>숙소설명을 수정합니다</h1>
+	
+		<h3>숙소 설명</h3>
+		<textarea name="description" rows="10" cols="50"></textarea>
+		<h3>기타사항(선택)</h3>
+		<textarea name="descriptionEtc" rows="10" cols="50"></textarea>
+
+		<div class="btn-block">
+			<a href="./photo?hostId=${hostId }">이전</a>
+			<a href="./name?hostId=${hostId }">다음</a>
 		</div>
 		
-		<div class="btn-block">
-			<a href="">이전</a>
-			<button>다음</button>
-		</div>
-	
+		
 	</div>
-
-
+<script src="/p5/js/host.js?v=<%=System.currentTimeMillis() %>"></script>
 </body>
-
 <script>
 	// 2단계의 헤더 내용을 변경한다. 
 
@@ -43,12 +46,15 @@
 	nav.css('grid-template-columns', 'repeat(3,1fr)');
 
 	//nav의 내용에 2단계 tab을 추가
-	nav.append('<a  class="step1-tab" href="./modifyPhoto.jsp" id="tabPhoto">사진등록</a>'
+	nav.append(
+		'<a  class="step1-tab" href="./modifyPhoto.jsp" id="tabPhoto">사진등록</a>'
 		+ '<a  class="step1-tab" href="./modifyDescription.jsp" id="tabDescription">숙소설명</a>'
 		+ '<a  class="step1-tab" href="./modifyTitle.jsp" id="tabTitle">숙소명</a>'
 	);
 	
+	// 숙소 설명 탭에 색추가 
+	$('#tabDescription').css('background','#bbb');
 	
-	$('#tabTitle').css('background','#bbb');
+	
 </script>
 </html>

@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="./modifyFacilities.css" />
 </head>
 <body>
+<input type="hidden" id="hostId" value="${hostId }" />
 
 
 	<%@include file="../headerStep.jsp" %>
@@ -28,12 +29,14 @@
 		<input type="checkbox" name="isParkingLot" value="Y" />주차<br> 
 	
 		<div class="btn-block">
-			<a href="hostStatus.jsp">이전</a>
-			<button id="facilitiesNextBtn">다음</button>
+			<a href="./address?hostId=${hostId }">이전</a>
+			<a href="../hostingStatus?hostId=${hostId }">다음</a>
 		</div>
 		
 	</div>
 	<!-- <a href="photo">다음</a> -->
+	<script src="/p5/js/jquery-3.4.1.js"></script>
+	<script src="/p5/js/host.js?v=<%=System.currentTimeMillis() %>"></script>
 </body>
 <script>
 

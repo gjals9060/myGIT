@@ -9,14 +9,16 @@
 
 		// 알아서 저장하겠다우~
 	$(window).bind("pagehide", function (event) {
-		var url = setSaveURL(); // 정보를 처리할 적절한 곳으로 보낸다.
 		var params = setParams(); // 저장할 정보를 담은 보따리를 받아서
+			if(!params){return false;} // 유효성에 어긋나면 저장 안함
+		var url = setSaveURL(); // 정보를 처리할 적절한 곳으로 보낸다.
 		$.ajax({
 			type : "POST",
 			url : url,
 			data : params
-		});
+		}); // AJAX-END
 	});
+	
 		// 최신 정보만 보여주게써~
 	$(window).bind("pageshow", function (event) {
 	//	alert(urlInfo);
@@ -24,6 +26,7 @@
 		$.ajax({
 			type : "POST",
 			url : url,
+			data : "hostId=" + $('#hostId').val(),
 			success : function(host){
 //				alert(JSON.stringify(host)); // 내용 확인
 				refresh(host); // 화면 갱신
@@ -36,27 +39,11 @@
 
 
 	
-//////////////////////////////// setParams-END ///////////////////////////////////////////
+//////////////////////////////// setParams ///////////////////////////////////////////
 function setParams(){
 	
-	
-//========================= roomType.jsp 값 세팅-END ====================================
-	var hostTypeId = $('select[name="hostTypeId"]').val();
-	var roomTypeId = $('select[name="roomTypeId"]').val();
-//=====================================================================================
-	
-//========================= roomCount.jsp 값 세팅-END ===================================
-	var capacity = $('input[name="capacity"]').val();
-	var roomCount = $('input[name="roomCount"]').val();
-	var bedCount = $('input[name="bedCount"]').val();
-	var bathroomCount = $('input[name="bathroomCount"]').val();
-//=====================================================================================
-	
-//========================= address.jsp 값 세팅-END =====================================
 	var address = $('input[name="address"]').val();
-	var latitude = $('input[name="latitude"]').val();
-	var longitude = $('input[name="longitude"]').val();
-//=====================================================================================
+	var name = $('input[name="name"]').val();
 	
 //========================= facilities.jsp 값 세팅 ======================================
 	var isTv = 'N';
@@ -83,26 +70,26 @@ function setParams(){
 	if($('input:checkbox[name="isElevator"]').is(":checked") == true) {isElevator = 'Y';}
 	if($('input:checkbox[name="isParkingLot"]').is(":checked") == true) {isParkingLot = 'Y';}
 //====================================================================================================
-
+	
 
 //******************************* params 세팅 *****************************************
 
 	var paramsRoomType = { // roomType.jsp
-			hostTypeId : hostTypeId,
-			roomTypeId : roomTypeId
+			hostTypeId : $('select[name="hostTypeId"]').val(),
+			roomTypeId : $('select[name="roomTypeId"]').val()
 	};
 	var paramsRoomCount = { //roomCount.jsp
-			capacity : capacity,
-			roomCount : roomCount,
-			bedCount : bedCount,
-			bathroomCount : bathroomCount
+			capacity : $('input[name="capacity"]').val(),
+			roomCount : $('input[name="roomCount"]').val(),
+			bedCount : $('input[name="bedCount"]').val(),
+			bathroomCount : $('input[name="bathroomCount"]').val()
 	};
 	var paramsAddress = { // address.jsp
 			address : address,
-			latitude : latitude,
-			longitude : longitude
+			latitude : $('input[name="latitude"]').val(),
+			longitude : $('input[name="longitude"]').val()
 	};
-	var paramsfacilities = { // facilities.jsp
+	var paramsFacilities = { // facilities.jsp
 			isTv : isTv,
 			isWifi : isWifi,
 			isAirConditioner : isAirConditioner,
@@ -115,30 +102,45 @@ function setParams(){
 			isElevator : isElevator,
 			isParkingLot : isParkingLot
 	};
+	var paramsDescription = { // description.jsp
+			description : $('textarea[name="description"]').val(),
+			descriptionEtc : $('textarea[name="descriptionEtc"]').val()
+	};
+	var paramsTitle = { // title.jsp
+			name : name
+	};
+	var paramsStayDate = { // stayDate.jsp
+			minimumStay : $('input[name="minimumStay"]').val(),
+			maximumStay : $('input[name="maximumStay"]').val()
+	};
+	var paramsPrice = { // price.jsp
+			price : $('input[name="price"]').val()
+	};
 //****************************** params 세팅-END *****************************************
-
-
-
-
-	if(urlInfo == '/p5/host/registration/roomType'){return paramsRoomType;}
-	if(urlInfo == '/p5/host/registration/roomCount'){return paramsRoomCount;}
-	if(urlInfo == '/p5/host/registration/address'){return paramsAddress;}
-	if(urlInfo == '/p5/host/registration/facilities'){return paramsfacilities;}
-
-
-
+	
+	
+	if(urlInfo == '/p5/host/registration/roomType' || urlInfo == '/p5/host/modification/roomType')
+	{return paramsRoomType;}
+	if(urlInfo == '/p5/host/registration/roomCount' || urlInfo == '/p5/host/modification/roomCount')
+	{return paramsRoomCount;}
+	if(urlInfo == '/p5/host/registration/address' || urlInfo == '/p5/host/modification/address')
+	{if(!address){return false;}
+	return paramsAddress;}
+	if(urlInfo == '/p5/host/registration/facilities' || urlInfo == '/p5/host/modification/facilities')
+	{return paramsFacilities;}
+	
+	if(urlInfo == '/p5/host/registration/description' || urlInfo == '/p5/host/modification/description')
+	{return paramsDescription;}
+	if(urlInfo == '/p5/host/registration/title' || urlInfo == '/p5/host/modification/title')
+	{if(!name.trim()){return false;}
+	return paramsTitle;}
+	
+	if(urlInfo == '/p5/host/registration/stayDate' || urlInfo == '/p5/host/modification/stayDate')
+	{return paramsStayDate;}
+	if(urlInfo == '/p5/host/registration/price' || urlInfo == '/p5/host/modification/price')
+	{return paramsPrice;}
 
 }//////////////////////////////////// setParams-END //////////////////////////////////////////
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -153,13 +155,15 @@ function setParams(){
 //////////////////////////////////////// setSaveURL /////////////////////////////////////////////
 function setSaveURL(){
 
-//******************* 등록 1단계에서 보낼 URL(newHost 세션 사용) ****************************
-	if(urlInfo == '/p5/host/registration/roomType'){return "save/newHost";}
-	if(urlInfo == '/p5/host/registration/roomCount'){return "save/newHost";}
-	if(urlInfo == '/p5/host/registration/address'){return "save/newHost";}
-	if(urlInfo == '/p5/host/registration/facilities'){return "save/newHost";}
-//***************** 등록 1단계에서 보낼 URL(newHost 세션 사용)-END ****************************	
+	// 등록 1단계에서 보낼 URL(newHost 세션 사용)
+	if(urlInfo == '/p5/host/registration/roomType'
+	|| urlInfo == '/p5/host/registration/roomCount'
+	|| urlInfo == '/p5/host/registration/address'
+	|| urlInfo == '/p5/host/registration/facilities')
+	{return "newHost/save";}
 	
+	// 등록 1단계 이후의 과정 및 모든 수정(DB 사용)
+	return "save";
 	
 }//////////////////////////////////// setSaveURL-END /////////////////////////////////////////////
 
@@ -167,13 +171,15 @@ function setSaveURL(){
 /////////////////////////////////////setRefreshURL /////////////////////////////////////////////
 function setRefreshURL(){
 	
-//******************* 등록 1단계에서 보낼 URL(newHost 세션 사용) ****************************
-	if(urlInfo == '/p5/host/registration/roomType'){return "refresh/newHost";}
-	if(urlInfo == '/p5/host/registration/roomCount'){return "refresh/newHost";}
-	if(urlInfo == '/p5/host/registration/address'){return "refresh/newHost";}
-	if(urlInfo == '/p5/host/registration/facilities'){return "refresh/newHost";}
-//***************** 등록 1단계에서 보낼 URL(newHost 세션 사용)-END ****************************	
+	// 등록 1단계에서 보낼 URL(newHost 세션 사용)
+	if(urlInfo == '/p5/host/registration/roomType'
+	|| urlInfo == '/p5/host/registration/roomCount'
+	|| urlInfo == '/p5/host/registration/address'
+	|| urlInfo == '/p5/host/registration/facilities')
+	{return "newHost/refresh";}
 	
+	// 등록 1단계 이후의 과정 및 모든 수정(DB 사용)
+	return "getHost";
 	
 }////////////////////////////////// setRefreshURL-END /////////////////////////////////////////////
 
@@ -186,8 +192,20 @@ function setRefreshURL(){
 
 ///////////////////////////////////// refresh /////////////////////////////////////////////////
 function refresh(host){
-if(urlInfo == '/p5/host/registration/facilities' && !host.address){
+if(urlInfo == '/p5/host/registration/roomCount' && (!host.hostTypeId || !host.roomTypeId)){
+	alert("제대로 입력도 안하고 넘어오냐~?");
+	location.replace("roomType");
+	return;
+}
+if(urlInfo == '/p5/host/registration/facilities' && !host.address && !host.hostTypeId && !host.roomTypeId){
 	alert("등록 완료했자너 왜 뒤루 와~");
+	location.replace("../hostingList");
+	return;
+}
+if(urlInfo == '/p5/host/registration/facilities' && !host.address){
+	alert("주소 입력 완료하고 와라~");
+	location.replace("address");
+	return;
 }
 	
 //************************************ 1 단계 **********************************************
@@ -217,11 +235,16 @@ if(urlInfo == '/p5/host/registration/facilities' && !host.address){
 //************************************ 1 단계-END **********************************************
 	
 	
-	
-	
-	
-	
-	
+			// 2단계
+		$('textarea[name="description"]').val(host.description);
+		$('textarea[name="descriptionEtc"]').val(host.descriptionEtc);
+		$('input[name="name"]').val(host.name);
+		
+			// 3단계
+		$('input[name="minimumStay"]').val(host.minimumStay);
+		$('input[name="maximumStay"]').val(host.maximumStay);
+		$('input[name="price"]').val(host.price);
+
 	
 	
 }///////////////////////////////////// refresh-END //////////////////////////////////////////////

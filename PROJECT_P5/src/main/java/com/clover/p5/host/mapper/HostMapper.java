@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.clover.p5.host.dto.Host;
 import com.clover.p5.host.dto.HostPhoto;
 import com.clover.p5.host.dto.HostPhotoVO;
+import com.clover.p5.host.dto.HostingDTO;
 import com.clover.p5.host.dto.NewHostDTO;
 
 public interface HostMapper {
@@ -15,10 +17,11 @@ public interface HostMapper {
 	int insertHost(NewHostDTO newHost); // session에 모은 정보로 호스트 등록(DB에 저장)
 	int selectNewHostId(int memberId); // 작성자 ID로 새로 등록한 호스트 ID를 검색한다
 	
+	// 특정 호스트 정보 검색
+	Host selectHost(int hostId);
 	
 	
-	
-	
+	List<HostingDTO> selectHostingList(int memberId);
 	
 	
 	
@@ -44,10 +47,10 @@ public interface HostMapper {
 	
 	
 	
-	/*
+	
 	int insertBlocking(
 			@Param("hostId") int hostId,
-			@Param("arrBlockingDate") String[] arrBlockingDate);*/	
+			@Param("arrBlockingDate") String[] arrBlockingDate);	
 	
 	
 	

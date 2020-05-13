@@ -135,7 +135,7 @@
 			</connections>
 			<display>false</display>
 			<creation_date>2020-04-14 11:00:41</creation_date>
-			<updated_date>2020-05-12 12:26:46</updated_date>
+			<updated_date>2020-05-12 17:38:42</updated_date>
 			<model_property>
 				<name>프로젝트명</name>
 				<value></value>
@@ -1625,7 +1625,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>16</word_id>
+					<word_id>17</word_id>
 					<id>9</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -1658,7 +1658,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>53</word_id>
+					<word_id>54</word_id>
 					<id>10</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -1877,7 +1877,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>17</word_id>
+					<word_id>16</word_id>
 					<id>15</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -1910,7 +1910,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>54</word_id>
+					<word_id>53</word_id>
 					<id>16</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -3907,8 +3907,8 @@
 			<width>224</width>
 				<font_name>맑은 고딕</font_name>
 				<font_size>9</font_size>
-			<x>1228</x>
-			<y>714</y>
+			<x>1248</x>
+			<y>720</y>
 			<color>
 				<r>128</r>
 				<g>128</g>

@@ -9,12 +9,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.clover.p5.host.dto.NewHostDTO;
 import com.clover.p5.host.service.HostService;
+import com.clover.p5.member.service.MemberServiceImpl;
 
 
 
@@ -31,22 +31,23 @@ public class NewHostController {
 		
 		
 	@ModelAttribute("newHost")
-	public NewHostDTO newHost(@SessionAttribute("userId") int memberId) {
-		return new NewHostDTO(memberId);
+	public NewHostDTO newHost(HttpServletRequest req) {
+		int userId = MemberServiceImpl.getSessionUserId(req);
+		return new NewHostDTO(userId);
 	}
 		// 화면에 갱신된 내용을 적용 - AJAX
-	@RequestMapping("/host/registration/refresh/newHost")
+	@RequestMapping("/host/registration/newHost/refresh")
 	@ResponseBody
-	public NewHostDTO refresh(@ModelAttribute("newHost") NewHostDTO newHost) {
+	public NewHostDTO refreshNewHost(@ModelAttribute("newHost") NewHostDTO newHost) {
 		System.out.println("=============== 화면을 갱신합니다 ===============");
 		System.out.println(newHost);
 		System.out.println("===================================================\n");
 		return newHost;
 	}
 		// 화면 전환(페이지 이동)시 입력한 정보를 저장 - AJAX
-	@RequestMapping("/host/registration/save/newHost")
+	@RequestMapping("/host/registration/newHost/save")
 	@ResponseBody
-	public void save(@ModelAttribute("newHost") NewHostDTO newHost, HttpServletRequest request) {
+	public void saveNewHost(@ModelAttribute("newHost") NewHostDTO newHost, HttpServletRequest request) {
 		System.out.println("============== newHost 세션에 정보를 저장 ===============");
 		Set<String> keySet = request.getParameterMap().keySet();
 		for(String key: keySet) {System.out.println(key + ": " + request.getParameter(key));}
@@ -86,12 +87,11 @@ public class NewHostController {
 	}
 		// 1단계 등록을 완료하면 DB에 저장
 	@RequestMapping("/host/registration/step1/complete")
-	public String inputFacilities
+	@ResponseBody
+	public int completeStep1
 	(@ModelAttribute("newHost") NewHostDTO newHost) {
 			// DB에 저장하고 등록된 새 호스트 ID 받기
-		int newHostId = hostService.completeStep1(newHost);
-		
-		return "redirect:../../hostingStatus?hostId=" + newHostId;
+		return hostService.completeStep1(newHost);
 	}
 	
 	

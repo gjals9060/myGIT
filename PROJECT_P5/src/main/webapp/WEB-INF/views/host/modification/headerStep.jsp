@@ -75,10 +75,10 @@ nav {
 	</div>
 	
 	<nav>
-		<a  class="step1-tab" href="./modifyRoomType.jsp" id="tabRoomType">숙소형태</a>
-		<a class="step1-tab" href="./modifyRoomCount.jsp" id="tabRoomCount">인원</a>
-		<a class="step1-tab" href="./modifyAddress.jsp" id="tabAddress">위치</a>
-		<a class="step1-tab" href="./modifyFacilities.jsp" id="tabFacilities">편의시설</a>
+		<a  class="step1-tab" href="./roomType.jsp?hostId=" id="tabRoomType">숙소형태</a>
+		<a class="step1-tab" href="./roomCount.jsp" id="tabRoomCount">인원</a>
+		<a class="step1-tab" href="./address.jsp" id="tabAddress">위치</a>
+		<a class="step1-tab" href="./facilities.jsp" id="tabFacilities">편의시설</a>
 	</nav>
 	
 </header>

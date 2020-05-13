@@ -27,7 +27,7 @@ value를 0부터 2까지 설정 0이면 전체 1이면 개인실 2이면 다인�
 <h2>숙소유형을 등록해봐요</h2>
 <select name="roomTypeId" id="">
 <option value="">선택</option>
-<option value="A1">전체</option>
+<option value="A1">집 전체</option>
 <option value="B2">개인실</option>
 <option value="C3">다인실</option>
 </select>

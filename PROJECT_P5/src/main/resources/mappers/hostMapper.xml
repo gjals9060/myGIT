@@ -56,6 +56,28 @@
 		WHERE member_id = #{memberId}
 	</select>
 	
+	<!-- 호스트 정보 검색 -->
+	<select id="selectHost" resultType="Host">
+		SELECT *
+		FROM host
+		WHERE id = #{hostId}
+	</select>
+	
+	
+	
+	<select id="selectHostingList" resultType="HostingDTO">
+		SELECT host.id AS hostId,
+				host_photo.path AS coverPhotoPath,
+				host.name AS hostName,
+    			room_type.name AS roomTypeName
+		FROM host LEFT JOIN host_photo ON host.id = host_photo.host_id
+										AND host_photo.sort_order = 1
+        JOIN room_type ON host.room_type_id = room_type.id
+        WHERE host.member_id = #{memberId}
+        ORDER BY host.id DESC
+	</select>
+	
+	
 	
 	
 	
@@ -144,7 +166,7 @@
 
 	<!-- foreach문에서는 trigger로! .nextval이 안먹힌다 -->
 	<!-- 예약 차단일 등록 -->
-	<!-- <insert id="insertBlocking">
+	<insert id="insertBlocking">
 		<foreach collection="arrBlockingDate" item="blockingDate"
 		 separator=" " open="INSERT ALL " close="SELECT * FROM DUAL">
 			INTO blocking
@@ -158,7 +180,7 @@
 				TO_DATE(#{blockingDate}, 'MM/DD/YYYY')
 														)
 		</foreach>
-	</insert> -->
+	</insert>
 
 
 

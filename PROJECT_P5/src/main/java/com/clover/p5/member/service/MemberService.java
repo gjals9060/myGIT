@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.validation.Errors;
 import org.springframework.web.multipart.MultipartFile;
@@ -36,7 +35,7 @@ public interface MemberService {
 	// 임시 비밀번호 생성
 	String randomPassword(int length);
 	// 이메일로 임시 비밀번호 발급
-	String sendTemporaryPassword(String userEmail);
+	String sendTemporaryPassword(String email);
 	// 임시 로그인
 	boolean temporaryLogIn(HttpServletRequest req);
 	
@@ -52,7 +51,7 @@ public interface MemberService {
 	
 	
 	// 휴대전화 인증여부 확인
-	boolean isMobileAuthentication(HttpSession session);
+	boolean isMobileAuthentication(HttpServletRequest req);
 	// 휴대전화 인증번호 발송
 	String sendMobileCode(String mobileNumber);
 	// 휴대전화 인증(인증번호 확인 + 결과 DB에 적용)
@@ -64,13 +63,13 @@ public interface MemberService {
 	
 	
 	// 프로필 사진 목록 가져오기
-	List<ProfilePhoto> getProfilePhotoList(int memberId);
+	List<ProfilePhoto> getProfilePhotoList(HttpServletRequest req);
 	// 프로필 사진 저장(서버 + DB) 및 적용
 	boolean addProfilePhoto(MultipartFile photoFile, HttpServletRequest req);
 	// 프로필 사진 삭제
-	boolean deleteProfilePhoto(HttpServletRequest req, int photoId);
+	boolean deleteProfilePhoto(HttpServletRequest req);
 	// 프로필 사진 변경
-	boolean changeProfilePhoto(HttpServletRequest req, int photoId);
+	boolean changeProfilePhoto(HttpServletRequest req);
 	
 	
 	
@@ -84,8 +83,6 @@ public interface MemberService {
 	
 	
 	
-	// user session 갱신
-	void refreshUserSession(HttpServletRequest req, int userId);
 	
 	// 유효성 검사 결과를 정리
 	List<ErrorFieldDTO> validationResult(Errors errors);

@@ -7,7 +7,7 @@
 <title>등록한 숙소 리스트</title>
 </head>
 <body>
-	<%@include file="modify/headerStep.jsp" %>
+	<%@include file="modification/headerStep.jsp" %>
 
 
 </body>
