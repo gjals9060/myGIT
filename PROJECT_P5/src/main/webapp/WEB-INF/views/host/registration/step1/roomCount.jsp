@@ -126,6 +126,6 @@
 
 
 <script src="/p5/js/jquery-3.4.1.js"></script>
-<script src="/p5/js/host.js"></script>
+<script src="/p5/js/host.js?v=<%=System.currentTimeMillis() %>"></script>
 </body>
 </html>

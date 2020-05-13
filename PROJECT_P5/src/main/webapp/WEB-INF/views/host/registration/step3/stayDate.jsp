@@ -12,6 +12,7 @@ display:block;
 }
 </style>
 <body>
+<input type="hidden" id="hostId" value="${hostId }" />
 <form action="calendar" method="post">
 	<h1>최대,최소 숙박일을 정해주세요</h1>
 	최소 숙박
@@ -29,8 +30,10 @@ display:block;
 	<div id="maximum-warning"></div>
 <input type="submit" value="다음" />
 </form>
-<a href="description">이전</a>
+<a href="../hostingStatus?hostId=${hostId }">이전</a>
+        <a href="./calendar?hostId=${hostId }">다음</a>
 <!-- <a href="calendar">다음</a> -->
+<script src="/p5/js/host.js?v=<%=System.currentTimeMillis() %>"></script>
 </body>
 <script>
 
@@ -135,6 +138,6 @@ display:block;
 	});
 
 
-
+	
 </script>
 </html>

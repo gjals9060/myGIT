@@ -13,7 +13,7 @@
 </head>
 
 <body>
-
+<input type="hidden" id="hostId" value="${hostId }" />
 	<%@include file="../headerStep.jsp" %>
 
 	<div id="wrap">
@@ -34,11 +34,13 @@
 		</select>
 
 		<div class="btn-block">
-			<a href="hostStatus.jsp">이전</a>
-			<button id="roomTypeNextBtn">다음</button>
+			<a href="../hostingStatus?hostId=${hostId }">이전</a>
+			<a href="./roomCount?hostId=${hostId }">다음</a>
+			<!-- <button id="roomType">다음</button> -->
 		</div>
 
 	</div>
+<script src="/p5/js/host.js?v=<%=System.currentTimeMillis() %>"></script>
 </body>
 
 <script>

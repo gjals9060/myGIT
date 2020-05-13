@@ -13,6 +13,14 @@ img{
 margin-right:10px;
 width:200px;
 }
+.efg{
+ 	margin: 5px;
+	padding:  5px;
+	border-width: 2px;
+	border-color: #aaa;
+	border-style: outset;
+	width: 500px;
+}
 </style>
 </head>
 <body>		
@@ -20,10 +28,17 @@ width:200px;
 <div id="wrap">
 새로운 숙소 진행을 시작해볼까요?
 <div id="list">
-<ul>
-<li><input type="radio" name="hostId" value="0" /><img src="room1.jpg" alt="사진" />새로운 숙소 등록하기</li><br>
-숙소 등록중
-<li><input type="radio" name="hostId" value="3456" /><img src="room1.jpg" alt="사진" />개인실</li>
+<ul id="abc">
+<li>
+	<input type="radio" name="hostId" value="0" />
+	<img src="room1.jpg" alt="사진" />새로운 숙소 등록하기</li><br>
+	숙소 등록중 
+<%-- <li>
+	<input type="radio" name="hostId" value="${hosting.hostId }" />
+	<img src="${hosting.coverPhotoPath}" alt="사진" /><br />
+	${hosting.hostName }<br />
+	${hosting.roomTypeName }
+</li> --%>
 </ul>
 </div>
 </div>
@@ -50,7 +65,36 @@ function next(){
 	
 } // next-END
 
-
+	$(window).bind("pageshow", function (event) {
+		$.ajax({
+			type : "POST",
+			url : "getHostingList",
+//			async : false,
+			success : function(hostingList){
+			//	alert(hostingList.length);
+				var result = '';
+				$.each(hostingList, function(i, hosting){
+					result +=
+					'	<li><div class="efg">	'
+					+'	<input type="radio" name="hostId" value="' + hosting.hostId + '" />	'
+					+'	<img src="' + hosting.coverPhotoPath + '" alt="사진" />	'
+					+'	<br />' + hosting.hostName + '<br />' + hosting.roomTypeName
+					+'	</div></li>	'
+					;
+				}); // each-END
+				$('#abc').append(result);
+			},	
+			error : function(){
+				alert("통신 실패..");
+			}
+		});
+		
+		
+		$.ajax({
+			type : "POST",
+			url : "registration/reset",
+		}); // AJAX-END
+	});
 
 
 

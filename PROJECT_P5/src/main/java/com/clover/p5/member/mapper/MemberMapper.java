@@ -12,18 +12,18 @@ import com.clover.p5.member.dto.ProfilePhotoVO;
 public interface MemberMapper {
 	
 	// 회원정보 저장
-	int insertMember(NewMemberDTO newMemberDto);
+	int insertMember(NewMemberDTO newHost);
 	// 회원정보 검색(이메일로)
 	Member selectMemberByEmail(String email);
 	// 이메일로 회원ID 검색
-	int selectMemberId(String userEmail);
+	int selectMemberId(String email);
 	// 회원정보 검색(ID로)
-	Member selectMember(int userId);
+	Member selectMember(int memberId);
 	
 	
 	
 	// 비밀번호 변경
-	int updatePassword(@Param("userId") int userId,
+	int updatePassword(@Param("memberId") int memberId,
 						@Param("newPassword") String newPassword);
 	
 	
@@ -31,9 +31,9 @@ public interface MemberMapper {
 	
 	
 	// 휴대전화 인증 여부 검색
-	String selectMobileAuthentication(int userId);
+	String selectMobileAuthentication(int memberId);
 	// 휴대전화 인증으로 수정
-	int updateMobileAuthentication(int userId);
+	int updateMobileAuthentication(int memberId);
 	
 
 	
@@ -46,15 +46,13 @@ public interface MemberMapper {
 	// 프로필 사진 등록
 	int insertProfilePhoto(ProfilePhotoVO vo);
 	// 프로필 사진 삭제
-	int deleteProfilePhoto(int photoId);
+	int deleteProfilePhoto(int profilePhotoId);
 	// 삭제된 프로필 사진 채우기
 	int updateAutoProfile(int memberId);
 	// 프로필 사진 해제
 	int updateIsProfileN(int memberId);
 	// 프로필 사진 적용
-	int updateIsProfileY(int photoId);
-	// 프로필 변경 이후 회원 테이블에 새 경로 저장
-	int updateMemberProfilePhotoPath(int memberId);
+	int updateIsProfileY(int profilePhotoId);
 	
 	
 	

@@ -4,25 +4,26 @@
 <mapper namespace="com.clover.p5.host.mapper.HostMapper">
 	
 	
-	<!-- 호스트 등록 -->
+	<!-- 호스트 등록 1단계 완료 -->
 	<insert id="insertHost" parameterType="NewHostDTO">
 		INSERT INTO host
 		VALUES
 		(
 			SEQ_host_id.nextval,
 			#{memberId},
-			#{name},
-			#{description},
-			#{descriptionEtc},
-			#{type},
-			#{roomType},
+			
+			#{hostTypeId},
+			#{roomTypeId},
+			
 			#{capacity},
 			#{roomCount},
 			#{bedCount},
 			#{bathroomCount},
+			
 			#{address},
 			#{latitude},
 			#{longitude},
+			
 			#{isTv},
 			#{isWifi},
 			#{isAirConditioner},
@@ -33,39 +34,82 @@
 			#{isWashingMachine},
 			#{isElevator},
 			#{isParkingLot},
-			#{minimumStay},
-			#{maximumStay},
-			#{price},
-			TO_DATE(#{creationDate}, 'YYYY-MM-DD HH24:MI:SS'),
-			NULL
+			
+			'', <!-- 숙소 설명 -->
+			'', <!-- 기타 사항 -->
+			'', <!-- 숙소 이름 -->
+			
+			1, <!-- 최소 숙박일 -->
+			1, <!-- 최대 숙박일 -->
+			0, <!-- 1박 가격 -->
+			
+			NULL, <!-- 작성일 -->
+			NULL  <!-- 수정일 -->
 								)
 	</insert>
+	<!-- TO_DATE(#{creationDate}, 'YYYY-MM-DD HH24:MI:SS'), -->
 	
-	
-	<select id="selectNewHostId" parameterType="int" resultType="int">
+	<!-- 새로 등록한 호스트의 ID 검색 -->
+	<select id="selectNewHostId" resultType="int">
 		SELECT MAX(id)
 		FROM host
 		WHERE member_id = #{memberId}
 	</select>
 	
+	<!-- 호스트 정보 검색 -->
+	<select id="selectHost" resultType="Host">
+		SELECT *
+		FROM host
+		WHERE id = #{hostId}
+	</select>
 	
-	<!-- foreach문에서는 trigger로! .nextval이 안먹힌다 -->
-	<!-- 예약 차단일 등록 -->
-	<insert id="insertBlocking">
-		<foreach collection="arrBlockingDate" item="blockingDate"
-		 separator=" " open="INSERT ALL " close="SELECT * FROM DUAL">
-			INTO blocking
-			(	
-				host_id,
-				blocking_date
-								)
-			VALUES
-			(	
-				#{hostId},
-				TO_DATE(#{blockingDate}, 'MM/DD/YYYY')
-														)
-		</foreach>
-	</insert>
+	
+	
+	<select id="selectHostingList" resultType="HostingDTO">
+		SELECT host.id AS hostId,
+				host_photo.path AS coverPhotoPath,
+				host.name AS hostName,
+    			room_type.name AS roomTypeName
+		FROM host LEFT JOIN host_photo ON host.id = host_photo.host_id
+										AND host_photo.sort_order = 1
+        JOIN room_type ON host.room_type_id = room_type.id
+        WHERE host.member_id = #{memberId}
+        ORDER BY host.id DESC
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- 호스트에 등록된 사진 목록을 검색 -->
+	<select id="selectHostPhotoList" resultType="HostPhoto">
+		SELECT *
+		FROM host_photo
+		WHERE host_id = #{hostId}
+		ORDER BY sort_order
+	</select>
+	
+	<!-- 호스트(숙소) 사진이 있나 확인 -->
+	<select id="selectHostPhotoCount" resultType="int">
+		SELECT count(*)
+		FROM host_photo
+		WHERE host_id = #{hostId}
+	</select>
+	<!-- 사진이 있다면 사진의 index 최댓값 구함 -->
+	<select id="selectHostPhotoSortOrderMax" resultType="int">
+		SELECT max(sort_order)
+		FROM host_photo
+		WHERE host_id = #{hostId}
+	</select>
 	
 	<!-- 호스트 사진 저장 -->
 	<insert id="insertHostPhoto">
@@ -90,27 +134,6 @@
 		</foreach>
 	</insert>
 	
-	<!-- 호스트(숙소) 사진이 있나 확인 -->
-	<select id="selectHostPhotoCount" resultType="int">
-		SELECT count(*)
-		FROM host_photo
-		WHERE host_id = #{hostId}
-	</select>
-	<!-- 사진이 있다면 사진의 index 최댓값 구함 -->
-	<select id="selectHostPhotoSortOrderMax" resultType="int">
-		SELECT max(sort_order)
-		FROM host_photo
-		WHERE host_id = #{hostId}
-	</select>
-	
-	<!-- 호스트에 등록된 사진 목록을 검색 -->
-	<select id="selectHostPhotoList" resultType="HostPhoto">
-		SELECT *
-		FROM host_photo
-		WHERE host_id = #{hostId}
-		ORDER BY sort_order
-	</select>
-	
 	<!-- 호스트에 등록된 사진을 삭제 -->
 	<delete id="deleteHostPhoto"> <!-- 파라미터 타입은 안써줘도 되는가 -->
 		DELETE
@@ -134,6 +157,34 @@
 		SET sort_order = #{sortOrder}
 		WHERE id = #{photoId}
 	</update>
+	
+	
+
+
+
+
+
+
+	<!-- foreach문에서는 trigger로! .nextval이 안먹힌다 -->
+	<!-- 예약 차단일 등록 -->
+	<insert id="insertBlocking">
+		<foreach collection="arrBlockingDate" item="blockingDate"
+		 separator=" " open="INSERT ALL " close="SELECT * FROM DUAL">
+			INTO blocking
+			(	
+				host_id,
+				blocking_date
+								)
+			VALUES
+			(	
+				#{hostId},
+				TO_DATE(#{blockingDate}, 'MM/DD/YYYY')
+														)
+		</foreach>
+	</insert>
+
+
+
 
 
 

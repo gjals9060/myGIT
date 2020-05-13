@@ -21,12 +21,16 @@ display:none;
 </Style>
 </head>
 <body>
-	<form action="price" method="post">
+<input type="hidden" id="hostId" value="${hostId }" />
+	<!-- <form action="price" method="post"> -->
 		<div id="mdp-demo"></div>
 		<input type="text" id="altField" value="" name="blockingDate" /> <input
 			type="button" value="전체해제" id="mdpAbled" class="abled" /> <input
-			type="button" value="전체차단" id="mdpDisabled" class="disabled" /> <a
-			href="stayDate">이전</a> <input type="submit" value="다음" />
+			type="button" value="전체차단" id="mdpDisabled" class="disabled" /> 
+			
+		<a href="stayDate?hostId=${hostId }">이전</a>
+        <a href="price?hostId=${hostId }">다음</a>
+			<!-- <input type="submit" value="다음" /> -->
 	</form>
 </body>
 <script>

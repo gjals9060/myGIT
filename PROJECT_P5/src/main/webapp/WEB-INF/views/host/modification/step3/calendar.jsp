@@ -4,30 +4,27 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>3단계-금액</title>
+<title>3단계-예약불가날짜</title>
 </head>
 <body>
+<input type="hidden" id="hostId" value="${hostId }" />
 	<%@include file="../headerStep.jsp" %>
 	
 	<div id="wrap">
-		<h1>날짜마다 동일한 금액을 정해주세요!</h1>
-		<!--0부터 9까지 숫자를 입력하지않으면 ""로 replace됨  -->
-		금액 <input type="text" name="price"
-			onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" />
-		<div id="warning"></div>
-
-
+		
+		
 		<div class="btn-block">
-			<a href="">이전</a>
-			<button>다음</button>
+		<a href="./stayDate?hostId=${hostId }">이전</a>
+			<a href="./price?hostId=${hostId }">다음</a>
 		</div>
 	</div>
-	
-	
-	
+
+
+
 </body>
+
 <script>
-	//3단계의 헤더 내용을 변경한다. 
+	// 3단계의 헤더 내용을 변경한다. 
 	
 	// 3단계를 설명하는 설명문을 넣음. 
 	var stepDescription = $('.step1-description');
@@ -50,8 +47,7 @@
 		+ '<a  class="step1-tab" href="./modifyPrice.jsp" id="tabPrice">금액</a>'
 	);
 	
-	// 금액 tab에 배경추가
-	$('#tabPrice').css('background','#bbb');
-
+	// 예약불가 tab에 배경 추가
+	$('#tabCalender').css('background','#bbb');
 </script>
 </html>
