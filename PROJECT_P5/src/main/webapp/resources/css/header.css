@@ -227,8 +227,7 @@ herder>* {
 	animation: zoom 0.3s ease-out;
 }
 
-@
-keyframes zoom {from { transform:translateY(-5%);
+@keyframes zoom {from { transform:translateY(-5%);
 	opacity: 0.2;
 }
 
