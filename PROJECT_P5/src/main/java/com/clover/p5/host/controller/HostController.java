@@ -48,16 +48,21 @@ public class HostController {
 		return "host/hostingStatus";
 	}
 	
-	// 특정 호스트 검색
+	// 호스트 등록중 목록 검색
 	@RequestMapping("/host/getHostingList")
 	@ResponseBody
 	public List<HostingDTO> getHostingList(HttpServletRequest req) {
 		return hostService.getHostingList(MemberServiceImpl.getSessionUserId(req));
 	}
 	
+	// 호스트 수정 페이지 본인 식별
+	@RequestMapping("/ajax/isIdentified")
+	@ResponseBody
+	public boolean isIdentified(HttpServletRequest req) {
+		return hostService.isIdentified(req);
+	}
 	
 	
-	// 특정 호스트 검색
 	@RequestMapping("/host/*/getHost")
 	@ResponseBody
 	public Host getHost(int hostId) {

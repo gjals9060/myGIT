@@ -44,8 +44,8 @@ public interface HostService {
 	
 	
 	
-	
-	
+	// 호스트 내용 변경시 접근 권한 확인
+	boolean isIdentified(HttpServletRequest req);
 	
 	
 	// 숙소 등록시 설정한 예약 차단일 저장

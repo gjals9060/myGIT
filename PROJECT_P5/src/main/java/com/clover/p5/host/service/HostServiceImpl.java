@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.clover.p5.host.dto.Host;
@@ -21,6 +22,7 @@ import com.clover.p5.host.dto.HostPhotoVO;
 import com.clover.p5.host.dto.HostingDTO;
 import com.clover.p5.host.dto.NewHostDTO;
 import com.clover.p5.host.mapper.HostMapper;
+import com.clover.p5.member.service.MemberServiceImpl;
 
 @Service
 public class HostServiceImpl implements HostService {
@@ -134,16 +136,25 @@ public class HostServiceImpl implements HostService {
 
 
 //********************************** 호스트 사진 삭제(수정 필요) ***********************************************
+	@Transactional
 	@Override
 	public boolean deleteHostPhoto(HttpServletRequest req) {
+		int photoId = Integer.parseInt(req.getParameter("photoId"));
+		int photoOrder = Integer.parseInt(req.getParameter("photoOrder"));
+		int photoCount = Integer.parseInt(req.getParameter("photoCount"));
 		int hostId = Integer.parseInt(req.getParameter("hostId"));
-		int hostPhotoId = Integer.parseInt(req.getParameter("hostPhotoId"));
-		if(hostMapper.deleteHostPhoto(hostPhotoId) == 1) {
-			System.out.println(hostPhotoId + "번 사진 삭제 성공");
-			hostMapper.selectHostPhotoCount(hostId)
-			return true; // 삭제 성공
+		if(hostMapper.deleteHostPhoto(photoId) != 1) {
+			System.out.println(photoId + "번 사진 삭제 실패");
+			return false;
 		}
-		return false; // 삭제 실패
+		if(photoOrder == 1 && photoCount > 1) { // 삭제한 사진이 커버사진이고 다른 사진이 존재했을 때
+			if(hostMapper.updateCoverPhotoOrder(hostId) != 1) {
+				System.out.println("커버 사진 order 대체 실패");
+				return false;
+			}
+		}
+		System.out.println(photoId + "번 사진 삭제 성공");
+		return true; // 삭제 성공
 	}
 //********************************** 호스트 사진 삭제-END ***********************************************
 	
@@ -215,6 +226,18 @@ public class HostServiceImpl implements HostService {
 		List<HostingDTO> list = hostMapper.selectHostingList(memberId);
 		System.out.println(memberId + "번 회원의 등록중인 호스트 : " + list.size() + "개");
 		return list;
+	}
+
+
+
+	@Override
+	public boolean isIdentified(HttpServletRequest req) {
+		int hostId = Integer.parseInt(req.getParameter("hostId"));
+		int memberId = MemberServiceImpl.getSessionUserId(req);
+		if(hostMapper.selectIsIdentified(hostId, memberId) != 1) {
+			return false;
+		}
+		return true;
 	}
 	
 	

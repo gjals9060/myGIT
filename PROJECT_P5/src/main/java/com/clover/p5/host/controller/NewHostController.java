@@ -36,7 +36,7 @@ public class NewHostController {
 		return new NewHostDTO(userId);
 	}
 		// 화면에 갱신된 내용을 적용 - AJAX
-	@RequestMapping("/host/registration/newHost/refresh")
+	@RequestMapping("/host/registration/getNewHost")
 	@ResponseBody
 	public NewHostDTO refreshNewHost(@ModelAttribute("newHost") NewHostDTO newHost) {
 		System.out.println("=============== 화면을 갱신합니다 ===============");
@@ -45,7 +45,7 @@ public class NewHostController {
 		return newHost;
 	}
 		// 화면 전환(페이지 이동)시 입력한 정보를 저장 - AJAX
-	@RequestMapping("/host/registration/newHost/save")
+	@RequestMapping("/host/registration/saveNewHost")
 	@ResponseBody
 	public void saveNewHost(@ModelAttribute("newHost") NewHostDTO newHost, HttpServletRequest request) {
 		System.out.println("============== newHost 세션에 정보를 저장 ===============");

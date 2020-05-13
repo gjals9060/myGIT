@@ -140,6 +140,16 @@
 		FROM host_photo
 		WHERE id = #{hostPhotoId}
 	</delete>
+	<update id="updateCoverPhotoOrder">
+		UPDATE host_photo
+		SET sort_order = 1
+		WHERE host_id = #{hostId}
+				AND sort_order = (
+									SELECT MIN(sort_order)
+									FROM host_photo
+									WHERE host_id = #{hostId}
+																)
+	</update>
 	
 	<!-- 호스트 사진 정렬 순서 저장 -->
 	<update id="updateHostPhotoSort">
@@ -185,7 +195,14 @@
 
 
 
-
+	<select id="selectIsIdentified" parameterType="int" resultType="int">
+		SELECT count(*)
+		FROM host
+		WHERE id = #{hostId} AND member_id = #{memberId}
+	</select>
+	
+	
+	
 
 
 

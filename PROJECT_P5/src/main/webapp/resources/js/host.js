@@ -22,17 +22,33 @@
 		// 최신 정보만 보여주게써~
 	$(window).bind("pageshow", function (event) {
 	//	alert(urlInfo);
-		var url = setRefreshURL();
 		$.ajax({
 			type : "POST",
-			url : url,
+			url : "/p5/ajax/isIdentified",
 			data : "hostId=" + $('#hostId').val(),
-			success : function(host){
-//				alert(JSON.stringify(host)); // 내용 확인
-				refresh(host); // 화면 갱신
+			success : function(result){
+				if(!result){
+					alert("접근 권한이 없는 페이지입니다.");
+					location.replace("/p5"); // 홈으로 이동
+				}
+				// 접근 권한 통과하면 화면 갱신 수행
+				var url = setRefreshURL();
+				$.ajax({
+					type : "POST",
+					url : url,
+					data : "hostId=" + $('#hostId').val(),
+					success : function(host){
+//						alert(JSON.stringify(host)); // 내용 확인
+						refresh(host); // 화면 갱신
+					},	
+					error : function(){
+						alert("화면 갱신에 실패..");
+					}
+				}); // AJAX-END
+				
 			},	
 			error : function(){
-				alert("화면 갱신에 실패..");
+				alert("접근 권한 확인에 실패..");
 			}
 		}); // AJAX-END
 	});
@@ -160,10 +176,10 @@ function setSaveURL(){
 	|| urlInfo == '/p5/host/registration/roomCount'
 	|| urlInfo == '/p5/host/registration/address'
 	|| urlInfo == '/p5/host/registration/facilities')
-	{return "newHost/save";}
+	{return "saveNewHost";}
 	
 	// 등록 1단계 이후의 과정 및 모든 수정(DB 사용)
-	return "save";
+	return "saveHost";
 	
 }//////////////////////////////////// setSaveURL-END /////////////////////////////////////////////
 
@@ -176,7 +192,7 @@ function setRefreshURL(){
 	|| urlInfo == '/p5/host/registration/roomCount'
 	|| urlInfo == '/p5/host/registration/address'
 	|| urlInfo == '/p5/host/registration/facilities')
-	{return "newHost/refresh";}
+	{return "getNewHost";}
 	
 	// 등록 1단계 이후의 과정 및 모든 수정(DB 사용)
 	return "getHost";

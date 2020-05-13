@@ -36,6 +36,8 @@ public interface HostMapper {
 	int insertHostPhoto(List<HostPhotoVO> photoList);
 	// 호스트 사진 삭제
 	int deleteHostPhoto(int hostPhotoId);
+	// 커버 사진 삭제시에 order 대체
+	int updateCoverPhotoOrder(int hostId);
 	// 호스트 사진 드래그 순서 변경 결과 저장
 	int updateHostPhotoSort(int[] sortResult);
 	// 호스트 대표 사진 바꾸기에 사용
@@ -55,6 +57,8 @@ public interface HostMapper {
 	
 	
 	
-	
+	int selectIsIdentified(
+			@Param("hostId") int hostId,
+			@Param("memberId") int memberId);
 	
 }

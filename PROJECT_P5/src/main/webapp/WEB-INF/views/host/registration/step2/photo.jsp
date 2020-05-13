@@ -321,13 +321,13 @@ function apply(){
       });
 
    var menu = '<span class="photoButton first">'
-      + '<button onclick="deleteHostPhoto($(this).parent().prev().attr(\'data-id\'))">'
+      + '<button onclick="deleteHostPhoto($(this).parent().prev().attr(\'data-id\'), $(this).parent().prev().attr(\'data-order\'))">'
         + '<i class="fas fa-trash-alt fa-2x"></i></button>'
       + '<button onclick="modalOn($(this).parent().prev().index())"><i class="fas fa-external-link-alt fa-2x"></i></button></span>';
    var menu2 = '<span class="photoButton">'
         + '<button onclick="changeCoverImage($(this).parent().prev().attr(\'data-order\'))">'
         + '<i class="fas fa-check"></i></button>'
-      + '<button onclick="deleteHostPhoto($(this).parent().prev().attr(\'data-id\'))">'
+      + '<button onclick="deleteHostPhoto($(this).parent().prev().attr(\'data-id\'), $(this).parent().prev().attr(\'data-order\'))">'
         + '<i class="fas fa-trash-alt"></i></button>'
       + '<button onclick="modalOn($(this).parent().prev().index())"><i class="fas fa-external-link-alt"></i></button></span>';
       
@@ -430,8 +430,23 @@ function apply(){
        }
        
 //**************************** 백엔드 기능.. ***********************************************************
+$(window).bind("pageshow", function (event) {
+		$.ajax({
+			type : "POST",
+			url : "/p5/ajax/isIdentified",
+			data : "hostId=" + $('#hostId').val(),
+			success : function(result){
+				if(!result){
+					alert("접근 권한이 없는 페이지입니다.");
+					location.replace("/p5"); // 홈으로 이동
+				}
+			},	
+			error : function(){
+				alert("접근 권한 확인에 실패..");
+			}
+		}); // AJAX-END
+});
 $(function(){
-	
    // 화면에 사진 출력
    showHostPhoto();
    
@@ -638,13 +653,14 @@ function addHostPhoto(formData){
 
 
    // 사진 삭제
-function deleteHostPhoto(hostPhotoId){
+function deleteHostPhoto(photoId, photoOrder){
 	   var params = {
-   			hostPhotoId : hostPhotoId
- 			hostPhotoCount : $(".inputPhoto").length,
-			   hostId : $('#hostId').val(),
+   			photoId : photoId,
+   			photoOrder : photoOrder,
+ 			photoCount : $(".inputPhoto").length,
+			hostId : $('#hostId').val()
 	   }
-      
+ //   alert(JSON.stringify(params));
    $.ajax({
       type: "POST",
       url: '/p5/ajax/deleteHostPhoto',

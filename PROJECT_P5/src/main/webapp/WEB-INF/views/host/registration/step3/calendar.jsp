@@ -7,10 +7,10 @@
 <link rel="icon" type="image/png" href="mdp-icon.png">
 <!--[if IE]><link rel="shortcut icon" href="favicon.ico" /><![endif]-->
 <title>숙소등록</title>
-<script src="../../../js/jquery-3.4.1.js"></script>
-<script src="../../../jquery-ui.min.js"></script>
-<script src="../../../js/Calendar.js"></script>
-<link rel="stylesheet" href="../../../css/reservationCalendar.css" />
+<script src="/p5/js/jquery-3.4.1.js"></script>
+<script src="/p5/jquery-ui.min.js"></script>
+<script src="/p5/js/Calendar.js"></script>
+<link rel="stylesheet" href="/p5/css/reservationCalendar.css" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- <link rel="stylesheet" href="https://cdn.rawgit.com/dubrox/Multiple-Dates-Picker-for-jQuery-UI/master/jquery-ui.multidatespicker.css" /> -->
 
@@ -31,9 +31,24 @@ display:none;
 		<a href="stayDate?hostId=${hostId }">이전</a>
         <a href="price?hostId=${hostId }">다음</a>
 			<!-- <input type="submit" value="다음" /> -->
-	</form>
 </body>
 <script>
+$(window).bind("pageshow", function (event) {
+	$.ajax({
+		type : "POST",
+		url : "/p5/ajax/isIdentified",
+		data : "hostId=" + $('#hostId').val(),
+		success : function(result){
+			if(!result){
+				alert("접근 권한이 없는 페이지입니다.");
+				location.replace("/p5"); // 홈으로 이동
+			}
+		},	
+		error : function(){
+			alert("접근 권한 확인에 실패..");
+		}
+	}); // AJAX-END
+});
 	var month;
 	var year;
 	$('#mdp-demo').multiDatesPicker({
