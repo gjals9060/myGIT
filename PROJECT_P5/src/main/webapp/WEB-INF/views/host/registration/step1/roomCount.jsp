@@ -3,11 +3,25 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<title>인원</title>
 </head>
 <body>
+<input type="hidden" id="hostId" value="${hostId }" />
+
+	<%@include file="../hostHeader.jsp" %>
+	<nav>
+		<a class="step-tab" href="./roomType.jsp?hostId=" id="tabRoomType">숙소형태</a>
+		<a class="step-tab" href="./roomCount.jsp" id="tabRoomCount">인원</a>
+		<a class="step-tab" href="./address.jsp" id="tabAddress">위치</a> 
+		<a class="step-tab" href="./facilities.jsp" id="tabFacilities">편의시설</a>
+	</nav>
+	
+	<script>
+		$('#progressBar').val('30');
+		$('#tabRoomCount').css('background','#bbb');
+	</script>
 	<!-- <form action="address" method="post"> -->
+	<div id="wrap">
 		최대 숙박인원 <br><input type="text" name="capacity" class="maximum-stay" readonly value="1"/>
 		<button id="maximum-increase-quantity">▲</button>
 		<button id="maximum-decrease-quantity">▼</button><br>
@@ -23,6 +37,7 @@
 		<button id="bathroom-increase-quantity">▲</button>
 		<button id="bathroom-decrease-quantity">▼</button>
 		<!--index.jsp랑 똑같음  침대개수는 0이 낮은값 나머지는 1이 낮은값 그이상을줄일수 없음 -->
+		</div>
 		<script>
 		/*최대 숙박인원  */
 			$(function() {
@@ -121,8 +136,10 @@
 		<!-- <input type="submit" value="다음" /> -->
 	<!-- </form> -->
 	<!--페이지 넘어가기(임시방안)  -->
-<a href="roomType">이전</a>
-<a href="address">다음</a>
+<a class="registration" href="./roomType">이전</a>
+<a class="registration" href="./address">다음</a>
+	<a class="modification" href="./roomType?hostId=${hostId }">이전</a>
+	<a class="modification" href="./address?hostId=${hostId }">다음</a>
 
 
 <script src="/p5/js/jquery-3.4.1.js"></script>

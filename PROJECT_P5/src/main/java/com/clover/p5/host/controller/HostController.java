@@ -48,23 +48,78 @@ public class HostController {
 		return "host/hostingStatus";
 	}
 	
-	// 특정 호스트 검색
+	// 호스트 등록중 목록 검색
 	@RequestMapping("/host/getHostingList")
 	@ResponseBody
 	public List<HostingDTO> getHostingList(HttpServletRequest req) {
 		return hostService.getHostingList(MemberServiceImpl.getSessionUserId(req));
 	}
 	
+	// 호스트 수정 페이지 본인 식별
+	@RequestMapping("/ajax/isIdentified")
+	@ResponseBody
+	public boolean isIdentified(HttpServletRequest req) {
+		return hostService.isIdentified(req);
+	}
 	
 	
-	// 특정 호스트 검색
 	@RequestMapping("/host/*/getHost")
 	@ResponseBody
 	public Host getHost(int hostId) {
 		return hostService.getHost(hostId);
 	}
 	
+	@RequestMapping("/host/modification/saveRoomType")
+	@ResponseBody
+	public boolean saveRoomType(Host host) {
+		return hostService.modifyRoomType(host);
+	}
+	@RequestMapping("/host/modification/saveRoomCount")
+	@ResponseBody
+	public boolean saveRoomCount(Host host) {
+		return hostService.modifyRoomCount(host);
+	}
+	@RequestMapping("/host/modification/saveAddress")
+	@ResponseBody
+	public boolean saveAddress(Host host) {
+		return hostService.modifyAddress(host);
+	}
+	@RequestMapping("/host/modification/saveFacilities")
+	@ResponseBody
+	public boolean saveFacilities(Host host) {
+		return hostService.modifyFacilities(host);
+	}
 	
+	
+	@RequestMapping("/host/*/saveDescription")
+	@ResponseBody
+	public boolean saveDescription(Host host) {
+		return hostService.updateDescription(host);
+	}
+	@RequestMapping("/host/*/saveName")
+	@ResponseBody
+	public boolean saveName(Host host) {
+		return hostService.updateName(host);
+	}
+	
+	
+	@RequestMapping("/host/*/saveStayDate")
+	@ResponseBody
+	public boolean saveStayDate(Host host) {
+		return hostService.updateStayDate(host);
+	}
+	@RequestMapping("/host/modification/savePrice")
+	@ResponseBody
+	public boolean savePrice(Host host) {
+		return hostService.updatePrice(host);
+	}
+	
+	
+	@RequestMapping("ajax/completeStep3")
+	@ResponseBody
+	public boolean completeStep3(int price, int hostId) {
+		return hostService.completeRegistration(price, hostId);
+	}
 	
 	
 	
@@ -109,19 +164,43 @@ public class HostController {
 	
 	
 	
-	
+	// roomType.jsp로 이동
+		@RequestMapping("/host/modification/roomType")
+		public String roomType2(int hostId, Model model) {
+			model.addAttribute("hostId", hostId);
+			return "host/registration/step1/roomType";
+		}	// roomCount.jsp로 이동
+		@RequestMapping("/host/modification/roomCount")
+		public String roomCount2(int hostId, Model model) {
+			model.addAttribute("hostId", hostId);
+			return "host/registration/step1/roomCount";
+		}	// address.jsp로 이동
+		@RequestMapping("/host/modification/address")
+		public String address2(int hostId, Model model) {
+			model.addAttribute("hostId", hostId);
+			return "host/registration/step1/address";
+		}	// facilities.jsp로 이동
+		@RequestMapping("/host/modification/facilities")
+		public String facilities2(int hostId, Model model) {
+			model.addAttribute("hostId", hostId);
+			return "host/registration/step1/facilities";
+		}
+		
+		
+		
+		
 		// photo.jsp로 이동
-	@RequestMapping("/host/registration/photo")
+	@RequestMapping("/host/*/photo")
 	public String photo(int hostId, Model model) {
 		model.addAttribute("hostId", hostId);
 		return "host/registration/step2/photo";
 	}	// description.jsp로 이동
-	@RequestMapping("/host/registration/description")
+	@RequestMapping("/host/*/description")
 	public String description(int hostId, Model model) {
 		model.addAttribute("hostId", hostId);
 		return "host/registration/step2/description";
 	}	// name.jsp로 이동
-	@RequestMapping("/host/registration/name")
+	@RequestMapping("/host/*/name")
 	public String name(int hostId, Model model) {
 		model.addAttribute("hostId", hostId);
 		return "host/registration/step2/name";
@@ -130,17 +209,17 @@ public class HostController {
 	
 	
 		// stayDate.jsp로 이동
-	@RequestMapping("/host/registration/stayDate")
+	@RequestMapping("/host/*/stayDate")
 	public String stayDate(int hostId, Model model) {
 		model.addAttribute("hostId", hostId);
 		return "host/registration/step3/stayDate";
 	}	// calendar.jsp로 이동
-	@RequestMapping("/host/registration/calendar")
+	@RequestMapping("/host/*/calendar")
 	public String calendar(int hostId, Model model) {
 		model.addAttribute("hostId", hostId);
 		return "host/registration/step3/calendar";
 	}	// price.jsp로 이동
-	@RequestMapping("/host/registration/price")
+	@RequestMapping("/host/*/price")
 	public String price(int hostId, Model model) {
 		model.addAttribute("hostId", hostId);
 		return "host/registration/step3/price";
@@ -149,34 +228,13 @@ public class HostController {
 	public void finish(int hostId, Model model) {
 		model.addAttribute("hostId", hostId);
 		return;
-		//return "host/registration/finish";
 	}
 	
 	
-		// roomType.jsp로 이동
-	@RequestMapping("/host/modification/roomType")
-	public String roomType2(int hostId, Model model) {
-		model.addAttribute("hostId", hostId);
-		return "host/modification/step1/roomType";
-	}	// roomCount.jsp로 이동
-	@RequestMapping("/host/modification/roomCount")
-	public String roomCount2(int hostId, Model model) {
-		model.addAttribute("hostId", hostId);
-		return "host/modification/step1/roomCount";
-	}	// address.jsp로 이동
-	@RequestMapping("/host/modification/address")
-	public String address2(int hostId, Model model) {
-		model.addAttribute("hostId", hostId);
-		return "host/modification/step1/address";
-	}	// facilities.jsp로 이동
-	@RequestMapping("/host/modification/facilities")
-	public String facilities2(int hostId, Model model) {
-		model.addAttribute("hostId", hostId);
-		return "host/modification/step1/facilities";
-	}
+		
 	
 	
-	
+	/*
 		// photo.jsp로 이동
 	@RequestMapping("/host/modification/photo")
 	public String photo2(int hostId, Model model) {
@@ -211,7 +269,7 @@ public class HostController {
 	public String price2(int hostId, Model model) {
 		model.addAttribute("hostId", hostId);
 		return "host/modification/step3/price";
-	}
+	}*/
 	
 	
 	

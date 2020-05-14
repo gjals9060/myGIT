@@ -20,17 +20,17 @@
 		<h1>등록하실 숙소의 종류는 무엇인가요?</h1>
 		<h2>숙소종류를 등록해봐요</h2>
 		<!--숙소 종류 value를 0부터 2까지 설정 0이면 아파트 1이면 주택 2이면 팬션 -->
-		<select name="type" id="hostUpdateType">
-			<option value="0">아파트</option>
-			<option value="1">주택</option>
-			<option value="2">팬션</option>
+		<select name="hostTypeId" id="">
+			<option value="A1">아파트</option>
+			<option value="B2">주택</option>
+			<option value="C3">팬션</option>
 		</select>
 		<!--숙소 유형 value를 0부터 2까지 설정 0이면 전체 1이면 개인실 2이면 다인실 -->
 		<h2>숙소유형을 등록해봐요</h2>
-		<select name="roomType" id="hostUpdateRoomType">
-			<option value="0">전체</option>
-			<option value="1">개인실</option>
-			<option value="2">다인실</option>
+		<select name="roomTypeId" id="">
+			<option value="A1">집 전체</option>
+			<option value="B2">개인실</option>
+			<option value="C3">다인실</option>
 		</select>
 
 		<div class="btn-block">

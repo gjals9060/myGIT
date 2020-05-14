@@ -2,6 +2,7 @@ package com.clover.p5.host.dto;
 
 public class Host {
 	
+		private int hostId; // 호스트번호
 		private int memberId; // 회원번호
 		
 		private String hostTypeId; // 호스트 종류 번호
@@ -44,7 +45,8 @@ public class Host {
 		
 		@Override
 		public String toString() {
-			return 	"memberId: " + memberId + "\n"
+			return 	"hostId: " + hostId + "\n"
+					+ "memberId: " + memberId + "\n"
 					+ "hostTypeId: " + hostTypeId + "\n"
 					+ "roomTypeId: " + roomTypeId + "\n"
 					+ "capacity: " + capacity + "\n"
@@ -72,6 +74,16 @@ public class Host {
 					+ "price: " + price + "\n"
 					+ "creationDate: " + creationDate + "\n"
 					+ "modificationDate: " + modificationDate;
+		}
+
+
+		public int getHostId() {
+			return hostId;
+		}
+
+
+		public void setHostId(int hostId) {
+			this.hostId = hostId;
 		}
 
 
@@ -353,7 +365,8 @@ public class Host {
 		public void setModificationDate(String modificationDate) {
 			this.modificationDate = modificationDate;
 		}
-		
+
+
 		
 		
 		

@@ -13,15 +13,42 @@ import com.clover.p5.host.dto.NewHostDTO;
 
 public interface HostService {
 	
+	// 호스팅 목록 검색
+	List<HostingDTO> getHostingList(int memberId);
 	
-	// 숙소 등록 1단계 완료
+	// 호스트 등록 1단계 완료
 	int completeStep1(NewHostDTO newHost);
 	
 	// 특정 호스트 검색
 	Host getHost(int hostId);
 	
+	// 호스트 수정 1단계 - roomType.jsp
+	boolean modifyRoomType(Host host);
+	// 호스트 수정 1단계 - roomCount.jsp
+	boolean modifyRoomCount(Host host);
+	// 호스트 수정 1단계 - address.jsp
+	boolean modifyAddress(Host host);
+	// 호스트 수정 1단계 - facilities.jsp
+	boolean modifyFacilities(Host host);
 	
-	List<HostingDTO> getHostingList(int memberId);
+	// 호스트 등록, 수정 2단계 - description.jsp
+	boolean updateDescription(Host host);
+	// 호스트 등록, 수정 2단계 - name.jsp
+	boolean updateName(Host host);
+	
+	// 호스트 등록, 수정 3단계 - stayDate.jsp
+	boolean updateStayDate(Host host);
+	// 호스트 등록, 수정 3단계 - price.jsp
+	boolean updatePrice(Host host);
+	
+	// 호스트 등록 3단계 완료
+	boolean completeRegistration(int price, int hostId);
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -46,12 +73,16 @@ public interface HostService {
 	
 	
 	
-	
-	
 	// 숙소 등록시 설정한 예약 차단일 저장
 	/*boolean insertBlocking(int hostId, String blockingDate);*/
 	
 	
+	
+	
+	
+	
+	// 호스트 내용 변경시 접근 권한 확인
+	boolean isIdentified(HttpServletRequest req);
 	
 	
 }

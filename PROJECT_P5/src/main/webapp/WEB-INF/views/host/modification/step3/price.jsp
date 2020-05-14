@@ -20,12 +20,16 @@
 
 		<div class="btn-block">
 			<a href="./calendar?hostId=${hostId }">이전</a>
-			<a href="../hostingStatus?hostId=${hostId }">다음</a>
+			<button onclick="modifyPrice()">다음</button>
 		</div>
 	</div>
 	
 	
 	<script src="/p5/js/host.js?v=<%=System.currentTimeMillis() %>"></script>
+<script>
+
+
+</script>
 </body>
 <script>
 	//3단계의 헤더 내용을 변경한다. 

@@ -4,16 +4,26 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
 <%--panTo 사용시 오류, 이전 위치 기억등 잡아줘야할 내용이 많아져서 그냥 보류--%>>
-
+<title>위치</title>
 <!-- services와 clusterer, drawing 라이브러리 불러오기 -->
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6252091adcb28726fdb95ebdf0b78361&libraries=services"></script>
 
 </head>
 <body>
-
+	<input type="hidden" id="hostId" value="${hostId }" />
+	<%@include file="../hostHeader.jsp" %>
+	<nav>
+		<a class="step-tab" href="./roomType.jsp?hostId=" id="tabRoomType">숙소형태</a>
+		<a class="step-tab" href="./roomCount.jsp" id="tabRoomCount">인원</a>
+		<a class="step-tab" href="./address.jsp" id="tabAddress">위치</a> 
+		<a class="step-tab" href="./facilities.jsp" id="tabFacilities">편의시설</a>
+	</nav>
+	<script>
+		$('#progressBar').val('60');
+		$('#tabAddress').css('background','#bbb');
+	</script>
 
 	도로명/지번 :
 	<input type="text" id="sample5_address"
@@ -48,9 +58,10 @@
 
 
 	<!--임시 이동  -->
-	<a href="roomCount">이전</a>
-	<a href="facilities">다음</a>
-
+	<a class="registration" href="./roomCount">이전</a>
+	<a class="registration" href="./facilities">다음</a>
+	<a class="modification" href="./roomCount?hostId=${hostId }">이전</a>
+	<a class="modification" href="./facilities?hostId=${hostId }">다음</a>
 	<!-- <button id="next" onclick="inputAddress();">다음</button> -->
 </body>
 
@@ -575,6 +586,6 @@
 
 
 <!-- host.js에서 값을 받아옴 -->
-<script src="/p5/js/host.js"></script>
+<script src="/p5/js/host.js?v=<%=System.currentTimeMillis()%>"></script>
 
 </html>

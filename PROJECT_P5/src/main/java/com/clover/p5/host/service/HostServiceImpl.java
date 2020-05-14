@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.clover.p5.host.dto.Host;
@@ -21,6 +22,7 @@ import com.clover.p5.host.dto.HostPhotoVO;
 import com.clover.p5.host.dto.HostingDTO;
 import com.clover.p5.host.dto.NewHostDTO;
 import com.clover.p5.host.mapper.HostMapper;
+import com.clover.p5.member.service.MemberServiceImpl;
 
 @Service
 public class HostServiceImpl implements HostService {
@@ -134,16 +136,25 @@ public class HostServiceImpl implements HostService {
 
 
 //********************************** 호스트 사진 삭제(수정 필요) ***********************************************
+	@Transactional
 	@Override
 	public boolean deleteHostPhoto(HttpServletRequest req) {
+		int photoId = Integer.parseInt(req.getParameter("photoId"));
+		int photoOrder = Integer.parseInt(req.getParameter("photoOrder"));
+		int photoCount = Integer.parseInt(req.getParameter("photoCount"));
 		int hostId = Integer.parseInt(req.getParameter("hostId"));
-		int hostPhotoId = Integer.parseInt(req.getParameter("hostPhotoId"));
-		if(hostMapper.deleteHostPhoto(hostPhotoId) == 1) {
-			System.out.println(hostPhotoId + "번 사진 삭제 성공");
-			hostMapper.selectHostPhotoCount(hostId);
-			return true; // 삭제 성공
+		if(hostMapper.deleteHostPhoto(photoId) != 1) {
+			System.out.println(photoId + "번 사진 삭제 실패");
+			return false;
 		}
-		return false; // 삭제 실패
+		if(photoOrder == 1 && photoCount > 1) { // 삭제한 사진이 커버사진이고 다른 사진이 존재했을 때
+			if(hostMapper.updateCoverPhotoOrder(hostId) != 1) {
+				System.out.println("커버 사진 order 대체 실패");
+				return false;
+			}
+		}
+		System.out.println(photoId + "번 사진 삭제 성공");
+		return true; // 삭제 성공
 	}
 //********************************** 호스트 사진 삭제-END ***********************************************
 	
@@ -216,8 +227,138 @@ public class HostServiceImpl implements HostService {
 		System.out.println(memberId + "번 회원의 등록중인 호스트 : " + list.size() + "개");
 		return list;
 	}
+
+
+
+	@Override
+	public boolean isIdentified(HttpServletRequest req) {
+		int hostId = Integer.parseInt(req.getParameter("hostId"));
+		int memberId = MemberServiceImpl.getSessionUserId(req);
+		if(hostMapper.selectIsIdentified(hostId, memberId) != 1) {
+			return false;
+		}
+		return true;
+	}
 	
 	
+
+
+
+	@Override
+	public boolean modifyRoomType(Host host) {
+		if(hostMapper.updateRoomType(host) == 1) {
+			System.out.println("roomType.jsp 수정 완료했습니다.");
+			return true;
+		}
+		System.out.println("roomType.jsp 수정 실패했습니다.");
+		return false;
+	}
+	@Override
+	public boolean modifyRoomCount(Host host) {
+		if(hostMapper.updateRoomCount(host) == 1) {
+			System.out.println("roomCount.jsp 수정 완료했습니다.");
+			return true;
+		}
+		System.out.println("roomCount.jsp 수정 실패했습니다.");
+		return false;
+	}
+	@Override
+	public boolean modifyAddress(Host host) {
+		if(hostMapper.updateAddress(host) == 1) {
+			System.out.println("address.jsp 수정 완료했습니다.");
+			return true;
+		}
+		System.out.println("address.jsp 수정 실패했습니다.");
+		return false;
+	}
+	@Override
+	public boolean modifyFacilities(Host host) {
+		if(hostMapper.updateFacilities(host) == 1) {
+			System.out.println("facilities.jsp 수정 완료했습니다.");
+			return true;
+		}
+		System.out.println("facilities.jsp 수정 실패했습니다.");
+		return false;
+	}
+	@Override
+	public boolean updateDescription(Host host) {
+		if(hostMapper.updateDescription(host) == 1) {
+			System.out.println("description.jsp 수정 완료했습니다.");
+			return true;
+		}
+		System.out.println("description.jsp 수정 실패했습니다.");
+		return false;
+	}
+	@Override
+	public boolean updateName(Host host) {
+		if(hostMapper.updateName(host) == 1) {
+			System.out.println("name.jsp 수정 완료했습니다.");
+			return true;
+		}
+		System.out.println("name.jsp 수정 실패했습니다.");
+		return false;
+	}
+	@Override
+	public boolean updateStayDate(Host host) {
+		if(hostMapper.updateStayDate(host) == 1) {
+			System.out.println("stayDate.jsp 수정 완료했습니다.");
+			return true;
+		}
+		System.out.println("stayDate.jsp 수정 실패했습니다.");
+		return false;
+	}
+	@Override
+	public boolean updatePrice(Host host) {
+		if(hostMapper.updatePrice(host) == 1) {
+			System.out.println("price.jsp 수정 완료했습니다.");
+			return true;
+		}
+		System.out.println("price.jsp 수정 실패했습니다.");
+		return false;
+	}
+
+
+
+	@Override
+	public boolean completeRegistration(int price, int hostId) {
+	/***
+	** 서버시간에 서울의 타임존을 적용한 DateTime을 얻는다.
+	***/
+		ZonedDateTime nowSeoul = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
+		String creationDate =
+			nowSeoul.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+										
+		if(hostMapper.updateCreationDate(price, creationDate, hostId) != 1) {
+			System.out.println("호스트 등록(3단계)을 완료하지 못했습니다.");
+			return false;
+		}
+		System.out.println("호스트 등록(3단계)을 완료했습니다.");
+		return true;
+	}
+	
+	
+	
+	public boolean modifyHost(int hostId) {
+		
+		if(hostMapper.selectCreationDate(hostId) != null) { // 등록 완료된 글이면
+		/***
+		 ** 서버시간에 서울의 타임존을 적용한 DateTime을 얻는다.
+		 ***/
+			ZonedDateTime nowSeoul = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
+			String modificationDate =
+				nowSeoul.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+			
+			if(hostMapper.updateModificationDate(modificationDate, hostId) == 1) {
+				System.out.println(hostId + "번 호스트 - 수정일 업데이트 완료.");
+				return true;
+			} else {
+				System.out.println(hostId + "번 호스트 - 수정일 업데이트 실패.");
+				return false;
+			}
+		}
+		System.out.println(hostId + "번 호스트 - 수정일 업데이트 불필요.(등록 미완료)");
+		return false;					
+	}
 	
 	/*@Override
 	public boolean insertBlocking(int hostId, String blockingDate) {
@@ -245,68 +386,7 @@ public class HostServiceImpl implements HostService {
 
 	
 	
-	
-	
-	/*@Transactional
-	@Override
-	public boolean insertHost(NewHostDTO newHostDto, HttpServletRequest request) {
-		
-	*//***
-	** 서버시간에 서울의 타임존을 적용한 DateTime을 얻는다.
-	***//*
-		ZonedDateTime nowSeoul = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
-		newHostDto.setCreationDate( // 필요한 형식으로 변경하여 세팅
-			nowSeoul.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
-																				);
-	*//***																	
-	** 호스트를 등록한다.
-	***//*
-		if(hostMapper.insertHost(newHostDto) == 1) { // 호스트 등록에 성공하면
-			
-			System.out.println("호스트 정보를 성공적으로 저장했습니다.");
-			
-			// 작성자 ID로 방금 DB에 등록된 호스트의 ID를 검색
-			int hostId = hostMapper.selectNewHostId(newHostDto.getMemberId());
-			// 서버와 DB에 저장할 사진파일 정보
-			List<MultipartFile> photos = newHostDto.getPhoto();
-			// DB에 저장할 예약 차단일 정보
-			String blockingDate = newHostDto.getBlockingDate();
-			
-		*//***
-		** 저장할 사진 파일이 있으면 서버와 DB에 저장한다.
-		***//*
-			if(photos.size() == 1 && photos.get(0).isEmpty()) { // 없으면
-				
-				System.out.println("업로드한 파일이 존재하지 않습니다.");
-				
-			} else { // 있으면 저장을 시도
-				
-				if(!insertHostPhoto(hostId, photos, request)) { // 문제 발생 시에만
-					return false;
-				}
-				
-			}
-			
-		*//***		계속해서..
-		** 등록할 예약불가 날짜가 있으면 DB에 저장한다.
-		***//*
-			if(blockingDate.isEmpty()) { // 없으면
-				
-				System.out.println("등록할 예약불가 날짜가 없습니다.");
-				return true; // 호스트 등록을 마침.
-				
-			} else { // 있으면 저장을 시도
-				
-				return insertBlocking(hostId, blockingDate);
-				// 결과 반환으로 호스트 등록을 마침.
-			}
-			
-		} // if(호스트 등록 성공)-END
-		
-		System.out.println("호스트 등록 실패");
-		return false;
-	}
-	*/
+
 	
 	
 	

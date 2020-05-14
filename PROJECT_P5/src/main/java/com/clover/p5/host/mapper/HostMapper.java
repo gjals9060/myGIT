@@ -12,8 +12,10 @@ import com.clover.p5.host.dto.NewHostDTO;
 
 public interface HostMapper {
 
-
-	// 호스트 등록 1단계 마침
+	// 호스팅 목록 검색
+	List<HostingDTO> selectHostingList(int memberId);
+	
+	// 호스트 등록 1단계 완료
 	int insertHost(NewHostDTO newHost); // session에 모은 정보로 호스트 등록(DB에 저장)
 	int selectNewHostId(int memberId); // 작성자 ID로 새로 등록한 호스트 ID를 검색한다
 	
@@ -21,10 +23,32 @@ public interface HostMapper {
 	Host selectHost(int hostId);
 	
 	
-	List<HostingDTO> selectHostingList(int memberId);
+	// 호스트 수정 1단계
+	int updateRoomType(Host host);
+	int updateRoomCount(Host host);
+	int updateAddress(Host host);
+	int updateFacilities(Host host);
+		
+	// 호스트 등록, 수정 2단계
+	int updateDescription(Host host);
+	int updateName(Host host);
 	
+	// 호스트 등록, 수정 3단계
+	int updateStayDate(Host host);
+	int updatePrice(Host host);
 	
+	// 호스트 등록 3단계 완료
+	int updateCreationDate(
+			@Param("price") int price,
+			@Param("creationDate") String creationDate,
+			@Param("hostId") int hostId);
 	
+	// 등록 완료 호스트인지 확인
+	String selectCreationDate(int hostId);
+	// 호스트 주요 내용 수정
+	int updateModificationDate(
+			@Param("modificationDate") String modificationDate,
+			@Param("hostId") int hostId);
 	
 	
 	// 호스트 사진 목록 검색
@@ -36,6 +60,8 @@ public interface HostMapper {
 	int insertHostPhoto(List<HostPhotoVO> photoList);
 	// 호스트 사진 삭제
 	int deleteHostPhoto(int hostPhotoId);
+	// 커버 사진 삭제시에 order 대체
+	int updateCoverPhotoOrder(int hostId);
 	// 호스트 사진 드래그 순서 변경 결과 저장
 	int updateHostPhotoSort(int[] sortResult);
 	// 호스트 대표 사진 바꾸기에 사용
@@ -56,5 +82,9 @@ public interface HostMapper {
 	
 	
 	
+	// 호스트 접근 권한 확인
+	int selectIsIdentified(
+			@Param("hostId") int hostId,
+			@Param("memberId") int memberId);
 	
 }

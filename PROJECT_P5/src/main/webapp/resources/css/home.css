@@ -52,7 +52,7 @@
 
 * {
 	font-family: NanumBarunGothic;
-	transition: 0.5s;
+	/* transition: 0.5s; */
 }
 
 /* home css */
@@ -77,8 +77,9 @@ html {
 /* 배경  */
 #backgroundColor {
 	background: black;
-	z-index: -1000;
+	z-index: -2;
 	padding: 20px;
+	position: relative;
 }
 
 /* section  */

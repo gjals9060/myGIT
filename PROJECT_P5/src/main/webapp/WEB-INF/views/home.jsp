@@ -31,7 +31,8 @@
 
 </head>
 <body>
-	<jsp:include page="./header.jsp"></jsp:include>	
+<%-- 	<jsp:include page="./header.jsp"></jsp:include>	 --%>
+	<%@include file="./header.jsp" %>
 		
 		<div id="presentationTitle">Peace / Place / Pleasure / Present / People </div>
 
@@ -42,7 +43,7 @@
 			
 			<div class="pop-img-block" id="fristBlock">
 		 		<img src="img/bedroom.jpg" alt="" class="push-area-img" id="fristImg" />
-		 		<div class="figcaption" >여기는 종로구 입니다.</div>
+		 		<div class="figcaption" >종로</div>
 		 	</div>
 		 
 		 	<div class="pop-img-block">
