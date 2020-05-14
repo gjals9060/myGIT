@@ -317,7 +317,6 @@
 		// toggle 버튼 클릭시 toggleButton 상태
 		//console.log("처리전 toggle 상태 : " + toggleButton);
 		// 포커스 버튼 활성/비활성 여부
-		$("#focusbtn").prop("disabled", !toggleButton);
 		
 		// 드래그 활성/비활성 여부
 		map.setDraggable(toggleButton);

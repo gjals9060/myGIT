@@ -10,8 +10,8 @@ public class HostInfoDTO {
 	private String description;
 	private String descriptionEtc;
 	
-	private char type;
-	private char roomType;
+	private String hostTypeId;
+	private String roomTypeId;
 	private int capacity;
 	private int roomCount;
 	private int bedCount;
@@ -43,8 +43,6 @@ public class HostInfoDTO {
 	//호스트의 이름
 	private String firstName;
 	private String lastName;
-	
-	
 	public int getId() {
 		return id;
 	}
@@ -75,17 +73,17 @@ public class HostInfoDTO {
 	public void setDescriptionEtc(String descriptionEtc) {
 		this.descriptionEtc = descriptionEtc;
 	}
-	public char getType() {
-		return type;
+	public String getHostTypeId() {
+		return hostTypeId;
 	}
-	public void setType(char type) {
-		this.type = type;
+	public void setHostTypeId(String hostTypeId) {
+		this.hostTypeId = hostTypeId;
 	}
-	public char getRoomType() {
-		return roomType;
+	public String getRoomTypeId() {
+		return roomTypeId;
 	}
-	public void setRoomType(char roomType) {
-		this.roomType = roomType;
+	public void setRoomTypeId(String roomTypeId) {
+		this.roomTypeId = roomTypeId;
 	}
 	public int getCapacity() {
 		return capacity;
@@ -235,16 +233,19 @@ public class HostInfoDTO {
 	@Override
 	public String toString() {
 		return "HostInfoDTO [id=" + id + ", MemberId=" + MemberId + ", name=" + name + ", description=" + description
-				+ ", descriptionEtc=" + descriptionEtc + ", type=" + type + ", roomType=" + roomType + ", capacity="
-				+ capacity + ", roomCount=" + roomCount + ", bedCount=" + bedCount + ", bathroomCount=" + bathroomCount
-				+ ", address=" + address + ", latitude=" + latitude + ", longitude=" + longitude + ", isTv=" + isTv
-				+ ", isWifi=" + isWifi + ", isAirConditioner=" + isAirConditioner + ", isAirPurifier=" + isAirPurifier
-				+ ", isHairDryer=" + isHairDryer + ", isIron=" + isIron + ", isKitchen=" + isKitchen
-				+ ", isWashingMachine=" + isWashingMachine + ", isElevator=" + isElevator + ", isParkingLot="
-				+ isParkingLot + ", minimumStay=" + minimumStay + ", maximumStay=" + maximumStay + ", price=" + price
-				+ ", creationDate=" + creationDate + ", modificationDate=" + modificationDate + ", firstName="
-				+ firstName + ", lastName=" + lastName + "]";
+				+ ", descriptionEtc=" + descriptionEtc + ", hostTypeId=" + hostTypeId + ", roomTypeId=" + roomTypeId
+				+ ", capacity=" + capacity + ", roomCount=" + roomCount + ", bedCount=" + bedCount + ", bathroomCount="
+				+ bathroomCount + ", address=" + address + ", latitude=" + latitude + ", longitude=" + longitude
+				+ ", isTv=" + isTv + ", isWifi=" + isWifi + ", isAirConditioner=" + isAirConditioner
+				+ ", isAirPurifier=" + isAirPurifier + ", isHairDryer=" + isHairDryer + ", isIron=" + isIron
+				+ ", isKitchen=" + isKitchen + ", isWashingMachine=" + isWashingMachine + ", isElevator=" + isElevator
+				+ ", isParkingLot=" + isParkingLot + ", minimumStay=" + minimumStay + ", maximumStay=" + maximumStay
+				+ ", price=" + price + ", creationDate=" + creationDate + ", modificationDate=" + modificationDate
+				+ ", firstName=" + firstName + ", lastName=" + lastName + "]";
 	}
+	
+	
+	
 	
 	
 
