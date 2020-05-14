@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.clover.p5.host.dto.Host;
+import com.clover.p5.host.dto.HostDTO;
 import com.clover.p5.host.dto.HostPhoto;
 import com.clover.p5.host.dto.HostingDTO;
 import com.clover.p5.host.service.HostService;
@@ -54,6 +55,37 @@ public class HostController {
 	public List<HostingDTO> getHostingList(HttpServletRequest req) {
 		return hostService.getHostingList(MemberServiceImpl.getSessionUserId(req));
 	}
+	
+	// 등록완료 호스트 페이지로 이동
+	@RequestMapping("/host/hostList")
+	public void hostList() {return;}
+	
+	// 호스트 등록 완료 목록 검색
+	@RequestMapping("/host/getHostList")
+	@ResponseBody
+	public List<HostDTO> getHostList(HttpServletRequest req) {
+		return hostService.getHostList(MemberServiceImpl.getSessionUserId(req));
+	}
+	
+	// 호스트 삭제
+	@RequestMapping("/host/deleteHost")
+	@ResponseBody
+	public boolean deleteHost(int hostId) {
+		return hostService.deleteHost(hostId);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	// 호스트 수정 페이지 본인 식별
 	@RequestMapping("/ajax/isIdentified")

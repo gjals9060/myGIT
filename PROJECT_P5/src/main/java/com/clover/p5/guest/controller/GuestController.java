@@ -11,10 +11,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.clover.p5.guest.service.GuestService;
 import com.clover.p5.guest.dto.HostInfoDTO;
-import com.clover.p5.guest.dto.ReservationInfoDTO;
+import com.clover.p5.guest.dto.BookingEntity;
 import com.clover.p5.guest.dto.SearchInputDTO;
 
 @Controller
@@ -45,9 +46,15 @@ public class GuestController {
 	}
 	
 	@RequestMapping(value = "/reservationFinish", method = RequestMethod.POST)
-	public String reservationFinish(ReservationInfoDTO reservationInfoDTO, HttpServletRequest request, Model model) {	
-		return guestService.reservationFinish(reservationInfoDTO, request, model);
+	public String reservationFinish(BookingEntity booking, HttpServletRequest request, Model model) {	
+		return guestService.reservationFinish(booking, request, model);
 	}
+	
+	@RequestMapping(value = "/userInfoReservationList", method = RequestMethod.POST)
+	public ModelAndView userInfoReservationList(HttpServletRequest request, ModelAndView mv) {	
+		return guestService.userInfoReservationList(request, mv);
+	}
+	
 	
 	
 }

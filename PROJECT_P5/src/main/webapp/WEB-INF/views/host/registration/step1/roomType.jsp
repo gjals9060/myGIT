@@ -11,16 +11,11 @@
 	<input type="hidden" id="hostId" value="${hostId }" />
 	
 	<%@include file="../hostHeader.jsp" %>
-	<nav>
-		<a class="step-tab" href="./roomType.jsp?hostId=" id="tabRoomType">숙소형태</a>
-		<a class="step-tab" href="./roomCount.jsp" id="tabRoomCount">인원</a>
-		<a class="step-tab" href="./address.jsp" id="tabAddress">위치</a> 
-		<a class="step-tab" href="./facilities.jsp" id="tabFacilities">편의시설</a>
-	</nav>
+	
 	<!-- 페이지별 헤더 변경사항 -->
 	<script>
 		$('#tabRoomType').css('background','#bbb'); // 숙소형태 tab
-		/* 	$('nav').css('display','none'); */
+	
 	</script>
 	
 
@@ -65,7 +60,6 @@
 
 
 
-	<script src="/p5/js/jquery-3.4.1.js"></script>
 	<script src="/p5/js/host.js?v=<%=System.currentTimeMillis()%>"></script>
 </body>
 </html>

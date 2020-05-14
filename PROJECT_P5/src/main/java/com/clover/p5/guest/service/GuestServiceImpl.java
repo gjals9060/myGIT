@@ -12,10 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.clover.p5.guest.dto.HostInfoDTO;
 import com.clover.p5.guest.dto.HostPhotoDTO;
-import com.clover.p5.guest.dto.ReservationInfoDTO;
+import com.clover.p5.guest.dto.BookingEntity;
 import com.clover.p5.guest.dto.SearchHostDTO;
 import com.clover.p5.guest.dto.SearchInputDTO;
 import com.clover.p5.guest.mapper.GuestMapper;
@@ -30,6 +31,7 @@ public class GuestServiceImpl implements GuestService {
 	
 	@Autowired
 	private HostMapper hostMapper;
+	
 	
 	@Override
 	public String selectHost(HttpServletRequest request, Model model) {
@@ -100,7 +102,6 @@ public class GuestServiceImpl implements GuestService {
 		return "postPage";	
 	}
 
-
 	@Override
 	public List<HostInfoDTO> selectHostList(SearchInputDTO dto) {
 		
@@ -148,7 +149,6 @@ public class GuestServiceImpl implements GuestService {
 		return guestMapper.selectHostList(searchHostDto);
 	}
 
-
 	@Override
 	public String reservationList(HttpServletRequest request, Model model) {
 
@@ -184,7 +184,6 @@ public class GuestServiceImpl implements GuestService {
 		
 		return "reservationList";
 	}
-
 
 	@Override
 	public String reservationPurchase(HttpServletRequest request, Model model) {
@@ -244,7 +243,7 @@ public class GuestServiceImpl implements GuestService {
 		model.addAttribute("hostName", hostName);
 		//model.addAttribute("payment", payment);		
 		
-		ReservationInfoDTO booking = new ReservationInfoDTO(-1, hostId, memberId, checkInDate, checkOutDate, guestCount, payment, null, null, 0);
+		BookingEntity booking = new BookingEntity(-1, hostId, memberId, checkInDate, checkOutDate, guestCount, payment, null, null, 0);
 		model.addAttribute("booking", booking);
 		
 		return "reservationPurchase";
@@ -252,13 +251,13 @@ public class GuestServiceImpl implements GuestService {
 
 	@Transactional
 	@Override
-	public String reservationFinish(ReservationInfoDTO reservationInfoDTO, HttpServletRequest request, Model model) {
+	public String reservationFinish(BookingEntity booking, HttpServletRequest request, Model model) {
 
 		System.out.println("\n reservationFinish 페이지 이동");
 				
-//		System.out.println("id : " + reservationInfoDTO.getHostId());
-//		System.out.println("checkIn : " + reservationInfoDTO.getCheckInDate());
-//		System.out.println("payment : " + reservationInfoDTO.getPayment());
+//		System.out.println("id : " + booking.getHostId());
+//		System.out.println("checkIn : " + booking.getCheckInDate());
+//		System.out.println("payment : " + booking.getPayment());
 		SimpleDateFormat format0 = new SimpleDateFormat ( "MM/dd/yyyy");
 		SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy.MM.dd HH:mm:ss");
 		SimpleDateFormat format2 = new SimpleDateFormat ( "yyyy.MM.dd");
@@ -268,16 +267,16 @@ public class GuestServiceImpl implements GuestService {
 		String bookingDate = format1.format(today);	// Date => String
 		//today = format1.parse(bookingDate);		// String => Date
 		
-		String checkInDate = reservationInfoDTO.getCheckInDate();
-		String checkOutDate = reservationInfoDTO.getCheckOutDate();
+		String checkInDate = booking.getCheckInDate();
+		String checkOutDate = booking.getCheckOutDate();
 		
 		List<String> listBlockingDate = new ArrayList<>();
 
-		reservationInfoDTO.setBookingDate(bookingDate);
+		booking.setBookingDate(bookingDate);
 		
-		System.out.println("reservationInfoDTO : " + reservationInfoDTO.toString());
+		System.out.println("booking : " + booking.toString());
 
-		if(guestMapper.insertBooking(reservationInfoDTO) == 1) {
+		if(guestMapper.insertBooking(booking) == 1) {
 			
 			System.out.println("DB booking insert 성공");
 			
@@ -310,19 +309,40 @@ public class GuestServiceImpl implements GuestService {
 		String[] arrBlockingDate = listBlockingDate.toArray(new String[listBlockingDate.size()]);
 		
 
-		if(hostMapper.insertBlocking(reservationInfoDTO.getHostId(), arrBlockingDate) == arrBlockingDate.length) {
+		if(hostMapper.insertBlocking(booking.getHostId(), arrBlockingDate) == arrBlockingDate.length) {
 			System.out.println("DB blocking insert 성공");
 		}else {
 			System.out.println("DB blocking insert 실패");
 		}
 		
-		HostInfoDTO host = guestMapper.selectHost(reservationInfoDTO.getHostId()+"");
+		HostInfoDTO host = guestMapper.selectHost(booking.getHostId()+"");
 		
-		model.addAttribute("booking", reservationInfoDTO);
+		model.addAttribute("booking", booking);
 		model.addAttribute("host", host);
 		
 		return "reservationFinish";
 	}
+
+
+	
+	@Override
+	public ModelAndView userInfoReservationList(HttpServletRequest request, ModelAndView mv) {
+
+		String memberId = request.getParameter("memberId");
+		
+		List<BookingEntity> bookingList = guestMapper.selectBooking(memberId);
+		
+		System.out.println("날짜 확인 : " + bookingList.get(0).getCheckInDate());
+		
+		mv.addObject("bookingList", bookingList);
+		//mv.addObject("hostList", hostList);
+		
+		mv.setViewName("userInfoReservationList"); // 뷰의 이름
+		
+		return mv;
+	}
+
+	
 }
 
 

@@ -428,7 +428,7 @@ button {
 											//console.log(ss);
 											
 											//마커 추가
-											var imageSrc1 = './img/marker3.png', // 마커이미지의 주소입니다    
+											var imageSrc1 = './img/markerBlue.png', // 마커이미지의 주소입니다    
 											    imageSize1 = new kakao.maps.Size(45, 50), // 마커이미지의 크기입니다
 											    imageOption1 = {offset: new kakao.maps.Point(20, 50)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
 											
@@ -445,7 +445,7 @@ button {
 				
 											// 이벤트 마커 이미지
 											//마커 추가
-											var imageSrc2 = './img/marker2.png', // 마커이미지의 주소입니다    
+											var imageSrc2 = './img/markerRed.png', // 마커이미지의 주소입니다    
 											    imageSize2 = new kakao.maps.Size(65, 70), // 마커이미지의 크기입니다
 											    imageOption2 = {offset: new kakao.maps.Point(30, 60)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
 											

@@ -36,7 +36,7 @@
 	<select id="selectBlocking" parameterType="String" resultType="Date">
 	
 		SELECT
-			blocking_date
+			check_in_date
 		FROM
 			blocking
 		WHERE
@@ -80,7 +80,7 @@
 			                blocking b 
 			                ON h.id = b.host_id
 			        WHERE 
-			            (b.blocking_date BETWEEN TO_DATE(#{sStartDate},'YYYY.MM.DD') 
+			            (b.check_in_date BETWEEN TO_DATE(#{sStartDate},'YYYY.MM.DD') 
 			                AND
 			                    TO_DATE(#{sEndDate},'YYYY.MM.DD'))
 				)
@@ -93,7 +93,7 @@
 	
 	</select>
 	
-	<insert id="insertBooking" parameterType="ReservationInfoDTO">
+	<insert id="insertBooking" parameterType="BookingEntity">
 		
 		INSERT 
 		INTO
@@ -112,6 +112,19 @@
 		)
 	
 	</insert>
+	
+	<select id="selectBooking" parameterType="String" resultType="BookingEntity">
+		
+		SELECT
+			*
+		FROM
+			booking
+		WHERE
+			member_id = #{memberId}
+		ORDER BY
+			check_in_date
+	
+	</select>
 
 </mapper>
 	

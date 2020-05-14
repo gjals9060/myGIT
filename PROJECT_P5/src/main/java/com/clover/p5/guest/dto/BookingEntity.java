@@ -2,7 +2,7 @@ package com.clover.p5.guest.dto;
 
 import java.util.Date;
 
-public class ReservationInfoDTO {
+public class BookingEntity {
 	
 /*	
 	ID	NUMBER
@@ -27,11 +27,11 @@ public class ReservationInfoDTO {
 	private String cancellation;
 	private int refund;
 	
-	public ReservationInfoDTO() {
+	public BookingEntity() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ReservationInfoDTO(int id, int hostId, int memberId, String checkInDate, String checkOutDate, int guestCount,
+	public BookingEntity(int id, int hostId, int memberId, String checkInDate, String checkOutDate, int guestCount,
 			int payment, String bookingDate, String cancellation, int refund) {
 		super();
 		this.id = id;
