@@ -9,6 +9,7 @@
 <!-- services와 clusterer, drawing 라이브러리 불러오기 -->
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6252091adcb28726fdb95ebdf0b78361&libraries=services"></script>
+<script src="/p5/js/jquery-3.4.1.js"></script>
 
 </head>
 <body>
@@ -69,9 +70,7 @@
 
 
 
-<script
-	src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script src="/p5/js/jquery-3.4.1.js"></script>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <!-- 1. 지도 기본 구성 -->
 <script type="text/javascript">
@@ -336,6 +335,7 @@
 		}else{
 			if(!savingAddress()){
 				console.log("false 반환");
+				map.setDraggable(true);
 				return false;
 			}
 			// 저장하기
@@ -366,7 +366,7 @@
 		}
 		
 		//상태 전환
-		
+		//console.log("toggleButton 상태전환");
 		toggleButton = !toggleButton;
 		
 		// 처리 후 toggleButton 상태
@@ -395,6 +395,7 @@
 		if(markerRed.getPosition().equals(markerTemp.getPosition())){
 			
 			console.log("움직임x");
+				
 			console.log("memory : " + memoryAddress);
 			
 			// 메모리에 있던 기존 주소를 다시 넣어줌
@@ -402,7 +403,7 @@
 			
 			$('#addressInfo').empty();
 			$('#addressInfo').append( '확정 주소 : ' + memoryAddress);
-			
+				
 		}else{
 			console.log("움직임o");
 
@@ -435,10 +436,7 @@
 		return true;
 
 	}	// end - savingAddress()
-	
-	function toggleBreak(){
-		
-	}
+
 	
 	
 </script>
