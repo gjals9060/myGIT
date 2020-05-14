@@ -43,7 +43,9 @@ progress::-webkit-progress-bar {
 /* progress end  */
 
 
-
+#logoImg{
+	position: static;
+}
 
 
 header img {
@@ -85,12 +87,10 @@ nav {
 }
 
 </style>
-<script type="text/javascript"
-	src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 </head>
 <body>
 	<header>
-		<img src="/p5/img/p5Host.png" alt="안보임" />
+		<a id="logoImg" href="hostingStatus?hostId=${hostId}"><img src="/p5/img/p5Host.png" alt="안보임" /></a>
 		<div class="hosting-step">1단계:기본사항을 입력하세요</div>
 		
 		<!--  등록  -->

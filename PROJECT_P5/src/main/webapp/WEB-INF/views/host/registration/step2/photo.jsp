@@ -221,6 +221,22 @@ img:hover {
 </style>
 </head>
 <body>
+	<%@include file="../hostHeader.jsp" %>
+	 <nav>
+		<a class="step-tab" href="./modifyPhoto.jsp" id="tabPhoto">사진등록</a>
+		<a class="step-tab" href="./modifyDescription.jsp" id="tabDescription">숙소설명</a>
+		<a class="step-tab" href="./modifyTitle.jsp" id="tabTitle">숙소명</a>
+	</nav>
+	<script>
+		$('.hosting-step').empty();
+		$('.hosting-step').text("2단계:상세정보를 입력하세요");
+		$('nav').css('grid-template-columns' ,'repeat(3, 1fr)');
+		$('#progressBar').val('10');
+		
+		$('#tabPhoto').css('background','#bbb');
+		
+	</script> 
+
    <div id="wrap">
          
       <div class="photoUpload">

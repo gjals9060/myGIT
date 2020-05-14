@@ -4,7 +4,6 @@
 <head>
 <meta charset="UTF-8">
 <title>인원</title>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 </head>
 <body>
 <input type="hidden" id="hostId" value="${hostId }" />
