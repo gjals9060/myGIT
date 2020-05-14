@@ -22,15 +22,17 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 <link rel="stylesheet"
 	href="https://unpkg.com/swiper/css/swiper.min.css">
-<link rel="stylesheet" href="/p5/css/daterangepicker.css" />
-<link rel="stylesheet" href="/p5/css/reset.css" />
-<link rel="stylesheet" href="/p5/css/header.css" />
+<link rel="stylesheet" href="css/daterangepicker.css" />
+<link rel="stylesheet" href="css/reset.css" />
+<link rel="stylesheet" href="css/header.css" />
 
 <body>
-
 	<header>
+		<button id="headerMobileButton">
+			<i class="fas fa-bars fa-3x"></i>
+		</button>
 		<div class="title-logo-img">
-			<a href="/p5"><img src="/p5/img/p5_logo.png" id="titleLogoImg" /></a>
+			<a href="/p5"><img src="img/p5_logo.png" id="titleLogoImg" /></a>
 			<!-- 로고 이미지 들어갈 자리 -->
 		</div>
 
@@ -45,15 +47,16 @@
 						<span class="input-text"><i
 							class="fas fa-map-marked-alt fa-2x"></i></span> <span class="inputWrap">
 							<input class="input-serach-value" type="text" name="address"
-							id="address" placeholder="어디로 여행가세요?" />
+							id="address" placeholder="어디로 여행가세요?" /> <input type="button"
+							id="locationReset" value="&#xf01e">
 						</span>
 					</div>
 
 					<!--날짜 입력  -->
-					<div class="input-date-block pad">
+					<div class="input-date-block">
 						<span class="input-text"> <i
 							class="fas fa-calendar-alt fa-2x"></i>
-						</span> <span class="inputWrap pad"> <input class="input-serach-value"
+						</span> <span class="inputWrap"> <input class="input-serach-value"
 							type="text" id="checkDate" name="checkInDatecheckOutDate"
 							autocomplete="off" placeholder=" 날짜는?" onchange="countDate()" />
 							<input type="button" id="dateReset" value="&#xf01e">
@@ -62,14 +65,14 @@
 
 					<!--인원  -->
 					<div class="input-guestCount-block">
-						<span class="input-text"> <i
-							class="fas fa-user-alt fa-2x"></i>
-						</span> <span class="inputWrap pad">
+						<span class="input-text"> <i class="fas fa-user-alt fa-2x"></i>
+						</span> <span class="inputWrap"> <input type='text'
+							id="guestCount" name='guestCount' class="guestCount_input"
+							autocomplete="off" placeholder="  인원은?" readonly="readonly"
+							value="">
 							<button id="decreaseQuantity">
 								<i class="fas fa-minus fa-xs"></i>
-							</button> <input type='text' id="guestCount" name='guestCount'
-							class="guestCount_input" autocomplete="off" placeholder="  인원은?"
-							readonly="readonly" value="">
+							</button>
 							<button id="increaseQuantity">
 								<i class="fas fa-plus fa-xs"></i>
 							</button> <input type="button" id="guestCountReset" value="&#xf01e">
@@ -85,7 +88,6 @@
 
 		<script>
 			//버튼 on/off display 작성하기~ val() 뽑아서
-			
 		</script>
 
 		<div class="useradd-login-form">
@@ -140,7 +142,7 @@
 			<script>
 				$('#btnHostReservationList').on('click', function() {
 					alert("등록한 숙소 리스트로 이동");
-					location.href = "/p5/host/hostList";
+					location.href = "/p5/hostReservationList";
 				});
 
 				$('#btnUserInfoUpdate').on('click', function() {
@@ -393,11 +395,14 @@
 	});
 
 	function countDate() {
-
 		if (!flag) {
 			$("#checkDate").val('');
 		}
 	}
+
+	$('#locationReset').click(function() {
+		$('#address').val('');
+	});
 
 	$('#dateReset').click(function() {
 		$('#checkDate').val('');
@@ -467,7 +472,7 @@
 
 				$('.guestCount_input').val(num);
 			}
- 
+
 		}); /* click이벤트  */
 
 		$('#increaseQuantity').click(function(e) {
@@ -490,33 +495,73 @@
 		var height = $(document).scrollTop();
 		$('#scrollId').val(height);
 
-		if (height > 80) { // 스크롤의 위치가 80보다  클경우 
+		if (height > 80) { // 스크롤의 위치가 80보다  클경우(scroll)
 			$('header').css({
 				"position" : "fixed",
 				"box-shadow" : "1px 1px 10px 0px #bbb",
 				"opacity" : "0.97"
 			});
-			
-			$('#presentationTitle ').css('padding-top','120px');
-
-			$('.title-logo-img ').css("height", "80px");
-			
+		
 			$('.fa-2x').css("font-size", "1em");
 			$('.inputWrap').css("display", "contents");
+			$('.title-logo-img ').css("height", "80px");
 			
-		} else { /// 80보다 낮은 위치라면 
+			$('$presentationTitle').css("padding-top", "120px");
+			
+			if ($(window).width() <= 620) {
+				$('.title-logo-img ').css("height", "50px");
+
+				$('#headerMobileButton').css("display", "block");
+
+				$('.input-info').css("display", "none");
+				$('.useradd-login-form').css("display", "none");
+			} else if ($(window).width() <= 870) {
+				$('.title-logo-img').css("display", "none");
+				$('.useradd-login-form').css("display", "none");
+			} else {
+			}
+ 
+		} else { /// 80보다 낮은 위치라면(top)
 			$("header").css({
 				"position" : "static",
 				"box-shadow" : "0px 0px"
 			});
 			$('.title-logo-img ').css("height", "100px");
-			
-			$('#presentationTitle ').css('padding-top','0px');
-			
+
 			$('.fa-2x').css("font-size", "2em");
 			$('.inputWrap').css("display", "block");
+			
+			$('.title-logo-img').css("display", "block");
+			$('.useradd-login-form').css("display", "block");
+			
+			$('#headerMobileButton').css("display", "none");
+			$('.input-info').css("display", "block");
+			
+			$('#presentationTitle ').css('padding-top','0px');
+			   
+			if ($(window).width() <= 620) {
 
+			} else if ($(window).width() <= 870) {
+
+			} else {
+			}
 		}
+
+		var mobileSwitch = true; /* 버튼 off */
+
+		$('#headerMobileButton').click(function() {
+			if (mobileSwitch == false) { /* 모바일 메뉴 버튼 off */
+				$('.input-info').css("display", "none");
+				$('.useradd-login-form').css("display", "none");
+
+				mobileSwitch = true;
+			} else { /* 모바일 메뉴 버튼 on */
+				$('.input-info').css("display", "block");
+				$('.useradd-login-form').css("display", "block");
+
+				mobileSwitch = false;
+			}
+		})
 
 	});
 
