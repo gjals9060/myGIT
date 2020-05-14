@@ -93,7 +93,7 @@
 	
 	</select>
 	
-	<insert id="insertBooking" parameterType="ReservationInfoDTO">
+	<insert id="insertBooking" parameterType="BookingEntity">
 		
 		INSERT 
 		INTO
@@ -112,6 +112,19 @@
 		)
 	
 	</insert>
+	
+	<select id="selectBooking" parameterType="String" resultType="BookingEntity">
+		
+		SELECT
+			*
+		FROM
+			booking
+		WHERE
+			member_id = #{memberId}
+		ORDER BY
+			check_in_date
+	
+	</select>
 
 </mapper>
 	
