@@ -520,7 +520,7 @@
 				$('.useradd-login-form').css("display", "none");
 			} else {
 			}
-
+ 
 		} else { /// 80보다 낮은 위치라면(top)
 			$("header").css({
 				"position" : "static",
