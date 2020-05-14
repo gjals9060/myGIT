@@ -27,13 +27,8 @@
 </head>
 <body>
 	<input type="hidden" id="hostId" value="${hostId }" />
-	<%@include file="../hostHeader.jsp"%>
-	<nav>
-		<a  class="step-tab" href="./modifyStayDate.jsp" id="tabStayDate">숙박일</a>
-		<a  class="step-tab" href="./modifyCalender.jsp" id="tabCalender">예약불가날짜</a>
-		<a  class="step-tab" href="./modifyPrice.jsp" id="tabPrice">금액</a>
-	</nav>
-	
+	<%@include file="./hostHeaderStep3.jsp"%>
+		
 	<script>
 		$('.hosting-step').empty();
 		$('.hosting-step').text("2단계:상세정보를 입력하세요");
@@ -41,7 +36,7 @@
 		$('#progressBar').val('50');
 		
 		$('#tabCalender').css('background','#bbb');
-	</script>
+	</script> 
 	
 	<!-- <form action="price" method="post"> -->
 	<div id="mdp-demo"></div>

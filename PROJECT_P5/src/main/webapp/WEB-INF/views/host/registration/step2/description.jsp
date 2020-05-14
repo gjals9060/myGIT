@@ -10,13 +10,8 @@
 <body>
 
 	<input type="hidden" id="hostId" value="${hostId }" />
-	<%@include file="../hostHeader.jsp" %>
-	<nav>
-		<a class="step-tab" href="./modifyPhoto.jsp" id="tabPhoto">사진등록</a>
-		<a class="step-tab" href="./modifyDescription.jsp" id="tabDescription">숙소설명</a>
-		<a class="step-tab" href="./modifyTitle.jsp" id="tabTitle">숙소명</a>
-	</nav>
-	
+	<%@include file="./hostHeaderStep2.jsp" %>
+
 	<script>
 		$('.hosting-step').empty();
 		$('.hosting-step').text("2단계:상세정보를 입력하세요");
@@ -24,8 +19,8 @@
 		$('#progressBar').val('50');
 		
 		$('#tabDescription').css('background','#bbb');
-		
 	</script>
+	
 	<!-- <form action="title" method="post"> -->
 	<h1>숙소설명을 적어주세요!</h1>
 

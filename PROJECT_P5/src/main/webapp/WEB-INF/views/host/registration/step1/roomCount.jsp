@@ -8,7 +8,7 @@
 <body>
 <input type="hidden" id="hostId" value="${hostId }" />
 
-	<%@include file="../hostHeader.jsp" %>
+	<%@include file="./hostHeaderStep1.jsp" %>
 	
 	<script>
 		$('#progressBar').val('30');

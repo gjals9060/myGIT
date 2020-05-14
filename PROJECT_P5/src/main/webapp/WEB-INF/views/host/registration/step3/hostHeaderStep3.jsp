@@ -89,9 +89,6 @@ nav {
 }
 
 
-
-
-
 </style>
 </head>
 <body>
@@ -121,12 +118,11 @@ nav {
 			<c:when test="${isModification }">
 			
 				<!-- 수정  -->
-			<nav class="modification-tab">
-			<a class="step-tab" href="./roomType?hostId=${hostId}" id="tabRoomType">숙소형태</a>
-			<a class="step-tab" href="./roomCount?hostId=${hostId}" id="tabRoomCount">인원</a>
-			<a class="step-tab" href="./address?hostId=${hostId}" id="tabAddress">위치</a> 
-			<a class="step-tab" href="./facilities?hostId=${hostId}" id="tabFacilities">편의시설</a>
-			</nav>
+				<nav>
+					<a  class="step-tab" href="./stayDate?hostId=${hostId }" id="tabStayDate">숙박일</a>
+					<a  class="step-tab" href="./calendar?hostId=${hostId }" id="tabCalender">예약불가날짜</a>
+					<a  class="step-tab" href="./price?hostId=${hostId }" id="tabPrice">금액</a>
+				</nav>
 			
 			</c:when>
 		</c:choose>
@@ -150,7 +146,6 @@ nav {
 	
 
 
-<script src="/p5/js/jquery-3.4.1.js"></script>
 
 </body>
 </html>

@@ -10,7 +10,7 @@
 <body>
 	<input type="hidden" id="hostId" value="${hostId }" />
 	
-	<%@include file="../hostHeader.jsp" %>
+	<%@include file="./hostHeaderStep1.jsp" %>
 	
 	<!-- 페이지별 헤더 변경사항 -->
 	<script>

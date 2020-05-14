@@ -10,12 +10,7 @@
 </head>
 <body>
 	<input type="hidden" id="hostId" value="${hostId }" />
-	<%@include file="../hostHeader.jsp" %>
-	<nav>
-		<a class="step-tab" href="./modifyPhoto.jsp" id="tabPhoto">사진등록</a>
-		<a class="step-tab" href="./modifyDescription.jsp" id="tabDescription">숙소설명</a>
-		<a class="step-tab" href="./modifyTitle.jsp" id="tabTitle">숙소명</a>
-	</nav>
+	<%@include file="./hostHeaderStep2.jsp" %>
 	
 	<script>
 		$('.hosting-step').empty();
@@ -24,7 +19,6 @@
 		$('#progressBar').val('50');
 		
 		$('#tabTitle').css('background','#bbb');
-		
 	</script>
 	
 	

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<%--panTo 사용시 오류, 이전 위치 기억등 잡아줘야할 내용이 많아져서 그냥 보류--%>>
+<%--panTo 사용시 오류, 이전 위치 기억등 잡아줘야할 내용이 많아져서 그냥 보류--%>
 <title>위치</title>
 <!-- services와 clusterer, drawing 라이브러리 불러오기 -->
 <script type="text/javascript"
@@ -13,7 +13,7 @@
 </head>
 <body>
 	<input type="hidden" id="hostId" value="${hostId }" />
-	<%@include file="../hostHeader.jsp" %>
+	<%@include file="./hostHeaderStep1.jsp" %>
 	
 	<script>
 		$('#progressBar').val('60');
