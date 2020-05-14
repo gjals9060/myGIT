@@ -52,56 +52,99 @@ li {
 	<!-- </form> -->
 	<!-- <input type="submit" value="다음" /> -->
 	<button onclick="next()">다음</button>
+	<br /><br /><button onclick="deleteHost()">삭제</button>
 
-	<script src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-	<script>
-		function next() {
-			// 체크 여부
-			var isChecked = $('input[name="hostId"]:checked').length;
-			// 선택 호스팅의 호스트ID
-			var hostId = $('input[name="hostId"]:checked').val();
+<script src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script>
+	function next() {
+		// 체크 여부
+		var isChecked = $('input[name="hostId"]:checked').length;
+		// 선택 호스팅의 호스트ID
+		var hostId = $('input[name="hostId"]:checked').val();
 
-			if (!isChecked) { // 체크하지 않았으면
-				alert("선택해라..");
-			} else { // 체크했으면
-				location.href = "hostingStatus?hostId=" + hostId;
-			}
+		if (!isChecked) { // 체크하지 않았으면
+			alert("선택해라..");
+		} else { // 체크했으면
+			location.href = "hostingStatus?hostId=" + hostId;
+		}
 
-		} // next-END
+	} // next-END
 
-		$(window).bind("pageshow",function(event) {
-			$.ajax({
-				type : "POST",
-				url : "getHostingList",
-				//			async : false,
-				success : function(hostingList) {
-					//	alert(hostingList.length);
-					var result = '';
-					$.each(hostingList,function(i, hosting) {
-						result += '	<li><div class="efg" id="as">	'
-								+ ' <label for="as">'
-								+ '	<input type="radio" name="hostId" value="' + hosting.hostId + '" />	'
-								+ '	<img src="' + hosting.coverPhotoPath + '" alt="사진" class="room-img"/>	'
-								+ '	<br />'
-								+ hosting.hostName
-								+ '<br />'
-								+ hosting.roomTypeName
-								+ '	</label></div></li>	';
-						}); // each-END
-					$('#abc').append(result);
-				},
-				
-				error : function() {
-					alert("통신 실패..");
+	$(window).bind("pageshow",function(event) {
+		refresh(); // 화면 갱신
+
+		$.ajax({
+			type : "POST",
+			url : "registration/reset",
+		}); // AJAX-END
+	});
+	
+	// 화면 갱신
+function refresh(){
+	$.ajax({
+		type : "POST",
+		url : "getHostingList",
+		//			async : false,
+		success : function(hostingList) {
+			//	alert(hostingList.length);
+			var result = '';
+			$.each(hostingList,function(i, hosting) {
+				result += '	<li class="hosting"><div class="efg" id="as">	'
+						+ ' <label for="as">'
+						+ '	<input type="radio" name="hostId" value="' + hosting.hostId + '" />	'
+						+ '	<img src="' + hosting.coverPhotoPath + '" alt="사진" class="room-img"/>	'
+						+ '	<br />'
+						+ hosting.hostName
+						+ '<br />'
+						+ hosting.roomTypeName
+						+ '	</label></div></li>	';
+				}); // each-END
+			$('.hostng').remove();
+			$('#abc').append(result);
+		},
+		
+		error : function() {
+			alert("통신 실패..");
+		}
+	});
+}	
+	
+	
+	
+	// 호스트 삭제 메소드
+	function deleteHost(){
+	// 체크 여부
+	var isChecked = $('input[name="hostId"]:checked').length;
+	// 선택 호스팅의 호스트ID
+	var hostId = $('input[name="hostId"]:checked').val();
+
+	if (!isChecked) { // 체크하지 않았으면
+		alert("삭제할 호스팅을 선택해주세요.");
+		return;
+	}
+	if(hostId == 0){
+		alert("삭제할!! 호스팅!!!");
+		return;
+	}
+	
+		$.ajax({
+			type : "POST",
+			url : "deleteHost",
+			data : "hostId=" + hostId,
+			success : function(result) {
+				if(result){ // 호스트 삭제 성공
+					alert("삭제 성공");
+					refresh(); // 화면 갱신
+				} else{
+					alert("호스팅 삭제 실패..");
 				}
-			});
-
-			$.ajax({
-				type : "POST",
-				url : "registration/reset",
-			}); // AJAX-END
+			},
+			error : function() {
+				alert("통신 실패..");
+			}
 		});
-	</script>
+	}
+</script>
 	
 	<jsp:include page="../footer.jsp"/>
 

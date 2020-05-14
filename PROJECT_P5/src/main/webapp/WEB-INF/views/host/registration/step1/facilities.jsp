@@ -9,15 +9,17 @@
 <body>
 	<input type="hidden" id="hostId" value="${hostId }" />
 	<%@include file="../hostHeader.jsp" %>
-	<nav>
+	<!-- <nav>
 		<a class="step-tab" href="./roomType.jsp?hostId=" id="tabRoomType">숙소형태</a>
 		<a class="step-tab" href="./roomCount.jsp" id="tabRoomCount">인원</a>
 		<a class="step-tab" href="./address.jsp" id="tabAddress">위치</a> 
 		<a class="step-tab" href="./facilities.jsp" id="tabFacilities">편의시설</a>
-	</nav>
+	</nav> -->
 	<script>
 		$('#progressBar').val('80');
 		$('#tabFacilities').css('background','#bbb');
+		$('.modification-tab').hide();
+		$('.progress-bar').hide();
 	</script>
 	<!-- <form action="photo" method="post"> -->
 	<h1>편의시설이 어떤게 있나요?</h1>

@@ -754,7 +754,7 @@
 		$
 				.ajax({
 					type : "POST",
-					url : "ajax/isMobileAuthentication",
+					url : "/p5/ajax/isMobileAuthentication",
 					async : false,
 					success : function(data) {
 						if (data) { // 휴대전화 인증자이면

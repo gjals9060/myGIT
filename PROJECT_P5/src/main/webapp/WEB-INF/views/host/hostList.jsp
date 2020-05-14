@@ -93,7 +93,7 @@ span {
 				<th class="room">방</th>
 				<th class="bed-room">침실</th>
 				<th class="bed-count">침대</th>
-				<th class="">욕실</th>
+				<th class="bed-count">욕실</th>
 				<th class="address">위치</th>
 			<!-- 	<th class="btn">
 					<button>수정</button>
@@ -101,7 +101,7 @@ span {
 				</th> -->
 			</tr>
 
-			<tr class="table-tr" onclick="">
+			<!-- <tr class="table-tr" onclick="">
 				<td>1010</td>
 				<td><div class="host-room-div">
 						<img class="host-img" src="../img/어린왕자.jpg" alt="" /> <span>어린왕자</span>
@@ -132,7 +132,7 @@ span {
 				<td>3</td>
 				<td>2</td>
 				<td>서울특별시 종로구</td>
-			</tr>
+			</tr> -->
 
 
 		</table>
@@ -173,7 +173,7 @@ function refresh(){
 				+'<td>' + host.bathroomCount + '</td>	'
 				+'<td>' + host.address + '</td>	'
 				+'<th class="btn">	'
-				+'<button onclick="location.href=\'./hostStatus?hostId=' + host.id + '\'">수정</button>	'
+				+'<button onclick="location.href=\'./hostingStatus?hostId=' + host.id + '\'">수정</button>	'
 				+'<button onclick="deleteHost(' + host.id + ')">삭제</button>	'
 				+'</th>	'
 				+'</tr>	'

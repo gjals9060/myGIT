@@ -262,8 +262,8 @@ if(urlInfo.indexOf('/p5/host/registration/price') !== -1 && host.price != 0){
 	return;
 }
 
-if(urlInfo.indexOf('/p5/host/registration/') !== -1){$('title').text("호스트 등록"); $('.modification').remove();}
-if(urlInfo.indexOf('/p5/host/modification/') !== -1){$('title').text("호스트 변경"); $('.registration').remove();}
+if(urlInfo.indexOf('/p5/host/registration/') !== -1){$('.modification').remove();}
+if(urlInfo.indexOf('/p5/host/modification/') !== -1){$('.registration').remove();}
 	
 //************************************ 1 단계 **********************************************
 	$('select[name="hostTypeId"]').val(host.hostTypeId);
