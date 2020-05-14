@@ -9,7 +9,6 @@
 <!-- services와 clusterer, drawing 라이브러리 불러오기 -->
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6252091adcb28726fdb95ebdf0b78361&libraries=services"></script>
-<script src="/p5/js/jquery-3.4.1.js"></script>
 
 </head>
 <body>
@@ -371,7 +370,7 @@
 	function settingAddress() {	// 조정 클릭시 실행
 		
 		console.log("========조정!========");
-
+		memoryAddress = $('input[name="address"]').val(); // 메모리 어드레스에 넣고
 		$('input[name="address"]').val(""); // 초기화
 		
       
@@ -435,7 +434,8 @@
 </script>
 
 <!-- 3. 주소/좌표 input값 확인 및  host.js에서 넘어온 값 확인 -->
-<script type="text/javascript">
+
+<!-- <script type="text/javascript">
 	var memoryAddress; // host.js로 부터 받아오는 값 담을 변수
 	var memoryLatitude; // host.js로 부터 받아오는 값 담을 변수
 	var memoryLongitude; // host.js로 부터 받아오는 값 담을 변수
@@ -507,7 +507,7 @@
 
 			}, 1000);
 	
-</script>
+</script> -->
 
 <!-- 4. 주소검색 기본구성 -->
 <script type="text/javascript">

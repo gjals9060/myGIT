@@ -262,11 +262,51 @@ if(urlInfo.indexOf('/p5/host/registration/price') !== -1 && host.price != 0){
 	return;
 }
 
+
+if(!!host.address && (urlInfo == ('/p5/host/registration/address') ||
+				  urlInfo.indexOf('/p5/host/modification/address') !== -1)){ // 지도 표시
+	
+var hostLatLng = new daum.maps.LatLng(host.latitude, host.longitude);
+
+	$('#map').show();
+	map.setDraggable(false);
+valueInMap(host.latitude, host.longitude);
+	
+$('#map-set-btn').show();
+$('#map-save-btn').hide();
+
+markerRed.setPosition(hostLatLng);
+markerRed.setVisible(true);			
+markerBlue.setVisible(false);
+toggleButton = true;
+
+
+$('#addressInfo').empty();
+$('#addressInfo').append( ' 주소 : ' + host.address);
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 if(urlInfo.indexOf('/p5/host/registration/') !== -1){$('.modification').remove();}
 if(urlInfo.indexOf('/p5/host/modification/') !== -1){$('.registration').remove();}
-
-
-
 
 
 
