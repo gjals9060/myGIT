@@ -427,6 +427,7 @@
 				success: function(result){
 					alert("성공");
 					
+					
 					// 성공 후 input
 					firstNameInput.attr("disabled",true);
 					lastNameInput.attr("disabled",true);
@@ -451,12 +452,27 @@
 	var birthDateBtn = $("#userInfoUpdateValueBirthDateBtn"); // 수정 
 	var cancelDate = $("#userInfoDateCancelBtn");
 	
+	var birthDate = birthDateInput.val();
 	birthDateBtn.on("click", function() {
 		
 		if(birthDateInput.is(":disabled")){
 			birthDateInput.attr("disabled",false);
 			cancelDate.css("display","inline");
 		}else{
+			
+			$.ajax({
+				url : "",
+				type: "POST",
+				data : "birthDate:"+birthDate,
+				success: function(){
+					alert('확인');
+				},
+				error: function(){
+					alert('실패');
+				}
+			});
+			
+			
 			////// ajax 처리 후 
 			birthDateInput.attr("disabled",true);
 			cancelDate.css("display","none");
