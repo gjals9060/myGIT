@@ -13,9 +13,7 @@
 	src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 <script type="text/javascript"
 	src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script> -->
-<!-- <script type="text/javascript" src="js/header.js"></script> -->
-<script type="text/javascript" src="js/daterangepicker.js"></script>
+<script type="text/javascript" src="/p5/js/daterangepicker.js"></script>
 
 <!-- Link Swiper's CSS -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
@@ -105,10 +103,10 @@
 			%>
 			<!-- 이름만 출력 -->
 			<!-- <a href='host/registration/roomType'>호스트 등록</a> -->
-			<button onclick='isMobileAuthentication()'>호스트 등록</button>
-			<button class="user-drop-down-btn">
+			<button class='btn' onclick='isMobileAuthentication()'>호스트 등록</button>
+			<button class="user-drop-down-btn btn">
 				<span id="userImgBlock"> <c:set var="defaultProfilePhotoPath"
-						value="img/defaultProfile.png" /> <c:choose>
+						value="/p5/img/defaultProfile.png" /> <c:choose>
 						<c:when test="${empty user.profilePhotoPath}">
 							<img id="userImg" src="${defaultProfilePhotoPath }" alt="" />
 						</c:when>
