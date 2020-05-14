@@ -15,10 +15,39 @@
     			room_type.name AS roomTypeName
 		FROM host LEFT JOIN host_photo ON host.id = host_photo.host_id
 										AND host_photo.sort_order = 1
-        JOIN room_type ON host.room_type_id = room_type.id
-        WHERE host.member_id = #{memberId} AND host.creation_date is NULL
+        				JOIN room_type ON host.room_type_id = room_type.id
+        WHERE host.member_id = #{memberId} AND host.creation_date IS NULL
         ORDER BY host.id DESC
 	</select>
+	
+	<!-- 완료 호스트 목록 검색 -->
+	<select id="selectHostList" resultType="HostDTO">
+		SELECT host.id AS id,
+				host_photo.path AS coverPhotoPath,
+				host_type.name AS hostTypeName,
+				room_type.name AS roomTypeName,
+				capacity,
+				room_count,
+				bed_count,
+				bathroom_count,
+				address,
+				host.name AS name,
+				creation_date,
+				modification_date
+		FROM host LEFT JOIN host_photo ON host.id = host_photo.host_id
+										AND host_photo.sort_order = 1
+						JOIN host_type ON host.host_type_id = host_type.id
+						JOIN room_type ON host.room_type_id = room_type.id
+		WHERE host.member_id = #{memberId} AND host.creation_date IS NOT NULL
+		ORDER BY host.id DESC
+	</select>
+	
+	<!-- 호스트 삭제 -->
+	<delete id="deleteHost">
+		DELETE
+		FROM host
+		WHERE id = #{hostId}
+	</delete>
 	
 	
 	<!-- 호스트 등록 1단계 완료 -->

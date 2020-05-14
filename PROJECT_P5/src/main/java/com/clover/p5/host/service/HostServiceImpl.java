@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.clover.p5.host.dto.Host;
+import com.clover.p5.host.dto.HostDTO;
 import com.clover.p5.host.dto.HostPhoto;
 import com.clover.p5.host.dto.HostPhotoVO;
 import com.clover.p5.host.dto.HostingDTO;
@@ -358,6 +359,28 @@ public class HostServiceImpl implements HostService {
 		}
 		System.out.println(hostId + "번 호스트 - 수정일 업데이트 불필요.(등록 미완료)");
 		return false;					
+	}
+
+
+
+	@Override
+	public List<HostDTO> getHostList(int memberId) {
+		List<HostDTO> list = hostMapper.selectHostList(memberId);
+		System.out.println(memberId + "번 회원의 등록 완료 호스트 : " + list.size() + "개");
+		return list;
+	}
+
+
+
+	
+	@Override
+	public boolean deleteHost(int hostId) {
+		if(hostMapper.deleteHost(hostId) == 1) {
+			System.out.println(hostId + "번 호스트 삭제 성공했습니다.");
+			return true;
+		}
+		System.out.println(hostId + "번 호스트 삭제 실패했습니다..");
+		return false;
 	}
 	
 	/*@Override

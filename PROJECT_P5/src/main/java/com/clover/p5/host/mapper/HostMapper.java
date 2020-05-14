@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.clover.p5.host.dto.Host;
+import com.clover.p5.host.dto.HostDTO;
 import com.clover.p5.host.dto.HostPhoto;
 import com.clover.p5.host.dto.HostPhotoVO;
 import com.clover.p5.host.dto.HostingDTO;
@@ -12,8 +13,12 @@ import com.clover.p5.host.dto.NewHostDTO;
 
 public interface HostMapper {
 
+	// 등록 완료 호스트 목록 검색
+	List<HostDTO> selectHostList(int memberId);
+	
 	// 호스팅 목록 검색
 	List<HostingDTO> selectHostingList(int memberId);
+	
 	
 	// 호스트 등록 1단계 완료
 	int insertHost(NewHostDTO newHost); // session에 모은 정보로 호스트 등록(DB에 저장)
@@ -22,6 +27,8 @@ public interface HostMapper {
 	// 특정 호스트 정보 검색
 	Host selectHost(int hostId);
 	
+	// 호스트 삭제
+	int deleteHost(int hostId);
 	
 	// 호스트 수정 1단계
 	int updateRoomType(Host host);

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.clover.p5.host.dto.Host;
+import com.clover.p5.host.dto.HostDTO;
 import com.clover.p5.host.dto.HostPhoto;
 import com.clover.p5.host.dto.HostingDTO;
 import com.clover.p5.host.dto.NewHostDTO;
@@ -15,12 +16,18 @@ public interface HostService {
 	
 	// 호스팅 목록 검색
 	List<HostingDTO> getHostingList(int memberId);
+	// 완료 호스트 목록 검색
+	List<HostDTO> getHostList(int memberId);
 	
 	// 호스트 등록 1단계 완료
 	int completeStep1(NewHostDTO newHost);
 	
 	// 특정 호스트 검색
 	Host getHost(int hostId);
+	
+	// 호스트 삭제
+	boolean deleteHost(int hostId);
+	
 	
 	// 호스트 수정 1단계 - roomType.jsp
 	boolean modifyRoomType(Host host);

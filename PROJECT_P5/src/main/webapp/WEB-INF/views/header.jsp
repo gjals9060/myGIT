@@ -142,7 +142,7 @@
 			<script>
 				$('#btnHostReservationList').on('click', function() {
 					alert("등록한 숙소 리스트로 이동");
-					location.href = "/p5/hostReservationList";
+					location.href = "/p5/host/hostList";
 				});
 
 				$('#btnUserInfoUpdate').on('click', function() {
