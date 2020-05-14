@@ -104,7 +104,7 @@ herder>* {
 	margin: auto 0;
 	max-width: 150px;
 }
-
+ 
 /* 로그인 회원가입 버튼 */
 .btn {
 	width: 70%;
@@ -234,10 +234,7 @@ herder>* {
 	position: fixed;
 	background-color: rgb(0, 0, 0, 0.9);
 	width: 100%;
-	height: 105%;
-	top: 0;
-	right: 0;
-	padding: auto;
+	height: 100%;
 	top: 0;
 	z-index: 10;
 }

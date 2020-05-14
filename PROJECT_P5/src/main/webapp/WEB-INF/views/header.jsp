@@ -506,6 +506,8 @@
 			$('.inputWrap').css("display", "contents");
 			$('.title-logo-img ').css("height", "80px");
 			
+			$('$presentationTitle').css("padding-top", "120px");
+			
 			if ($(window).width() <= 620) {
 				$('.title-logo-img ').css("height", "50px");
 
@@ -535,6 +537,8 @@
 			$('#headerMobileButton').css("display", "none");
 			$('.input-info').css("display", "block");
 			
+			$('#presentationTitle ').css('padding-top','0px');
+			   
 			if ($(window).width() <= 620) {
 
 			} else if ($(window).width() <= 870) {
