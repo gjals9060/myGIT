@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="css/roo.css" />
 </head>
 <body>
+<input type="hidden" id="hostId" value="${hostId }" />
 <!-- <form action="roomCount" method="post"> -->
 <h4>기본사항을 입력하세요</h4>
 <progress value="10" max="100" ></progress>
@@ -16,26 +17,38 @@
 <h2>숙소종류를 등록해봐요</h2>
 <!--숙소 종류 
 value를 0부터 2까지 설정 0이면 아파트 1이면 주택 2이면 팬션 -->
-<select name="hostTypeId" id="">
+<select class="registration" name="hostTypeId" id="">
 <option value="">선택</option>
 <option value="A1">아파트</option>
 <option value="B2">주택</option>
 <option value="C3">팬션</option>
 </select>
+	<select class="modification" name="hostTypeId" id="">
+		<option value="A1">아파트</option>
+		<option value="B2">주택</option>
+		<option value="C3">팬션</option>
+	</select>
 <!--숙소 유형 
 value를 0부터 2까지 설정 0이면 전체 1이면 개인실 2이면 다인실 -->
 <h2>숙소유형을 등록해봐요</h2>
-<select name="roomTypeId" id="">
+<select class="registration" name="roomTypeId" id="">
 <option value="">선택</option>
 <option value="A1">집 전체</option>
 <option value="B2">개인실</option>
 <option value="C3">다인실</option>
 </select>
+	<select class="modification" name="roomTypeId" id="">
+		<option value="A1">집 전체</option>
+		<option value="B2">개인실</option>
+		<option value="C3">다인실</option>
+	</select>
 <!-- <input type="submit" value="다음" /> -->
 <!-- </form> -->
 <!--페이지 넘어가기(임시방안)  -->
-<a href="../hostingList">이전</a>
-<a href="roomCount">다음</a>
+<a class="registration" href="../hostingList">이전</a>
+<a class="registration" href="./roomCount">다음</a>
+	<a class="modification" href="../hostingStatus?hostId=${hostId }">이전</a>
+	<a class="modification" href="./roomCount?hostId=${hostId }">다음</a>
 </div>
 
 

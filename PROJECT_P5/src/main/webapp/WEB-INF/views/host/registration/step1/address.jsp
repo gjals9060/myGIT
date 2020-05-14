@@ -10,7 +10,7 @@
 
 </head>
 <body>
-
+<input type="hidden" id="hostId" value="${hostId }" />
 
 
    도로명/지번 : <input type="text" id="sample5_address" onclick="sample5_execDaumPostcode()" placeholder="주소 검색하기" readonly>
@@ -36,9 +36,10 @@
    
    
    <!--임시 이동  -->
-   <a href="roomCount">이전</a>
-   <a href="facilities">다음</a>
-   
+<a class="registration" href="./roomCount">이전</a>
+<a class="registration" href="./facilities">다음</a>
+	<a class="modification" href="./roomCount?hostId=${hostId }">이전</a>
+	<a class="modification" href="./facilities?hostId=${hostId }">다음</a>   
    <!-- <button id="next" onclick="inputAddress();">다음</button> -->
 </body>
 

@@ -27,35 +27,7 @@
 	
 	<script src="/p5/js/host.js?v=<%=System.currentTimeMillis() %>"></script>
 <script>
-function modifyPrice(){
-	var price = $('input[name="price"]').val();
-	if(!price || price == 0){
-		alert("수정 가격을 입력해주세요.");
-		$('input[name="price"]').val("");
-		$('input[name="price"]').focus();
-		return;
-	}
-	var params = {
-		hostId : $('#hostId').val(),
-		price : $('input[name="price"]').val()
-	}
-	$.ajax({
-		type : "POST",
-		url : "savePrice",
-		data : params,
-		success : function(result){
-			if(result){
-				alert("가격 수정 성공^^");
-				location.href="../hostingStatus?hostId=" + $('#hostId').val();
-			} else{
-				alert("가격 수정 실패..");
-			}
-		},	
-		error : function(){
-			alert("통신에 실패..");
-		}
-	}); // AJAX-END
-}
+
 
 </script>
 </body>

@@ -15,6 +15,7 @@
         }
     }
     </script> -->
+<title>Insert title here</title>
 </head>
  <body>
  <input type="hidden" id="hostId" value="${hostId }" />
@@ -25,8 +26,9 @@
  <div id="warning"></div>
 <!--  <input type="submit" value="다음" /> -->
 <!-- </form> -->
-<a href="calendar?hostId=${hostId }">이전</a>
-<button onclick="completeStep3()">완료</button>
+<a href="./calendar?hostId=${hostId }">이전</a>
+<button class="registration" onclick="completeStep3()">완료</button>
+			<button class="modification" onclick="modifyPrice()">다음</button>
 	<%-- <a href="finish?hostId=${hostId }">완료</a> --%>
 	
 	
@@ -62,6 +64,36 @@ function completeStep3(){
 	}); // AJAX-END 
 }
 
+
+function modifyPrice(){
+	var price = $('input[name="price"]').val();
+	if(!price || price == 0){
+		alert("수정 가격을 입력해주세요.");
+		$('input[name="price"]').val("");
+		$('input[name="price"]').focus();
+		return;
+	}
+	var params = {
+		hostId : $('#hostId').val(),
+		price : $('input[name="price"]').val()
+	}
+	$.ajax({
+		type : "POST",
+		url : "savePrice",
+		data : params,
+		success : function(result){
+			if(result){
+				alert("가격 수정 성공^^");
+				location.href="../hostingStatus?hostId=" + $('#hostId').val();
+			} else{
+				alert("가격 수정 실패..");
+			}
+		},	
+		error : function(){
+			alert("통신에 실패..");
+		}
+	}); // AJAX-END
+}
 
 
 

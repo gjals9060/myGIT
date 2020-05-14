@@ -12,8 +12,9 @@
 <h3>숙소명</h3>
 <!--2단계마지막  -->
 <input type="text" name="name" placeholder="숙소 이름" id="inputText"/>
- <a href="description?hostId=${hostId }">이전</a>
- <button onclick="completeStep2()">다음</button>
+ <a href="./description?hostId=${hostId }">이전</a>
+ <button class="registration" onclick="completeStep2()">다음</button>
+		<a class="modification" href="../hostingStatus?hostId=${hostId }">다음</a>
  
 <script src="/p5/js/jquery-3.4.1.js"></script>
 <script src="/p5/js/host.js?v=<%=System.currentTimeMillis() %>"></script>

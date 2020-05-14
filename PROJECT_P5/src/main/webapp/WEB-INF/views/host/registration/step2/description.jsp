@@ -16,8 +16,8 @@
 <h3>기타사항(선택)</h3>
 <textarea name="descriptionEtc" rows="10" cols="50"></textarea>
 <!-- </form> -->
- <a href="photo?hostId=${hostId }">이전</a>
- <a href="name?hostId=${hostId }">다음</a>
+ <a href="./photo?hostId=${hostId }">이전</a>
+ <a href="./name?hostId=${hostId }">다음</a>
  
  
  

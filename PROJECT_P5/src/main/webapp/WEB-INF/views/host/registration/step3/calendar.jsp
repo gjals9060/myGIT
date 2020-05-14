@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="icon" type="image/png" href="mdp-icon.png">
 <!--[if IE]><link rel="shortcut icon" href="favicon.ico" /><![endif]-->
-<title>숙소등록</title>
+<title>예약 차단 설정</title>
 <script src="/p5/js/jquery-3.4.1.js"></script>
 <script src="/p5/js/jquery-ui.min.js"></script>
 <script src="/p5/js/Calendar.js"></script>
@@ -28,8 +28,8 @@ display:none;
 			type="button" value="전체해제" id="mdpAbled" class="abled" /> <input
 			type="button" value="전체차단" id="mdpDisabled" class="disabled" /> 
 			
-		<a href="stayDate?hostId=${hostId }">이전</a>
-        <a href="price?hostId=${hostId }">다음</a>
+		<a href="./stayDate?hostId=${hostId }">이전</a>
+        <a href="./price?hostId=${hostId }">다음</a>
 			<!-- <input type="submit" value="다음" /> -->
 </body>
 <script>

@@ -304,7 +304,7 @@ img:hover {
    </div>
    <!-- wrap end -->
    <a href="../hostingStatus?hostId=${hostId }">이전</a>
-        <a href="description?hostId=${hostId }">다음</a>
+        <a href="./description?hostId=${hostId }">다음</a>
 </body>
 
 <script type="text/javascript">

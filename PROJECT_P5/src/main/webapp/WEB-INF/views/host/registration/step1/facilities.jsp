@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<input type="hidden" id="hostId" value="${hostId }" />
 <!-- <form action="photo" method="post"> -->
 <h1>편의시설이 어떤게 있나요?</h1>
 <input type="checkbox" name="isTv" value="Y" />TV<br>
@@ -24,8 +25,10 @@
 
 <!-- <input type="submit" value="다음" /> -->
 <!-- </form> -->
-<a href="address">이전</a>
-<button onclick="completeStep1()">다음</button>
+<a class="registration" href="./address">이전</a>
+<button class="registration" onclick="completeStep1()">다음</button>
+	<a class="modification" href="./address?hostId=${hostId }">이전</a>
+	<a class="modification" href="../hostingStatus?hostId=${hostId }">다음</a>
 
 
 <script src="/p5/js/jquery-3.4.1.js"></script>
