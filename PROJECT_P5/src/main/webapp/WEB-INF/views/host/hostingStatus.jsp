@@ -56,11 +56,12 @@
 						return;
 					}
 					// 접근 권한 통과하면 화면 갱신 수행
-					//	refresh();
+						refresh();
 
 				},
 				error : function() {
-					alert("접근 권한 확인에 실패..");
+					alert("로그아웃 되신 듯..");
+					location.replace("/p5"); // 홈으로 이동
 				}
 			}); // AJAX-END
 
@@ -71,7 +72,7 @@
 		});
 
 		function refresh() {
-			/* 
+			 
 			$.ajax({
 				type : "POST",
 				url : "hostingStatus/getHost",
@@ -79,25 +80,25 @@
 				success : function(host){
 				//	alert(JSON.stringify(host)); // 내용 확인
 					if(!host.name){ // step2 미완료
-						$('#modifyStep2').css("display","none"); // step2 변경 X
-						$('#registerStep3').css("display","none"); // step3 계속 X
-						$('#modifyStep3').css("display","none"); // step3 변경 X
+						$('#modifyStep2').remove(); // step2 변경 X
+						$('#registerStep3').remove(); // step3 계속 X
+						$('#modifyStep3').remove(); // step3 변경 X
 						return;
 					}
 					if(!host.creationDate){ // step3 미완료
-						$('#registerStep2').css("display","none"); // step2 계속 X
-						$('#modifyStep3').css("display","none"); // step3 변경 X
+						$('#registerStep2').remove(); // step2 계속 X
+						$('#modifyStep3').remove(); // step3 변경 X
 						return;
 					}
 					// step3 완료(등록 완료된 호스트 수정시 화면)
-					$('#registerStep2').css("display","none"); // step2 계속 X
-					$('#registerStep3').css("display","none"); // step3 계속 X
+					$('#registerStep2').remove(); // step2 계속 X
+					$('#registerStep3').remove(); // step3 계속 X
 				},	
 				error : function(){
 					alert("호스팅 상태 보기 실패..");
 				}
 			}); // AJAX-END
-			 */
+			 
 		}
 	</script>
 </body>

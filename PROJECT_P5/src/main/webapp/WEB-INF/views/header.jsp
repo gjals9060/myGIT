@@ -18,6 +18,7 @@
 <script type="text/javascript" src="js/daterangepicker.js"></script>
 
 <!-- Link Swiper's CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 <link rel="stylesheet"
@@ -27,6 +28,7 @@
 <link rel="stylesheet" href="/p5/css/header.css" />
 
 <body>
+<div id="widthTest"></div>
 	<header>
 		<button id="headerMobileButton">
 			<i class="fas fa-bars fa-3x"></i>
@@ -490,63 +492,126 @@
 		});
 	});
 
+	var width_size = $(window).width();
 	/// header scroll event 
-	$(window).scroll(function() {
-		var height = $(document).scrollTop();
-		$('#scrollId').val(height);
+	$(window).on({
+		"resize" : function() {
+			width_size = $(window).width();
+			var height = $(document).scrollTop();
+			$('#scrollId').val(height);
 
-		if (height > 80) { // 스크롤의 위치가 80보다  클경우(scroll)
-			$('header').css({
-				"position" : "fixed",
-				"box-shadow" : "1px 1px 10px 0px #bbb",
-				"opacity" : "0.97"
-			});
-		
-			$('.fa-2x').css("font-size", "1em");
-			$('.inputWrap').css("display", "contents");
-			$('.title-logo-img ').css("height", "80px");
+			if (height > 80) { // 스크롤의 위치가 80보다  클경우(scroll)
+				$('header').css({
+					"position" : "fixed",
+					"box-shadow" : "1px 1px 10px 0px #bbb",
+					"opacity" : "0.97"
+				});
 			
-			$('$presentationTitle').css("padding-top", "120px");
+				$('.fa-2x').css("font-size", "1em");
+				$('.inputWrap').css("display", "contents");
+				$('.title-logo-img ').css("height", "80px");
+				
+				$('#presentationTitle').css("padding-top", "120px");
+				
+				if (width_size <= 603) {
+					$('.title-logo-img ').css("height", "50px");
+					$('#headerMobileButton').css("display", "block");
+					$('.input-info').css("display", "none");
+					$('.useradd-login-form').css("display", "none");
+					
+					$('.title-logo-img').css("display", "block");
+					$('.useradd-login-form').css("display", "none");
+				} else if (width_size <= 843) {
+					$('.title-logo-img ').css("height", "80px");
+					$('#headerMobileButton').css("display", "none");
+					$('.input-info').css("display", "block");
+					$('.useradd-login-form').css("display", "block");
+					
+					$('.title-logo-img').css("display", "none");
+					$('.useradd-login-form').css("display", "none");
+					
+				} else {
+					$('.title-logo-img').css("display", "block");
+					$('.useradd-login-form').css("display", "block");
+				}
+	 
+			} else { /// 80보다 낮은 위치라면(top)
+				$("header").css({
+					"position" : "static",
+					"box-shadow" : "0px 0px"
+				});
+				$('.title-logo-img ').css("height", "100px");
+
+				$('.fa-2x').css("font-size", "2em");
+				$('.inputWrap').css("display", "block");
+				
+				$('.title-logo-img').css("display", "block");
+				$('.useradd-login-form').css("display", "block");
+				
+				$('#headerMobileButton').css("display", "none");
+				$('.input-info').css("display", "block");
+				
+				$('#presentationTitle').css('padding-top','0px');
+				   
+			}			
+		},
+		"scroll" : function() {
+			width_size = $(window).width();
+			var height = $(document).scrollTop();
+			$('#scrollId').val(height);
+
+			if (height > 80) { // 스크롤의 위치가 80보다  클경우(scroll)
+				$('header').css({
+					"position" : "fixed",
+					"box-shadow" : "1px 1px 10px 0px #bbb",
+					"opacity" : "0.97"
+				});
 			
-			if ($(window).width() <= 620) {
-				$('.title-logo-img ').css("height", "50px");
+				$('.fa-2x').css("font-size", "1em");
+				$('.inputWrap').css("display", "contents");
+				$('.title-logo-img ').css("height", "80px");
+				
+				$('#presentationTitle').css("padding-top", "120px");
+				
+				if (width_size <= 603) {
+					$('.title-logo-img ').css("height", "50px");
 
-				$('#headerMobileButton').css("display", "block");
+					$('#headerMobileButton').css("display", "block");
 
-				$('.input-info').css("display", "none");
-				$('.useradd-login-form').css("display", "none");
-			} else if ($(window).width() <= 870) {
-				$('.title-logo-img').css("display", "none");
-				$('.useradd-login-form').css("display", "none");
-			} else {
-			}
- 
-		} else { /// 80보다 낮은 위치라면(top)
-			$("header").css({
-				"position" : "static",
-				"box-shadow" : "0px 0px"
-			});
-			$('.title-logo-img ').css("height", "100px");
+					$('.input-info').css("display", "none");
+					$('.useradd-login-form').css("display", "none");
+				} else if (width_size <= 843) {
+					$('.title-logo-img').css("display", "none");
+					$('.useradd-login-form').css("display", "none");
+				} else {
+					$('.title-logo-img').css("display", "block");
+					$('.useradd-login-form').css("display", "block");
+				}
+	 
+			} else { /// 80보다 낮은 위치라면(top)
+				$("header").css({
+					"position" : "static",
+					"box-shadow" : "0px 0px"
+				});
+				$('.title-logo-img ').css("height", "100px");
 
-			$('.fa-2x').css("font-size", "2em");
-			$('.inputWrap').css("display", "block");
-			
-			$('.title-logo-img').css("display", "block");
-			$('.useradd-login-form').css("display", "block");
-			
-			$('#headerMobileButton').css("display", "none");
-			$('.input-info').css("display", "block");
-			
-			$('#presentationTitle ').css('padding-top','0px');
-			   
-			if ($(window).width() <= 620) {
-
-			} else if ($(window).width() <= 870) {
-
-			} else {
+				$('.fa-2x').css("font-size", "2em");
+				$('.inputWrap').css("display", "block");
+				
+				$('.title-logo-img').css("display", "block");
+				$('.useradd-login-form').css("display", "block");
+				
+				$('#headerMobileButton').css("display", "none");
+				$('.input-info').css("display", "block");
+				
+				$('#presentationTitle').css('padding-top','0px');
+				   
 			}
 		}
-
+	})
+		
+	
+		
 		var mobileSwitch = true; /* 버튼 off */
 
 		$('#headerMobileButton').click(function() {
@@ -563,7 +628,6 @@
 			}
 		})
 
-	});
 
 	//==========================================================================
 	//======================= 회원가입, 로그인, 로그아웃 =============================

@@ -23,9 +23,6 @@
 		// 최신 정보만 보여주게써~
 	$(window).bind("pageshow", function (event) {
 	//	alert(urlInfo);
-	//	var a = setParams();
-	//	alert(JSON.stringify(a));
-			
 		var url = setRefreshURL();
 		if(url == 'getNewHost'){
 			ajaxRefresh(url);
