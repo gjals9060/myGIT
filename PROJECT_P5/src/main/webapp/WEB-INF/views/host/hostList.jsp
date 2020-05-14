@@ -76,11 +76,12 @@ td {
 span {
 	vertical-align: super;
 }
+
 </style>
 </head>
-<body>	
-<%@include file="modification/headerStep.jsp" %>
+<body>
 
+	<%-- <%@include file="../header.jsp" %> --%>
 
 	<div id="wrap">
 		<h2>등록한 숙소 몇 개</h2>
@@ -93,6 +94,10 @@ span {
 				<th class="bed-room">침실</th>
 				<th class="bed-count">침대</th>
 				<th class="address">위치</th>
+				<th class="btn">
+					<button>수정</button>
+					<button>삭제</button>
+				</th>
 			</tr>
 
 			<tr class="table-tr" onclick="">
