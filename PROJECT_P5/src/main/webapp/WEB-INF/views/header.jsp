@@ -18,6 +18,7 @@
 <script type="text/javascript" src="js/daterangepicker.js"></script>
 
 <!-- Link Swiper's CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 <link rel="stylesheet"
@@ -27,6 +28,7 @@
 <link rel="stylesheet" href="css/header.css" />
 
 <body>
+<div id="widthTest"></div>
 	<header>
 		<button id="headerMobileButton">
 			<i class="fas fa-bars fa-3x"></i>
@@ -511,7 +513,7 @@
 				
 				$('#presentationTitle').css("padding-top", "120px");
 				
-				if (width_size <= 620) {
+				if (width_size <= 603) {
 					$('.title-logo-img ').css("height", "50px");
 					$('#headerMobileButton').css("display", "block");
 					$('.input-info').css("display", "none");
@@ -519,7 +521,7 @@
 					
 					$('.title-logo-img').css("display", "block");
 					$('.useradd-login-form').css("display", "none");
-				} else if (width_size <= 850) {
+				} else if (width_size <= 843) {
 					$('.title-logo-img ').css("height", "80px");
 					$('#headerMobileButton').css("display", "none");
 					$('.input-info').css("display", "block");
@@ -551,17 +553,10 @@
 				
 				$('#presentationTitle').css('padding-top','0px');
 				   
-				if (width_size <= 620) {
-	/* 
-				} else if ($(window).width() <= 850) {
-	 */
-				} else {
-				}
 			}			
 		},
 		"scroll" : function() {
 			width_size = $(window).width();
-			
 			var height = $(document).scrollTop();
 			$('#scrollId').val(height);
 
@@ -578,17 +573,19 @@
 				
 				$('#presentationTitle').css("padding-top", "120px");
 				
-				if ($('header').width() <= 620) {
+				if (width_size <= 603) {
 					$('.title-logo-img ').css("height", "50px");
 
 					$('#headerMobileButton').css("display", "block");
 
 					$('.input-info').css("display", "none");
 					$('.useradd-login-form').css("display", "none");
-				} else if ($('header').width() <= 850) {
+				} else if (width_size <= 843) {
 					$('.title-logo-img').css("display", "none");
 					$('.useradd-login-form').css("display", "none");
 				} else {
+					$('.title-logo-img').css("display", "block");
+					$('.useradd-login-form').css("display", "block");
 				}
 	 
 			} else { /// 80보다 낮은 위치라면(top)
@@ -609,14 +606,6 @@
 				
 				$('#presentationTitle').css('padding-top','0px');
 				   
-				if ($('header').width() <= 620) {
-	/* 
-				} else if ($(window).width() <= 850) {
-	 */
-				} else {					
-					$('.title-logo-img').css("display", "block");
-				$('.useradd-login-form').css("display", "block");
-				}
 			}
 		}
 	})
