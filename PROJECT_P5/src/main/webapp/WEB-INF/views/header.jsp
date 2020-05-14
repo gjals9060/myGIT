@@ -22,9 +22,9 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 <link rel="stylesheet"
 	href="https://unpkg.com/swiper/css/swiper.min.css">
-<link rel="stylesheet" href="css/daterangepicker.css" />
-<link rel="stylesheet" href="css/reset.css" />
-<link rel="stylesheet" href="css/header.css" />
+<link rel="stylesheet" href="/p5/css/daterangepicker.css" />
+<link rel="stylesheet" href="/p5/css/reset.css" />
+<link rel="stylesheet" href="/p5/css/header.css" />
 
 <body>
 	<header>
@@ -32,7 +32,7 @@
 			<i class="fas fa-bars fa-3x"></i>
 		</button>
 		<div class="title-logo-img">
-			<a href="/p5"><img src="img/p5_logo.png" id="titleLogoImg" /></a>
+			<a href="/p5"><img src="/p5/img/p5_logo.png" id="titleLogoImg" /></a>
 			<!-- 로고 이미지 들어갈 자리 -->
 		</div>
 
@@ -142,7 +142,7 @@
 			<script>
 				$('#btnHostReservationList').on('click', function() {
 					alert("등록한 숙소 리스트로 이동");
-					location.href = "/p5/hostReservationList";
+					location.href = "/p5/host/hostList";
 				});
 
 				$('#btnUserInfoUpdate').on('click', function() {
