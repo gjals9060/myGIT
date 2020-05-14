@@ -15,9 +15,7 @@
 	<!-- 페이지별 헤더 변경사항 -->
 	<script>
 		$('#tabRoomType').css('background','#bbb'); // 숙소형태 tab
-		$('.modification-tab').hide();
-		$('.progress-bar').hide();
-		/* 	$('nav').css('display','none'); */
+	
 	</script>
 	
 
@@ -62,7 +60,6 @@
 
 
 
-	<script src="/p5/js/jquery-3.4.1.js"></script>
 	<script src="/p5/js/host.js?v=<%=System.currentTimeMillis()%>"></script>
 </body>
 </html>

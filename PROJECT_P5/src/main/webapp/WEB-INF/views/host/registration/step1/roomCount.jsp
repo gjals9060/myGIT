@@ -13,8 +13,7 @@
 	<script>
 		$('#progressBar').val('30');
 		$('#tabRoomCount').css('background','#bbb');
-		$('.modification-tab').hide();
-		$('.progress-bar').hide();
+		
 	</script>
 	<!-- <form action="address" method="post"> -->
 	<div id="wrap">
@@ -138,7 +137,7 @@
 	<a class="modification" href="./address?hostId=${hostId }">다음</a>
 
 
-<script src="/p5/js/jquery-3.4.1.js"></script>
+
 <script src="/p5/js/host.js?v=<%=System.currentTimeMillis() %>"></script>
 </body>
 </html>

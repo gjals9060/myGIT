@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -88,6 +90,8 @@ nav {
 
 
 
+
+
 </style>
 </head>
 <body>
@@ -95,6 +99,39 @@ nav {
 		<a id="logoImg" href="../hostingStatus?hostId=${hostId}"><img src="/p5/img/p5Host.png" alt="안보임" /></a>
 		<div class="hosting-step">1단계:기본사항을 입력하세요</div>
 		
+		<c:set var="path" value="${requestScope['javax.servlet.forward.servlet_path']}" />
+		<c:set var="isRegistration" value="${fn:startsWith(path, '/host/registration/')}" />
+		<c:set var="isModification" value="${fn:startsWith(path, '/host/modification/')}" />
+		<%-- 내용 확인
+	     ${path }<br />
+	     ${isRegistration }<br />
+	     ${isModification }<br /> --%>
+	     
+	      
+	     
+		<c:choose>
+			<c:when test="${isRegistration }">
+			
+				<!--  등록  -->
+			<div class='progress-bar'>
+				<progress value="10" max="100" id="progressBar"></progress>
+			</div>
+			
+			</c:when>
+			<c:when test="${isModification }">
+			
+				<!-- 수정  -->
+			<nav class="modification-tab">
+			<a class="step-tab" href="./roomType?hostId=${hostId}" id="tabRoomType">숙소형태</a>
+			<a class="step-tab" href="./roomCount?hostId=${hostId}" id="tabRoomCount">인원</a>
+			<a class="step-tab" href="./address?hostId=${hostId}" id="tabAddress">위치</a> 
+			<a class="step-tab" href="./facilities?hostId=${hostId}" id="tabFacilities">편의시설</a>
+			</nav>
+			
+			</c:when>
+		</c:choose>
+		
+		<%-- 
 		<!--  등록  -->
 		<div class='progress-bar'>
 			<progress value="10" max="100" id="progressBar"></progress>
@@ -107,6 +144,13 @@ nav {
 		<a class="step-tab" href="./address?hostId=${hostId}" id="tabAddress">위치</a> 
 		<a class="step-tab" href="./facilities?hostId=${hostId}" id="tabFacilities">편의시설</a>
 		</nav>
+		 --%>
+		
 	</header>
+	
+
+
+<script src="/p5/js/jquery-3.4.1.js"></script>
+
 </body>
 </html>

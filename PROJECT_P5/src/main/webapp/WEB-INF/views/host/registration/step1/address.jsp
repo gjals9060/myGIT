@@ -14,17 +14,10 @@
 <body>
 	<input type="hidden" id="hostId" value="${hostId }" />
 	<%@include file="../hostHeader.jsp" %>
-	<!-- <nav>
-		<a class="step-tab" href="./roomType.jsp?hostId=" id="tabRoomType">숙소형태</a>
-		<a class="step-tab" href="./roomCount.jsp" id="tabRoomCount">인원</a>
-		<a class="step-tab" href="./address.jsp" id="tabAddress">위치</a> 
-		<a class="step-tab" href="./facilities.jsp" id="tabFacilities">편의시설</a>
-	</nav> -->
+	
 	<script>
 		$('#progressBar').val('60');
 		$('#tabAddress').css('background','#bbb');
-		$('.modification-tab').hide();
-		$('.progress-bar').hide();
 	</script>
 
 	도로명/지번 :
