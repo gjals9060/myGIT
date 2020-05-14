@@ -140,7 +140,7 @@ public class HostServiceImpl implements HostService {
 		int hostPhotoId = Integer.parseInt(req.getParameter("hostPhotoId"));
 		if(hostMapper.deleteHostPhoto(hostPhotoId) == 1) {
 			System.out.println(hostPhotoId + "번 사진 삭제 성공");
-			hostMapper.selectHostPhotoCount(hostId)
+			hostMapper.selectHostPhotoCount(hostId);
 			return true; // 삭제 성공
 		}
 		return false; // 삭제 실패
