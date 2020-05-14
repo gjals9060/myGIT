@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,40 +15,61 @@
 <!-- <link rel="stylesheet" href="https://cdn.rawgit.com/dubrox/Multiple-Dates-Picker-for-jQuery-UI/master/jquery-ui.multidatespicker.css" /> -->
 
 <Style>
-.abled{
-display:none;
+.abled {
+	display: none;
 }
+
+.step-tab{
+	height: auto !important;
+}
+
 </Style>
 </head>
 <body>
-<input type="hidden" id="hostId" value="${hostId }" />
+	<input type="hidden" id="hostId" value="${hostId }" />
+	<%@include file="../hostHeader.jsp"%>
+	<nav>
+		<a  class="step-tab" href="./modifyStayDate.jsp" id="tabStayDate">숙박일</a>
+		<a  class="step-tab" href="./modifyCalender.jsp" id="tabCalender">예약불가날짜</a>
+		<a  class="step-tab" href="./modifyPrice.jsp" id="tabPrice">금액</a>
+	</nav>
+	
+	<script>
+		$('.hosting-step').empty();
+		$('.hosting-step').text("2단계:상세정보를 입력하세요");
+		$('nav').css('grid-template-columns' ,'repeat(3, 1fr)');
+		$('#progressBar').val('50');
+		
+		$('#tabCalender').css('background','#bbb');
+	</script>
+	
 	<!-- <form action="price" method="post"> -->
-		<div id="mdp-demo"></div>
-		<input type="text" id="altField" value="" name="blockingDate" /> <input
-			type="button" value="전체해제" id="mdpAbled" class="abled" /> <input
-			type="button" value="전체차단" id="mdpDisabled" class="disabled" /> 
-			
-		<a href="./stayDate?hostId=${hostId }">이전</a>
-        <a href="./price?hostId=${hostId }">다음</a>
-			<!-- <input type="submit" value="다음" /> -->
+	<div id="mdp-demo"></div>
+	<input type="text" id="altField" value="" name="blockingDate" />
+	<input type="button" value="전체해제" id="mdpAbled" class="abled" />
+	<input type="button" value="전체차단" id="mdpDisabled" class="disabled" />
+
+	<a href="./stayDate?hostId=${hostId }">이전</a>
+	<a href="./price?hostId=${hostId }">다음</a>
+	<!-- <input type="submit" value="다음" /> -->
 </body>
 <script>
-$(window).bind("pageshow", function (event) {
-	$.ajax({
-		type : "POST",
-		url : "/p5/ajax/isIdentified",
-		data : "hostId=" + $('#hostId').val(),
-		success : function(result){
-			if(!result){
-				alert("접근 권한이 없는 페이지입니다.");
-				location.replace("/p5"); // 홈으로 이동
+	$(window).bind("pageshow", function(event) {
+		$.ajax({
+			type : "POST",
+			url : "/p5/ajax/isIdentified",
+			data : "hostId=" + $('#hostId').val(),
+			success : function(result) {
+				if (!result) {
+					alert("접근 권한이 없는 페이지입니다.");
+					location.replace("/p5"); // 홈으로 이동
+				}
+			},
+			error : function() {
+				alert("접근 권한 확인에 실패..");
 			}
-		},	
-		error : function(){
-			alert("접근 권한 확인에 실패..");
-		}
-	}); // AJAX-END
-});
+		}); // AJAX-END
+	});
 	var month;
 	var year;
 	$('#mdp-demo').multiDatesPicker({
@@ -105,7 +126,7 @@ $(window).bind("pageshow", function (event) {
 		$('#mdp-demo').multiDatesPicker('resetDates', 'picked');
 		$('td').removeClass('ui-state-highlight');
 		$('a').removeClass('ui-state-active');
-	 /* 	$('a').addClass('ui-state-default');  */
+		/* 	$('a').addClass('ui-state-default');  */
 		$('td').addClass('');
 		$('#mdpDisabled').show();
 		$('#mdpAbled').hide();
@@ -114,10 +135,10 @@ $(window).bind("pageshow", function (event) {
 	$('#mdpDisabled').click(function() {
 		month = $('.ui-datepicker-title>span.ui-datepicker-month').text();
 		year = $('.ui-datepicker-title>span.ui-datepicker-year').text();
-var minDate=new Date();
+		var minDate = new Date();
 
 		var b = new Date();
-		var a= new Date();
+		var a = new Date();
 		var m;
 		switch (month) {
 		case 'January':
@@ -160,13 +181,11 @@ var minDate=new Date();
 		alert(m);
 		b.setMonth(m);
 		a.setMonth(m);
-		var arr=new Array();
-		var maxDate=new Date();
-		maxDate.setMonth(minDate.getMonth()+2);
-		var lastDate = ( new Date( 2020, m, 0) ).getDate();
+		var arr = new Array();
+		var maxDate = new Date();
+		maxDate.setMonth(minDate.getMonth() + 2);
+		var lastDate = (new Date(2020, m, 0)).getDate();
 
-
-		
 		alert(lastDate);
 		/* for (i = 0; i < 31 - a.getDate(); i++) {
 			if(31 - a.getDate()<0){
@@ -185,98 +204,91 @@ var minDate=new Date();
 			console.log(arr[i]);
 		} */
 		/*7월달  */
-		if(7==b.getMonth()){
-			for(i=0;i<maxDate.getDate();i++){
+		if (7 == b.getMonth()) {
+			for (i = 0; i < maxDate.getDate(); i++) {
 
-			if(lastDate==30&&i==31)
-				break;
-	
-			
-			arr.push(b.setDate(i));
-			
-			
-		} }
-		
-		else if(6==b.getMonth()){
-			for(i=1;i<32;i++){
-
-				if(lastDate==30&&i==31)
+				if (lastDate == 30 && i == 31)
 					break;
-				if(i<b.getDate()&&m==5){
-					b.setMonth(m-1);
-					continue;
-					
-				} 
-			
-			if(m==6){
-				b.setMonth(m-1);
-			
-				
-			} 
-				
-				
-				
+
 				arr.push(b.setDate(i));
-			console.log(new Date(b.setDate(i)));
-				
+
 			}
 		}
-		
-		else{for(i=0;i<32;i++){
 
-			if(lastDate==30&&i==31)
-				break;
-			if(i<b.getDate()&&m==5){
-				b.setMonth(m-1);
-				continue;
-				
-			} 
-		
-			
-			
-			
-			arr.push(b.setDate(i));
-		console.log(new Date(b.setDate(i)));
-			
-		} }
+		else if (6 == b.getMonth()) {
+			for (i = 1; i < 32; i++) {
 
-/*0인덱스에 31부터 시작하는 것을 1로 시작해 넣지않기로함  */
-	if(m==7)
-		{for( i=1;i<arr.length;i++){
-		
-		$('#mdp-demo').multiDatesPicker({
-			addDates : [ new Date(arr[i]) ]
+				if (lastDate == 30 && i == 31)
+					break;
+				if (i < b.getDate() && m == 5) {
+					b.setMonth(m - 1);
+					continue;
 
-		});
-		
-		$('td').addClass('ui-state-highlight');
-		$('a').addClass('ui-state-active');
+				}
+
+				if (m == 6) {
+					b.setMonth(m - 1);
+
+				}
+
+				arr.push(b.setDate(i));
+				console.log(new Date(b.setDate(i)));
+
+			}
 		}
 
+		else {
+			for (i = 0; i < 32; i++) {
 
-alert($('#altField').val());
-$('#mdpDisabled').hide();
-$('#mdpAbled').show();
+				if (lastDate == 30 && i == 31)
+					break;
+				if (i < b.getDate() && m == 5) {
+					b.setMonth(m - 1);
+					continue;
 
-	}
-	else {for( i=0;i<arr.length;i++){
-		
-		$('#mdp-demo').multiDatesPicker({
-			addDates : [ new Date(arr[i]) ]
+				}
 
-		});
-		
-		$('td').addClass('ui-state-highlight');
-		$('a').addClass('ui-state-active');
+				arr.push(b.setDate(i));
+				console.log(new Date(b.setDate(i)));
+
+			}
 		}
 
-	alert($('#altField').val());
+		/*0인덱스에 31부터 시작하는 것을 1로 시작해 넣지않기로함  */
+		if (m == 7) {
+			for (i = 1; i < arr.length; i++) {
 
-$('#mdpDisabled').hide();
-$('#mdpAbled').show();
-	}
+				$('#mdp-demo').multiDatesPicker({
+					addDates : [ new Date(arr[i]) ]
+
+				});
+
+				$('td').addClass('ui-state-highlight');
+				$('a').addClass('ui-state-active');
+			}
+
+			alert($('#altField').val());
+			$('#mdpDisabled').hide();
+			$('#mdpAbled').show();
+
+		} else {
+			for (i = 0; i < arr.length; i++) {
+
+				$('#mdp-demo').multiDatesPicker({
+					addDates : [ new Date(arr[i]) ]
+
+				});
+
+				$('td').addClass('ui-state-highlight');
+				$('a').addClass('ui-state-active');
+			}
+
+			alert($('#altField').val());
+
+			$('#mdpDisabled').hide();
+			$('#mdpAbled').show();
+		}
 	});
 </script>
 </html>
 
-    

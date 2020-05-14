@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>위치</title>
 <!-- services와 clusterer, drawing 라이브러리 불러오기 -->
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c57fda7695336028646dd43a52736a17&libraries=services"></script>
@@ -12,32 +12,17 @@
 </head>
 <body>
 	<input type="hidden" id="hostId" value="${hostId }" />
-	
-	
-	<div class="">
-		<header>
-			<div class="step1-header">
-				<div class="logo">
-					<img src="" alt="로고" />
-				</div>
-				<div class="step1-description">1단계 : 기본사항을 입력하세요</div>
-
-				<div class="step1-status-btn">
-					<button id="statusSave">저장 후 나가기</button>
-				</div>
-			</div>
-
-			<nav>
-				<a class="step1-tab" href="./roomType.jsp?hostId=" id="tabRoomType">숙소형태</a>
-				<a class="step1-tab" href="./roomCount.jsp" id="tabRoomCount">인원</a>
-				<a class="step1-tab" href="./address.jsp" id="tabAddress">위치</a> 
-				<a class="step1-tab" href="./facilities.jsp" id="tabFacilities">편의시설</a>
-			</nav>
-
-		</header>
-
-	</div>
-
+	<%@include file="../hostHeader.jsp" %>
+	<nav>
+		<a class="step-tab" href="./roomType.jsp?hostId=" id="tabRoomType">숙소형태</a>
+		<a class="step-tab" href="./roomCount.jsp" id="tabRoomCount">인원</a>
+		<a class="step-tab" href="./address.jsp" id="tabAddress">위치</a> 
+		<a class="step-tab" href="./facilities.jsp" id="tabFacilities">편의시설</a>
+	</nav>
+	<script>
+		$('#progressBar').val('60');
+		$('#tabAddress').css('background','#bbb');
+	</script>
 
 	도로명/지번 :
 	<input type="text" id="sample5_address"

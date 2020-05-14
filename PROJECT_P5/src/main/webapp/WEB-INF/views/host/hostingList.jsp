@@ -32,9 +32,14 @@ li {
 		새로운 숙소 진행을 시작해볼까요?
 		<div id="list">
 			<ul id="abc">
-				<li><input type="radio" name="hostId" value="0" /> <img
-					src="room1.jpg" alt="사진" />새로운 숙소 등록하기</li>
-				숙소 등록중
+				<li>
+					<input type="radio" name="hostId" value="0" /> 
+					<img src="room1.jpg" alt="사진" />새로운 숙소 등록하기
+				</li>
+				
+				<p>숙소 등록중</p>
+				
+				
 				<%-- <li>
 					<input type="radio" name="hostId" value="${hosting.hostId }" />
 					<img src="${hosting.coverPhotoPath}" alt="사진" /><br />
@@ -73,14 +78,15 @@ li {
 					//	alert(hostingList.length);
 					var result = '';
 					$.each(hostingList,function(i, hosting) {
-						result += '	<li><div class="efg">	'
+						result += '	<li><div class="efg" id="as">	'
+								+ ' <label for="as">'
 								+ '	<input type="radio" name="hostId" value="' + hosting.hostId + '" />	'
 								+ '	<img src="' + hosting.coverPhotoPath + '" alt="사진" class="room-img"/>	'
 								+ '	<br />'
 								+ hosting.hostName
 								+ '<br />'
 								+ hosting.roomTypeName
-								+ '	</div></li>	';
+								+ '	</label></div></li>	';
 						}); // each-END
 					$('#abc').append(result);
 				},
@@ -96,6 +102,8 @@ li {
 			}); // AJAX-END
 		});
 	</script>
+	
+	<jsp:include page="../footer.jsp"/>
 
 
 </body>

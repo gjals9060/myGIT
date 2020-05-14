@@ -13,26 +13,26 @@
 	src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 <script type="text/javascript"
 	src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script> -->
-<!-- <script type="text/javascript" src="js/header.js"></script> -->
-<script type="text/javascript" src="js/daterangepicker.js"></script>
+<script type="text/javascript" src="/p5/js/daterangepicker.js"></script>
 
 <!-- Link Swiper's CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 <link rel="stylesheet"
 	href="https://unpkg.com/swiper/css/swiper.min.css">
-<link rel="stylesheet" href="css/daterangepicker.css" />
-<link rel="stylesheet" href="css/reset.css" />
-<link rel="stylesheet" href="css/header.css" />
+<link rel="stylesheet" href="/p5/css/daterangepicker.css" />
+<link rel="stylesheet" href="/p5/css/reset.css" />
+<link rel="stylesheet" href="/p5/css/header.css" />
 
 <body>
+<div id="widthTest"></div>
 	<header>
 		<button id="headerMobileButton">
 			<i class="fas fa-bars fa-3x"></i>
 		</button>
 		<div class="title-logo-img">
-			<a href="/p5"><img src="img/p5_logo.png" id="titleLogoImg" /></a>
+			<a href="/p5"><img src="/p5/img/p5_logo.png" id="titleLogoImg" /></a>
 			<!-- 로고 이미지 들어갈 자리 -->
 		</div>
 
@@ -103,10 +103,10 @@
 			%>
 			<!-- 이름만 출력 -->
 			<!-- <a href='host/registration/roomType'>호스트 등록</a> -->
-			<button onclick='isMobileAuthentication()'>호스트 등록</button>
-			<button class="user-drop-down-btn">
+			<button class='btn' onclick='isMobileAuthentication()'>호스트 등록</button>
+			<button class="user-drop-down-btn btn">
 				<span id="userImgBlock"> <c:set var="defaultProfilePhotoPath"
-						value="img/defaultProfile.png" /> <c:choose>
+						value="/p5/img/defaultProfile.png" /> <c:choose>
 						<c:when test="${empty user.profilePhotoPath}">
 							<img id="userImg" src="${defaultProfilePhotoPath }" alt="" />
 						</c:when>
@@ -511,7 +511,7 @@
 				
 				$('#presentationTitle').css("padding-top", "120px");
 				
-				if (width_size <= 620) {
+				if (width_size <= 603) {
 					$('.title-logo-img ').css("height", "50px");
 					$('#headerMobileButton').css("display", "block");
 					$('.input-info').css("display", "none");
@@ -519,7 +519,7 @@
 					
 					$('.title-logo-img').css("display", "block");
 					$('.useradd-login-form').css("display", "none");
-				} else if (width_size <= 850) {
+				} else if (width_size <= 843) {
 					$('.title-logo-img ').css("height", "80px");
 					$('#headerMobileButton').css("display", "none");
 					$('.input-info').css("display", "block");
@@ -551,17 +551,10 @@
 				
 				$('#presentationTitle').css('padding-top','0px');
 				   
-				if (width_size <= 620) {
-	/* 
-				} else if ($(window).width() <= 850) {
-	 */
-				} else {
-				}
 			}			
 		},
 		"scroll" : function() {
 			width_size = $(window).width();
-			
 			var height = $(document).scrollTop();
 			$('#scrollId').val(height);
 
@@ -578,17 +571,19 @@
 				
 				$('#presentationTitle').css("padding-top", "120px");
 				
-				if ($('header').width() <= 620) {
+				if (width_size <= 603) {
 					$('.title-logo-img ').css("height", "50px");
 
 					$('#headerMobileButton').css("display", "block");
 
 					$('.input-info').css("display", "none");
 					$('.useradd-login-form').css("display", "none");
-				} else if ($('header').width() <= 850) {
+				} else if (width_size <= 843) {
 					$('.title-logo-img').css("display", "none");
 					$('.useradd-login-form').css("display", "none");
 				} else {
+					$('.title-logo-img').css("display", "block");
+					$('.useradd-login-form').css("display", "block");
 				}
 	 
 			} else { /// 80보다 낮은 위치라면(top)
@@ -609,14 +604,6 @@
 				
 				$('#presentationTitle').css('padding-top','0px');
 				   
-				if ($('header').width() <= 620) {
-	/* 
-				} else if ($(window).width() <= 850) {
-	 */
-				} else {					
-					$('.title-logo-img').css("display", "block");
-				$('.useradd-login-form').css("display", "block");
-				}
 			}
 		}
 	})

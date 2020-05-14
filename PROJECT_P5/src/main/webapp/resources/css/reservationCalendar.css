@@ -7,9 +7,9 @@
 
 /* Layout helpers
 ----------------------------------*/
-html{
+/* html{
 	width:1100px;
-}
+} */
 .ui-helper-hidden {
 	display: none;
 }
