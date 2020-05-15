@@ -951,7 +951,8 @@
 			success : function() {
 
 				alert("로그아웃 했다");
-				location.reload(); // 페이지 새로 고침
+			/* 	location.reload(); // 페이지 새로 고침 */
+				location.href="/p5/";
 
 			},
 			error : function() {

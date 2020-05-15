@@ -10,7 +10,7 @@
 /* 회원정보 페이지 컨테이너*/
 .user-info-update-container {
 	border: 1px solid;
-	height: 1100px;
+	height: 1200px;
 	margin: 50px 0;
 }
 
@@ -63,11 +63,23 @@
 }
 
 /*  수정하기 버튼들 (전화번호 인증하기 버튼과 인증완료 포함)*/
-#authenticationResult,
-#mobileAuthenticationResult,
 .user-info-update-value-btn {
 	position: absolute;
 	right: 20px;
+}
+
+#authenticationResult,
+#mobileAuthenticationResult {
+    position: absolute;
+    left: 150px;
+
+}
+
+#mobileAuthenticationResult {
+    color: #ed2d55;
+    background: white;
+    box-sizing: border-box;
+    border: 1px solid #ed2d55;
 }
 
 /* 취소하기 버튼들 */

@@ -1,6 +1,7 @@
 <%@page import="org.apache.velocity.runtime.directive.Include"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -277,6 +278,13 @@
 				<div class="user-info-update-value-title">계정</div>
 				<div class="user-info-update-value">${user.email }</div>
 			</div>
+			
+			<div class="user-info-update-value-block">
+				<div class="user-info-update-value-title">가입일</div>
+				<div class="user-info-update-value">
+					${user.registrationDate }
+				</div>
+			</div>
 
 			<!-- 실명 -->
 			<div class="user-info-update-value-block">
@@ -314,12 +322,18 @@
 			<div class="user-info-update-value-block">
 				<div class="user-info-update-value-title">전화번호</div>
 				<div class="user-info-update-value">
-					<input class="user-info-update-value-input"
-						id="userInfoUpdateValuePhone" type="text"
+					<input class="user-info-update-value-input" id="userInfoUpdateValuePhone" type="text"
 						value=${user.mobilePhone } disabled /> 
-						<input type="hidden" name="mobileAuthentication" value="${user.mobileAuthentication }" />
+					<input type="hidden" name="mobileAuthentication" value="${user.mobileAuthentication }" />
+					
 					<span id="authenticationResult"></span>
 					<button id="mobileAuthenticationResult" class="btnTheme"></button>
+					
+					<button class="user-info-update-value-cancel btnTheme" 
+						id="userInfoPhoneCancelBtn">취소</button>
+					<button class="user-info-update-value-btn btnTheme"
+						id="userInfoUpdateValuePhoneBtn">수정하기</button>
+					
 				</div>
 			</div>
 
@@ -402,9 +416,6 @@
 	/////////////////// 이름 수정하기 /////////////////////
 	var cancleName=$('#userInfoNameCancelBtn');
 	
-
-	
-	
 	var firstNameInput = $("#userInfoUpdateValueFirstName");
 	var lastNameInput = $("#userInfoUpdateValueLastName");
 	
@@ -445,7 +456,7 @@
 		} ////// if end
 		
 	}); 
-	/////이름 수정하기 끝 
+	
 	
 	////////////////// 생년월일 /////////////////
 	var birthDateInput = $("#userInfoUpdateValueBirthDate"); // input
@@ -478,6 +489,53 @@
 			cancelDate.css("display","none");
 		}
 	});
+	
+	
+	/////////////전화번호 변경//////////
+	var phoneInput = $('#userInfoUpdateValuePhone');
+	var phoneBtn = $('#userInfoUpdateValuePhoneBtn');
+	var cancelPhone =$('#userInfoPhoneCancelBtn');
+	var mobilePhone = phoneInput.val();
+	
+	var mobileAuthenticationResult = $('#mobileAuthenticationResult');
+	var authenticationResult = $('#authenticationResult');
+	
+	
+	phoneBtn.on('click',function(){
+		
+		if(phoneInput.is(':disabled')){
+			phoneInput.attr('disabled',false);
+			cancelPhone.css("display","inline");
+			
+			mobileAuthenticationResult.css('display','none');
+			authenticationResult.css('display','none');
+			
+		}else {
+			
+			$.ajax({
+				url:"",
+				type: "POST",
+				data: "mobilePhone:"+mobilePhone,
+				success:function(){
+					alert("확인");
+				},
+				error:function(){
+					alert("통신실패");
+				}
+				
+			});
+			
+			phoneInput.attr('disabled',true);
+			cancelPhone.css("display","none");
+			mobileAuthenticationResult.css('display','inline');
+			authenticationResult.css('display','inline');
+		}
+		
+	});
+	
+	
+	
+	
 	
 	
 	////////////// 모든 취소 버튼 ///////////////	
