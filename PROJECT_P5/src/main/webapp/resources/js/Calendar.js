@@ -1,3 +1,260 @@
+var hostId = $('#hostId').val();
+
+
+	// 차단일 설정
+function block(date){
+	var arr = date.split(".");
+	params = {
+		hostId : hostId,
+		year : arr[0],
+		month : arr[1],
+		date : arr[2]
+	};
+	
+	$.ajax({
+		type : "POST",
+		url : "./block",
+		data : params,
+//		async : false,
+		success : function(result) {
+			if(result){
+				alert("차단일 설정 성공!!!");
+				refresh();
+			} else{
+				alert("차단일 설정 실패");
+			}
+		},
+		error : function() {
+			alert("통신 실패..");
+		}
+	}); // AJAX-END
+} // block-END
+
+
+	// 차단일 해제
+function unblock(date){
+	var arr = date.split(".");
+	params = {
+		hostId : hostId,
+		year : arr[0],
+		month : arr[1],
+		date : arr[2]
+	};
+	
+	$.ajax({
+		type : "POST",
+		url : "./unblock",
+		data : params,
+//		async : false,
+		success : function(result) {
+			if(result){
+				alert("차단일 해제 성공!!!");
+				refresh();
+			} else{
+				alert("차단일 해제 실패");
+			}
+		},
+		error : function() {
+			alert("통신 실패..");
+		}
+	}); // AJAX-END
+} // unblock-END
+
+
+
+//$('td').addClass('ui-state-highlight');
+//		$('a').addClass('ui-state-active');
+	
+	
+function refresh(){
+	var m = $('.ui-datepicker-month').text();
+	var month = convertMonth(m); // 처음에는 index를 받음
+	
+	// 화면의 차단일 수
+	var count = $('td[data-month=' + month + '][class*="ui-state-highlight"]').length;
+	
+  	if(count != 0){ // 차단된 게 있으면
+		$('#manageMonth').text("전체 해제");
+	} else{ // 없으면
+		$('#manageMonth').text("전체 차단");
+	}
+  	
+  	$.ajax({
+		type : "POST",
+		url : "./getBlockingList",
+		data : "hostId=" + hostId,
+//		async : false,
+		success : function(blockingList) {
+			if(!blockingList.length){
+				alert("설정한 차단일이 없습니다.");
+			} else{
+				alert(blockingList.length);
+				
+			}
+		},
+		error : function() {
+			alert("통신 실패..");
+		}
+	}); // AJAX-END
+} // refresh-END
+
+
+	// 전체(월) 차단
+function blockMonth(){
+	var year = $('.ui-datepicker-year').text();
+	var m = $('.ui-datepicker-month').text();
+	var month = convertMonth(m); // 처음에는 index를 받음
+	
+	var arr = new Array();
+	$('td[data-month=' + month + ']').each(function(){
+		arr.push($(this).find('a').text());
+	});
+	var date = arr[0];
+	for(i = 1; i < arr.length; i++){
+		date += "," + arr[i];
+	}
+	
+	month++;
+	params = {
+		hostId : hostId,
+		year : year,
+		month : month,
+		date : date
+	};
+	
+	alert(JSON.stringify(params));
+	$.ajax({
+		type : "POST",
+		url : "./blockMonth",
+		data : params,
+//		async : false,
+		success : function(result) {
+			if (result) {
+				
+				alert("전체 차단 성공!");
+			//	refresh();
+				
+			} else{
+				alert("전체 차단 실패....");				
+			}
+		},
+		error : function() {
+			alert("통신 실패..");
+		}
+	}); // AJAX-END
+} // blockMonth-END
+
+	// 전체(월) 해제
+function unblockMonth(){
+	var year = $('.ui-datepicker-year').text();
+	var m = $('.ui-datepicker-month').text();
+	var month = convertMonth(m); // 처음에는 index를 받음
+	month++; // 실제 해당 월
+	
+	params = {
+		hostId : hostId,
+		year : year,
+		month : month
+	};
+	
+	alert(JSON.stringify(params));
+	$.ajax({
+		type : "POST",
+		url : "./unblockMonth",
+		data : params,
+//		async : false,
+		success : function(result) {
+			if (result) {
+				
+				alert("전체 해제 성공!");
+			//	refresh();
+				
+			} else{
+				alert("전체 해제 실패....");				
+			}
+		},
+		error : function() {
+			alert("통신 실패..");
+		}
+	}); // AJAX-END
+} // unblockMonth-END
+
+function manageMonth(){
+	var doWhat = $('#manageMonth').text();
+	
+	if(doWhat == "전체 해제"){
+		unblockMonth();
+	}
+	else if(doWhat == "전체 차단"){
+		blockMonth();
+	}
+} // manageMonth-END
+
+// 해당 월의 index를 반환
+function convertMonth(m){
+	switch (m) {
+	case 'January':
+		return 0;
+	case 'February':
+		return 1;
+	case 'March':
+		return 2;
+	case 'April':
+		return 3;
+	case 'May':
+		return 4;
+	case 'June':
+		return 5;
+	case 'July':
+		return 6;
+	case 'Agust':
+		return 7;
+	case 'September':
+		return 8;
+	case 'Ocotber':
+		return 9;
+	case 'November':
+		return 10;
+	case 'December':
+		return 11;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /**
  * 
  */
@@ -482,18 +739,24 @@
 							if (methods.gotDate.call(this, date) === false) {
 								// adds
 								// dates
-								methods.addDates.call(this, date, type);	
-								alert("입력"+date);
-								$('#mdpDisabled').hide();
-								$('#mdpAbled').show();
+								methods.addDates.call(this, date, type);
+								block(date);
+								
+								
+								//	alert("입력"+date);
+							//	$('#mdpDisabled').hide();
+							//	$('#mdpAbled').show();
 								
 							}
 							else{
 								// removes dates
 								methods.removeDates.call(this, date, type);
-								alert("삭제"+date);
-								$('#mdpDisabled').show();
-								$('#mdpAbled').hide();
+								unblock(date);
+								
+								
+								//	alert("삭제"+date);
+							//	$('#mdpDisabled').show();
+							//	$('#mdpAbled').hide();
 							}
 						
 							break;

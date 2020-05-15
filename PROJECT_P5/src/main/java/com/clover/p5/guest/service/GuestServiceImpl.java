@@ -14,9 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.clover.p5.guest.dto.BookingEntity;
 import com.clover.p5.guest.dto.HostInfoDTO;
 import com.clover.p5.guest.dto.HostPhotoDTO;
-import com.clover.p5.guest.dto.BookingEntity;
 import com.clover.p5.guest.dto.SearchHostDTO;
 import com.clover.p5.guest.dto.SearchInputDTO;
 import com.clover.p5.guest.mapper.GuestMapper;

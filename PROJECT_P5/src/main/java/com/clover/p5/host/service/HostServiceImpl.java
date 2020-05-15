@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.clover.p5.host.dto.Blocking;
+import com.clover.p5.host.dto.BlockingDTO;
 import com.clover.p5.host.dto.Host;
 import com.clover.p5.host.dto.HostDTO;
 import com.clover.p5.host.dto.HostPhoto;
@@ -382,26 +384,74 @@ public class HostServiceImpl implements HostService {
 		System.out.println(hostId + "번 호스트 삭제 실패했습니다..");
 		return false;
 	}
+
+
+
 	
-	/*@Override
-	public boolean insertBlocking(int hostId, String blockingDate) {
-		// 날짜를 배열에 담는다
-		String[] arrBlockingDate = blockingDate.split(",");
-		
-		// DB에 입력
-		int result = hostMapper.insertBlocking(hostId, arrBlockingDate);
-		
-		// 입력에 문제가 없으면
-		if(arrBlockingDate.length == result) {
-			System.out.println(
-				hostId + "번 호스트 - " + result + "건의 예약 차단일을 입력했습니다."
-			);
+	
+	@Override
+	public List<Blocking> getBlokcingList(int hostId) {
+		List<Blocking> list = hostMapper.selectBlockingList(hostId);
+		System.out.println(hostId + "번 호스트 예약 차단일 - " + list.size() + "건");
+		return list;
+	}
+
+	@Override
+	public boolean block(BlockingDTO dto) {
+		if(hostMapper.insertBlocking(dto) == 1) {
+			System.out.println("예약 차단일 설정 성공");
 			return true;
 		}
-		
-		System.out.println("예약 차단일 저장 중에 오류 발생");
+		System.out.println("예약 차단일 설정 실패");
 		return false;
-	}*/
+	}
+
+	@Override
+	public boolean unblock(BlockingDTO dto) {
+		if(hostMapper.deleteBlocking(dto) == 1) {
+			System.out.println("예약 차단일 설정 해제 성공");
+			return true;
+		}
+		System.out.println("예약 차단일 설정 해제 실패");
+		return false;
+	}
+
+	@Override
+	public boolean blockMonth(BlockingDTO dto) {
+		String[] arrDate = dto.getDate().split(",");
+		int result = hostMapper.insertBlockingMonth(dto.getHostId(),
+													dto.getYear(),
+													dto.getMonth(),
+													arrDate);
+		if(result == arrDate.length) {
+			System.out.println(dto.getHostId() + "번 호스트 "
+								+ dto.getMonth() + "월 전체 차단 결과 - "
+								+ result + "건의 예약 차단일 설정을 완료했습니다.");
+			return true;
+		}
+		System.out.println(dto.getHostId() + "번 호스트 "
+							+ dto.getMonth() + "월 전체 차단 결과 - 실패..");
+		return false;
+	}
+
+	@Override
+	public boolean unblockMonth(BlockingDTO dto) {
+		String month = dto.getMonth();
+		if(month.length() == 1) {
+			dto.setMonth("0" + month);
+		}
+		int result = hostMapper.deleteBlockingMonth(dto);
+		if(result > 0) {
+			System.out.println(dto.getHostId() + "번 호스트 "
+					+ dto.getMonth() + "월 전체 차단 해제 결과 - "
+					+ result + "건의 예약 차단일 설정을 해제했습니다.");
+			return true;
+		}
+		System.out.println(dto.getHostId() + "번 호스트 "
+							+ dto.getMonth() + "월 전체 차단 해제 결과 - 실패..");
+		return false;
+	}
+	
 
 
 

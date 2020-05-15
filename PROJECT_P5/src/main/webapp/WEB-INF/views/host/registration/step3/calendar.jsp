@@ -8,8 +8,8 @@
 <!--[if IE]><link rel="shortcut icon" href="favicon.ico" /><![endif]-->
 <title>예약 차단 설정</title>
 <script src="/p5/js/jquery-3.4.1.js"></script>
-<script src="/p5/js/jquery-ui.min.js"></script>
-<script src="/p5/js/Calendar.js"></script>
+<%-- <script src="/p5/js/jquery-ui.min.js"></script>
+<script src="/p5/js/Calendar.js?v=<%=System.currentTimeMillis()%>"></script> --%>
 <link rel="stylesheet" href="/p5/css/reservationCalendar.css" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- <link rel="stylesheet" href="https://cdn.rawgit.com/dubrox/Multiple-Dates-Picker-for-jQuery-UI/master/jquery-ui.multidatespicker.css" /> -->
@@ -41,41 +41,59 @@
 	<!-- <form action="price" method="post"> -->
 	<div id="mdp-demo"></div>
 	<input type="text" id="altField" value="" name="blockingDate" />
-	<input type="button" value="전체해제" id="mdpAbled" class="abled" />
-	<input type="button" value="전체차단" id="mdpDisabled" class="disabled" />
+<!-- 	<input type="button" value="전체해제" id="mdpAbled" class="disabled" />
+	<input type="button" value="전체차단" id="mdpDisabled" class="disabled" /> -->
+	<button id="manageMonth" onclick="manageMonth();"></button>
 
 	<a href="./stayDate?hostId=${hostId }">이전</a>
 	<a href="./price?hostId=${hostId }">다음</a>
 	<!-- <input type="submit" value="다음" /> -->
+	
+
+<script src="/p5/js/jquery-ui.min.js"></script>
+<script src="/p5/js/Calendar.js?v=<%=System.currentTimeMillis()%>"></script>
 </body>
 <script>
-	$(window).bind("pageshow", function(event) {
-		$.ajax({
-			type : "POST",
-			url : "/p5/ajax/isIdentified",
-			data : "hostId=" + $('#hostId').val(),
-			success : function(result) {
-				if (!result) {
-					alert("접근 권한이 없는 페이지입니다.");
-					location.replace("/p5"); // 홈으로 이동
-				}
-			},
-			error : function() {
-				alert("접근 권한 확인에 실패..");
+$('#mdp-demo').multiDatesPicker({
+	dateFormat : "yy.mm.dd",
+	altField : '#altField',
+	minDate : 0, // today
+	maxDate : 60 // +30 days from today
+});
+
+
+$(window).bind("pageshow", function(event) {
+	$.ajax({
+		type : "POST",
+		url : "/p5/ajax/isIdentified",
+		data : "hostId=" + hostId,
+		success : function(result) {
+			if (!result) {
+				alert("접근 권한이 없는 페이지입니다.");
+				location.replace("/p5"); // 홈으로 이동
+			} else{
+				
+				
+				refresh(); // 화면 갱신
+				
+				
 			}
-		}); // AJAX-END
-	});
-	var month;
-	var year;
-	$('#mdp-demo').multiDatesPicker({
-		dateFormat : "yy.mm.dd",
-		altField : '#altField',
-		minDate : 0, // today
-		maxDate : 60, // +30 days from today
-	});
-	/*전체해제  */
-	$('#mdpAbled').click(function() {
-		month = $('.ui-datepicker-title>span.ui-datepicker-month').text();
+		},
+		error : function() {
+			alert("접근 권한 확인에 실패..");
+		}
+	}); // AJAX-END
+});
+
+
+
+
+	
+	
+	
+	
+	
+		/* month = $('.ui-datepicker-title>span.ui-datepicker-month').text();
 		year = $('.ui-datepicker-title>span.ui-datepicker-year').text();
 		var m;
 		switch (month) {
@@ -122,14 +140,17 @@
 		$('td').removeClass('ui-state-highlight');
 		$('a').removeClass('ui-state-active');
 		/* 	$('a').addClass('ui-state-default');  */
-		$('td').addClass('');
-		$('#mdpDisabled').show();
-		$('#mdpAbled').hide();
-	});
+	//	$('td').addClass('');
+	/* 	$('#mdpDisabled').show();
+		$('#mdpAbled').hide(); */
+//	}); */
 	/*전체차단  */
-	$('#mdpDisabled').click(function() {
-		month = $('.ui-datepicker-title>span.ui-datepicker-month').text();
-		year = $('.ui-datepicker-title>span.ui-datepicker-year').text();
+	
+	
+		 
+	/*	year = $('.ui-datepicker-year').text();
+		m = $('.ui-datepicker-month').text();
+		
 		var minDate = new Date();
 
 		var b = new Date();
@@ -181,7 +202,8 @@
 		maxDate.setMonth(minDate.getMonth() + 2);
 		var lastDate = (new Date(2020, m, 0)).getDate();
 
-		alert(lastDate);
+		
+		alert(lastDate); */
 		/* for (i = 0; i < 31 - a.getDate(); i++) {
 			if(31 - a.getDate()<0){
 				break;
@@ -198,8 +220,9 @@
 			} 
 			console.log(arr[i]);
 		} */
+		
 		/*7월달  */
-		if (7 == b.getMonth()) {
+	/* 	if (7 == b.getMonth()) {
 			for (i = 0; i < maxDate.getDate(); i++) {
 
 				if (lastDate == 30 && i == 31)
@@ -250,7 +273,7 @@
 		}
 
 		/*0인덱스에 31부터 시작하는 것을 1로 시작해 넣지않기로함  */
-		if (m == 7) {
+		/* if (m == 7) {
 			for (i = 1; i < arr.length; i++) {
 
 				$('#mdp-demo').multiDatesPicker({
@@ -283,7 +306,17 @@
 			$('#mdpDisabled').hide();
 			$('#mdpAbled').show();
 		}
-	});
+	}); */
+	
+	
+
+	
+
+	
+	
+	
+	
 </script>
+
 </html>
 

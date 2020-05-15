@@ -296,23 +296,82 @@
 
 
 
+
+
+
+	<!-- 예약 차단일 목록 검색 -->
+	<select id="selectBlockingList" resultType="Blocking">
+		SELECT *
+		FROM blocking
+		WHERE host_id = #{hostId}
+	</select>
+	
+	<!-- 예약 차단일 설정 -->
+	<insert id="insertBlocking" parameterType="BlockingDTO">
+		INSERT INTO blocking
+		(
+			host_id,
+			check_in_date,
+			who
+							)
+		VALUES
+		(
+			#{hostId},
+			TO_DATE('${year}.${month}.${date}', 'YYYY.MM.DD'),
+			'H'
+									)
+	</insert>
+	
+	<!-- 예약 차단일 설정 해제 -->
+	<delete id="deleteBlocking" parameterType="BlockingDTO">
+		DELETE
+		FROM blocking
+		WHERE host_id = #{hostId}
+			AND TO_CHAR(check_in_date, 'YYYYMMDD') = '${year}${month}${date}'
+	</delete>
+	
 	<!-- foreach문에서는 trigger로! .nextval이 안먹힌다 -->
-	<!-- 예약 차단일 등록 -->
-	<insert id="insertBlocking">
-		<foreach collection="arrBlockingDate" item="blockingDate"
+	<!-- 전체(월) 예약 차단 -->
+	<insert id="insertBlockingMonth">
+		<foreach collection="arrDate" item="date"
 		 separator=" " open="INSERT ALL " close="SELECT * FROM DUAL">
 			INTO blocking
 			(	
 				host_id,
-				blocking_date
+				check_in_date,
+				who
 								)
 			VALUES
 			(	
 				#{hostId},
-				TO_DATE(#{blockingDate}, 'MM/DD/YYYY')
-														)
+				TO_DATE('${year}.${month}.${date}', 'YYYY.MM.DD'),
+				'H'
+										)
 		</foreach>
 	</insert>
+	
+	<!-- 전체(월) 예약 차단 해제 -->
+	<delete id="deleteBlockingMonth" parameterType="BlockingDTO">
+		DELETE
+		FROM blocking
+		WHERE host_id = #{hostId}
+			AND TO_CHAR(check_in_date, 'YYYYMM') = '${year}${month}'
+	</delete>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
