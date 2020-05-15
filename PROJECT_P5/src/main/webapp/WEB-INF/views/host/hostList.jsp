@@ -40,7 +40,7 @@ td {
 }
 
 .host-room {
-	width: 40%;
+	width: 30%;
 	text-align: left;
 	vertical-align: middle;
 }
@@ -59,6 +59,10 @@ td {
 
 .address {
 	width: 20%
+}
+
+.btn {
+	width: 10%;
 }
 
 .host-room-div {
@@ -81,10 +85,10 @@ span {
 </head>
 <body>
 
-	<%-- <%@include file="../header.jsp" %> --%>
+	<%@include file="../header.jsp" %>
 
 	<div id="wrap">
-		<h2>등록한 숙소 몇 개</h2>
+		<h2>등록한 숙소 ${host.name } 개</h2>
 
 		<table class="host-list-room-table">
 			<tr class="table-tr-th">
@@ -95,44 +99,9 @@ span {
 				<th class="bed-count">침대</th>
 				<th class="bed-count">욕실</th>
 				<th class="address">위치</th>
-			<!-- 	<th class="btn">
-					<button>수정</button>
-					<button>삭제</button>
-				</th> -->
+				<th class="btn">설정</th>
 			</tr>
 
-			<!-- <tr class="table-tr" onclick="">
-				<td>1010</td>
-				<td><div class="host-room-div">
-						<img class="host-img" src="../img/어린왕자.jpg" alt="" /> <span>어린왕자</span>
-					</div></td>
-				<td>3</td>
-				<td>3</td>
-				<td>2</td>
-				<td>서울특별시 종로구</td>
-			</tr>
-
-			<tr class="table-tr" onclick="">
-				<td>1010</td>
-				<td><div class="host-room-div">
-						<img class="host-img" src="../img/어린왕자.jpg" alt="" /> <span>어린왕자</span>
-					</div></td>
-				<td>3</td>
-				<td>3</td>
-				<td>2</td>
-				<td>서울특별시 종로구</td>
-			</tr>
-
-			<tr class="table-tr" onclick="">
-				<td>1010</td>
-				<td><div class="host-room-div">
-						<img class="host-img" src="../img/어린왕자.jpg" alt="" /> <span>어린왕자</span>
-					</div></td>
-				<td>3</td>
-				<td>3</td>
-				<td>2</td>
-				<td>서울특별시 종로구</td>
-			</tr> -->
 
 
 		</table>
@@ -152,7 +121,7 @@ function refresh(){
 		success : function(hostList) {
 		//		alert(hostList.length); // 몇 개 받았나
 				console.log(JSON.stringify(hostList)); // 받은 내용 확인
-			
+
 			var resultList = '';
 		 	$.each(hostList,function(i, host) { // 그 외 host.capacity, host.creationDate ...
 		 		var hostName;
