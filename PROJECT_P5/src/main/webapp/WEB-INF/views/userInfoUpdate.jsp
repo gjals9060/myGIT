@@ -1,6 +1,7 @@
 <%@page import="org.apache.velocity.runtime.directive.Include"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -279,10 +280,12 @@
 				<div class="user-info-update-value">${user.email }</div>
 			</div>
 			
+			
 			<div class="user-info-update-value-block">
 				<div class="user-info-update-value-title">가입일</div>
 				<div class="user-info-update-value">
-					${user.registrationDate }
+					<fmt:parseDate var="date1" value="${user.registrationDate }" pattern="yyyy-MM-dd"/>
+					<fmt:formatDate value="${date1 }" pattern="yyyy.MM.dd"/>
 				</div>
 			</div>
 
