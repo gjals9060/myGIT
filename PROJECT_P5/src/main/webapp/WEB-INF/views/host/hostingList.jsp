@@ -87,19 +87,25 @@ function refresh(){
 		//			async : false,
 		success : function(hostingList) {
 			//	alert(hostingList.length);
-			var result = '';
+			var result = ''; var hostName;
 			$.each(hostingList,function(i, hosting) {
+				if(!hosting.hostName){
+					hostName = "";
+				} else{
+					hostName = hosting.hostName;
+				}
+				hostName = 
 				result += '	<li class="hosting"><div class="efg" id="as">	'
 						+ ' <label for="as">'
 						+ '	<input type="radio" name="hostId" value="' + hosting.hostId + '" />	'
 						+ '	<img src="' + hosting.coverPhotoPath + '" alt="사진" class="room-img"/>	'
 						+ '	<br />'
-						+ hosting.hostName
+						+ hostName
 						+ '<br />'
 						+ hosting.roomTypeName
 						+ '	</label></div></li>	';
 				}); // each-END
-			$('.hostng').remove();
+			$('.hosting').remove();
 			$('#abc').append(result);
 		},
 		

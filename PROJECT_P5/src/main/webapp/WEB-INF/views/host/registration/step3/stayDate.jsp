@@ -18,8 +18,8 @@
 	<%@include file="./hostHeaderStep3.jsp"%>
 	
 	<script>
-		$('.hosting-step').empty();
-		$('.hosting-step').text("2단계:상세정보를 입력하세요");
+	//	$('.hosting-step').empty(); // 없어도 됨
+	//	$('.hosting-step').text("3단계 : 최소, 최대 숙박일을 설정하세요");
 		$('nav').css('grid-template-columns' ,'repeat(3, 1fr)');
 		$('#progressBar').val('10');
 		

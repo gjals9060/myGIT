@@ -16,8 +16,8 @@
 <body>
 	<%@include file="./hostHeaderStep2.jsp" %>
 	<script>
-		$('.hosting-step').empty();
-		$('.hosting-step').text("2단계:상세정보를 입력하세요");
+	//	$('.hosting-step').empty();
+	//	$('.hosting-step').text("2단계:상세정보를 입력하세요");
 		$('nav').css('grid-template-columns' ,'repeat(3, 1fr)');
 		$('#progressBar').val('10');
 		

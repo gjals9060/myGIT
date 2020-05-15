@@ -94,7 +94,7 @@ nav {
 <body>
 	<header>
 		<a id="logoImg" href="../hostingStatus?hostId=${hostId}"><img src="/p5/img/p5Host.png" alt="안보임" /></a>
-		<div class="hosting-step">1단계:기본사항을 입력하세요</div>
+		<div class="hosting-step">1단계 : 기본사항을 입력하세요</div>
 		
 		<c:set var="path" value="${requestScope['javax.servlet.forward.servlet_path']}" />
 		<c:set var="isRegistration" value="${fn:startsWith(path, '/host/registration/')}" />
