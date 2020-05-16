@@ -4,6 +4,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="/p5/css/address.css" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <%--panTo 사용시 오류, 이전 위치 기억등 잡아줘야할 내용이 많아져서 그냥 보류--%>
 <title>위치</title>
 <!-- services와 clusterer, drawing 라이브러리 불러오기 -->
@@ -19,11 +21,20 @@
 		$('#progressBar').val('60');
 		$('#tabAddress').css('background','#bbb');
 	</script>
-
+<div id="wrap">
+	<div id="container">
+<h1 class="location">숙소의 위치를 입력해주세요</h1> <div class="pin"><h1>핀이 놓인 위치가 정확한가요?</h1>필요한 경우 핀이 정확한 위치에 자리하도록 조정할 수 있어요. 도착 시 숙소를 찾을 수 있도록 예약이 확정된 게스트만 핀을 볼 수 있습니다.</div>
 	도로명/지번 :
 	<input type="text" id="sample5_address"
-		onclick="sample5_execDaumPostcode()" placeholder="주소 검색하기" readonly>
+		onclick="sample5_execDaumPostcode()" placeholder="주소 검색하기" readonly><br>
 	<!-- <input type="button" onclick="sample5_execDaumPostcode()" value="주소 검색"> -->
+	<!--  <form action="facilities" method="post" name="formAddress"> -->
+	<input type="text" name="address" readonly="readonly" id="checkAddress" />
+	<input type="hidden" name="latitude" readonly="readonly" id="lat" />
+	<input type="hidden" name="longitude" readonly="readonly" id="lon"/>
+	<!-- </form> -->
+
+	<div id="addressInfo"></div>
 	<br>
 	<!-- <div id="map" style="width: 300px; height: 300px; margin-top: 10px; display: none"> -->
 	<div id="map" style="width: 300px; height: 300px; margin-top: 10px;">
@@ -43,21 +54,20 @@
 	<div id="result"></div>
 
 
-	<!--  <form action="facilities" method="post" name="formAddress"> -->
-	<input type="text" name="address" readonly="readonly" />
-	<input type="text" name="latitude" readonly="readonly" />
-	<input type="text" name="longitude" readonly="readonly" />
-	<!-- </form> -->
-
-	<div id="addressInfo"></div>
+	
 
 
 	<!--임시 이동  -->
-	<a class="registration" href="./roomCount">이전</a>
-	<a class="registration" href="./facilities">다음</a>
+	<a class="registration" href="./roomCount"><span class="previous">이전</span></a>
+	<a class="registration" onclick="check()"><span class="next">다음</span></a>
 	<a class="modification" href="./roomCount?hostId=${hostId }">이전</a>
 	<a class="modification" href="./facilities?hostId=${hostId }">다음</a>
 	<!-- <button id="next" onclick="inputAddress();">다음</button> -->
+	 </div>
+  <div id="left">
+  
+  </div>
+  </div>
 </body>
 
 
@@ -489,6 +499,18 @@
 
 	}	// end - savingAddress()
 
+	function check(){
+		var la=$('#lat').val();
+		var lo=$('#lon').val();
+		var address=$('#checkAddress').val();
+if(!la||!lo||!address){
+	alert("주소입력하세요");
+	return;
+}
+else{
+	location.href="./facilities ";
+	}
+	}
 	
 	
 </script>

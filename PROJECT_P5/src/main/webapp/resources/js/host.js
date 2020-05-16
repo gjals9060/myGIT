@@ -246,11 +246,11 @@ if(urlInfo == '/p5/host/registration/facilities' && !host.address && !host.hostT
 	location.replace("../hostingList");
 	return;
 }
-if(urlInfo == '/p5/host/registration/facilities' && !host.address){
+/*if(urlInfo == '/p5/host/registration/facilities' && !host.address){
 	alert("주소 입력 완료하고 와라~");
 	location.replace("address");
 	return;
-}
+}*/
 if(urlInfo.indexOf('/p5/host/registration/name') !== -1 && !!host.name){
 	alert("2단계 등록 마쳤는데 왜 뒤루 와~");
 	location.replace("../hostingStatus?hostId=" + $('#hostId').val());
