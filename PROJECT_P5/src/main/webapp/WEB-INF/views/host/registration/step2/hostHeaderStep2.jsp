@@ -145,8 +145,8 @@ nav {
 	</header>
 	
 
-
-<script src="/p5/js/jquery-3.4.1.js"></script>
+<!-- 
+<script src="/p5/js/jquery-3.4.1.js"></script> -->
 
 </body>
 </html>
