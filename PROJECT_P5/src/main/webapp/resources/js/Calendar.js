@@ -3,22 +3,18 @@ var hostId = $('#hostId').val();
 
 	// 차단일 설정
 function block(date){
-	var arr = date.split(".");
-	params = {
-		hostId : hostId,
-		year : arr[0],
-		month : arr[1],
-		date : arr[2]
-	};
-	
+params = {
+	hostId : hostId,
+	date : date
+};
 	$.ajax({
 		type : "POST",
 		url : "./block",
 		data : params,
-//		async : false,
+		async : false,
 		success : function(result) {
 			if(result){
-				alert("차단일 설정 성공!!!");
+				alert("설정했어요~");
 				refresh();
 			} else{
 				alert("차단일 설정 실패");
@@ -33,22 +29,18 @@ function block(date){
 
 	// 차단일 해제
 function unblock(date){
-	var arr = date.split(".");
-	params = {
-		hostId : hostId,
-		year : arr[0],
-		month : arr[1],
-		date : arr[2]
-	};
-	
+params = {
+	hostId : hostId,
+	date : date
+};
 	$.ajax({
 		type : "POST",
 		url : "./unblock",
 		data : params,
-//		async : false,
+		async : false,
 		success : function(result) {
 			if(result){
-				alert("차단일 해제 성공!!!");
+				alert("해제했어요!!");
 				refresh();
 			} else{
 				alert("차단일 해제 실패");
@@ -62,41 +54,76 @@ function unblock(date){
 
 
 
-//$('td').addClass('ui-state-highlight');
-//		$('a').addClass('ui-state-active');
-	
-	
 function refresh(){
-	var m = $('.ui-datepicker-month').text();
-	var month = convertMonth(m); // 처음에는 index를 받음
-	
-	// 화면의 차단일 수
-	var count = $('td[data-month=' + month + '][class*="ui-state-highlight"]').length;
-	
-  	if(count != 0){ // 차단된 게 있으면
-		$('#manageMonth').text("전체 해제");
-	} else{ // 없으면
-		$('#manageMonth').text("전체 차단");
-	}
-  	
   	$.ajax({
 		type : "POST",
 		url : "./getBlockingList",
 		data : "hostId=" + hostId,
-//		async : false,
+		async : false,
 		success : function(blockingList) {
+			
 			if(!blockingList.length){
-				alert("설정한 차단일이 없습니다.");
+			//	alert("차단일(예약 완료 포함)이 없습니다.");
+				$('#mdp-demo').multiDatesPicker('resetDates', 'picked'); // 초기화
 			} else{
-				alert(blockingList.length);
+				var arrHostBlocking = new Array();
+				var arrGuestBlocking = new Array();
+				$.each(blockingList, function(i, blocking){
+					if(blocking.who === 'H'){
+						arrHostBlocking.push(blocking.checkInDate);
+					} else{
+						arrGuestBlocking.push(blocking.checkInDate);
+					}
+				}); // each-END
 				
-			}
-		},
+				
+				// 동작을 수행하는 페이지
+				var activePage = convertMonth($('.ui-datepicker-month').text());
+				
+				
+				$('#mdp-demo').multiDatesPicker('resetDates', 'picked'); // 초기화
+				if(!!arrHostBlocking.length){
+					$('#mdp-demo').multiDatesPicker({
+						addDates: arrHostBlocking // 호스트 차단일 적용
+					}); // 페이지 초기화 일어남
+				}
+				
+			
+				// 화면 갱신 후 초기(첫) 페이지
+				var defaultPage = convertMonth($('.ui-datepicker-month').text());
+				// 화면 갱신 후에 이동할 페이지 수
+				var nextCount = activePage*1 - defaultPage*1;
+				
+				if(!!nextCount){
+					alert(nextCount + "페이지 이동~");
+					for(i = 0; i < nextCount; i++){ // 이동할 수만큼 페이지 이동
+						$('a[data-handler=next]').trigger('click');
+					}
+				}
+				
+			} // else-END
+			
+		}, // success-END
 		error : function() {
 			alert("통신 실패..");
 		}
 	}); // AJAX-END
 } // refresh-END
+
+
+function manageMonth(){
+	var m = $('.ui-datepicker-month').text();
+	var month = convertMonth(m); // 처음에는 index를 받음
+	
+	// 화면의 차단일 수
+	var count = $('td[data-month=' + month + '][class*="ui-state-highlight"]').length;
+	alert("화면의 차단일 수 : " + count);
+  	if(!count){ // 차단된 게 없으면
+  		blockMonth(); // 전체 차단
+	} else{ // 차단된 게 있으면
+		unblockMonth();
+	}
+} // manageMonth-END
 
 
 	// 전체(월) 차단
@@ -122,18 +149,16 @@ function blockMonth(){
 		date : date
 	};
 	
-	alert(JSON.stringify(params));
+//	alert(JSON.stringify(params));
 	$.ajax({
 		type : "POST",
 		url : "./blockMonth",
 		data : params,
-//		async : false,
+		async : false,
 		success : function(result) {
 			if (result) {
-				
 				alert("전체 차단 성공!");
-			//	refresh();
-				
+				refresh();
 			} else{
 				alert("전체 차단 실패....");				
 			}
@@ -157,18 +182,15 @@ function unblockMonth(){
 		month : month
 	};
 	
-	alert(JSON.stringify(params));
 	$.ajax({
 		type : "POST",
 		url : "./unblockMonth",
 		data : params,
-//		async : false,
+		async : false,
 		success : function(result) {
 			if (result) {
-				
 				alert("전체 해제 성공!");
-			//	refresh();
-				
+				refresh();
 			} else{
 				alert("전체 해제 실패....");				
 			}
@@ -179,16 +201,6 @@ function unblockMonth(){
 	}); // AJAX-END
 } // unblockMonth-END
 
-function manageMonth(){
-	var doWhat = $('#manageMonth').text();
-	
-	if(doWhat == "전체 해제"){
-		unblockMonth();
-	}
-	else if(doWhat == "전체 차단"){
-		blockMonth();
-	}
-} // manageMonth-END
 
 // 해당 월의 index를 반환
 function convertMonth(m){
@@ -739,22 +751,22 @@ function convertMonth(m){
 							if (methods.gotDate.call(this, date) === false) {
 								// adds
 								// dates
-								methods.addDates.call(this, date, type);
+							//	methods.addDates.call(this, date, type);
 								block(date);
 								
 								
-								//	alert("입력"+date);
+							//		alert("입력"+date);
 							//	$('#mdpDisabled').hide();
 							//	$('#mdpAbled').show();
 								
 							}
 							else{
 								// removes dates
-								methods.removeDates.call(this, date, type);
+							//	methods.removeDates.call(this, date, type);
 								unblock(date);
 								
 								
-								//	alert("삭제"+date);
+							//		alert("삭제"+date);
 							//	$('#mdpDisabled').show();
 							//	$('#mdpAbled').hide();
 							}

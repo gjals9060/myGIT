@@ -301,7 +301,7 @@
 
 	<!-- 예약 차단일 목록 검색 -->
 	<select id="selectBlockingList" resultType="Blocking">
-		SELECT *
+		SELECT id, host_id, TO_CHAR(check_in_date, 'YYYY.MM.DD') AS checkInDate, who
 		FROM blocking
 		WHERE host_id = #{hostId}
 	</select>
@@ -317,7 +317,7 @@
 		VALUES
 		(
 			#{hostId},
-			TO_DATE('${year}.${month}.${date}', 'YYYY.MM.DD'),
+			TO_DATE(#{date}, 'YYYY.MM.DD'),
 			'H'
 									)
 	</insert>
@@ -327,7 +327,8 @@
 		DELETE
 		FROM blocking
 		WHERE host_id = #{hostId}
-			AND TO_CHAR(check_in_date, 'YYYYMMDD') = '${year}${month}${date}'
+			AND TO_CHAR(check_in_date, 'YYYY.MM.DD') = #{date}
+			AND who = 'H'
 	</delete>
 	
 	<!-- foreach문에서는 trigger로! .nextval이 안먹힌다 -->
@@ -355,7 +356,8 @@
 		DELETE
 		FROM blocking
 		WHERE host_id = #{hostId}
-			AND TO_CHAR(check_in_date, 'YYYYMM') = '${year}${month}'
+			AND TO_CHAR(check_in_date, 'YYYY.MM') = '${year}.${month}'
+			AND who = 'H'
 	</delete>
 
 

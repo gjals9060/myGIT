@@ -22,7 +22,11 @@
 .step-tab{
 	height: auto !important;
 }
-
+.booked{
+	border-width: 10px;
+	border-color: red;
+	color: red;
+}
 </Style>
 </head>
 <body>
@@ -43,7 +47,7 @@
 	<input type="text" id="altField" value="" name="blockingDate" />
 <!-- 	<input type="button" value="전체해제" id="mdpAbled" class="disabled" />
 	<input type="button" value="전체차단" id="mdpDisabled" class="disabled" /> -->
-	<button id="manageMonth" onclick="manageMonth();"></button>
+	<button id="manageMonth" onclick="manageMonth();">전체 차단/해제</button>
 
 	<a href="./stayDate?hostId=${hostId }">이전</a>
 	<a href="./price?hostId=${hostId }">다음</a>
@@ -56,7 +60,7 @@
 <script>
 $('#mdp-demo').multiDatesPicker({
 	dateFormat : "yy.mm.dd",
-	altField : '#altField',
+//	altField : '#altField',
 	minDate : 0, // today
 	maxDate : 60 // +30 days from today
 });
@@ -72,11 +76,7 @@ $(window).bind("pageshow", function(event) {
 				alert("접근 권한이 없는 페이지입니다.");
 				location.replace("/p5"); // 홈으로 이동
 			} else{
-				
-				
 				refresh(); // 화면 갱신
-				
-				
 			}
 		},
 		error : function() {

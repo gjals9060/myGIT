@@ -1,12 +1,10 @@
 package com.clover.p5.host.dto;
 
-import java.sql.Date;
-
 public class Blocking {
 	
 	private int id; // 쓸 일이 있을까
 	private int hostId;
-	private Date checkInDate;
+	private String checkInDate;
 	private char who;
 	
 	
@@ -22,10 +20,10 @@ public class Blocking {
 	public void setHostId(int hostId) {
 		this.hostId = hostId;
 	}
-	public Date getCheckInDate() {
+	public String getCheckInDate() {
 		return checkInDate;
 	}
-	public void setCheckInDate(Date checkInDate) {
+	public void setCheckInDate(String checkInDate) {
 		this.checkInDate = checkInDate;
 	}
 	public char getWho() {
@@ -38,6 +36,9 @@ public class Blocking {
 	public String toString() {
 		return "Blocking [id=" + id + ", hostId=" + hostId + ", checkInDate=" + checkInDate + ", who=" + who + "]";
 	}
+	
+	
+	
 	
 	
 	
