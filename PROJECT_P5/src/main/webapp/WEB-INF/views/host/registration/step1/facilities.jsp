@@ -5,6 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>편의시설</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/p5/css/facilities.css" />
 </head>
 <body>
 	<input type="hidden" id="hostId" value="${hostId }" />
@@ -13,39 +15,52 @@
 		$('#progressBar').val('80');
 		$('#tabFacilities').css('background','#bbb');
 	</script>
-	<!-- <form action="photo" method="post"> -->
-	<h1>편의시설이 어떤게 있나요?</h1>
-	<input type="checkbox" name="isTv" value="Y" />TV
-	<br>
-	<input type="checkbox" name="isWifi" value="Y" />WiFi
-	<br>
-	<input type="checkbox" name="isAirConditioner" value="Y" />에어컨
-	<br>
-	<input type="checkbox" name="isAirPurifier" value="Y" />공기청정기
-	<br>
-	<input type="checkbox" name="isHairDryer" value="Y" />헤어드라이기
-	<br>
-	<input type="checkbox" name="isIron" value="Y" />다리미
-	<br>
-	<hr>
-	<h1>이용가능한 시설</h1>
-	<input type="checkbox" name="isKitchen" value="Y" />주방
-	<br>
-	<input type="checkbox" name="isWashingMachine" value="Y" />세탁기
-	<br>
-	<input type="checkbox" name="isElevator" value="Y" />앨리베이터
-	<br>
-	<input type="checkbox" name="isParkingLot" value="Y" />주차
-	<br>
+			<div id="wrap">
+		<div id="container">
+<!-- <form action="photo" method="post"> -->
+<h1>편의시설이 어떤게 있나요?</h1>
+<div class="text">일반적으로는 게스트가 기대하는 편의시설 목록입니다 숙소를 등록한후 언제든 편의 시설을 추가할수 있어요</div> 
+<br>
 
+<input class="check-Facilities" class="available"type="checkbox" id="TV" name="isTv" value="Y" /><label for="TV">TV</label><hr noshade="noshade"/><br>
+
+<input class="check-Facilities"class="available"type="checkbox" id="WiFi" name="isWifi" value="Y" /><label for="WiFi">Wifi</label><hr noshade="noshade" /><br>
+
+<input class="check-Facilities"class="available"type="checkbox"  ID="airConditioner" name="isAirConditioner" value="Y" /><label for="airConditioner">에어컨</label><hr noshade="noshade" /><br>
+
+<input class="check-Facilities"class="available"type="checkbox" id="airPurifier" name="isAirPurifier" value="Y" /><label for="airPurifier">공기청정기</label><hr noshade="noshade"/><br>
+
+<input class="check-Facilities"class="available" type="checkbox" id="hairDryer" name="isHairDryer" value="Y" /><label for="hairDryer">헤어드라이기</label><hr noshade="noshade"/><br>
+
+<input class="check-Facilities" class="available" type="checkbox"  id="iron" name="isIron" value="Y" /><label for="iron">다리미</label><hr noshade="noshade"/><br>
+
+
+
+<h1 class="available-facilities">이용가능한 시설</h1>
+<div class="text">등록하고자하는 숙소에서 게스트가 이용가능한 공용공간을 선택하세요</div>
+<br>
+<input class="available" class="check-Facilities" type="checkbox" id="kitchen"  name="isKitchen" value="Y" /><label for="kitchen">주방</label><hr noshade="noshade"/><br>
+
+<input class="available" class="check-Facilities"type="checkbox"  id="washingMachine"name="isWashingMachine" value="Y" /><label for="washingMachine">세탁기</label><hr noshade="noshade"/><br>
+
+<input class="available"type="checkbox"class="check-Facilities"  id="Elevator" name="isElevator" value="Y" /><label for="Elevator">앨리베이터</label><hr noshade="noshade"/><br>
+
+<input class="available" type="checkbox"class="check-Facilities"  id="parkingLot" name="isParkingLot" value="Y" /><label for="parkingLot">주차</label><hr noshade="noshade"/><br>
+
+
+	
 	<!-- <input type="submit" value="다음" /> -->
 	<!-- </form> -->
-	<a class="registration" href="./address">이전</a>
-	<button class="registration" onclick="completeStep1()">다음</button>
+	<a class="registration" href="./address"><span class="previous">이전</span></a>
+	<button class="registration" onclick="completeStep1()"><span class="next">다음</span></button>
 	<a class="modification" href="./address?hostId=${hostId }">이전</a>
 	<a class="modification" href="../hostingStatus?hostId=${hostId }">다음</a>
 
 
+</div>
+<div id="left">
+</div>
+</div>
 	
 	<script>
 		function completeStep1() {
