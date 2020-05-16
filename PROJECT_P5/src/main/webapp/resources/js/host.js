@@ -236,11 +236,11 @@ function setRefreshURL(){
 
 ///////////////////////////////////// refresh /////////////////////////////////////////////////
 function refresh(host){
-if(urlInfo == '/p5/host/registration/roomCount' && (!host.hostTypeId || !host.roomTypeId)){
+/*if(urlInfo == '/p5/host/registration/roomCount' && (!host.hostTypeId || !host.roomTypeId)){
 	alert("제대로 입력도 안하고 넘어오냐~?");
 	location.replace("roomType");
 	return;
-}
+}*/
 if(urlInfo == '/p5/host/registration/facilities' && !host.address && !host.hostTypeId && !host.roomTypeId){
 	alert("등록 완료했자너 왜 뒤루 와~");
 	location.replace("../hostingList");
