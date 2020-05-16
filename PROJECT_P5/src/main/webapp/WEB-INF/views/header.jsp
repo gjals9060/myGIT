@@ -16,17 +16,18 @@
 <script type="text/javascript" src="/p5/js/daterangepicker.js"></script>
 
 <!-- Link Swiper's CSS -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 <link rel="stylesheet"
 	href="https://unpkg.com/swiper/css/swiper.min.css">
 <link rel="stylesheet" href="/p5/css/daterangepicker.css" />
 <link rel="stylesheet" href="/p5/css/reset.css" />
-<link rel="stylesheet" href="/p5/css/header.css" />
+<link rel="stylesheet" href="css/header.css" />
 
 <body>
-<div id="widthTest"></div>
+	<div id="widthTest"></div>
 	<header>
 		<button id="headerMobileButton">
 			<i class="fas fa-bars fa-3x"></i>
@@ -103,7 +104,8 @@
 			%>
 			<!-- 이름만 출력 -->
 			<!-- <a href='host/registration/roomType'>호스트 등록</a> -->
-			<button class='btn' onclick='isMobileAuthentication()'>호스트 등록</button>
+			<button class='btn' onclick='isMobileAuthentication()'>호스트
+				등록</button>
 			<button class="user-drop-down-btn btn">
 				<span id="userImgBlock"> <c:set var="defaultProfilePhotoPath"
 						value="/p5/img/defaultProfile.png" /> <c:choose>
@@ -163,14 +165,16 @@
 
 	</header>
 
+	<div class="modalBack"></div>
+
 	<div id="modalLogin" class="modal">
 		<!-- 닫기버튼 -->
 		<span id="login-close" class="close">&times;</span>
 
 		<div class="modal-popup">
+		<div class="modalWrap">
 			<h1>로그인</h1>
 			<hr>
-			<br>
 			<form action="" onsubmit="return userLogin()">
 				<div class="loginTitle">이메일</div>
 				<div class="loginInput">
@@ -183,21 +187,22 @@
 					<input type="password" class="user-login-input-value"
 						id="userPassword" name="userPassword" />
 				</div>
-				<br />
 				<div class="loginCheck"></div>
+				
 				<div>
 					<input type="checkbox" id="rememberMe" /> <label for="rememberMe">자동
 						로그인</label>
 				</div>
-
-				<br> <input type="submit" value="로그인" />
+				
+				<input type="submit" value="로그인" class="loginButtons" />
 			</form>
-			<br> <input type="button" value="카카오톡으로 로그인하기" /> <br> <br>
-			<input type="button" id="emailUserAdd" value="이메일로 가입하기" /> <br />
-			<button id="makeshiftPasswordBtn">비밀번호를 잊어버리셨나요?</button>
+			<input type="button" value="카카오톡으로 로그인하기" class="loginButtons"/>
+			<br>
+			<input type="button" id="emailUserAdd" value="이메일로 가입하기" class="loginButtons" /><br>
+			<button id="makeshiftPasswordBtn" class="loginButtons" >비밀번호를 잊어버리셨나요?</button>
+		</div>
 		</div>
 	</div>
-
 
 	<!-- 회원가입 -->
 	<form name="newMember">
@@ -208,13 +213,14 @@
 
 			<!-- 회원가입 1단계 ( 정보입력 )  -->
 			<div class="modal-popup">
-
+			<div class="modalWrap">
+				<h1>회원가입</h1>
+				<hr>
 				<div class="formTitle">이메일</div>
 				<div class="formInput">
 					<input type="text" class="input-value" id="inputEmail" name="email" />
 				</div>
 				<div class="form-input-check" id="idCheck"></div>
-				<br>
 
 				<div class="formTitle">비밀번호</div>
 				<div class="formInput">
@@ -222,7 +228,6 @@
 						name="password" />
 				</div>
 				<div class="form-input-check" id="passwordCheck"></div>
-				<br>
 
 				<div class="formTitle">비밀번호 확인</div>
 				<div class="formInput">
@@ -230,7 +235,6 @@
 						name="passwordCheck" />
 				</div>
 				<div class="form-input-check" id="passwordReCheck"></div>
-				<br>
 
 				<div class="formTitle">이름</div>
 				<div class="formInput">
@@ -238,7 +242,6 @@
 						name="firstName" />
 				</div>
 				<div class="form-input-check" id="firstNameCheck"></div>
-				<br>
 
 				<div class="formTitle">성</div>
 				<div class="formInput">
@@ -246,7 +249,6 @@
 						name="lastName" />
 				</div>
 				<div class="form-input-check" id="lastNameCheck"></div>
-				<br>
 
 				<div class="formTitle">생년월일</div>
 				<div class="formInput">
@@ -254,7 +256,6 @@
 						name="birthDate" />
 				</div>
 				<div class="form-input-check" id="dateCheck"></div>
-				<br>
 
 				<div class="formTitle">전화번호</div>
 				<div class="formInput">
@@ -262,9 +263,10 @@
 						name="mobilePhone" />
 				</div>
 				<div class="form-input-check" id="telCheck"></div>
-				<br> <input type="button" value="다음" id="btnSendEmail" />
+				<input type="button" value="다음" id="btnSendEmail" />
 				<!-- <input type="submit" value="다음" /> -->
 				<!-- 이후에 바로 이메일 인증받는 페이지로 이동 -->
+			</div>
 			</div>
 		</div>
 	</form>
@@ -274,15 +276,17 @@
 		<span id="emailCheckBack" class="back">&lt;</span> <span
 			id="emailCheckClose" class="close">&times;</span>
 		<div class="modal-popup">
-			<h1>이메일 인증</h1>
-			<br />
-			<!-- 이메일 인증 input -->
-			<div id="toEmail"></div>
-			<input type="text" id="inputCode" /> <input type="button"
-				value="재요청" id="rerequest" />
-			<!-- 이메일 인증번호 input -->
-			<input type="hidden" id="authenticationCode" /> <br /> <br /> <input
-				type="button" value="완료" id="completeSignUp" />
+			<div class="modalWrap">
+				<h1>이메일 인증</h1>
+				<hr>
+				<!-- 이메일 인증 input -->
+				<div id="toEmail"></div>
+				<input type="text" id="inputCode" /> <input type="button"
+					value="재요청" id="rerequest" />
+				<!-- 이메일 인증번호 input -->
+				<input type="hidden" id="authenticationCode" /><input type="button"
+					value="완료" id="completeSignUp" />
+			</div>
 		</div>
 	</div>
 
@@ -291,8 +295,8 @@
 		<span id="makeshiftPasswordBack" class="back">&lt;</span> <span
 			id="makeshiftPasswordClose" class="close">&times;</span>
 		<div class="modal-popup">
+		<div class="modalWrap">
 			<h1>임시 비밀번호 발급</h1>
-			<br />
 			<div class="makeshift-password-input-wrap">
 				<div class="makeshift-password-input-block">
 					<div class="makeshift-password-input-title">이메일</div>
@@ -313,16 +317,16 @@
 						<input type="hidden" id="temporaryPassword" /> <input
 							type="password" id="inputTemporaryPassword" />
 					</div>
-					<br /> <br />
 					<div>
 						<button onclick='temporaryLogIn()'>로그인</button>
 					</div>
 				</div>
-
+				</div>
 			</div>
-
 		</div>
 	</div>
+
+
 
 </body>
 <script>
@@ -504,19 +508,19 @@
 					"box-shadow" : "1px 1px 10px 0px #bbb",
 					"opacity" : "0.97"
 				});
-			
+
 				$('.fa-2x').css("font-size", "1em");
 				$('.inputWrap').css("display", "contents");
 				$('.title-logo-img ').css("height", "80px");
-				
+
 				$('#presentationTitle').css("padding-top", "120px");
-				
+
 				if (width_size <= 603) {
 					$('.title-logo-img ').css("height", "50px");
 					$('#headerMobileButton').css("display", "block");
 					$('.input-info').css("display", "none");
 					$('.useradd-login-form').css("display", "none");
-					
+
 					$('.title-logo-img').css("display", "block");
 					$('.useradd-login-form').css("display", "none");
 				} else if (width_size <= 843) {
@@ -524,15 +528,15 @@
 					$('#headerMobileButton').css("display", "none");
 					$('.input-info').css("display", "block");
 					$('.useradd-login-form').css("display", "block");
-					
+
 					$('.title-logo-img').css("display", "none");
 					$('.useradd-login-form').css("display", "none");
-					
+
 				} else {
 					$('.title-logo-img').css("display", "block");
 					$('.useradd-login-form').css("display", "block");
 				}
-	 
+
 			} else { /// 80보다 낮은 위치라면(top)
 				$("header").css({
 					"position" : "static",
@@ -542,16 +546,16 @@
 
 				$('.fa-2x').css("font-size", "2em");
 				$('.inputWrap').css("display", "block");
-				
+
 				$('.title-logo-img').css("display", "block");
 				$('.useradd-login-form').css("display", "block");
-				
+
 				$('#headerMobileButton').css("display", "none");
 				$('.input-info').css("display", "block");
-				
-				$('#presentationTitle').css('padding-top','0px');
-				   
-			}			
+
+				$('#presentationTitle').css('padding-top', '0px');
+
+			}
 		},
 		"scroll" : function() {
 			width_size = $(window).width();
@@ -564,13 +568,13 @@
 					"box-shadow" : "1px 1px 10px 0px #bbb",
 					"opacity" : "0.97"
 				});
-			
+
 				$('.fa-2x').css("font-size", "1em");
 				$('.inputWrap').css("display", "contents");
 				$('.title-logo-img ').css("height", "80px");
-				
+
 				$('#presentationTitle').css("padding-top", "120px");
-				
+
 				if (width_size <= 603) {
 					$('.title-logo-img ').css("height", "50px");
 
@@ -585,7 +589,7 @@
 					$('.title-logo-img').css("display", "block");
 					$('.useradd-login-form').css("display", "block");
 				}
-	 
+
 			} else { /// 80보다 낮은 위치라면(top)
 				$("header").css({
 					"position" : "static",
@@ -595,37 +599,34 @@
 
 				$('.fa-2x').css("font-size", "2em");
 				$('.inputWrap').css("display", "block");
-				
+
 				$('.title-logo-img').css("display", "block");
 				$('.useradd-login-form').css("display", "block");
-				
+
 				$('#headerMobileButton').css("display", "none");
 				$('.input-info').css("display", "block");
-				
-				$('#presentationTitle').css('padding-top','0px');
-				   
+
+				$('#presentationTitle').css('padding-top', '0px');
+
 			}
 		}
 	})
-		
-	
-		
-		var mobileSwitch = true; /* 버튼 off */
 
-		$('#headerMobileButton').click(function() {
-			if (mobileSwitch == false) { /* 모바일 메뉴 버튼 off */
-				$('.input-info').css("display", "none");
-				$('.useradd-login-form').css("display", "none");
+	var mobileSwitch = true; /* 버튼 off */
 
-				mobileSwitch = true;
-			} else { /* 모바일 메뉴 버튼 on */
-				$('.input-info').css("display", "block");
-				$('.useradd-login-form').css("display", "block");
+	$('#headerMobileButton').click(function() {
+		if (mobileSwitch == false) { /* 모바일 메뉴 버튼 off */
+			$('.input-info').css("display", "none");
+			$('.useradd-login-form').css("display", "none");
 
-				mobileSwitch = false;
-			}
-		})
+			mobileSwitch = true;
+		} else { /* 모바일 메뉴 버튼 on */
+			$('.input-info').css("display", "block");
+			$('.useradd-login-form').css("display", "block");
 
+			mobileSwitch = false;
+		}
+	})
 
 	//==========================================================================
 	//======================= 회원가입, 로그인, 로그아웃 =============================
@@ -951,8 +952,8 @@
 			success : function() {
 
 				alert("로그아웃 했다");
-			/* 	location.reload(); // 페이지 새로 고침 */
-				location.href="/p5/";
+				/* 	location.reload(); // 페이지 새로 고침 */
+				location.href = "/p5/";
 
 			},
 			error : function() {
