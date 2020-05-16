@@ -4,6 +4,16 @@ import java.sql.Date;
 
 public class HostInfoDTO {
 	
+	//호스트의 이름
+	private String firstName;
+	private String lastName;
+	
+	// 호스트 타입
+	private String htName;
+	// 룸 타입
+	private String rtName;
+
+	// 호스트정보
 	private int id;
 	private int MemberId;
 	private String name;
@@ -39,10 +49,30 @@ public class HostInfoDTO {
 	
 	private Date creationDate;
 	private Date modificationDate;
-
-	//호스트의 이름
-	private String firstName;
-	private String lastName;
+	public String getFirstName() {
+		return firstName;
+	}
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	public String getHtName() {
+		return htName;
+	}
+	public void setHtName(String htName) {
+		this.htName = htName;
+	}
+	public String getRtName() {
+		return rtName;
+	}
+	public void setRtName(String rtName) {
+		this.rtName = rtName;
+	}
 	public int getId() {
 		return id;
 	}
@@ -217,22 +247,10 @@ public class HostInfoDTO {
 	public void setModificationDate(Date modificationDate) {
 		this.modificationDate = modificationDate;
 	}
-	public String getFirstName() {
-		return firstName;
-	}
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-	public String getLastName() {
-		return lastName;
-	}
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-	
 	@Override
 	public String toString() {
-		return "HostInfoDTO [id=" + id + ", MemberId=" + MemberId + ", name=" + name + ", description=" + description
+		return "HostInfoDTO [firstName=" + firstName + ", lastName=" + lastName + ", htName=" + htName + ", rtName="
+				+ rtName + ", id=" + id + ", MemberId=" + MemberId + ", name=" + name + ", description=" + description
 				+ ", descriptionEtc=" + descriptionEtc + ", hostTypeId=" + hostTypeId + ", roomTypeId=" + roomTypeId
 				+ ", capacity=" + capacity + ", roomCount=" + roomCount + ", bedCount=" + bedCount + ", bathroomCount="
 				+ bathroomCount + ", address=" + address + ", latitude=" + latitude + ", longitude=" + longitude
@@ -241,10 +259,9 @@ public class HostInfoDTO {
 				+ ", isKitchen=" + isKitchen + ", isWashingMachine=" + isWashingMachine + ", isElevator=" + isElevator
 				+ ", isParkingLot=" + isParkingLot + ", minimumStay=" + minimumStay + ", maximumStay=" + maximumStay
 				+ ", price=" + price + ", creationDate=" + creationDate + ", modificationDate=" + modificationDate
-				+ ", firstName=" + firstName + ", lastName=" + lastName + "]";
+				+ "]";
 	}
-	
-	
+
 	
 	
 	

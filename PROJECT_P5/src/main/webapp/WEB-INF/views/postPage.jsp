@@ -545,7 +545,7 @@ hr {
 									<td><span class="contentLocation">${host.address }</span></td>
 								</tr>
 								<tr>
-									<td>${host.type }${host.roomType }|인원
+									<td>${host.htName } / ${host.rtName }|인원
 										${host.capacity }명 방 ${host.roomCount }개 침대 ${host.bedCount }개
 										욕실 ${host.bathroomCount }개</td>
 								</tr>
@@ -571,7 +571,7 @@ hr {
 							<div class="contentMap Title">지도</div>
 							<div id="map" class="map" style="width: 90%">
 								<button
-									style="background: #FFFFFF; width: 33px; margin-right: 2px; padding: unset; position: absolute; top: 105px; right: 0; z-index: 5; border: none; border-radius: 10px;"
+									style="background: #FFFFFF; width: 33px; margin-right: 2px; padding: unset; position: absolute; top: 125px; right: 0; z-index: 5; border: none; border-radius: 10px;"
 									onclick="panTo()">
 									<img alt="focus" src="./img/focus.png"
 										style="width: 30px; height: 30px;">
@@ -589,8 +589,8 @@ hr {
                      
                      var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
                      
-                     map.setMinLevel(2);
-                     map.setMaxLevel(4);
+                     map.setMinLevel(1);
+                     map.setMaxLevel(5);
                      
                      var latitude = ${host.latitude};
                      var longitude = ${host.longitude};
@@ -603,7 +603,7 @@ hr {
                      
                      
                      // center 좌표에 마커 생성
-                     var imageSrc = './img/marker2.png', // 마커이미지의 주소입니다    
+                     var imageSrc = './img/markerRed.png', // 마커이미지의 주소입니다    
                          imageSize = new kakao.maps.Size(65, 70), // 마커이미지의 크기입니다
                          imageOption = {offset: new kakao.maps.Point(30, 60)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
                      
@@ -1160,7 +1160,7 @@ hr {
 	/* 인원 선택 */
 	/* button 태그 사용하면 submit되서 input 태그 또는 button태그 내에 button 타입을 부여했으나 버튼 적용이 안되서 정정함 */
 	$(document).ready(function() {
-		var guestCountVal = ${guestCount};
+		var guestCountVal = '${guestCount}';
 			
 		if(guestCountVal == -1 || guestCountVal == null || guestCountVal == ''){
 			$('#guestCount_reserve').val(0);

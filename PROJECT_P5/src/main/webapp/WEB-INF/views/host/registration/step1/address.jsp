@@ -4,6 +4,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="/p5/css/address.css" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <%--panTo 사용시 오류, 이전 위치 기억등 잡아줘야할 내용이 많아져서 그냥 보류--%>
 <title>위치</title>
 <!-- services와 clusterer, drawing 라이브러리 불러오기 -->
@@ -19,11 +21,20 @@
 		$('#progressBar').val('60');
 		$('#tabAddress').css('background','#bbb');
 	</script>
-
+<div id="wrap">
+	<div id="container">
+<h1 class="location">숙소의 위치를 입력해주세요</h1> <div class="pin"><h1>핀이 놓인 위치가 정확한가요?</h1>필요한 경우 핀이 정확한 위치에 자리하도록 조정할 수 있어요. 도착 시 숙소를 찾을 수 있도록 예약이 확정된 게스트만 핀을 볼 수 있습니다.</div>
 	도로명/지번 :
 	<input type="text" id="sample5_address"
-		onclick="sample5_execDaumPostcode()" placeholder="주소 검색하기" readonly>
+		onclick="sample5_execDaumPostcode()" placeholder="주소 검색하기" readonly><br>
 	<!-- <input type="button" onclick="sample5_execDaumPostcode()" value="주소 검색"> -->
+	<!--  <form action="facilities" method="post" name="formAddress"> -->
+	<input type="text" name="address" readonly="readonly" id="checkAddress" />
+	<input type="hidden" name="latitude" readonly="readonly" id="lat" />
+	<input type="hidden" name="longitude" readonly="readonly" id="lon"/>
+	<!-- </form> -->
+
+	<div id="addressInfo"></div>
 	<br>
 	<!-- <div id="map" style="width: 300px; height: 300px; margin-top: 10px; display: none"> -->
 	<div id="map" style="width: 300px; height: 300px; margin-top: 10px;">
@@ -43,21 +54,20 @@
 	<div id="result"></div>
 
 
-	<!--  <form action="facilities" method="post" name="formAddress"> -->
-	<input type="text" name="address" readonly="readonly" />
-	<input type="text" name="latitude" readonly="readonly" />
-	<input type="text" name="longitude" readonly="readonly" />
-	<!-- </form> -->
-
-	<div id="addressInfo"></div>
+	
 
 
 	<!--임시 이동  -->
-	<a class="registration" href="./roomCount">이전</a>
-	<a class="registration" href="./facilities">다음</a>
+	<a class="registration" href="./roomCount"><span class="previous">이전</span></a>
+	<a class="registration" onclick="check()"><span class="next">다음</span></a>
 	<a class="modification" href="./roomCount?hostId=${hostId }">이전</a>
 	<a class="modification" href="./facilities?hostId=${hostId }">다음</a>
 	<!-- <button id="next" onclick="inputAddress();">다음</button> -->
+	 </div>
+  <div id="left">
+  
+  </div>
+  </div>
 </body>
 
 
@@ -181,6 +191,8 @@
 	var toggleButton;		
 	// F -> set  클릭시  -> (버튼: set-btn:off / save-btn:on ) -> (드래그,포커스,지도 설정) -> 상태전환(F -> T)
 	// T -> save 클릭시  -> (버튼: set-btn:on  / save-btn:off) -> (드래그,포커스,지도 설정) -> 상태전환(T -> F)
+	var dragFlag = false;
+	var searchFlag = false;
 	
 	// ### 이벤트 ###
 	$(document).on('click','#map-set-btn', state);	// 조정하기 클릭시 조정중
@@ -201,13 +213,59 @@
 	kakao.maps.event.addListener(map, 'dragend', moveMap);
 			
 	// ### 메서드 ###
+	// 소수점 아래 4자리까지 올림하여 반환(표준좌표로 설정)
+	function ceil(x) {
+		
+		//console.log("계산전:" + x);
+		var digit = Math.pow(10,4);	//소수점 아래 5자리에서 올림하여 4자리까지 표기
+		
+		return Math.ceil(x * digit) / digit;
+
+	}//end-ceil(x)
+	
+	// 표준좌표로 비교하여 같으면 True, 다르면 False
+	function ApproximatelyEqual(x,y){
+
+		var xLat = x.getPosition().getLat();
+		var xLng = x.getPosition().getLng();
+		
+		var yLat = y.getPosition().getLat();
+		var yLng = y.getPosition().getLng();
+		
+		// 값 비교시 
+		/* 
+			x = 10.4491 과 y = 10.4500 를 비교 
+			소수점 아래 4자리에서 올림하여 3자리까지 표기한다고 할 때
+			x' = 10.450 , y' = 10.451
+			그러므로
+			x, y를 각각 (n+1)자리에서 올림하여 n자리까지 표기하였을 때
+			값 비교는 x, y의 (n-1)자리까지 비교가 되어야함			
+		*/
+		
+		console.log("계산후 xLat : " + ceil(xLat));
+		console.log("계산후 yLat : " + ceil(yLat));
+		console.log("계산후 xLng : " + ceil(xLng));
+		console.log("계산후 yLng : " + ceil(yLng));
+		
+		var d = ceil(xLat).substring(0, (ceil(xLat).length - 1))	
+		console.log(d);
+		
+/* 		
+		if( () && () ){
+			return true;
+		}else{
+			return false;
+		}
+*/					
+	}//end-ApproximatelyEqual(x,y)
+	
 	function moveMap() {
 					
 		if(!toggleButton) {
 			console.log("MOVE_MAP!");
-
+			dragFlag = true;
 			// markerTemp 초기화
-			markerTemp.setPosition(defaultLatLng);
+			markerTemp.setPosition(markerBlue.getPosition());
 			markerTemp.setVisible(false);
 			console.log("markerTemp 초기화!");
 			//markerBlue.setPosition(map.getCenter());
@@ -337,7 +395,8 @@
 
 			
 			// 레드마커 위치 조정, ON
-			markerRed.setPosition(markerBlue.getPosition());
+			//markerRed.setPosition(markerBlue.getPosition());
+			markerRed.setPosition(markerTemp.getPosition());
 
 			markerRed.setVisible(true);			
 			console.log("저장 시 레드:" + markerRed.getPosition());
@@ -369,6 +428,9 @@
 	
 	function settingAddress() {	// 조정 클릭시 실행
 		
+		dragFlag = false;
+		searchFlag = false;
+		
 		console.log("========조정!========");
 		memoryAddress = $('input[name="address"]').val(); // 메모리 어드레스에 넣고
 		$('input[name="address"]').val(""); // 초기화
@@ -383,22 +445,16 @@
 		console.log("블루마커 : " + markerBlue.getPosition());
 		console.log("서클 : " + circle.getPosition());
 		console.log("markerTemp : " + markerTemp.getPosition());
-	
-		if(markerRed.getPosition().equals(markerTemp.getPosition())){
-			
-			console.log("움직임x");
-				
-			console.log("memory : " + memoryAddress);
-			
-			// 메모리에 있던 기존 주소를 다시 넣어줌
-			$('input[name="address"]').val(memoryAddress);
-			
-			$('#addressInfo').empty();
-			$('#addressInfo').append( '확정 주소 : ' + memoryAddress);
-				
-		}else{
+		
+		//if(markerRed.getPosition().equals(markerTemp.getPosition())){
+		//if(ApproximatelyEqual(markerTemp, markerRed)){
+		console.log("드래그 : " + dragFlag + ", 주소검색 : " + searchFlag);	
+		if(dragFlag || searchFlag) {
+		
 			console.log("움직임o");
-
+			dragFlag = false;	//초기화
+			searchFlag = false;
+			
 			var radioCount = $('input:radio[name="address1"]').length;
 		      
 			var address1;
@@ -416,19 +472,45 @@
 			var address = $.trim((address1 + " " + address2));
 			
 			$('input[name="address"]').val(address);
-			$('input[name="latitude"]').val(markerRed.getPosition().getLat());
-			$('input[name="longitude"]').val(markerRed.getPosition().getLng());
+			//$('input[name="latitude"]').val(markerRed.getPosition().getLat());
+			//$('input[name="longitude"]').val(markerRed.getPosition().getLng());
+			$('input[name="latitude"]').val(markerTemp.getPosition().getLat());
+			$('input[name="longitude"]').val(markerTemp.getPosition().getLng());
 			
 			$('#addressInfo').empty();
 			$('#addressInfo').append( '확정 주소 : ' + address);
 			memoryAddress = address;
 			console.log('확정 주소 : ' + address);
 			
+		}else{
+			
+			console.log("움직임x");
+				
+			console.log("memory : " + memoryAddress);
+			
+			// 메모리에 있던 기존 주소를 다시 넣어줌
+			$('input[name="address"]').val(memoryAddress);
+			
+			$('#addressInfo').empty();
+			$('#addressInfo').append( '확정 주소 : ' + memoryAddress);
+				
 		}
 		return true;
 
 	}	// end - savingAddress()
 
+	function check(){
+		var la=$('#lat').val();
+		var lo=$('#lon').val();
+		var address=$('#checkAddress').val();
+if(!la||!lo||!address){
+	alert("주소입력하세요");
+	return;
+}
+else{
+	location.href="./facilities ";
+	}
+	}
 	
 	
 </script>
@@ -547,8 +629,6 @@
 							// 지도 세팅
 							valueInMap(LatLng.getLat(),LatLng.getLng());
 														
-							toggleButton = true;
-							state();
 
 
 							// 선택 , 상세 주소
@@ -560,6 +640,13 @@
 
 							$('input[name="latitude"]').val(result.y);
 							$('input[name="longitude"]').val(result.x);
+							
+							
+							toggleButton = true;
+							state();
+							
+							searchFlag = true;
+
 
 
 						}

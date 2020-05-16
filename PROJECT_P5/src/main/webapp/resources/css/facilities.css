@@ -1,11 +1,36 @@
 @charset "UTF-8";
 #wrap{
-	position: relative;
-	left:25%;
-}
+	width:100%;
+	max-width:1100px;
+	display: inline;
 
-h1 {
-	margin-bottom: 10px;
+}
+#container{
+display: inline;
+    float: left;
+    width: 674px;
+    height: 710px;
+    padding: 0 0 0 200px;
+}
+#left{
+	display:inline;
+	width:413px;
+	height: 1250px;
+	background-color: #FAFAFA;
+	float: right;
+}
+header img{
+	width:30px;
+	height: 30px;
+	vertical-align: middle;
+}
+h5{
+display: inline;
+    margin-left: 30px;
+}
+h2{
+color: #6E6E6E;
+font-size:20px;	
 }
 /*진행바  */
 progress {
@@ -41,7 +66,7 @@ progress::-webkit-progress-value {
 progress::-webkit-progress-bar {
 	background: white;
 }
-/*기본 체크박스 없애기*/
+/*체크박스*/
 input[type="checkbox"] {
 	position: absolute;
 	width: 1px;
@@ -54,21 +79,28 @@ input[type="checkbox"] {
 }
 
 input[type="checkbox"]+label:before {
+	float:right;
 	content: '';
 	display: inline-block;
-	width: 20px;
-	height: 20px;
+	width: 32px;
+	height: 32px;
 	line-height: 20px;
 	margin: -2px 8px 0 0;
 	text-align: center;
 	vertical-align: middle;
 	background: #fafafa;
-	border: 1px solid #cacece;
-	border-radius: 3px;
+	border: 1px solid #008489;
+	border-radius: 100%;
 	box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px
 		rgba(0, 0, 0, 0.05);
-}
 
+}
+hr{
+	margin-top: 30px;
+	border-color: #EBEBEB;
+	size:2px;
+	
+}
 input[type="checkbox"]+label:active:before, input[type="checkbox"]:checked+label:active:before
 	{
 	box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05), inset 0px 1px 3px
@@ -76,13 +108,14 @@ input[type="checkbox"]+label:active:before, input[type="checkbox"]:checked+label
 }
 
 input[type="checkbox"]:checked+label:before {
-	content: '\2713';
-	color: white;
+
+	background:url("../img/check.png") no-repeat;
 	text-shadow: 1px 1px white;
-	background: #008489;
-	border-color: #adb8c0;
+
+border:none;
 	box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px
 		rgba(0, 0, 0, 0.05);
+		  animation: check 0.3s;
 }
 .available-facilities{
 	margin-top: 70px;
@@ -100,12 +133,71 @@ input[type="submit"]{
 .text{
 	color: #767676;
 }
+/*  */
+/* input[type="checkbox"]:checked:after {
+  animation: check 0.3s;
+} */
+/*체크박스 애니메이션  */
+@keyframes check {
+    0% { 
+   transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+    }
+    40% { 
+      transform: scale(1);
+		box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+      }
+    100% { 
+      transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+    }
+}
+/* 이전 다음 */
+button[onclick="completeStep1()"] {
+	position: relative;
+	top: 30px;
+	width: 80px;
+	height: 45px;
+	background-color: #008489;
+	float: right;
+	color: white;
+	border-radius: 10px;
+	border: 1px solid;
+}
+
+.next {
+	position: relative;
+
+}
+
+a[href="./address"] {
+ position: relative;
+    top: 50px;
+    background: url(../img/previousArrow.png) no-repeat;
+    background-size: 20px;
+    }
+
+span.previous {
+	position: relative;
+	color: #008489;
+	margin-left: 30px;
+}
 /*태블릿  */
 @media (max-width: 768px){
-	#wrap{
-	width:768px;
-	left:0;
-}
+#wrap {
+		width: 768px;
+		margin-left: 0px;
+		margin-right: 0px;
+	}
+	#container {
+		display: inline;
+    float: left;
+    width: 400px;
+    padding: 30px 140px 16px;
+	}
+	#left {
+		display: none;
+	}
 input[type="submit"] {
     background-color: #008489;
     border-color: #008489;
@@ -118,21 +210,28 @@ input[type="submit"] {
 }
 }
 /*모바일  */
-@media ( max-width : 450px) {
- #wrap{
-	left: 0%;
+@media ( max-width : 480px) {
+	h1{
+	font-size: 28px;
 	}
+	
+	
+	#wrap {
+		width: 480px;
+		margin-left: 0px;
+		margin-right: 0px;
+	}
+#left {
+		display: none;
+	}
+	#container {
+    display: inline;
+    float: left;
+    width: 350px;
+    padding: 30px 30px 16px;
+}
 	input[type="submit"] {
  left: 300px;
 	}
 }
-/* 	#sample5_address {
-		width: 250px;
-		height: 50px;
-	}
-	input[type="submit"] {
-    margin-top: 50px;
-    position: relative;
-       left: 180px;
-}  */
-}
+
