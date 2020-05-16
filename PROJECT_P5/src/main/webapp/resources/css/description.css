@@ -1,8 +1,49 @@
 @charset "UTF-8";
-#wrap{
-	width:1100px;
-	position: relative;
-	left:30%;
+#wrap {
+	width: 100%;
+	max-width: 1100px;
+	display: inline;
+}
+
+#container {
+	display: inline;
+	float: left;
+	width: 674px;
+	height: 710px;
+	padding: 0 0 0 200px;
+}
+.fifty {
+
+		top: 63px;
+    position: absolute;
+    width: 30%;
+    height: 16px;
+    float: left;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    background: repeating-linear-gradient(135deg, rgb(77, 223, 212), rgb(77, 223, 212) 2px, rgb(153, 237, 230) 2px, rgb(153, 237, 230) 4px);
+}
+#left {
+	display: inline;
+	width: 413px;
+	height: 900px;
+	background-color: #FAFAFA;
+	float: right;
+}
+header img {
+	width: 30px;
+	height: 30px;
+	vertical-align: middle;
+}
+
+h5 {
+	display: inline;
+	margin-left: 30px;
+}
+
+h2 {
+	color: #6E6E6E;
+	font-size: 20px;
 }
 /*진행바  */
 progress {
@@ -34,33 +75,187 @@ progress::-webkit-progress-value {
 	background: #008489;
 	border-radius: 100px;
 }
+progress[value="20"]::-webkit-progress-value {
+	background:red;
+	border-radius: 100px;
+}
 
 progress::-webkit-progress-bar {
 	background: white;
 }
-/*테블릿  */
-@media ( max-width : 768px) {
-	#wrap{
-	left: 0%;
-	margin: 0;
-	}
-	
+/*텍스트창  */
+textarea {
+	overflow: hidden;
+	outline-style: none;
+	border-radius: 5px;
+	width: 420px;
+	height: 216px;
 }
-/*테블릿  */
-@media ( max-width : 480px) {
+textarea:focus{
+	outline: 1px solid #008489;
+}
+/*남는 글자수 */
+#descriptionWord{
+	color: #008489;
+    position: relative;
+    top: -20px;
+    left: -50px;
+    font-size: 12px;
+}
+.warning{
+color:red;
+}
+/*이전 다음버튼  */
+.next-link{
+	    position: relative;
+    top: 285px;
+    width: 80px;
+    height: 45px;
+    background-color: #008489;
+    float: right;
+    color: white;
+    border-radius: 10px;
+    border: 1px solid;
+}
+
+.next{
+	position: relative;
+    top: 10px;
+    right: -20px;
+}
+.previous-link{
+	    position: relative;
+    top: 110px;
+    background: url(../img/previousArrow.png) no-repeat;
+    background-size: 20px;
+    left: -450px;
+    border: none;
+}
+span.previous{
+	position: relative;
+    color: #008489;
+    margin-left: 30px;
+
+}
+/*미디어 쿼리  */
+@media (max-width: 768px){
+#wrap{
+	width:768px;
+	margin-left: 0px;
+	margin-right: 0px;
+
+}
+#container{
+display: inline;
+    float: left;
+    width: 550px;
+    padding: 30px 90px 16px;
+}
+
+#left{
+	display: none;
+}
+a [href="./photo?hostId=${hostId }"]{
+    position: relative;
+    top: 350px;
+    width: 80px;
+    height: 45px;
+    background-color: #008489;
+    float: right;
+    color: white;
+    border-radius: 10px;
+    border: 1px solid;
+}
+.next-link {
+    position: relative;
+    top: 65px;
+    width: 80px;
+    height: 45px;
+    background-color: #008489;
+    float: right;
+    color: white;
+    border-radius: 10px;
+    border: 1px solid;
+}
+}
+/*모바일  */
+@media (max-width: 480px){
 	#wrap{
-	left: 0%;
-	margin: 0;
-	}
-	h3{
-	font-size: 30px;
-	
-	}
-	h1{
-	font-size:45px;
-	}
-	textarea{
-	height:500px;
-	}
+	width:480px;
+	margin-left: 0px;
+	margin-right: 0px;
+
+}
+#container{
+display: inline;
+    float: left;
+    width: 330px;
+    padding: 30px 30px 16px;
+}
+
+a [href="./photo?hostId=${hostId }"] {
+    position: relative;
+    top: 190px;
+    width: 80px;
+    height: 45px;
+    background-color: #008489;
+    float: right;
+    color: white;
+    border-radius: 10px;
+    border: 1px solid;
+    left: 100px;
+}
+h1{
+	font-size: 24px;
+}
+#left{
+	display: none;
+}
+.fifty {
+
+
+    top: 89px;
+    position: absolute;
+    width: 30%;
+    height: 16px;
+    float: left;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    background: repeating-linear-gradient(135deg, rgb(77, 223, 212), rgb(77, 223, 212) 2px, rgb(153, 237, 230) 2px, rgb(153, 237, 230) 4px);
+
+}
+#descriptionWord {
+    color: #008489;
+    position: relative;
+    top: -40px;
+    left: 320px;
+    font-size: 12px;
+}
+.next-link {
+    position: relative;
+    top: 65px;
+    width: 80px;
+    height: 45px;
+    background-color: #008489;
+    float: right;
+    color: white;
+    border-radius: 10px;
+    border: 1px solid;
+    left: 80px;
+}
+.previous-link {
+    position: relative;
+    top: 90px;
+    background: url(../img/previousArrow.png) no-repeat;
+    background-size: 20px;
+    left: -30px;
+    border: none;
+}
+textarea {
+    overflow: hidden;
+    outline-style: none;
+    border-radius: 5px;
+    width: 350px;
+    height: 216px;
 }
 }
