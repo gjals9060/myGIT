@@ -5,16 +5,24 @@
 	
 	<!-- postPage에 뿌려줄 host관련 정보(사진은 따로) -->
 	<select id="selectHost" parameterType="String" resultType="HostInfoDTO">
-		<![CDATA[
-			SELECT
-				h.*, m.first_name,  m.last_name
-			FROM
-				host h, member m
-			WHERE
-				h.id = #{id}
-			AND
-				(m.id = h.member_id)	
-		]]>	
+
+		SELECT 
+		    m.last_name, m.first_name, rt.name AS rt_name, ht.name AS ht_name, h.* 
+		FROM 
+			host h
+				INNER JOIN 
+		        member m
+		        ON h.member_id = m.id
+		        
+		        INNER JOIN 
+		        room_type rt
+		        ON h.room_type_id = rt.id
+		        
+		        INNER JOIN 
+		        host_type ht
+		        ON h.host_type_id = ht.id
+		WHERE
+			h.id = #{id}
 	
 	</select>
 	
@@ -121,12 +129,14 @@
 			INTO blocking
 			(	
 				host_id,
-				blocking_date
+				check_in_date,
+				who
 								)
 			VALUES
 			(	
 				#{hostId},
-				TO_DATE(#{blockingDate}, 'YYYY.MM.DD')
+				TO_DATE(#{blockingDate}, 'YYYY.MM.DD'),
+				'G'
 														)
 		</foreach>
 	</insert>

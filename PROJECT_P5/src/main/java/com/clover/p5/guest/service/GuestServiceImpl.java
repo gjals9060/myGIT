@@ -82,7 +82,16 @@ public class GuestServiceImpl implements GuestService {
 			sbBlocking.append("'" + form1.format(d) + "',");
 		}
 		System.out.println("sbBlocking : " + sbBlocking);
-		String sBlocking = sbBlocking.substring(0, sbBlocking.length()-1);
+		
+		
+		String sBlocking;
+		
+		if(blocking.size() == 0) {
+			sBlocking = "";
+		}else {
+			sBlocking = sbBlocking.substring(0, sbBlocking.length()-1);
+		}
+		
 		System.out.println("sBlocking : " + sBlocking);
 		
 		model.addAttribute("host", hostInfoDto);
@@ -254,7 +263,7 @@ public class GuestServiceImpl implements GuestService {
 //		System.out.println("id : " + booking.getHostId());
 //		System.out.println("checkIn : " + booking.getCheckInDate());
 //		System.out.println("payment : " + booking.getPayment());
-		SimpleDateFormat format0 = new SimpleDateFormat ( "MM/dd/yyyy");
+//		SimpleDateFormat format0 = new SimpleDateFormat ( "MM/dd/yyyy");
 		SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy.MM.dd HH:mm:ss");
 		SimpleDateFormat format2 = new SimpleDateFormat ( "yyyy.MM.dd");
 		
