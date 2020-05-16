@@ -4,6 +4,8 @@
 <head>
 <meta charset="UTF-8">
 <title>인원</title>
+<link rel="stylesheet" href="/p5/css/roomCount.css" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 <input type="hidden" id="hostId" value="${hostId }" />
@@ -16,23 +18,24 @@
 		
 	</script>
 	<!-- <form action="address" method="post"> -->
-	<div id="wrap">
-		최대 숙박인원 <br><input type="text" name="capacity" class="maximum-stay" readonly value="1"/>
-		<button id="maximum-increase-quantity">▲</button>
-		<button id="maximum-decrease-quantity">▼</button><br>
+		<div id="wrap">
+		<div id="container">
+ <h1>숙소에 얼마나 많은인원이 숙박할 수 있나요?</h1>
+ <h4>모든게스트가 편안하게 숙박할 수 있도록 침대가 충분히 구비되어 있는지 확인하세요.</h4>
+		최대 숙박인원 <br> <input type="text" name="capacity" class="maximum-stay" readonly="readonly"  value="1" />
+		<button id="maximum-increase-quantity"></button>
+		<button id="maximum-decrease-quantity"></button><br>
 
-		방 갯수를 입력해볼까요? <br><input type="text"name="roomCount"class="room-count" readonly value="1"/>
-		<button id="count-increase-quantity">▲</button>
-		<button id="count-decrease-quantity">▼</button><br>
-		게스트가 사용할 수 있는 침대가 몇 개 인가요?<br> <input type="text"name="bedCount"class="bed-count" readonly value="0"/>
-		<button id="bed-increase-quantity">▲</button>
-		<button id="bed-decrease-quantity">▼</button><br>
+		방 갯수를 입력해볼까요? <br><input type="text"name="roomCount"class="room-count" readonly="readonly" value="1"/>
+		<button id="count-increase-quantity"></button>
+		<button id="count-decrease-quantity"></button><br>
+		게스트가 사용할 수 있는 침대가 몇 개 인가요?<br> <input type="text"name="bedCount"class="bed-count" readonly="readonly" value="0"/>
+		<button id="bed-increase-quantity"></button>
+		<button id="bed-decrease-quantity"></button><br>
 		게스트가 사용할 수 있는 욕실은요?<br>
-		<input type="text"name="bathroomCount"name="bathroomCount"class="bathroom-count" readonly value="1"/>
-		<button id="bathroom-increase-quantity">▲</button>
-		<button id="bathroom-decrease-quantity">▼</button>
-		<!--index.jsp랑 똑같음  침대개수는 0이 낮은값 나머지는 1이 낮은값 그이상을줄일수 없음 -->
-		</div>
+		<input type="text"name="bathroomCount"name="bathroomCount"class="bathroom-count" readonly="readonly" value="1"/>
+		<button id="bathroom-increase-quantity"></button>
+		<button id="bathroom-decrease-quantity"></button>
 		<script>
 		/*최대 숙박인원  */
 			$(function() {
@@ -131,12 +134,15 @@
 		<!-- <input type="submit" value="다음" /> -->
 	<!-- </form> -->
 	<!--페이지 넘어가기(임시방안)  -->
-<a class="registration" href="./roomType">이전</a>
-<a class="registration" href="./address">다음</a>
+<a class="registration" href="./roomType"><span class="previous">이전</span></a>
+<a class="registration" href="./address"><span class="next">다음</span></a>
 	<a class="modification" href="./roomType?hostId=${hostId }">이전</a>
 	<a class="modification" href="./address?hostId=${hostId }">다음</a>
 
-
+</div>
+<div id="left">
+</div>
+</div>
 
 <script src="/p5/js/host.js?v=<%=System.currentTimeMillis() %>"></script>
 </body>
