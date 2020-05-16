@@ -28,11 +28,7 @@ public class GuestServiceImpl implements GuestService {
 	
 	@Autowired
 	private GuestMapper guestMapper;
-	
-	@Autowired
-	private HostMapper hostMapper;
-	
-	
+		
 	@Override
 	public String selectHost(HttpServletRequest request, Model model) {
 		
@@ -289,8 +285,8 @@ public class GuestServiceImpl implements GuestService {
 				//System.out.println("차이" + diffDays);
 				for(int i = 0;i<diffDays;i++ ) {
 					long day = dCID.getTime() + i * (24 * 60 * 60 * 1000);
-//					String sDay = format2.format(day);	// yyyy.MM.dd
-					String sDay = format0.format(day);	// MM/dd/yyyy
+					String sDay = format2.format(day);	// yyyy.MM.dd
+					//String sDay = format0.format(day);	// MM/dd/yyyy
 					
 					System.out.println(sDay);
 					listBlockingDate.add(sDay);
@@ -309,7 +305,7 @@ public class GuestServiceImpl implements GuestService {
 		String[] arrBlockingDate = listBlockingDate.toArray(new String[listBlockingDate.size()]);
 		
 
-		if(hostMapper.insertBlocking(booking.getHostId(), arrBlockingDate) == arrBlockingDate.length) {
+		if(guestMapper.insertBlocking(booking.getHostId(), arrBlockingDate) == arrBlockingDate.length) {
 			System.out.println("DB blocking insert 성공");
 		}else {
 			System.out.println("DB blocking insert 실패");
