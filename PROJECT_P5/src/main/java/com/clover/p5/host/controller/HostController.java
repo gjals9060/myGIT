@@ -11,12 +11,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.clover.p5.host.dto.Blocking;
+import com.clover.p5.host.dto.BlockingDTO;
 import com.clover.p5.host.dto.Host;
 import com.clover.p5.host.dto.HostDTO;
 import com.clover.p5.host.dto.HostPhoto;
 import com.clover.p5.host.dto.HostingDTO;
 import com.clover.p5.host.service.HostService;
 import com.clover.p5.member.service.MemberServiceImpl;
+
+import edu.emory.mathcs.backport.java.util.Arrays;
 
 
 @Controller
@@ -196,6 +200,59 @@ public class HostController {
 	
 	
 	
+	
+	
+	@RequestMapping("/host/*/getBlockingList") // 예약 차단일 목록 검색
+	@ResponseBody
+	public List<Blocking> getBlockingList(int hostId) {
+		return hostService.getBlokcingList(hostId);
+	}
+	@RequestMapping("/host/*/block") // 예약 차단
+	@ResponseBody
+	public boolean block(BlockingDTO dto) {
+		System.out.println(dto);
+		return hostService.block(dto);
+	}
+	@RequestMapping("/host/*/unblock") // 예약 차단 해제
+	@ResponseBody
+	public boolean unblock(BlockingDTO dto) {
+		System.out.println(dto);
+		return hostService.unblock(dto);
+	}
+	
+	
+	@RequestMapping("/host/*/blockMonth") // 예약 전체(월) 차단
+	@ResponseBody
+	public boolean blockMonth(BlockingDTO dto) {
+		System.out.println(dto);
+		return hostService.blockMonth(dto);
+	}
+	@RequestMapping("/host/*/unblockMonth") // 예약 전체(월) 해제
+	@ResponseBody
+	public boolean unblockMonth(BlockingDTO dto) {
+		System.out.println(dto);
+		return hostService.unblockMonth(dto);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	// roomType.jsp로 이동
 		@RequestMapping("/host/modification/roomType")
 		public String roomType2(int hostId, Model model) {
@@ -266,42 +323,7 @@ public class HostController {
 		
 	
 	
-	/*
-		// photo.jsp로 이동
-	@RequestMapping("/host/modification/photo")
-	public String photo2(int hostId, Model model) {
-		model.addAttribute("hostId", hostId);
-		return "host/modification/step2/photo";
-	}	// description.jsp로 이동
-	@RequestMapping("/host/modification/description")
-	public String description2(int hostId, Model model) {
-		model.addAttribute("hostId", hostId);
-		return "host/modification/step2/description";
-	}	// name.jsp로 이동
-	@RequestMapping("/host/modification/name")
-	public String name2(int hostId, Model model) {
-		model.addAttribute("hostId", hostId);
-		return "host/modification/step2/name";
-	}
 	
-	
-	
-		// stayDate.jsp로 이동
-	@RequestMapping("/host/modification/stayDate")
-	public String stayDate2(int hostId, Model model) {
-		model.addAttribute("hostId", hostId);
-		return "host/modification/step3/stayDate";
-	}	// calendar.jsp로 이동
-	@RequestMapping("/host/modification/calendar")
-	public String calendar2(int hostId, Model model) {
-		model.addAttribute("hostId", hostId);
-		return "host/modification/step3/calendar";
-	}	// price.jsp로 이동
-	@RequestMapping("/host/modification/price")
-	public String price2(int hostId, Model model) {
-		model.addAttribute("hostId", hostId);
-		return "host/modification/step3/price";
-	}*/
 	
 	
 	

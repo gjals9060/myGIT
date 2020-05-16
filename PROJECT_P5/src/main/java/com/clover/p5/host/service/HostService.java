@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.clover.p5.host.dto.Blocking;
+import com.clover.p5.host.dto.BlockingDTO;
 import com.clover.p5.host.dto.Host;
 import com.clover.p5.host.dto.HostDTO;
 import com.clover.p5.host.dto.HostPhoto;
@@ -80,9 +82,21 @@ public interface HostService {
 	
 	
 	
-	// 숙소 등록시 설정한 예약 차단일 저장
-	/*boolean insertBlocking(int hostId, String blockingDate);*/
 	
+	// 예약 차단일 목록 검색 
+	List<Blocking> getBlokcingList(int hostId);
+	
+	// 예약 차단일 설정
+	boolean block(BlockingDTO dto);
+	
+	// 예약 차단일 설정 해제
+	boolean unblock(BlockingDTO dto);
+	
+	// 전체(월) 예약 차단 
+	boolean blockMonth(BlockingDTO dto);
+	
+	// 전체(월) 예약 차단 해제
+	boolean unblockMonth(BlockingDTO dto);
 	
 	
 	

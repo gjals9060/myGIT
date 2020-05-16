@@ -7,6 +7,7 @@ import com.clover.p5.guest.dto.HostInfoDTO;
 import com.clover.p5.guest.dto.HostPhotoDTO;
 import com.clover.p5.guest.dto.BookingEntity;
 import com.clover.p5.guest.dto.SearchHostDTO;
+import com.clover.p5.host.dto.BlockingDTO;
 
 public interface GuestMapper {
 
@@ -20,6 +21,8 @@ public interface GuestMapper {
 	List<Date> selectBlocking(String hostId);
 	
 	int insertBooking(BookingEntity booking);	//성공시 1
+	
+	int insertBlocking(int hostId, String[] arrBlockingDate);
 	
 	List<BookingEntity> selectBooking(String memberId);
 }

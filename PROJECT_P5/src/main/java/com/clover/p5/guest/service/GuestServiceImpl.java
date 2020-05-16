@@ -14,9 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.clover.p5.guest.dto.BookingEntity;
 import com.clover.p5.guest.dto.HostInfoDTO;
 import com.clover.p5.guest.dto.HostPhotoDTO;
-import com.clover.p5.guest.dto.BookingEntity;
 import com.clover.p5.guest.dto.SearchHostDTO;
 import com.clover.p5.guest.dto.SearchInputDTO;
 import com.clover.p5.guest.mapper.GuestMapper;
@@ -28,11 +28,7 @@ public class GuestServiceImpl implements GuestService {
 	
 	@Autowired
 	private GuestMapper guestMapper;
-	
-	@Autowired
-	private HostMapper hostMapper;
-	
-	
+		
 	@Override
 	public String selectHost(HttpServletRequest request, Model model) {
 		
@@ -86,7 +82,16 @@ public class GuestServiceImpl implements GuestService {
 			sbBlocking.append("'" + form1.format(d) + "',");
 		}
 		System.out.println("sbBlocking : " + sbBlocking);
-		String sBlocking = sbBlocking.substring(0, sbBlocking.length()-1);
+		
+		
+		String sBlocking;
+		
+		if(blocking.size() == 0) {
+			sBlocking = "";
+		}else {
+			sBlocking = sbBlocking.substring(0, sbBlocking.length()-1);
+		}
+		
 		System.out.println("sBlocking : " + sBlocking);
 		
 		model.addAttribute("host", hostInfoDto);
@@ -258,7 +263,7 @@ public class GuestServiceImpl implements GuestService {
 //		System.out.println("id : " + booking.getHostId());
 //		System.out.println("checkIn : " + booking.getCheckInDate());
 //		System.out.println("payment : " + booking.getPayment());
-		SimpleDateFormat format0 = new SimpleDateFormat ( "MM/dd/yyyy");
+//		SimpleDateFormat format0 = new SimpleDateFormat ( "MM/dd/yyyy");
 		SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy.MM.dd HH:mm:ss");
 		SimpleDateFormat format2 = new SimpleDateFormat ( "yyyy.MM.dd");
 		
@@ -289,8 +294,8 @@ public class GuestServiceImpl implements GuestService {
 				//System.out.println("차이" + diffDays);
 				for(int i = 0;i<diffDays;i++ ) {
 					long day = dCID.getTime() + i * (24 * 60 * 60 * 1000);
-//					String sDay = format2.format(day);	// yyyy.MM.dd
-					String sDay = format0.format(day);	// MM/dd/yyyy
+					String sDay = format2.format(day);	// yyyy.MM.dd
+					//String sDay = format0.format(day);	// MM/dd/yyyy
 					
 					System.out.println(sDay);
 					listBlockingDate.add(sDay);
@@ -309,7 +314,7 @@ public class GuestServiceImpl implements GuestService {
 		String[] arrBlockingDate = listBlockingDate.toArray(new String[listBlockingDate.size()]);
 		
 
-		if(hostMapper.insertBlocking(booking.getHostId(), arrBlockingDate) == arrBlockingDate.length) {
+		if(guestMapper.insertBlocking(booking.getHostId(), arrBlockingDate) == arrBlockingDate.length) {
 			System.out.println("DB blocking insert 성공");
 		}else {
 			System.out.println("DB blocking insert 실패");

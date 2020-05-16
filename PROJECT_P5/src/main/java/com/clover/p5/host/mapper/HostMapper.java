@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.clover.p5.host.dto.Blocking;
+import com.clover.p5.host.dto.BlockingDTO;
 import com.clover.p5.host.dto.Host;
 import com.clover.p5.host.dto.HostDTO;
 import com.clover.p5.host.dto.HostPhoto;
@@ -80,10 +82,22 @@ public interface HostMapper {
 	
 	
 	
+	List<Blocking> selectBlockingList(int hostId);
 	
-	int insertBlocking(
+	int insertBlocking(BlockingDTO dto);	
+	int deleteBlocking(BlockingDTO dto);
+	
+	int insertBlockingMonth(
 			@Param("hostId") int hostId,
-			@Param("arrBlockingDate") String[] arrBlockingDate);	
+			@Param("year") String year,
+			@Param("month") String month,
+			@Param("arrDate") String[] arrDate);
+	
+	int deleteBlockingMonth(BlockingDTO dto);
+	
+	
+	
+	
 	
 	
 	
