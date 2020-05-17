@@ -20,7 +20,7 @@
 <img src="img/bedroom.jpg" alt="사진" />
 </div>
 <div class="description">
-	<div class="text">${host.type} / ${host.roomType}</div>
+	<div class="text">${host.htName} / ${host.rtName}</div>
 	<div class="title">${host.name}</div>
 	<div class="date">${booking.checkInDate} ~ ${booking.checkOutDate}</div>
 	<div class="guestCount">${booking.guestCount}명</div>

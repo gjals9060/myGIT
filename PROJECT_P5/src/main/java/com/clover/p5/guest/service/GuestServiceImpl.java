@@ -59,7 +59,7 @@ public class GuestServiceImpl implements GuestService {
 		HostInfoDTO hostInfoDto = guestMapper.selectHost(id);
 		
 		// 호스트 사진 리스트
-		List<HostPhotoDTO> hostPhotoDto = guestMapper.selectHostPhoto(id);
+		List<HostPhotoDTO> hostPhotoDto = guestMapper.selectHostPhotoList(id);
 		//System.out.println(hostPhotoDto.get(0).getPath());
 		
 		// 호스트 block 날짜 리스트
@@ -332,14 +332,32 @@ public class GuestServiceImpl implements GuestService {
 	
 	@Override
 	public ModelAndView userInfoReservationList(HttpServletRequest request, ModelAndView mv) {
-
+		
 		String memberId = request.getParameter("memberId");
 		
 		List<BookingEntity> bookingList = guestMapper.selectBooking(memberId);
 		
+		List<HostPhotoDTO> RepresentativePhotoList = new ArrayList<>();
+		
+		List<HostInfoDTO> hostList = new ArrayList<>();
+		
+		for(BookingEntity booking : bookingList) {
+			
+			HostPhotoDTO RepresentativePhoto = guestMapper.selectRepresentativePhoto(booking.getHostId()+"");
+			
+			RepresentativePhotoList.add(RepresentativePhoto);
+			
+			HostInfoDTO host = guestMapper.selectHost(booking.getHostId()+"");
+			hostList.add(host);
+		}
+		
 		System.out.println("날짜 확인 : " + bookingList.get(0).getCheckInDate());
 		
 		mv.addObject("bookingList", bookingList);
+		mv.addObject("RepresentativePhotoList", RepresentativePhotoList);
+		mv.addObject("hostList", hostList);
+		
+		
 		//mv.addObject("hostList", hostList);
 		
 		mv.setViewName("userInfoReservationList"); // 뷰의 이름

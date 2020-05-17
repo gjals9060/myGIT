@@ -137,26 +137,22 @@
 			</div>
 -->
 
-			<c:forEach var="booking" items="${bookingList}">
+			<c:forEach var="index" begin="0" end="${fn:length(bookingList)-1}">
 			
 				<div class="resercation-list-block">
-					<div class="reservation-list-num">
+					<!-- <div class="reservation-list-num">
 						<p>12345</p>
-					</div>
+					</div> -->
 					<div class="reservation-list-img">
-						<img src="./img/room1.jpg" alt="대표이미지" />
+						<img src="${RepresentativePhotoList[index].path}" alt="${RepresentativePhotoList[index].originalName}" />
 					</div>
 					<div class="reservaion-list-value">
 						<!-- 숙소 정보  -->
-						<div class="reservation-list-title">이름</div>
-						<script type="text/javascript">
-							//날짜 변환	
-							console
-						</script>
-						<div class="reservation-list-date">체크 인 : ${booking.checkInDate} / 체크 아웃 : ${booking.checkOutDate}</div>
-						<div class="reservation-list-buy-date">예약일 : ${booking.bookingDate}</div>
-						<div class="reservation-list-price">결제금액 : ${booking.payment}원</div>
-						<div class="reservation-list-guestCount"> 예약인원 : ${booking.guestCount}</div>
+						<div class="reservation-list-title">${hostList[index].name}</div>
+						<div class="reservation-list-date">체크 인 : ${bookingList[index].checkInDate} / 체크 아웃 : ${bookingList[index].checkOutDate}</div>
+						<div class="reservation-list-buy-date">예약일 : ${bookingList[index].bookingDate}</div>
+						<div class="reservation-list-price">결제금액 : ${bookingList[index].payment}원</div>
+						<div class="reservation-list-guestCount"> 예약인원 : ${bookingList[index].guestCount}</div>
 					</div>
 					<div class="reservation-list-refund">
 						<button class="reservation-list-refund-btn">후기등록</button>
