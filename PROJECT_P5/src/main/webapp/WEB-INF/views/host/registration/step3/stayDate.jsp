@@ -51,7 +51,7 @@
 	<br>
 <p class="tip"><span class="tip">팁:</span> 숙박 기간이 짧으면 예약을 더 많이 받을 수 있지만, 그만큼 예약을 자주 받아야 합니다.</p>
 	</div>
-	<a class="previous-link"><span class="previous">이전</span></a>
+	<a class="previous-link" href="../hostingStatus?hostId=${hostId }"><span class="previous">이전</span></a>
 	<a onclick="check()" class="next-link"><span class="next">다음</span></a>
 	<!-- <a href="calendar">다음</a> -->
 	</div>
@@ -86,7 +86,7 @@ function check() {
         return false; //
     }
     else {
-    	location.href="../hostingStatus?hostId=${hostId }";
+    	location.href="./calendar?hostId=${hostId }";
     }
 }
 $('input[name="minimumStay"]').keyup(function (e) {
