@@ -1,77 +1,132 @@
 @charset "UTF-8";
-#wrap{
-	position:relative;
-	width:1100px;
-	left:20%;
+
+#wrap {
+	position: relative;
+	width: 1100px;
+	left: 20%;
 }
-#payment-window{
+
+#payment-window {
 	border: 1px solid #ed2d55;
-    border-radius: 15px;
-    width: 700px;
-    height: 400px;
+	border-radius: 15px;
+	width: 700px;
+	height: 400px;
+	border: none;
+}
+
+.contents {
 	
 }
-.contents{
-	margin-left:30px;
-}
-#payment-window img{
-	float:right;
-    margin-right: 100px;
-    width: 150px;
-    height: 150px;
-	}
-.personnel{
-margin-top:70px;
-}
-.date{
-margin-top:40px;
+
+#payment-window img {
+	float: right;
+	margin-right: 100px;
+	width: 150px;
+	height: 150px;
 }
 
-.price-calculation{
-margin-top:40px;
-display:iline;
+.personnel {
+	margin-top: 70px;
 }
-.price{
-	display:inline;
-	margin-left: 300px;
+
+.date {
+	margin-top: 80px;
 }
-hr{
-	border-color: #ed2d55;
-	width:450px;
-margin-left:0px;
+
+.price-calculation {
+	margin-top: 40px;
+	display: iline;
+	margin-bottom: 30px;
 }
-.total-text{
-	display:inline;
+
+.price {
+	display: inline;
 }
-.total-price{
-		display:inline;
+
+.price-info {
+	margin-left: 280px;
+}
+
+hr {
+	width: 450px;
+	margin-left: 0px;
+	border: 3px solid #f7f7f7;
+}
+
+.total-text {
+	display: inline;
+}
+
+.total-price {
+	display: inline;
 	margin-left: 336px;
 }
-.pay-text{
-	margin-top: 40px;
+
+.pay-text {
+	margin-top: 80px;
+	margin-bottom: 20px;
 }
-.kakaopay{
-	display:inline;
+
+.kakaopay {
+	display: inline;
 	margin-left: 200px;
-
 }
-a{
-		float: right;
-		margin-right:750px;
+
+img {
+	vertical-align: middle;
+}
+
+a {
+	float: right;
+	margin-right: 750px;
+}
+
+#refund-info {
+	margin-top: 40px;
+	border-left: 3px solid #FFAF0F;
+	padding: 0px 10px;
+}
+
+.refund-title {
+	color: #222222;
+	font-size: 18px;
+	font-weight: bold;
+}
+.refund-text1,.refund-text2{
+	
+    width: 575px;
+	
+}
+.refund-last{
+	font-size: 12px;
+	width: 592px;
+}
+input[type="submit"]{
+	width: 643px;
+	height: 48px;
+background-color: #E62556;
+color: white;
+border: none;
+outline: none;
+margin-top: 20px;
+} 
+i{
+	position: relative;
+    left: -390px;
+    color: white;
+    vertical-align: middle;
 }
 /*태블릿버전  */
-@media (max-width: 768px){
-	#wrap{
-	margin: 0;
-	left:0;
-}
-
+@media ( max-width : 768px) {
+	#wrap {
+		margin: 0;
+		left: 0;
+	}
 }
 /*태블릿버전  */
-@media (max-width: 480px){
-	#wrap{
-	margin: 0;
-	left:0;
-}
-
+@media ( max-width : 480px) {
+	#wrap {
+		margin: 0;
+		left: 0;
+	}
 }

@@ -24,7 +24,7 @@
 	href="https://unpkg.com/swiper/css/swiper.min.css">
 <link rel="stylesheet" href="/p5/css/daterangepicker.css" />
 <link rel="stylesheet" href="/p5/css/reset.css" />
-<link rel="stylesheet" href="css/header.css" />
+<link rel="stylesheet" href="/p5/css/header.css" />
 
 <body>
 	<div id="widthTest"></div>
