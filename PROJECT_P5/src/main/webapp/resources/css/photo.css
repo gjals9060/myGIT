@@ -204,4 +204,320 @@ img:hover {
    height: 100px;
 }
 
+.info-modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
 
+/* Modal Content */
+
+.info-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 568px;
+  height: 432px;
+}/* The Close Button */
+.info-close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+} .info-tip{
+	font-size: 24px;
+	font-weight: bold;
+	margin-top: 50px;
+}
+.info-first{
+	margin-left:20px;
+	margin-top:30px;
+color:#484848;
+	font-size:18px;
+	font-weight: bold;
+}
+.info-last{
+	
+	margin-top:30px;
+color:#484848;
+	font-size:18px;
+	font-weight: bold;
+}
+.info-second{
+	margin-left:20px;
+font-size:18px;
+color:#484848;
+font-weight: bold;
+}
+
+.info-third{
+	margin-left:20px;
+font-size:18px;
+color:#484848;
+font-weight: bold;
+}
+
+.second{
+position: relative;
+    top: 24px;
+    left: -7px;
+}
+.third{
+position: relative;
+    top: 24px;
+    left: -7px;
+}
+
+.info-img-first{
+	position: relative;
+    top: 54px;
+    left: -7px;
+} 
+ #complete {
+    color: white;
+    background-color: #008489;
+    width: 80px;
+    height: 48px;
+    border: none;
+    margin-top: 20px;
+    border-radius: 10px;
+}   
+/* 설명 */
+.title{
+	margin-right: 10px;
+
+
+}
+.title,#info{
+	display: inline;
+		margin-top: 50px;
+}
+.title,#info,.tip-description{
+	position:relative;
+left: 10%;
+	
+}
+.tip-description{
+	margin-bottom: 30px;
+	margin-top: 10px;
+	}
+	.title{
+	color: #484848;
+	font-size: 24px;
+	font-weight: bold;
+	}
+	#info{
+	border: none;
+	background-color: white;
+	color: #008489;
+	}
+	i.fa.fa-lightbulb-o.fa-3x{
+	color: #008489;
+	}
+/* 이전다음 */
+.previous-link {
+    position: relative;
+    top: 355px;
+    background: url(../img/previousArrow.png) no-repeat;
+    background-size: 20px;
+    left: 100px;
+}
+span.previous {
+	position: relative;
+	color: #008489;
+	margin-left: 30px;
+}
+.next-link {
+    position: relative;
+    top: 345px;
+    width: 80px;
+    height: 45px;
+    background-color: #008489;
+    float: right;
+    color: white;
+    border-radius: 10px;
+    border: 1px solid;
+   
+}
+span.next{
+
+    border-radius: 3px 0 0 3px;
+    position: relative;
+    left: 5px;
+    top: 10px;
+}
+
+/*테블릿  */
+@media ( max-width : 768px) {
+#wrap {
+		max-width: 768px;
+		width:100%;
+		
+	}
+
+	.previous-link {
+    position: relative;
+    top: 365px;
+    background: url(../img/previousArrow.png) no-repeat;
+    background-size: 20px;
+    left: -0px;
+}
+.registration {
+    position: relative;
+    top: 265px;
+    width: 80px;
+    height: 45px;
+    background-color: #008489;
+    float: right;
+    color: white;
+    border-radius: 10px;
+    border: 1px solid;
+    left: 230px;
+}
+#descriptionWord {
+   color: #008489;
+    position: relative;
+    top: -35px;
+    left: 430px;
+    font-size: 12px;
+}
+input[type="text"] {
+    width: 460px;
+    height: 45px;
+    
+    border-top: outset;
+    border-left: 1px solid #A9A9A9;
+}
+.photoButton.first button {
+    width: 80px;
+    height: 80px;
+    position: relative;
+    left: -100px;
+    bottom: 0px;
+    top: 430px;
+    margin: 5px;
+}
+#upload{
+	width: 300px;
+    height: 200px;
+    border: 5px solid;
+    border-color: #eb2b55;
+    margin-top: 0px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    border-radius: 0px;
+}
+ .photoList img:first-child {
+    width: 740px;
+    height: 600px;
+    border: 5px solid;
+    border-color: #eb2b55;
+    margin-top: 0px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    border-radius: 0px;
+} 
+#mainPhoto {
+    width: 750px;
+    background: #eb2b55;
+    top: 65px;
+    /* bottom: -600px; */
+    margin: 0 auto;
+    color: white;
+    font-size: 25px;
+    font-weight: bolder;
+    margin: 0 auto;
+    color: white;
+    font-size: 25px;
+    font-weight: bolder;
+    padding: 20px 0;
+}
+}
+
+@media ( max-width : 480px) {
+
+	#wrap {
+		max-width: 480px;
+		
+	}
+	
+.photoList img:first-child {
+    width: 450px;
+    height: 600px;
+    border: 5px solid;
+    border-color: #eb2b55;
+    margin-top: 0px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    border-radius: 0px;
+    margin-left: 20px;
+}
+#mainPhoto {
+    width: 460px;
+    background: #eb2b55;
+    top: 65px;
+    /* bottom: -600px; */
+    margin: 0 auto;
+    color: white;
+    font-size: 25px;
+    font-weight: bolder;
+    margin: 0 auto;
+    color: white;
+    font-size: 25px;
+    font-weight: bolder;
+    padding: 20px 0;
+    margin-left: 20px;
+}
+.photoButton.first button {
+    width: 80px;
+    height: 80px;
+    position: relative;
+    left: -100px;
+   
+    bottom: 0px;
+    top: 430px;
+    margin: 5px;
+}
+.registration {
+    position: relative;
+    top: 265px;
+    width: 80px;
+    height: 45px;
+    background-color: #008489;
+    float: right;
+    color: white;
+    border-radius: 10px;
+    border: 1px solid;
+    left: 20px;
+}
+.fifty {
+    top: 89px;
+    position: absolute;
+    width: 30%;
+    height: 16px;
+    float: left;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    background: repeating-linear-gradient(135deg, rgb(77, 223, 212), rgb(77, 223, 212) 2px, rgb(153, 237, 230) 2px, rgb(153, 237, 230) 4px);
+}
+.info-content {
+    background-color: #fefefe;
+    margin: 30px;
+  
+    padding-left: 20px;
+   
+    padding: 20px;
+    border: 1px solid #888;
+    width: 438px;
+    height: 522px;
+}
+}

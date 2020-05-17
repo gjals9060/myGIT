@@ -8,8 +8,6 @@
 <!--[if IE]><link rel="shortcut icon" href="favicon.ico" /><![endif]-->
 <title>예약 차단 설정</title>
 <script src="/p5/js/jquery-3.4.1.js"></script>
-<script src="/p5/js/jquery-ui.min.js"></script>
-<script src="/p5/js/Calendar.js?v=<%=System.currentTimeMillis()%>"></script> 
 <link rel="stylesheet" href="/p5/css/reservationCalendar.css" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- <link rel="stylesheet" href="https://cdn.rawgit.com/dubrox/Multiple-Dates-Picker-for-jQuery-UI/master/jquery-ui.multidatespicker.css" /> -->
@@ -22,7 +20,6 @@
 .step-tab{
 	height: auto !important;
 }
-
 </Style>
 </head>
 <body>
@@ -43,7 +40,7 @@
 	<input type="text" id="altField" value="" name="blockingDate" />
 <!-- 	<input type="button" value="전체해제" id="mdpAbled" class="disabled" />
 	<input type="button" value="전체차단" id="mdpDisabled" class="disabled" /> -->
-	<button id="manageMonth" onclick="manageMonth();"></button>
+	<button id="manageMonth" onclick="manageMonth();">전체 차단/해제</button>
 
 	<a href="./stayDate?hostId=${hostId }">이전</a>
 	<a href="./price?hostId=${hostId }">다음</a>
@@ -56,11 +53,10 @@
 <script>
 $('#mdp-demo').multiDatesPicker({
 	dateFormat : "yy.mm.dd",
-	altField : '#altField',
+//	altField : '#altField',
 	minDate : 0, // today
-	maxDate : 60 // +30 days from today
+	maxDate : "+2m" // +2 months from today
 });
-
 
 $(window).bind("pageshow", function(event) {
 	$.ajax({
@@ -72,11 +68,7 @@ $(window).bind("pageshow", function(event) {
 				alert("접근 권한이 없는 페이지입니다.");
 				location.replace("/p5"); // 홈으로 이동
 			} else{
-				
-				
 				refresh(); // 화면 갱신
-				
-				
 			}
 		},
 		error : function() {

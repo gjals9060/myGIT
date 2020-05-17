@@ -392,7 +392,7 @@ public class HostServiceImpl implements HostService {
 	@Override
 	public List<Blocking> getBlokcingList(int hostId) {
 		List<Blocking> list = hostMapper.selectBlockingList(hostId);
-		System.out.println(hostId + "번 호스트 예약 차단일 - " + list.size() + "건");
+		System.out.println(hostId + "번 호스트 예약 차단일(예약 완료 포함) - " + list.size() + "건");
 		return list;
 	}
 

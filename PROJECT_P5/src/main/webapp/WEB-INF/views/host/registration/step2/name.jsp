@@ -7,11 +7,19 @@
 <meta charset="UTF-8">
 <title>숙소명</title>
 <script src="/p5/js/jquery-3.4.1.js"></script>
+<link rel="stylesheet" href="/p5/css/name.css" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 </head>
 <body>
 	<input type="hidden" id="hostId" value="${hostId }" />
 	<%@include file="./hostHeaderStep2.jsp" %>
-	
+		<div class="bar">
+			<div class="fifty">
+				<p></p>
+			</div>
+
+		</div>
 	<script>
 	//	$('.hosting-step').empty();
 	//	$('.hosting-step').text("2단계:상세정보를 입력하세요");
@@ -22,14 +30,24 @@
 	</script>
 	
 	
-	
-	<h3>숙소명</h3>
-	<!--2단계마지막  -->
-	<input type="text" name="name" placeholder="숙소 이름" id="inputText" />
-	<a href="./description?hostId=${hostId }">이전</a>
-	<button class="registration" onclick="completeStep2()">다음</button>
-	<a class="modification" href="../hostingStatus?hostId=${hostId }">다음</a>
+	<div id="wrap">
+		<div id="container">
+<h1>숙소의 제목을 만드세요.</h1>
+<h3>숙소의 특징과 장점을 강조하는 제목으로 게스트의 관심을 끌어보세요.</h3>
 
+
+
+	
+	<!--2단계마지막  -->
+	<input type="text" name="name" placeholder="숙소 이름" id="inputText" onkeyup="countWords()"/><span id="descriptionWord">50</span> 
+<div class="warning"></div>
+	<a href="./description?hostId=${hostId }" class="previous-link"><span class="previous">이전</span></a>
+	<button class="registration" onclick="completeStep2()"><span class="next">다음</span></button>
+	<a class="modification" href="../hostingStatus?hostId=${hostId }">다음</a>
+</div>
+<div id="left"><div id="info"><i class="fa fa-lightbulb-o fa-3x" aria-hidden="true"></i><br>경치가 좋은 Anam-dong, Seongbuk-gu 숙소</div>
+</div></div>
+</div>
 	<script src="/p5/js/jquery-3.4.1.js"></script>
 	<script src="/p5/js/host.js?v=<%=System.currentTimeMillis()%>"></script>
 	<script>
@@ -41,6 +59,10 @@
 				$('input[name="name"]').focus();
 				return;
 			}
+			if(name.length>50){
+				$('#inputText').focus();
+					 return;
+				 }
 			var params = {
 				hostId : $('#hostId').val(),
 				name : name
@@ -62,6 +84,23 @@
 					alert("통신에 실패..");
 				}
 			}); // AJAX-END
+		}
+		/*글자수 구하기  */
+		function countWords(){
+			 var content = $("#inputText").val();
+		if(content.length>50){
+			$('.warning').html("제목을 50자 이하로 줄여주세요.");
+			$('.warning').show();
+			
+			$('#inputText').css("outline-color","red");
+			
+		}else{
+			$('.warning').hide();
+			$('#inputText').css("outline-color","#008489");
+		}
+
+			 $("#descriptionWord").html(50-content.length);
+
 		}
 	</script>
 </body>
