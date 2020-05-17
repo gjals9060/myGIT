@@ -432,24 +432,32 @@
 	
 			var firstName = firstNameInput.val();
 			var lastName= lastNameInput.val();
-			
-			 $.ajax({
-				url : "",
-				data : "firstName:"+firstName
-					+ "lastName:"+lastName,
+		var params = {
+			firstName : firstName,
+			lastName : lastName
+		};
+		//	alert(JSON.stringify(params));
+	 		 $.ajax({
+				url : "ajax/updateUserName",
+		//		data : "firstName:"+firstName
+		//			+ "lastName:"+lastName,
+				data : params,
 				type: "POST",
 				success: function(result){
-					alert("성공");
+					if(result){
+						alert("회원정보 수정(이름, 성) 완료");
+						
+						// 성공 후 input
+						firstNameInput.attr("disabled",true);
+						lastNameInput.attr("disabled",true);
+					}
 					
 					
-					// 성공 후 input
-					firstNameInput.attr("disabled",true);
-					lastNameInput.attr("disabled",true);
 				},
 				error:function(result){
 					alert("통신실패")
 				}
-			}); 
+			});  
 			
 			firstNameInput.attr("disabled",true);
 			lastNameInput.attr("disabled",true);
@@ -473,18 +481,22 @@
 			birthDateInput.attr("disabled",false);
 			cancelDate.css("display","inline");
 		}else{
-			
-			$.ajax({
-				url : "",
+			alert(birthDate);
+		/* 	$.ajax({
+				url : "ajax/updateUserBirthDate",
 				type: "POST",
-				data : "birthDate:"+birthDate,
-				success: function(){
-					alert('확인');
+			//	data : "birthDate:"+birthDate,
+				data : "birthDate="+birthDate,
+				success: function(result){
+					if(result){
+					alert('회원정보 수정(생년월일) 완료');
+						
+					}
 				},
 				error: function(){
 					alert('실패');
 				}
-			});
+			}); */
 			
 			
 			////// ajax 처리 후 
@@ -516,11 +528,15 @@
 		}else {
 			
 			$.ajax({
-				url:"",
+				url:"ajax/updateUserMobilePhone",
 				type: "POST",
-				data: "mobilePhone:"+mobilePhone,
-				success:function(){
-					alert("확인");
+			//	data: "mobilePhone:"+mobilePhone,
+				data: "mobilePhone="+mobilePhone,
+				success:function(result){
+					if(result){
+						alert("회원정보 수정(휴대전화 번호) 완료");
+						
+					}
 				},
 				error:function(){
 					alert("통신실패");

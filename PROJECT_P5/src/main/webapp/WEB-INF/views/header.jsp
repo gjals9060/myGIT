@@ -682,7 +682,7 @@
 
 		$.ajax({
 			type : "POST",
-			url : "ajax/sendEmailAuthenticationCode",
+			url : "/p5/ajax/sendEmailAuthenticationCode",
 			data : "email=" + inputEmail,
 			success : function(data) {
 				if (!data) {
@@ -701,7 +701,7 @@
 	function sendTemporaryPassword() { // 로딩이미지 들어가야됨
 		$.ajax({
 			type : "POST",
-			url : "ajax/sendTemporaryPassword",
+			url : "/p5/ajax/sendTemporaryPassword",
 			data : 'userEmail=' + $('#makeshiftInputEmail').val(),
 			async : false,
 			success : function(data) {
@@ -732,7 +732,7 @@
 
 		$.ajax({
 			type : "POST",
-			url : "ajax/temporaryLogIn",
+			url : "/p5/ajax/temporaryLogIn",
 			data : params,
 			async : false,
 			success : function(data) {
@@ -794,7 +794,7 @@
 
 				$.ajax({
 					type : "POST",
-					url : "ajax/validateSignUp",
+					url : "/p5/ajax/validateSignUp",
 					data : params,
 					success : function(result) {
 						if (!result.length) { // 유효성 탈락 항목이 없다.
@@ -855,7 +855,7 @@
 
 		$.ajax({
 			type : "POST",
-			url : "ajax/emailAuthentication",
+			url : "/p5/ajax/emailAuthentication",
 			data : params,
 			async : false,
 			success : function(result) {
@@ -863,7 +863,7 @@
 
 					$.ajax({
 						type : "POST",
-						url : "ajax/completeSignUp",
+						url : "/p5/ajax/completeSignUp",
 						data : paramsNewMember,
 						async : false,
 						success : function(result) {
@@ -902,7 +902,7 @@
 
 		$.ajax({
 			type : "POST",
-			url : "ajax/logIn",
+			url : "/p5/ajax/logIn",
 			data : params,
 			async : false,
 			success : function(result) {
@@ -947,7 +947,7 @@
 	$('#btnLogOut').on('click', function() {
 		$.ajax({
 			type : "POST",
-			url : "ajax/logOut",
+			url : "/p5/ajax/logOut",
 			async : false,
 			success : function() {
 

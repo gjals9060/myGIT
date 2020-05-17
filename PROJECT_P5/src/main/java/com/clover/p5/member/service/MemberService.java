@@ -1,5 +1,6 @@
 package com.clover.p5.member.service;
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,8 +41,12 @@ public interface MemberService {
 	boolean temporaryLogIn(HttpServletRequest req);
 	
 	
-	
-	
+	// 회원정보 수정 - 이름, 성
+	boolean updateUserName(HttpServletRequest req);
+	// 회원정보 수정 - 생년월일
+	boolean updateUserBirthDate(HttpServletRequest req, Date birthDate);
+	// 회원정보 수정 - 휴대전화 번호
+	boolean updateUserMobilePhone(HttpServletRequest req);
 	// 비밀번호 변경
 	int updateUserPassword(HttpServletRequest req);
 	

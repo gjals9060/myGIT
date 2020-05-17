@@ -1,5 +1,6 @@
 package com.clover.p5.member.controller;
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -95,8 +96,23 @@ public class MemberController {
 
 	
 	
-	
-	
+//********************************** 회원정보 수정 *************************************
+	@RequestMapping("/ajax/updateUserName") // 이름, 성
+	@ResponseBody
+	public boolean updateUserName(HttpServletRequest req) {
+		return memberService.updateUserName(req);
+	}
+	@RequestMapping("/ajax/updateUserBirthDate") // 생년월일
+	@ResponseBody
+	public boolean updateUserBirthDate(HttpServletRequest req, Date birthDate) {
+		return memberService.updateUserBirthDate(req, birthDate);
+	}
+	@RequestMapping("/ajax/updateUserMobilePhone") // 휴대전화 번호
+	@ResponseBody
+	public boolean updateUserMobilePhone(HttpServletRequest req) {
+		return memberService.updateUserMobilePhone(req);
+	}
+//********************************** 회원정보 수정-END *************************************
 	
 	
 //********************************** 비밀번호 변경 *************************************

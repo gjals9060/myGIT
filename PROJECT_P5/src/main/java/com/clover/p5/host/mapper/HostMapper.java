@@ -81,18 +81,19 @@ public interface HostMapper {
 			
 	
 	
-	
+	// 예약 차단일 목록 검색(예약 완료 포함)
 	List<Blocking> selectBlockingList(int hostId);
-	
-	int insertBlocking(BlockingDTO dto);	
+	// 예약 차단일 설정
+	int insertBlocking(BlockingDTO dto);
+	// 예약 차단일 해제
 	int deleteBlocking(BlockingDTO dto);
-	
+	// 전체(월) 차단일 설정
 	int insertBlockingMonth(
 			@Param("hostId") int hostId,
 			@Param("year") String year,
 			@Param("month") String month,
 			@Param("arrDate") String[] arrDate);
-	
+	// 전체(월) 차단일 해제
 	int deleteBlockingMonth(BlockingDTO dto);
 	
 	

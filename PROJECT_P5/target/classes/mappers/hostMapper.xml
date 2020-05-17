@@ -331,9 +331,9 @@
 			AND who = 'H'
 	</delete>
 	
-	<!-- foreach문에서는 trigger로! .nextval이 안먹힌다 -->
 	<!-- 전체(월) 예약 차단 -->
 	<insert id="insertBlockingMonth">
+		<!-- foreach문에서는 trigger로! .nextval이 안먹힌다 -->
 		<foreach collection="arrDate" item="date"
 		 separator=" " open="INSERT ALL " close="SELECT * FROM DUAL">
 			INTO blocking

@@ -20,8 +20,6 @@ import com.clover.p5.host.dto.HostingDTO;
 import com.clover.p5.host.service.HostService;
 import com.clover.p5.member.service.MemberServiceImpl;
 
-import edu.emory.mathcs.backport.java.util.Arrays;
-
 
 @Controller
 public class HostController {
@@ -201,7 +199,7 @@ public class HostController {
 	
 	
 	
-	
+//****************************** 호스트 예약 차단 ******************************************	
 	@RequestMapping("/host/*/getBlockingList") // 예약 차단일 목록 검색
 	@ResponseBody
 	public List<Blocking> getBlockingList(int hostId) {
@@ -219,8 +217,6 @@ public class HostController {
 		System.out.println(dto);
 		return hostService.unblock(dto);
 	}
-	
-	
 	@RequestMapping("/host/*/blockMonth") // 예약 전체(월) 차단
 	@ResponseBody
 	public boolean blockMonth(BlockingDTO dto) {
@@ -233,6 +229,7 @@ public class HostController {
 		System.out.println(dto);
 		return hostService.unblockMonth(dto);
 	}
+//****************************** 호스트 예약 차단-END ******************************************	
 	
 	
 	
@@ -251,8 +248,7 @@ public class HostController {
 	
 	
 	
-	
-	
+//****************************** 호스트 수정 1단계 ******************************************	
 	// roomType.jsp로 이동
 		@RequestMapping("/host/modification/roomType")
 		public String roomType2(int hostId, Model model) {
@@ -274,10 +270,10 @@ public class HostController {
 			model.addAttribute("hostId", hostId);
 			return "host/registration/step1/facilities";
 		}
+//****************************** 호스트 수정 1단계-END ******************************************
 		
 		
-		
-		
+//****************************** 호스트 등록,수정 2단계 ******************************************
 		// photo.jsp로 이동
 	@RequestMapping("/host/*/photo")
 	public String photo(int hostId, Model model) {
@@ -294,9 +290,10 @@ public class HostController {
 		model.addAttribute("hostId", hostId);
 		return "host/registration/step2/name";
 	}
+//****************************** 호스트 등록,수정 2단계-END ******************************************
 	
 	
-	
+//****************************** 호스트 등록,수정 3단계 ******************************************
 		// stayDate.jsp로 이동
 	@RequestMapping("/host/*/stayDate")
 	public String stayDate(int hostId, Model model) {
@@ -318,7 +315,7 @@ public class HostController {
 		model.addAttribute("hostId", hostId);
 		return;
 	}
-	
+//****************************** 호스트 등록,수정 3단계-END ******************************************
 	
 		
 	

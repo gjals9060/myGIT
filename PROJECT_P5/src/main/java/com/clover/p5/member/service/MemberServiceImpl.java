@@ -2,6 +2,7 @@ package com.clover.p5.member.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Date;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -283,6 +284,51 @@ public class MemberServiceImpl implements MemberService {
 		return true; // 로그인 성공
 	}
 //******************************** 임시 로그인-END ******************************************
+	
+	
+	
+	
+	
+	
+	
+//******************************** 회원정보 수정 ********************************************
+	@Override
+	public boolean updateUserName(HttpServletRequest req) {
+		int memberId = getSessionUserId(req);
+		String firstName = req.getParameter("firstName");
+		String lastName = req.getParameter("lastName");
+		if(memberMapper.updateName(memberId, firstName, lastName) == 1) {
+			System.out.println("회원정보 수정(이름, 성)을 완료했습니다.");
+			refreshUserSession(req); // 세션 갱신
+			return true;
+		}
+		System.out.println("회원정보 수정(이름, 성)에 실패했습니다.");
+		return false;
+	}
+	@Override
+	public boolean updateUserBirthDate(HttpServletRequest req, Date birthDate) {
+		int memberId = getSessionUserId(req);
+		if(memberMapper.updateBirthDate(memberId, birthDate) == 1) {
+			System.out.println("회원정보 수정(생년월일)을 완료했습니다.");
+			refreshUserSession(req); // 세션 갱신
+			return true;
+		}
+		System.out.println("회원정보 수정(생년월일)에 실패했습니다.");
+		return false;
+	}
+	@Override
+	public boolean updateUserMobilePhone(HttpServletRequest req) {
+		int memberId = getSessionUserId(req);
+		String mobilePhone = req.getParameter("mobilePhone");
+		if(memberMapper.updateMobilePhone(memberId, mobilePhone) == 1) {
+			System.out.println("회원정보 수정(휴대전화 번호)을 완료했습니다.");
+			refreshUserSession(req); // 세션 갱신
+			return true;
+		}
+		System.out.println("회원정보 수정(휴대전화 번호)에 실패했습니다.");
+		return false;
+	}
+//******************************** 회원정보 수정-END ********************************************
 	
 	
 //******************************** 비밀번호 변경 ********************************************
@@ -690,6 +736,10 @@ public class MemberServiceImpl implements MemberService {
         return list;
 	}
 //******************************** 백엔드 유효성 검사 결과-END ********************************************
+
+
+
+	
 
 
 
