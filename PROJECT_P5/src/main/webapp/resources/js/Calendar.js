@@ -75,15 +75,26 @@ function refresh(){
 						arrGuestBlocking.push(blocking.checkInDate);
 					}
 				}); // each-END
+				alert("호스트 차단: " + arrHostBlocking.length + "건, 게스트 차단: " + arrGuestBlocking.length + "건")
 				
 				
-				// 동작을 수행하는 페이지
+				// 동작을 수행하는 페이지 - 초기화 되기 전 기록
 				var activePage = convertMonth($('.ui-datepicker-month').text());
 				
-				
 				$('#mdp-demo').multiDatesPicker('resetDates', 'picked'); // 초기화
-				if(!!arrHostBlocking.length){
+				if(!!arrHostBlocking.length && !!arrGuestBlocking.length){ // 호스트 차단, 게스트 차단 둘 다 있음
 					$('#mdp-demo').multiDatesPicker({
+						dateFormat : "yy.mm.dd",
+						addDisabledDates: arrGuestBlocking, // 예약 완료 건 비활성화
+						addDates: arrHostBlocking // 호스트 차단일 적용
+					}); // 페이지 초기화 일어남
+				} else if(!!arrGuestBlocking.length){ // 게스트 차단일만 있음
+					$('#mdp-demo').multiDatesPicker({
+						dateFormat : "yy.mm.dd",
+						addDisabledDates: arrGuestBlocking // 예약 완료 건 비활성화
+					}); // 페이지 초기화 일어남
+				} else{
+					$('#mdp-demo').multiDatesPicker({ // 호스트 차단일만 있음
 						addDates: arrHostBlocking // 호스트 차단일 적용
 					}); // 페이지 초기화 일어남
 				}
