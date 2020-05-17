@@ -8,8 +8,8 @@
 <!--[if IE]><link rel="shortcut icon" href="favicon.ico" /><![endif]-->
 <title>예약 차단 설정</title>
 <script src="/p5/js/jquery-3.4.1.js"></script>
-<%-- <script src="/p5/js/jquery-ui.min.js"></script>
-<script src="/p5/js/Calendar.js?v=<%=System.currentTimeMillis()%>"></script> --%>
+<script src="/p5/js/jquery-ui.min.js"></script>
+<script src="/p5/js/Calendar.js?v=<%=System.currentTimeMillis()%>"></script> 
 <link rel="stylesheet" href="/p5/css/reservationCalendar.css" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- <link rel="stylesheet" href="https://cdn.rawgit.com/dubrox/Multiple-Dates-Picker-for-jQuery-UI/master/jquery-ui.multidatespicker.css" /> -->
