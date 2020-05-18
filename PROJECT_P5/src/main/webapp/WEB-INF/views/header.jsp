@@ -30,8 +30,9 @@
 	<div id="widthTest"></div>
 	<header>
 		<button id="headerMobileButton">
-			<i class="fas fa-bars fa-3x"></i>
+			<i class="fas fa-search fa-3x"></i>
 		</button>
+		
 		<div class="title-logo-img">
 			<a href="/p5"><img src="/p5/img/p5_logo.png" id="titleLogoImg" /></a>
 			<!-- 로고 이미지 들어갈 자리 -->
@@ -516,13 +517,20 @@
 				$('#presentationTitle').css("padding-top", "120px");
 
 				if (width_size <= 603) {
-					$('.title-logo-img ').css("height", "50px");
-					$('#headerMobileButton').css("display", "block");
-					$('.input-info').css("display", "none");
-					$('.useradd-login-form').css("display", "none");
+					if(mobileSwitch = true) {
+	 					$('.title-logo-img ').css("height", "50px");
+						$('#headerMobileButton').css("display", "block");
+						$('.input-info').css("display", "none");
+						$('.useradd-login-form').css("display", "none");
 
-					$('.title-logo-img').css("display", "block");
-					$('.useradd-login-form').css("display", "none");
+						$('.title-logo-img').css("display", "block");
+						$('.useradd-login-form').css("display", "none");
+						$('.fa-2x').css("font-size", "2em");
+					} else {
+						$('.input-info').css("display", "block");
+						$('.useradd-login-form').css("display", "block");
+						$('.title-logo-img ').css("height", "80px");
+					}
 				} else if (width_size <= 843) {
 					$('.title-logo-img ').css("height", "80px");
 					$('#headerMobileButton').css("display", "none");
@@ -555,8 +563,25 @@
 
 				$('#presentationTitle').css('padding-top', '0px');
 
+				if (width_size <= 603) {
+					if(mobileSwitch = true) {
+	 					$('.title-logo-img ').css("height", "50px");
+						$('#headerMobileButton').css("display", "block");
+						$('.input-info').css("display", "none");
+						$('.useradd-login-form').css("display", "none");
+
+						$('.title-logo-img').css("display", "block");
+						$('.useradd-login-form').css("display", "none");
+						$('.fa-2x').css("font-size", "2em");
+					} else {
+						$('.input-info').css("display", "block");
+						$('.useradd-login-form').css("display", "block");
+						$('.title-logo-img ').css("height", "80px");
+				}
+				
 			}
-		},
+		}
+	},
 		"scroll" : function() {
 			width_size = $(window).width();
 			var height = $(document).scrollTop();
@@ -576,13 +601,21 @@
 				$('#presentationTitle').css("padding-top", "120px");
 
 				if (width_size <= 603) {
-					$('.title-logo-img ').css("height", "50px");
+					if(mobileSwitch = true) {
+	 					$('.title-logo-img ').css("height", "50px");
+						$('#headerMobileButton').css("display", "block");
+						$('.input-info').css("display", "none");
+						$('.useradd-login-form').css("display", "none");
 
-					$('#headerMobileButton').css("display", "block");
-
-					$('.input-info').css("display", "none");
-					$('.useradd-login-form').css("display", "none");
-				} else if (width_size <= 843) {
+						$('.title-logo-img').css("display", "block");
+						$('.useradd-login-form').css("display", "none");
+						$('.fa-2x').css("font-size", "2em");
+					} else {
+						$('.input-info').css("display", "block");
+						$('.useradd-login-form').css("display", "block");
+						$('.title-logo-img ').css("height", "80px");
+				}
+				}else if (width_size <= 843) {
 					$('.title-logo-img').css("display", "none");
 					$('.useradd-login-form').css("display", "none");
 				} else {
@@ -607,27 +640,45 @@
 				$('.input-info').css("display", "block");
 
 				$('#presentationTitle').css('padding-top', '0px');
+				
+				if (width_size <= 603) {
+					if(mobileSwitch = true) {
+	 					$('.title-logo-img ').css("height", "50px");
+						$('#headerMobileButton').css("display", "block");
+						$('.input-info').css("display", "none");
+						$('.useradd-login-form').css("display", "none");
 
+						$('.title-logo-img').css("display", "block");
+						$('.useradd-login-form').css("display", "none");
+						$('.fa-2x').css("font-size", "2em");
+					} else {
+						$('.input-info').css("display", "block");
+						$('.useradd-login-form').css("display", "block");
+						$('.title-logo-img ').css("height", "80px");
+				}
 			}
 		}
+	}
 	})
 
 	var mobileSwitch = true; /* 버튼 off */
-
+	
 	$('#headerMobileButton').click(function() {
 		if (mobileSwitch == false) { /* 모바일 메뉴 버튼 off */
 			$('.input-info').css("display", "none");
 			$('.useradd-login-form').css("display", "none");
+			$('.title-logo-img ').css("height", "50px");
 
 			mobileSwitch = true;
 		} else { /* 모바일 메뉴 버튼 on */
 			$('.input-info').css("display", "block");
 			$('.useradd-login-form').css("display", "block");
-
+			$('.title-logo-img ').css("height", "80px");
+			
 			mobileSwitch = false;
 		}
 	})
-
+	
 	//==========================================================================
 	//======================= 회원가입, 로그인, 로그아웃 =============================
 	//==========================================================================

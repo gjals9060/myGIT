@@ -153,7 +153,7 @@ herder>* {
 	margin: auto 0;
 	max-width: 150px;
 }
- 
+
 /* 로그인 회원가입 버튼 */
 .btn {
 	width: 70%;
@@ -166,7 +166,7 @@ herder>* {
 	outline: none;
 	font-size: 80%
 }
- 
+
 .btn:hover {
 	border: 1px solid #bbb;
 }
@@ -239,7 +239,7 @@ herder>* {
 	
 }
  */
- 
+
 /* 이름을 눌렀을 때 dropdown */
 .user-drop-down-btn {
 	vertical-align: middle;
@@ -288,32 +288,33 @@ herder>* {
 }
 
 .modal-popup {
-    width: 100%;
-    height: 100%;
-    display: flex;
+	width: 100%;
+	height: 100%;
+	display: flex;
 }
 
 .modalWrap {
-    vertical-align: middle;
-    text-align: center;
-    margin: auto;
-    background: white;
-    width: 30%;
-    min-width: 300px;
-    padding: 10% 0;
+	vertical-align: middle;
+	text-align: center;
+	margin: auto;
+	background: white;
+	width: 30%;
+	min-width: 400px;
+	padding: 10% 0;
 }
 
 /* login*/
-
 .loginTitle {
 	
 }
 
-.loginInput input[type="text"], .loginInput input[type="password"] {
+.modalWrap input[type="text"], .modalWrap input[type="password"], .modalWrap input[type="date"] {
 	margin: 10px;
-    width: 50%;
-    min-width: 200px;
-    height: 20px;
+	width: 60%;
+	min-width: 200px;
+	height: 25px;
+	text-align: center;
+	vertical-align: middle;
 }
 
 .loginCheck {
@@ -322,7 +323,10 @@ herder>* {
 }
 
 .loginButtons {
-	margin: 5px;
+	margin: 10px;
+	width: 60%;
+	min-width: 200px;
+	height: 30px;
 }
 
 /* 회원가입 경고문 */
@@ -396,14 +400,14 @@ to {
 /* 예약 */
 #userImg {
 	border-radius: 50%;
-    width: 25px;
-    vertical-align: middle;
-    height: 25px;
-    object-fit: cover;
-    object-position: center;
+	width: 25px;
+	vertical-align: middle;
+	height: 25px;
+	object-fit: cover;
+	object-position: center;
 }
- 
-#headerMobileButton { 
+
+#headerMobileButton {
 	display: none;
 	position: absolute;
 	width: 50px;
@@ -473,4 +477,28 @@ to {
 		margin: 10px;
 		width: 33%;
 	}
-} 
+ 	.fa-2x {
+		font-size: 2em;
+	}
+	.inputWrap {
+		display: contents;
+	}
+	.title-logo-img {
+		height: 50px;
+	}
+	#headerMobileButton {
+		display: block;
+	}
+	.input-info {
+		display: none;
+	}
+	.useradd-login-form {
+		display: none;
+	}
+	.title-logo-img {
+		display: block;
+	}
+	.useradd-login-form {
+		display: none;
+	}
+}

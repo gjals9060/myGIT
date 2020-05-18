@@ -1,18 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
-   
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 <title>숙소 상세보기</title>
 
-<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript"
+	src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="js/jquery-3.4.1.js"></script>
 
 
@@ -20,14 +23,16 @@
 <link rel="stylesheet" href="css/home.css" />
 <link rel="stylesheet" href="css/header.css?ver0.1" />
 
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 
-<link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
+<link rel="stylesheet"
+	href="https://unpkg.com/swiper/css/swiper.min.css">
 
 <link rel="stylesheet" href="css/daterangepicker.css" />
 <style type="text/css">
 #wrap {
-	width: 90%;
+	width: 100%;
 	max-width: 1100px;
 	margin: 10px auto;
 }
@@ -40,7 +45,7 @@ hr {
 	margin: 20px 0 20px;
 }
 
- button {
+button {
 	border: none;
 	width: 15px;
 	background: none;
@@ -81,7 +86,7 @@ hr {
 
 .modalImg img {
 	height: 600px;
-/* 	min-width: 600px;
+	/* 	min-width: 600px;
 	max-width: 900px; */
 }
 
@@ -122,7 +127,7 @@ hr {
 .postImgNumber, .modalImgNumber {
 	font-size: 12px;
 	top: 0px;
-	padding-top: 1%;
+	padding-top: 5%;
 }
 
 .postImgThumbnails, .modalImgThumbnails {
@@ -230,21 +235,20 @@ hr {
 }
 
 .contentReviewStar {
-	font-size: 
+	font-size:
 }
 
 /* 예약창 */
-
 .contentReserv {
 	border: 1px solid black;
-	padding: 3%;
+	padding: 2%;
 	position: sticky;
 	top: 10%;
 	bottom: 25%;
-	left: 75vw;
+	left: 100%;
 	text-align: center;
 	width: 10%;
-	min-width: 150px;
+	min-width: 170px;
 	background: #eee;
 }
 
@@ -257,7 +261,7 @@ hr {
 .contentReserv tr {
 	display: grid;
 }
-	
+
 .contentReserv input {
 	vertical-align: middle;
 	text-align: center;
@@ -266,8 +270,8 @@ hr {
 
 .guestCount_reserve {
 	/* header 랑 간섭이 있어서 guestCount_input이 였던걸 guestCount_reserve 으로 바꿨습니다. by 허민 */
- 	width: 60% !important;
- }
+	width: 60% !important;
+}
 
 .contentReserv input[type=submit], .contentReserv input[type=button] {
 	border: none;
@@ -285,14 +289,13 @@ hr {
 }
 
 /* 지도 */
-
 .contentMap {
 	width: 60vw;
 	max-width: 700px;
 }
 
 .map {
- 	width: 500px; 
+	width: 500px;
 	height: 400px;
 	margin-top: 10px;
 	z-index: 0;
@@ -303,229 +306,202 @@ hr {
 
 /* 페이징 */
 .pagination a {
-  color: black;
-  float: left;
-  padding: 8px 16px;
-  text-decoration: none;
-  transition: background-color .3s;
+	color: black;
+	float: left;
+	padding: 8px 16px;
+	text-decoration: none;
+	transition: background-color .3s;
 }
 
 .pagination a.active {
-  background-color: dodgerblue;
-  color: white;
+	background-color: dodgerblue;
+	color: white;
 }
 
-.pagination a:hover:not(.active) {background-color: #ddd;}
+.pagination a:hover:not (.active ) {
+	background-color: #ddd;
+}
 
-
-@media (min-width: 480px) and (max-width: 880px) {
-	
+@media ( min-width : 480px) and (max-width: 880px) {
 	#wrap {
 		width: 90%;
 		max-width: 880px;
 	}
-	
 	.postImgSlide {
 		width: 100%;
 	}
-	
 	.postContent {
 		padding: 0;
 	}
-	
 	.postContent div {
 		width: 85vw;
 		margin: 0 auto;
 	}
-	
 	.contentTitle {
 		width: none;
 	}
-	
 	.reservTab {
 		display: none;
 	}
-	
 	.contentReservFix {
 		display: block;
 	}
-		
 	.postImg img, .modalImg img {
 		padding-top: 0.5%;
 	}
-	
 	.modalImg img {
 		width: 100%;
 		height: auto;
 		min-width: 400px;
 		max-width: 800px;
 	}
-	
 	.postImgThumbnails, .modalImgThumbnails {
 		min-width: 300px;
 	}
-	
 	.postImgThumbnails img, .modalImgThumbnails img {
 		height: 70px;
 	}
-	
+
 	/* 반응형 */
-		
 	.contentReserv {
-	    bottom: 0;
-	    width: 100%;
-	    margin: 0;
-	    padding: 0;
-	    left: 0;
-	    vertical-align: middle;
-	    text-align: center;
+		bottom: 0;
+		width: 100%;
+		margin: 0;
+		padding: 0;
+		left: 0;
+		vertical-align: middle;
+		text-align: center;
 		background: #eee;
 	}
-	
 	.contentReserv table {
 		padding: 0 15px;
 	}
-	
 	.contentReserv tr {
 		display: contents;
 	}
 }
 
-@media (min-width: 0px) and (max-width: 480px) {
- 	
+@media ( min-width : 0px) and (max-width: 480px) {
 	#wrap {
 		width: 90%;
 		max-width: 480px;
 		min-width: 360px;
 	}
-	
 	.postImgSlide {
 		width: 100%;
 	}
-	
 	.postContent {
 		padding: 0;
 	}
-	
 	.postContent div {
 		width: 85vw;
 		margin: 0 auto;
-	
 	}
-	
 	.reservTab {
 		display: none;
 	}
-	
 	.contentReservFix {
 		display: block;
 	}
-	
-	
 	.postImg img, .modalImg img {
 		padding-top: 0.5%;
 	}
-	
 	.modalImg img {
 		width: 100%;
 		height: auto;
 		min-width: 300px;
 		max-width: 500px;
 	}
-	
 	.postImgThumbnails, .modalImgThumbnails {
 		min-width: 300px;
 	}
-	
 	.postImgThumbnails img, .modalImgThumbnails img {
 		height: 50px;
 	}
-	
-	
+
 	/* 반응형 */
-		
 	.contentReserv {
-	    bottom: 0;
-	    width: 100%;
-	    margin: 0;
-	    padding: 0;
-	    left: 0;
-	    vertical-align: middle;
-	    text-align: center;
+		bottom: 0;
+		width: 100%;
+		margin: 0;
+		padding: 0;
+		left: 0;
+		vertical-align: middle;
+		text-align: center;
 		background: #eee;
 	}
-	
 	.contentReserv table {
 		padding: 0 15px;
 	}
-	
 	.contentReserv tr {
 		display: contents;
 	}
-	
 }
-
 </style>
 
 </head>
 <body>
-	<jsp:include page="./header.jsp"></jsp:include>	
-   	<div id="wrap">
-      <div class="postImgSlide">
-         <!-- 사진 데이터 입력 시 반목문으로  >  .postImgSlide[0] 아래로 append
+	<jsp:include page="./header.jsp"></jsp:include>
+	<div id="wrap">
+		<div class="postImgSlide">
+			<!-- 사진 데이터 입력 시 반목문으로  >  .postImgSlide[0] 아래로 append
          <div class="postImg">
             <div class="postImgNumber">(i값)/(전체 사진 갯수)</div>
             <img src="이미지 링크" onclick="modalOn()">
          </div>
          -->
 
-         <!-- start 호스트포토 리스트 출력 작업 by 허민 -->
-         <c:forEach var="photo" items="${hostPhoto}" varStatus="status">
-			<div class="postImg">
-            	<div class="postImgNumber">${status.count} / ${fn:length(hostPhoto)}</div>
-            	<img src="${photo.path}" alt="${photo.originalName}" onclick="modalOn()">
+			<!-- start 호스트포토 리스트 출력 작업 by 허민 -->
+			<c:forEach var="photo" items="${hostPhoto}" varStatus="status">
+				<div class="postImg">
+					<div class="postImgNumber">${status.count}/
+						${fn:length(hostPhoto)}</div>
+					<img src="${photo.path}" alt="${photo.originalName}"
+						onclick="modalOn()">
+				</div>
+
+			</c:forEach>
+
+			<!-- end 호스트포토 리스트 출력 작업 by 허민 -->
+
+			<div class="postImgSlideButton">
+				<a class="prev" onclick="plusSlides(-1)">&#10094;</a> <a
+					class="next" onclick="plusSlides(1)">&#10095;</a>
 			</div>
-         
-         </c:forEach>
-         
-         <!-- end 호스트포토 리스트 출력 작업 by 허민 -->
 
-         <div class="postImgSlideButton">
-            <a class="prev" onclick="plusSlides(-1)">&#10094;</a> <a
-               class="next" onclick="plusSlides(1)">&#10095;</a>
-         </div>
-
-         <div class="postImgThumbnails">
-            <div class="postImgThumbnail"></div>
-         </div>
-      </div>
-      <!-- postImgSlide end -->
-
-      <div class="modalImgSlide">
-      
-         <!-- start 호스트포토 modal 출력 작업 by 허민 -->
-         
-         <c:forEach var="photo" items="${hostPhoto}" varStatus="status">
-			<div class="modalImg">
-            	<div class="modalImgNumber">${status.count} / ${fn:length(hostPhoto)}</div>
-            	<img src="${photo.path}" alt="${photo.originalName}" onclick="modalOff()">
+			<div class="postImgThumbnails">
+				<div class="postImgThumbnail"></div>
 			</div>
-         
-         </c:forEach>
-         
-         <!-- end 호스트포토 modal 출력 작업 by 허민 -->
+		</div>
+		<!-- postImgSlide end -->
 
-         <div class="modalImgSlideButton">
-            <a class="prev" onclick="plusSlides(-1)">&#10094;</a> <a
-               class="next" onclick="plusSlides(1)">&#10095;</a>
-         </div>
+		<div class="modalImgSlide">
 
-         <div class="modalImgThumbnails">
-            <div class="modalImgThumbnail"></div>
-         </div>
+			<!-- start 호스트포토 modal 출력 작업 by 허민 -->
 
-      </div>
-      <hr>
+			<c:forEach var="photo" items="${hostPhoto}" varStatus="status">
+				<div class="modalImg">
+					<div class="modalImgNumber">${status.count}/
+						${fn:length(hostPhoto)}</div>
+					<img src="${photo.path}" alt="${photo.originalName}"
+						onclick="modalOff()">
+				</div>
+
+			</c:forEach>
+
+			<!-- end 호스트포토 modal 출력 작업 by 허민 -->
+
+			<div class="modalImgSlideButton">
+				<a class="prev" onclick="plusSlides(-1)">&#10094;</a> <a
+					class="next" onclick="plusSlides(1)">&#10095;</a>
+			</div>
+
+			<div class="modalImgThumbnails">
+				<div class="modalImgThumbnail"></div>
+			</div>
+
+		</div>
+		<hr>
 
 		<div class="postContent">
 			<table class="postContentTable">
@@ -545,9 +521,9 @@ hr {
 									<td><span class="contentLocation">${host.address }</span></td>
 								</tr>
 								<tr>
-									<td>${host.htName } / ${host.rtName }|인원
-										${host.capacity }명 방 ${host.roomCount }개 침대 ${host.bedCount }개
-										욕실 ${host.bathroomCount }개</td>
+									<td>${host.htName }/ ${host.rtName }|인원 ${host.capacity }명
+										방 ${host.roomCount }개 침대 ${host.bedCount }개 욕실
+										${host.bathroomCount }개</td>
 								</tr>
 							</table>
 						</div> <!-- postContentIntro end -->
@@ -577,10 +553,9 @@ hr {
 										style="width: 30px; height: 30px;">
 								</button>
 							</div>
-							</div>
-							<script type="text/javascript"
-								src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6252091adcb28726fdb95ebdf0b78361"></script>
-							<script>
+						</div> <script type="text/javascript"
+							src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6252091adcb28726fdb95ebdf0b78361"></script>
+						<script>
                      var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
                          mapOption = { 
                              center: new kakao.maps.LatLng(37.240910457871784, 131.86707687050958), // 지도의 중심좌표
@@ -643,91 +618,98 @@ hr {
                     	relayout();
 
                     	</script>
-                    	<hr>
-			<div class="contentReview">
-				<div class="contentReview Title">후기 <span class="contentReviewStar">★ 4.5 (21)</span></div>
-				<table class="contentReviewList" id="reviewList">
-<!-- 					<tr></tr> -->
-				</table>
-				<div class="pagination">
-					<div class="pagingPrev"><a class="paging" onclick="commentLoad(nowCommentPage-1)">&laquo;</a></div>
-					<div class="pagingNum">
-		  				<a class="paging active" onclick="commentLoad(1)">1</a>
-						<a class="paging" onclick="commentLoad(2)">2</a>
-						<a class="paging" onclick="commentLoad(3)">3</a>
-						<a class="paging" onclick="commentLoad(4)">4</a>
-						<a class="paging" onclick="commentLoad(5)">5</a>
-					</div>
-					<div class="pagingNext"><a class="paging" onclick="commentLoad(nowCommentPage+1)">&raquo;</a></div>
-			</div>
-			</div>
-			<!-- contentReview end -->
-			<br>
-			<br>
-			<hr>
-			<div class="contentRefund">
-				<div class="contentRefund Title">환불정책</div>
-				체크인 30일 전까지는 전액환불 가능합니다.
-			</div>
+						<hr>
+						<div class="contentReview">
+							<div class="contentReview Title">
+								후기 <span class="contentReviewStar">★ 4.5 (21)</span>
+							</div>
+							<table class="contentReviewList" id="reviewList">
+								<!-- 					<tr></tr> -->
+							</table>
+							<div class="pagination">
+								<div class="pagingPrev">
+									<a class="paging" onclick="commentLoad(nowCommentPage-1)">&laquo;</a>
+								</div>
+								<div class="pagingNum">
+									<a class="paging active" onclick="commentLoad(1)">1</a> <a
+										class="paging" onclick="commentLoad(2)">2</a> <a
+										class="paging" onclick="commentLoad(3)">3</a> <a
+										class="paging" onclick="commentLoad(4)">4</a> <a
+										class="paging" onclick="commentLoad(5)">5</a>
+								</div>
+								<div class="pagingNext">
+									<a class="paging" onclick="commentLoad(nowCommentPage+1)">&raquo;</a>
+								</div>
+							</div>
+						</div> <!-- contentReview end --> <br> <br>
+						<hr>
+						<div class="contentRefund">
+							<div class="contentRefund Title">환불정책</div>
+							체크인 30일 전까지는 전액환불 가능합니다.
+						</div>
 					</td>
-					<td class="reservTab">
-					</td>
+					<td class="reservTab"></td>
 				</tr>
 				<tr>
 			</table>
 		</div>
-<!-- postContent end-->
+		<!-- postContent end-->
 
 		<div class="contentReserv">
-						
+
 			<c:set var="userId" value="${user.id}" />
 			<c:choose>
 				<c:when test="${userId != null}">
-				<form action="reservationPurchase" method="post" onsubmit="return isMobileAuthentication();">
-					<table>
-						<tr>
-							<td><div class="contentReservTitle">예약</div>
-							${host.price}/1박</td>
-							<td>
-								<div class="contentReservTitle">날짜</div>
-								<input type="text" id="reservationDate" name="checkInDatecheckOutDate" autocomplete="off" placeholder="날짜 선택" onchange="countRDate()" />
-								<!-- header 와 구분 -->
-							</td>
-							<td><div class="contentReservTitle">인원</div>
-							<span class="guestInput"><input type='text' name='guestCount' id="guestCount_reserve"
-							class="guestCount_reserve" value="">
-						
-							<button id="increaseQuantity" onclick="return increase();">▲</button>
-							<button id="decreaseQuantity" onclick="return decrease();">▼</button>
-							
-							</span></td>
-						</tr>
-					</table>
-					<div id="dateCount"></div>
-					<input type="hidden" id="hostId" name="hostId" value="${host.id}">
-					<input type="hidden" id="hostName" name="hostName" value="${host.name}">
-					<input type="hidden" id="hostPrice"	name="hostPrice" value="${host.price}">
-					<input type="hidden" id="dateCnt" name="dateCnt" value="">
-	
-	        		<input type="submit" id="goPurchase" value="예약하기" onclick="return gogo();"/>
-	        		<input type="hidden" id="userId" name="userId" value="${user.id}">
-	
+					<form action="reservationPurchase" method="post"
+						onsubmit="return isMobileAuthentication();">
+						<table>
+							<tr>
+								<td><div class="contentReservTitle">예약</div>
+									${host.price}/1박</td>
+								<td>
+									<div class="contentReservTitle">날짜</div> <input type="text"
+									id="reservationDate" name="checkInDatecheckOutDate"
+									autocomplete="off" placeholder="날짜 선택" onchange="countRDate()" />
+									<!-- header 와 구분 -->
+								</td>
+								<td><div class="contentReservTitle">인원</div> <span
+									class="guestInput"><input type='text' name='guestCount'
+										id="guestCount_reserve" class="guestCount_reserve" value="">
+
+										<button id="increaseQuantity" onclick="return increase();">▲</button>
+										<button id="decreaseQuantity" onclick="return decrease();">▼</button>
+
+								</span></td>
+							</tr>
+						</table>
+						<div id="dateCount"></div>
+						<input type="hidden" id="hostId" name="hostId" value="${host.id}">
+						<input type="hidden" id="hostName" name="hostName"
+							value="${host.name}"> <input type="hidden" id="hostPrice"
+							name="hostPrice" value="${host.price}"> <input
+							type="hidden" id="dateCnt" name="dateCnt" value=""> <input
+							type="submit" id="goPurchase" value="예약하기"
+							onclick="return gogo();" /> <input type="hidden" id="userId"
+							name="userId" value="${user.id}">
+
 					</form>
-	        	</c:when>
-	        	<c:otherwise>
-	        		<div class="contentReservTitle">예약</div>
-	        		<br>
-	        		<div>로그인 후에<br>이용가능합니다.</div>
-	        		<br>
-        			<input type="button" id="goLogin" value="로그인" />
-	        	</c:otherwise>
-	        </c:choose>
+				</c:when>
+				<c:otherwise>
+					<div class="contentReservTitle">예약</div>
+					<br>
+					<div>
+						로그인 후에<br>이용가능합니다.
+					</div>
+					<br>
+					<input type="button" id="goLogin" value="로그인" />
+				</c:otherwise>
+			</c:choose>
 		</div>
 
 
 
 	</div>
-   <!-- wrap end -->
+	<!-- wrap end -->
 
 </body>
 
