@@ -19,12 +19,20 @@
 			data : params
 		}); // AJAX-END
 	});
+	/*$(window).bind("pagehide", function (event) {
+		var url = setSaveURL(); // 정보를 처리할 적절한 곳으로 보낸다.
+		$.ajax({
+			type : "POST",
+			url : '/p5/test',
+			data : 'data='+url
+		}); // AJAX-END
+	});*/
 	
 		// 최신 정보만 보여주게써~
 	$(window).bind("pageshow", function (event) {
 	//	alert(urlInfo);
 		var url = setRefreshURL();
-		if(url == 'getNewHost'){
+		if(url == './getNewHost'){
 			ajaxRefresh(url);
 		} else{
 			$.ajax({
@@ -194,7 +202,7 @@ function setSaveURL(){
 	|| urlInfo == '/p5/host/registration/roomCount'
 	|| urlInfo == '/p5/host/registration/address'
 	|| urlInfo == '/p5/host/registration/facilities')
-	{return "saveNewHost";}
+	{return "./saveNewHost";}
 	
 	// 등록 1단계 이후의 과정 및 모든 수정(DB 사용)
 	if(urlInfo.indexOf('/p5/host/modification/roomType') !== -1){return "saveRoomType";}
@@ -203,11 +211,11 @@ function setSaveURL(){
 	if(urlInfo.indexOf('/p5/host/modification/facilities') !== -1){return "saveFacilities";}
 	
 	if(urlInfo.indexOf('/p5/host/registration/description') !== -1 || urlInfo.indexOf('/p5/host/modification/description') !== -1)
-	{return "saveDescription";}
+	{return "./saveDescription";}
 	if(urlInfo.indexOf('/p5/host/modification/name') !== -1){return "saveName";}
 	
 	if(urlInfo.indexOf('/p5/host/registration/stayDate') !== -1 || urlInfo.indexOf('/p5/host/modification/stayDate') !== -1)
-	{return "saveStayDate"};
+	{return "./saveStayDate"};
 	
 }//////////////////////////////////// setSaveURL-END /////////////////////////////////////////////
 
@@ -220,10 +228,10 @@ function setRefreshURL(){
 	|| urlInfo == '/p5/host/registration/roomCount'
 	|| urlInfo == '/p5/host/registration/address'
 	|| urlInfo == '/p5/host/registration/facilities')
-	{return "getNewHost";}
+	{return "./getNewHost";}
 	
 	// 등록 1단계 이후의 과정 및 모든 수정(DB 사용)
-	return "getHost";
+	return "./getHost";
 	
 }////////////////////////////////// setRefreshURL-END /////////////////////////////////////////////
 
