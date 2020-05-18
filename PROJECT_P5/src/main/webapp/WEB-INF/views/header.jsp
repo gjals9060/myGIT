@@ -361,6 +361,7 @@
 
 </body>
 <script>
+
 	var flag = true; // 날짜 출력 여부
 
 	var date = new Date();
@@ -526,185 +527,127 @@
 	});
 
 	var width_size = $(window).width();
-	/// header scroll event 
-	$(window).on({
-		"resize" : function() {
-			width_size = $(window).width();
-			var height = $(document).scrollTop();
-			$('#scrollId').val(height);
+	var isURLmain = false;
+	
+	if (window.location.pathname == "/p5/") {
+		isURLmain = true;
+	}
+	
 
-			if (height > 80) { // 스크롤의 위치가 80보다  클경우(scroll)
-				$('header').css({
-					"position" : "fixed",
-					"box-shadow" : "1px 1px 10px 0px #bbb",
-					"opacity" : "0.97"
-				});
+	var mobileSwitch = false;
+	
+	function headerSizeView() {
+		width_size = $(window).width();
+		var height = $(document).scrollTop();
+		$('#scrollId').val(height);
 
-				$('.fa-2x').css("font-size", "1em");
-				$('.inputWrap').css("display", "contents");
-				$('.title-logo-img ').css("height", "80px");
+		var a = 603;
+		var b = 843;
+		
+		if (isURLmain = true) {
+			var a = 603;
+			var b = 843;
+		} else {
+			var a = 843;
+			var b = 0;				
+		}
+		
+		if (height > 80) { // 스크롤의 위치가 80보다  클경우(scroll)
+			$('header').css({
+				"position" : "fixed",
+				"box-shadow" : "1px 1px 10px 0px #bbb",
+				"opacity" : "0.97"
+			});
 
-				$('#presentationTitle').css("padding-top", "120px");
+			$('.fa-2x').css("font-size", "1em");
+			$('.inputWrap').css("display", "contents");
+			$('.title-logo-img ').css("height", "80px");
 
-				if (width_size <= 603) {
-					if(mobileSwitch = true) {
-	 					$('.title-logo-img ').css("height", "50px");
-						$('#headerMobileButton').css("display", "block");
-						$('.input-info').css("display", "none");
-						$('.useradd-login-form').css("display", "none");
+			$('#presentationTitle').css("padding-top", "120px");
+			
+			if (width_size <= a) {
+				$('#headerMobileButton').css("display", "block");
+				if(mobileSwitch = true) {
+ 					$('.title-logo-img ').css("height", "50px");
+					$('.input-info').css("display", "none");
+					$('.useradd-login-form').css("display", "none");
 
-						$('.title-logo-img').css("display", "block");
-						$('.useradd-login-form').css("display", "none");
-						$('.fa-2x').css("font-size", "2em");
-					} else {
-						$('.input-info').css("display", "block");
-						$('.useradd-login-form').css("display", "block");
-						$('.title-logo-img ').css("height", "80px");
-					}
-				} else if (width_size <= 843) {
-					$('.title-logo-img ').css("height", "80px");
-					$('#headerMobileButton').css("display", "none");
+					$('.title-logo-img').css("display", "block");
+					$('.useradd-login-form').css("display", "none");
+					$('.fa-2x').css("font-size", "2em");
+				} else {
 					$('.input-info').css("display", "block");
 					$('.useradd-login-form').css("display", "block");
-
-					$('.title-logo-img').css("display", "none");
-					$('.useradd-login-form').css("display", "none");
-
-				} else {
-					$('.title-logo-img').css("display", "block");
-					$('.useradd-login-form').css("display", "block");
+					$('.title-logo-img ').css("height", "80px");
 				}
-
-			} else { /// 80보다 낮은 위치라면(top)
-				$("header").css({
-					"position" : "static",
-					"box-shadow" : "0px 0px"
-				});
-				$('.title-logo-img ').css("height", "100px");
-
-				$('.fa-2x').css("font-size", "2em");
-				$('.inputWrap').css("display", "block");
-
-				$('.title-logo-img').css("display", "block");
-				$('.useradd-login-form').css("display", "block");
-
-				$('#headerMobileButton').css("display", "none");
-				$('.input-info').css("display", "block");
-
-				$('#presentationTitle').css('padding-top', '0px');
-
-				if (width_size <= 603) {
-					if(mobileSwitch = true) {
-	 					$('.title-logo-img ').css("height", "50px");
-						$('#headerMobileButton').css("display", "block");
-						$('.input-info').css("display", "none");
-						$('.useradd-login-form').css("display", "none");
-
-						$('.title-logo-img').css("display", "block");
-						$('.useradd-login-form').css("display", "none");
-						$('.fa-2x').css("font-size", "2em");
-					} else {
-						$('.input-info').css("display", "block");
-						$('.useradd-login-form').css("display", "block");
-						$('.title-logo-img ').css("height", "80px");
-				}
-				
-			}
-		}
-	},
-		"scroll" : function() {
-			width_size = $(window).width();
-			var height = $(document).scrollTop();
-			$('#scrollId').val(height);
-
-			if (height > 80) { // 스크롤의 위치가 80보다  클경우(scroll)
-				$('header').css({
-					"position" : "fixed",
-					"box-shadow" : "1px 1px 10px 0px #bbb",
-					"opacity" : "0.97"
-				});
-
-				$('.fa-2x').css("font-size", "1em");
-				$('.inputWrap').css("display", "contents");
+			} else if (width_size <= b) {
 				$('.title-logo-img ').css("height", "80px");
-
-				$('#presentationTitle').css("padding-top", "120px");
-
-				if (width_size <= 603) {
-					if(mobileSwitch = true) {
-	 					$('.title-logo-img ').css("height", "50px");
-						$('#headerMobileButton').css("display", "block");
-						$('.input-info').css("display", "none");
-						$('.useradd-login-form').css("display", "none");
-
-						$('.title-logo-img').css("display", "block");
-						$('.useradd-login-form').css("display", "none");
-						$('.fa-2x').css("font-size", "2em");
-					} else {
-						$('.input-info').css("display", "block");
-						$('.useradd-login-form').css("display", "block");
-						$('.title-logo-img ').css("height", "80px");
-				}
-				}else if (width_size <= 843) {
-					$('.title-logo-img').css("display", "none");
-					$('.useradd-login-form').css("display", "none");
-				} else {
-					$('.title-logo-img').css("display", "block");
-					$('.useradd-login-form').css("display", "block");
-				}
-
-			} else { /// 80보다 낮은 위치라면(top)
-				$("header").css({
-					"position" : "static",
-					"box-shadow" : "0px 0px"
-				});
-				$('.title-logo-img ').css("height", "100px");
-
-				$('.fa-2x').css("font-size", "2em");
-				$('.inputWrap').css("display", "block");
-
-				$('.title-logo-img').css("display", "block");
-				$('.useradd-login-form').css("display", "block");
-
 				$('#headerMobileButton').css("display", "none");
 				$('.input-info').css("display", "block");
+				$('.useradd-login-form').css("display", "block");
 
-				$('#presentationTitle').css('padding-top', '0px');
-				
-				if (width_size <= 603) {
-					if(mobileSwitch = true) {
-	 					$('.title-logo-img ').css("height", "50px");
-						$('#headerMobileButton').css("display", "block");
-						$('.input-info').css("display", "none");
-						$('.useradd-login-form').css("display", "none");
+				$('.title-logo-img').css("display", "none");
+				$('.useradd-login-form').css("display", "none");
 
-						$('.title-logo-img').css("display", "block");
-						$('.useradd-login-form').css("display", "none");
-						$('.fa-2x').css("font-size", "2em");
-					} else {
-						$('.input-info').css("display", "block");
-						$('.useradd-login-form').css("display", "block");
-						$('.title-logo-img ').css("height", "80px");
-				}
+			} else {
+				$('.title-logo-img').css("display", "block");
+				$('.useradd-login-form').css("display", "block");
 			}
+
+		} else { /// 80보다 낮은 위치라면(top)
+			$("header").css({
+				"position" : "static",
+				"box-shadow" : "0px 0px"
+			});
+			$('.fa-2x').css("font-size", "2em");
+			$('.inputWrap').css("display", "block");
+			$('.title-logo-img').css("display", "block");
+
+			$('#presentationTitle').css('padding-top', '0px');
+			
+			if (width_size <= a) {
+				alert("1");
+				if(mobileSwitch = false) {
+ 					$('.title-logo-img ').css("height", "50px");
+					$('#headerMobileButton').css("display", "block");
+					$('.input-info').css("display", "none");
+					$('.useradd-login-form').css("display", "none");
+
+					$('.title-logo-img').css("display", "block");
+					$('.useradd-login-form').css("display", "none");
+				} /* else {
+					$('.input-info').css("display", "block");
+					$('.useradd-login-form').css("display", "block");
+					$('.title-logo-img ').css("height", "80px");
+				}
+				*/
+			
+		} else {
+			$('.title-logo-img ').css("height", "100px");
+			$('.useradd-login-form').css("display", "block");
+			$('.input-info').css("display", "block");
 		}
 	}
-	})
-
-	var mobileSwitch = true; /* 버튼 off */
+}
+	
+	$(window).resize(headerSizeView);
+	$(window).scroll(headerSizeView);
+	$(window).scroll(function() {
+		mobileSwitch = false;
+	});
 	
 	$('#headerMobileButton').click(function() {
 		if (mobileSwitch == false) { /* 모바일 메뉴 버튼 off */
-			$('.input-info').css("display", "none");
-			$('.useradd-login-form').css("display", "none");
-			$('.title-logo-img ').css("height", "50px");
-
-			mobileSwitch = true;
-		} else { /* 모바일 메뉴 버튼 on */
 			$('.input-info').css("display", "block");
 			$('.useradd-login-form').css("display", "block");
 			$('.title-logo-img ').css("height", "80px");
 			
+			mobileSwitch = true;
+		} else { /* 모바일 메뉴 버튼 on */
+			$('.input-info').css("display", "none");
+			$('.useradd-login-form').css("display", "none");
+			$('.title-logo-img ').css("height", "50px");
+
 			mobileSwitch = false;
 		}
 	})
