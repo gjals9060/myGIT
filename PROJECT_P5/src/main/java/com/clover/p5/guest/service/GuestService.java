@@ -32,7 +32,7 @@ public interface GuestService {
 	ModelAndView userInfoReservationList(HttpServletRequest request, ModelAndView mv);
 	
 	// 환불처리
-	boolean refund(String sBookingId, String sCheckInDate, String sPayment);
+	boolean refund(String sBookingId, String hostId, String sCheckInDate, String sCheckOutDate, String sPayment);
 	//boolean refund(BookingEntity bookingEntity);
 	
 }
