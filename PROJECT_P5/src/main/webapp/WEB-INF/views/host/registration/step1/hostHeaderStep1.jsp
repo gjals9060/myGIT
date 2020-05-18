@@ -111,6 +111,7 @@ nav {
 	     
 		<c:choose>
 			<c:when test="${isRegistration }">
+				<!-- 등록중일때 로고를 클릭하면 hostingList로 이동 -->
 				<script>
 					$('#logoImg').attr('href','../hostingList');
 				</script>

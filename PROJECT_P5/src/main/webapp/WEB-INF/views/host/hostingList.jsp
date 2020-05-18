@@ -238,7 +238,6 @@ function refresh(){
 				if(result){ // 호스트 삭제 성공
 					alert("삭제 성공");
 					refresh(); // 화면 갱신 
-					location.href="http://localhost:8081/p5/host/hostingList";
 				} else{
 					alert("호스팅 삭제 실패..");
 				}

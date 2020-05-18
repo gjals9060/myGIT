@@ -295,9 +295,8 @@
 				<div class="user-info-update-value">
 					<input class="user-info-update-value-input"
 						id="userInfoUpdateValueFirstName" type="text"
-						value=${user.firstName } disabled /> <input
-						class="user-info-update-value-input"
-						id="userInfoUpdateValueLastName" type="text"
+						value=${user.firstName } disabled /> 
+						<input class="user-info-update-value-input" id="userInfoUpdateValueLastName" type="text"
 						value=${user.lastName } disabled />
 					<button class="user-info-update-value-cancel btnTheme"
 						id="userInfoNameCancelBtn">취소</button>
@@ -329,13 +328,13 @@
 						value=${user.mobilePhone } disabled /> 
 					<input type="hidden" name="mobileAuthentication" value="${user.mobileAuthentication }" />
 					
-					<span id="authenticationResult"></span>
-					<button id="mobileAuthenticationResult" class="btnTheme"></button>
+					<span id="authenticationResult" class="user-info-update-value-btn"></span>
+					<button id="mobileAuthenticationResult" class="user-info-update-value-btn btnTheme"></button>
 					
-					<button class="user-info-update-value-cancel btnTheme" 
+					<!-- <button class="user-info-update-value-cancel btnTheme" 
 						id="userInfoPhoneCancelBtn">취소</button>
 					<button class="user-info-update-value-btn btnTheme"
-						id="userInfoUpdateValuePhoneBtn">수정하기</button>
+						id="userInfoUpdateValuePhoneBtn">수정하기</button> -->
 					
 				</div>
 			</div>
@@ -415,9 +414,13 @@
 </body>
 
 <script>
+	var saveFirstName =$("#userInfoUpdateValueFirstName").val();
+	var saveLastName = $("#userInfoUpdateValueLastName").val(); 
+	var saveBirthDate = $('#userInfoUpdateValueBirthDate').val();
+
 	
-	/////////////////// 이름 수정하기 /////////////////////
-	var cancleName=$('#userInfoNameCancelBtn');
+	/////////////////// 실명 수정하기 /////////////////////
+	var cancleName=$('#userInfoNameCancelBtn'); // 실명 취소버튼 
 	
 	var firstNameInput = $("#userInfoUpdateValueFirstName");
 	var lastNameInput = $("#userInfoUpdateValueLastName");
@@ -428,6 +431,8 @@
 			firstNameInput.attr("disabled",false);
 			lastNameInput.attr("disabled",false);
 			cancleName.css("display","inline");
+			$('#userInfoUpdateValueNameBtn').text("완료");
+						
 		}else{
 	
 			var firstName = firstNameInput.val();
@@ -445,11 +450,14 @@
 				type: "POST",
 				success: function(result){
 					if(result){
-						alert("회원정보 수정(이름, 성) 완료");
+						alert("회원정보 수정(이름, 성) 완료 :"+firstName);
 						
+						saveFirstName = firstName;
+						saveLastName = lastName;
 						// 성공 후 input
 						firstNameInput.attr("disabled",true);
 						lastNameInput.attr("disabled",true);
+						$('#userInfoUpdateValueNameBtn').text("수정하기");
 					}
 					
 					
@@ -458,7 +466,7 @@
 					alert("통신실패")
 				}
 			});  
-			
+
 			firstNameInput.attr("disabled",true);
 			lastNameInput.attr("disabled",true);
 			cancleName.css("display","none");
@@ -468,35 +476,58 @@
 		
 	}); 
 	
+	// 실명 취소시 
+	cancleName.on('click',function(){
+		$('#userInfoUpdateValueNameBtn').text("수정하기");
+		
+ 		$("#userInfoUpdateValueFirstName").val(saveFirstName);
+		$('#userInfoUpdateValueLastName').val(saveLastName);
+		
+		$("#userInfoUpdateValueFirstName").attr('disabled',true);
+		$('#userInfoUpdateValueLastName').attr('disabled',true);
+		cancleName.css('display','none');
+		
+	});
+	
+	
+	
 	
 	////////////////// 생년월일 /////////////////
-	var birthDateInput = $("#userInfoUpdateValueBirthDate"); // input
-	var birthDateBtn = $("#userInfoUpdateValueBirthDateBtn"); // 수정 
 	var cancelDate = $("#userInfoDateCancelBtn");
 	
-	var birthDate = birthDateInput.val();
+	var birthDateInput = $("#userInfoUpdateValueBirthDate"); // input
+	var birthDateBtn = $("#userInfoUpdateValueBirthDateBtn"); // 수정 
+	
+
+	
+	
 	birthDateBtn.on("click", function() {
+		var birthDate = birthDateInput.val();
+		
+		$('#userInfoUpdateValueBirthDateBtn').text('완료');
 		
 		if(birthDateInput.is(":disabled")){
 			birthDateInput.attr("disabled",false);
 			cancelDate.css("display","inline");
 		}else{
 			alert(birthDate);
-		/* 	$.ajax({
+			$.ajax({
 				url : "ajax/updateUserBirthDate",
 				type: "POST",
 			//	data : "birthDate:"+birthDate,
 				data : "birthDate="+birthDate,
 				success: function(result){
 					if(result){
-					alert('회원정보 수정(생년월일) 완료');
+						
+						alert('회원정보 수정(생년월일) 완료');
+						saveBirthDate = birthDate;
 						
 					}
 				},
 				error: function(){
 					alert('실패');
 				}
-			}); */
+			});
 			
 			
 			////// ajax 처리 후 
@@ -504,6 +535,17 @@
 			cancelDate.css("display","none");
 		}
 	});
+	
+	// 생년월일 취소 
+	
+	cancelDate.on('click',function(){
+		$('#userInfoUpdateValueBirthDateBtn').text("수정하기");
+		
+		$('#userInfoUpdateValueBirthDate').val(saveBirthDate);
+		$('#userInfoUpdateValueBirthDate').attr('disabled',true);
+		cancelDate.css('display','none');
+	});
+	
 	
 	
 	/////////////전화번호 변경//////////
@@ -530,7 +572,6 @@
 			$.ajax({
 				url:"ajax/updateUserMobilePhone",
 				type: "POST",
-			//	data: "mobilePhone:"+mobilePhone,
 				data: "mobilePhone="+mobilePhone,
 				success:function(result){
 					if(result){
@@ -554,76 +595,54 @@
 	
 	
 	
-	
-	
-	
-	////////////// 모든 취소 버튼 ///////////////	
-	var cancelBtn = $(".user-info-update-value-cancel");
-	
-	/// user의 정보를 저장 ( 이름, 성, 생년월일,전화번호)
-	var firstName = '${user.firstName}';
-	var lastName= '${user.lastName}';
-	var birthDate = '${user.birthDate}';
-	var phoneNumber = '${user.mobilePhone}';
-	
-	cancelBtn.on("click", function() {
-		firstNameInput.val(firstName);
-		lastNameInput.val(lastName);
-		birthDateInput.val(birthDate);
-		
-		
-		$('.user-info-update-value-input').attr("disabled",true);
-		cancelBtn.css("display","none");
-	});
-	
 
 
-// 임시 비밀번호로 로그인해서 왔으면 비밀번호 변경 modal 활성화
-$('document').ready(function(){
-	var t = $('#isTemporaryLogIn').val();
-	if(t === 'true'){
-		$("#userInfoUpdatePasswordModify").css("display","block");
-	}
-});
-
-
-
-/// 비밀번호 변경하기 
-function updateUserPassword(){
-	alert($("#userInputPassword").val());
-	var params = {
-			userPassword : $('#userInputPassword').val(),
-			newPassword : $('#newPassword').val()
-	}
-	
-	$.ajax({
-		type : "POST",
-		url : "ajax/updateUserPassword",
-		data : params,
-		async : false,
-		success : function(result){
-			if(result == 0){
-				
-				alert("기존의 비밀번호가 일치하지 않습니다.");
-				
-			} else if(result == 1){
-				
-				alert("비밀번호 변경 완료.");
-				location.replace("userInfoUpdate");
-				
-			} else{
-				
-				alert("비밀번호 변경 실패.");
-				
-			}
-		},	
-		error : function(){
-			alert("통신 실패..");
+	// 임시 비밀번호로 로그인해서 왔으면 비밀번호 변경 modal 활성화
+	$('document').ready(function(){
+		var t = $('#isTemporaryLogIn').val();
+		if(t === 'true'){
+			$("#userInfoUpdatePasswordModify").css("display","block");
 		}
 	});
-}
 
+
+
+	/// 비밀번호 변경하기 
+	function updateUserPassword(){
+		alert($("#userInputPassword").val());
+		var params = {
+				userPassword : $('#userInputPassword').val(),
+				newPassword : $('#newPassword').val()
+		}
+		
+		$.ajax({
+			type : "POST",
+			url : "ajax/updateUserPassword",
+			data : params,
+			async : false,
+			success : function(result){
+				if(result == 0){
+					
+					alert("기존의 비밀번호가 일치하지 않습니다.");
+					
+				} else if(result == 1){
+					
+					alert("비밀번호 변경 완료.");
+					location.replace("userInfoUpdate");
+					
+				} else{
+					
+					alert("비밀번호 변경 실패.");
+					
+				}
+			},	
+			error : function(){
+				alert("통신 실패..");
+			}
+		});
+	}
 	
+		
 	/////////////// 비밀번호 변경 모달 /////////////
 		$('#modalBtn').on("click", function() {
 			$("#userInfoUpdatePasswordModify").css("display","block");
