@@ -154,7 +154,37 @@
 
 				$('#btnUserReservationList').on('click', function() {
 					alert("예약 숙소리스트로 이동");
-					location.href = "/p5/userInfoReservationList";
+					
+					var userId = ${user.id};
+					/*jQuery form 전송 방식*/
+					// create element(form)
+					var newForm = $('<form><form>');
+					
+					// set attribute(form)
+					newForm.attr("name","newForm");
+					newForm.attr("method","POST");
+					newForm.attr("action","userInfoReservationList");
+					//newForm.attr("target","_blank");
+					newForm.attr("target","_self");
+					
+						/*
+						target 속성!
+						<form> 태그의 target 속성은 폼 데이터(form data)를 서버로 제출한 후
+						받는 응답이 열릴 위치를 명시합니다. 
+						(기본값은 _self : 응답을 링크가 위치한 현재 프레임에서 보여줌)
+						_blank : 응답을 새로운 윈도우나 탭에서 보여줌
+						*/
+					// create element & set attribute (input)
+					newForm.append($('<input/>', {type: 'hidden', name: 'memberId', value: userId}));
+							
+					// append form(to body)	
+					newForm.appendTo('body');
+					
+					// submit form
+					newForm.submit();
+					
+					//location.href = "userInfoReservationList";
+					
 				});
 			</script>
 

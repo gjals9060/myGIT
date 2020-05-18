@@ -21,6 +21,10 @@ public interface MemberMapper {
 	// 회원정보 검색(ID로)
 	Member selectMember(int memberId);
 	
+	
+	
+	
+	
 	// 회원정보 수정 - 이름, 성
 	int updateName(@Param("memberId") int memberId,
 					@Param("firstName") String firstName,
@@ -28,9 +32,6 @@ public interface MemberMapper {
 	// 회원정보 수정 - 생년월일
 	int updateBirthDate(@Param("memberId") int memberId,
 						@Param("birthDate") Date birthDate);
-	// 회원정보 수정 - 휴대전화 번호
-	int updateMobilePhone(@Param("memberId") int memberId,
-						@Param("mobilePhone") String mobilePhone);
 	// 비밀번호 변경
 	int updatePassword(@Param("memberId") int memberId,
 						@Param("newPassword") String newPassword);
@@ -41,8 +42,9 @@ public interface MemberMapper {
 	
 	// 휴대전화 인증 여부 검색
 	String selectMobileAuthentication(int memberId);
-	// 휴대전화 인증으로 수정
-	int updateMobileAuthentication(int memberId);
+	// 휴대전화 인증(변경)
+	int updateMobileAuthentication(@Param("memberId") int memberId,
+								@Param("mobilePhone") String mobilePhone);
 	
 
 	

@@ -1034,6 +1034,7 @@ hr {
 	console.log("start : " + sDate);
 	console.log("end : " + eDate);
 	
+	
    $(function() {
       $('#reservationDate').daterangepicker({	
     	  // start,endDate 값 넣을 때는 Date 형식이 지켜져야함.
@@ -1046,7 +1047,7 @@ hr {
                "maxSpan" : {"days" : maximumStay},
                "isInvalidDate" : function(ele) {
                    var currDate = moment(ele._d).format('YYYY.MM.DD');
-                   return [${blocking}].indexOf(currDate) != -1;
+                   return [blockingStr].indexOf(currDate) != -1;
             	}
                
             }, function(start, end, label) {
@@ -1133,6 +1134,7 @@ hr {
    
    function countRDate() {
 
+
 	 	
 	   	if(sw){
 			var date = $("#reservationDate").val().split(" - ");
@@ -1163,7 +1165,7 @@ hr {
 		var guestCountVal = '${guestCount}';
 			
 		if(guestCountVal == -1 || guestCountVal == null || guestCountVal == ''){
-			$('#guestCount_reserve').val(0);
+			$('#guestCount_reserve').val(1);
 		}else{
 			$('#guestCount_reserve').val(guestCountVal);
 		}
@@ -1172,7 +1174,7 @@ hr {
 		var stat = $('#guestCount_reserve').val();
 		var num = parseInt(stat, 10);
 		
-		if (num >= 1) {
+		if (num > 1) {
 		   //alert('1명미만으로 예약할 수 없습니다');
 			num--;
 		}

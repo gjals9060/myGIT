@@ -4,12 +4,14 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -28,6 +30,21 @@ public class GuestController {
 	@RequestMapping(value="/ajax/Hosts", method = RequestMethod.POST)
 	public List<HostInfoDTO> ajaxMap(@RequestBody SearchInputDTO searchInputDto) {	
 		return guestService.selectHostList(searchInputDto);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/ajax/refund", method = RequestMethod.POST)
+	public boolean ajaxRefund(
+			@RequestParam(value="bookingId")String sBookingId,
+			@RequestParam(value="checkInDate")String sCheckInDate,
+			@RequestParam(value="payment")String sPayment
+			//@RequestBody BookingEntity bookingEntity
+			
+			) {	
+		//System.out.println(bookingEntity);
+		return guestService.refund(sBookingId, sCheckInDate, sPayment);
+		//return guestService.refund(bookingEntity);
+		
 	}
 
 	@RequestMapping("/reservationList")

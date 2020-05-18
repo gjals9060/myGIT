@@ -56,6 +56,7 @@ function sendCerificationNumberMail(){
 	
 function completeMobileAuthentication(){
 	var params = {
+			mobilePhone : $('input[name=mobileNumber]').val(),
 			inputCode : $('#mobileInputCode').val(),
 			authenticationCode : $('#mobileAuthenticationCode').val()
 	}
@@ -73,10 +74,12 @@ function completeMobileAuthentication(){
 					** 부모창이 회원정보 페이지면 새로고침
 					** */
 						var parentUrl = window.opener.document.URL;
-						if(parentUrl == 'http://localhost:8081/p5/userInfoUpdate'){
+						var start = parentUrl.indexOf("/p5");
+						var end = parentUrl.length;
+						var urlInfo = parentUrl.substring(start, end);
+						if(urlInfo.indexOf('/p5/userInfoUpdate') !== -1	){
 							window.opener.location.reload(); // 부모창 새로고침
 						}
-				
 						window.close(); // 팝업창 닫기
 				} else if(result == 2){ // 인증번호 일치, DB에 적용 실패
 						alert("휴대전화 인증을 정상적으로 완료하지 못했습니다.");

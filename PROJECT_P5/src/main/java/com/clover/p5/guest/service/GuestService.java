@@ -16,7 +16,7 @@ public interface GuestService {
 	// postPage이동(id로 host 검색)
 	String selectHost(HttpServletRequest request, Model model);
 	
-	// 지도 반응형 리스트
+	// 지도 이동 반응형 리스트
 	List<HostInfoDTO> selectHostList(SearchInputDTO searchInputDto);
 	
 	// reservationList 이동
@@ -28,6 +28,11 @@ public interface GuestService {
 	// reservationFinish 이동
 	String reservationFinish(BookingEntity booking, HttpServletRequest request, Model model);
 	
+	// userInfoReservationList 이동
 	ModelAndView userInfoReservationList(HttpServletRequest request, ModelAndView mv);
+	
+	// 환불처리
+	boolean refund(String sBookingId, String sCheckInDate, String sPayment);
+	//boolean refund(BookingEntity bookingEntity);
 	
 }

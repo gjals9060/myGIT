@@ -59,7 +59,7 @@ public class GuestServiceImpl implements GuestService {
 		HostInfoDTO hostInfoDto = guestMapper.selectHost(id);
 		
 		// 호스트 사진 리스트
-		List<HostPhotoDTO> hostPhotoDto = guestMapper.selectHostPhoto(id);
+		List<HostPhotoDTO> hostPhotoDto = guestMapper.selectHostPhotoList(id);
 		//System.out.println(hostPhotoDto.get(0).getPath());
 		
 		// 호스트 block 날짜 리스트
@@ -332,20 +332,96 @@ public class GuestServiceImpl implements GuestService {
 	
 	@Override
 	public ModelAndView userInfoReservationList(HttpServletRequest request, ModelAndView mv) {
-
+		
 		String memberId = request.getParameter("memberId");
 		
 		List<BookingEntity> bookingList = guestMapper.selectBooking(memberId);
 		
+		List<HostPhotoDTO> RepresentativePhotoList = new ArrayList<>();
+		
+		List<HostInfoDTO> hostList = new ArrayList<>();
+		
+		for(BookingEntity booking : bookingList) {
+			
+			HostPhotoDTO RepresentativePhoto = guestMapper.selectRepresentativePhoto(booking.getHostId()+"");
+			
+			RepresentativePhotoList.add(RepresentativePhoto);
+			
+			HostInfoDTO host = guestMapper.selectHost(booking.getHostId()+"");
+			hostList.add(host);
+		}
+		
 		System.out.println("날짜 확인 : " + bookingList.get(0).getCheckInDate());
 		
 		mv.addObject("bookingList", bookingList);
+		mv.addObject("RepresentativePhotoList", RepresentativePhotoList);
+		mv.addObject("hostList", hostList);
+		
+		
 		//mv.addObject("hostList", hostList);
 		
 		mv.setViewName("userInfoReservationList"); // 뷰의 이름
 		
 		return mv;
 	}
+
+	@Override
+	public boolean refund(String sBookingId, String sCheckInDate, String sPayment) {
+	//public boolean refund(BookingEntity bookingEntity) {
+				
+
+		System.out.println("값 받았니? id: " + sBookingId);
+		System.out.println("값 받았니? checkInDate: " + sCheckInDate);
+		System.out.println("값 받았니? payment: " + sPayment);
+		
+		
+		SimpleDateFormat format0 = new SimpleDateFormat ( "yyyy-MM-dd HH:mm:ss.sss");
+		SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy.MM.dd");
+		SimpleDateFormat format2 = new SimpleDateFormat ( "yyyy.MM.dd HH:mm:ss");
+		
+		int id = Integer.parseInt(sBookingId);
+		
+		//System.out.println(bookingEntity.getHostId());
+		Date checkInDate = new Date();
+		try {
+			checkInDate = format0.parse(sCheckInDate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		Date cancelDate = new Date();
+		
+		// 시간 차이 계산후 refund 금액 계산
+		long diff = cancelDate.getTime() - checkInDate.getTime();
+		long diffDate = diff/(24*60*60*1000);
+		System.out.println("날짜 차이 : " + diffDate);
+		
+		String cancellationDate = format2.format(cancelDate);
+		
+		System.out.println("취소날짜,시간 : " + cancellationDate);
+		
+		// refund 금액 계산
+		
+		
+		
+		int refund = 10000;
+		
+		
+		
+//		int success = guestMapper.updateBooking(id, cancellationDate, refund);	// 실패면 0, 성공하면 row개수로 반환.	
+		
+//		System.out.println("success : " + success);
+		
+		/*if(bookingId == null) {
+			return false;
+		}else {
+			return true;
+		}*/
+		return false;
+	}
+	
+	
 
 	
 }
