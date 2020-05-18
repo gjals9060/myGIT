@@ -45,21 +45,17 @@ public interface MemberService {
 	boolean updateUserName(HttpServletRequest req);
 	// 회원정보 수정 - 생년월일
 	boolean updateUserBirthDate(HttpServletRequest req, Date birthDate);
-	// 회원정보 수정 - 휴대전화 번호
-	boolean updateUserMobilePhone(HttpServletRequest req);
 	// 비밀번호 변경
 	int updateUserPassword(HttpServletRequest req);
 	
-	
-	
-	
+
 	
 	
 	// 휴대전화 인증여부 확인
 	boolean isMobileAuthentication(HttpServletRequest req);
 	// 휴대전화 인증번호 발송
 	String sendMobileCode(String mobileNumber);
-	// 휴대전화 인증(인증번호 확인 + 결과 DB에 적용)
+	// 휴대전화 인증(변경)
 	int mobileAuthentication(HttpServletRequest req);
 	
 	

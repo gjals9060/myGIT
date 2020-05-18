@@ -242,7 +242,7 @@ function refresh(host){
 	return;
 }*/
 if(urlInfo == '/p5/host/registration/facilities' && !host.address && !host.hostTypeId && !host.roomTypeId){
-	alert("등록 완료했자너 왜 뒤루 와~");
+	alert("만료된 페이지입니다.");
 	location.replace("../hostingList");
 	return;
 }
@@ -252,12 +252,12 @@ if(urlInfo == '/p5/host/registration/facilities' && !host.address && !host.hostT
 	return;
 }*/
 if(urlInfo.indexOf('/p5/host/registration/name') !== -1 && !!host.name){
-	alert("2단계 등록 마쳤는데 왜 뒤루 와~");
+	alert("만료된 페이지입니다.");
 	location.replace("../hostingStatus?hostId=" + $('#hostId').val());
 	return;
 }
 if(urlInfo.indexOf('/p5/host/registration/price') !== -1 && host.price != 0){
-	alert("3단계 등록 마쳤는데 왜 뒤루 와~");
+	alert("만료된 페이지입니다.");
 	location.replace("../hostingStatus?hostId=" + $('#hostId').val());
 	return;
 }

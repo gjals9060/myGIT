@@ -98,7 +98,7 @@
 	<!-- 휴대전화 인증 결과를 DB에 적용 -->
 	<update id="updateMobileAuthentication">
 		UPDATE member
-		SET mobile_authentication = 'Y'
+		SET mobile_phone = #{mobilePhone}, mobile_authentication = 'Y'
 		WHERE id = #{memberId}
 	</update>
 		
