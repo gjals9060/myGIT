@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="/p5/css/address.css" />
+<link rel="stylesheet" href="/p5/css/reset.css" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <%--panTo 사용시 오류, 이전 위치 기억등 잡아줘야할 내용이 많아져서 그냥 보류--%>
 <title>위치</title>

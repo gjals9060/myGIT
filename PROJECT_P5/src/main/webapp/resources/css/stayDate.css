@@ -1,23 +1,23 @@
 @charset "UTF-8";
 
 #wrap {
-	width: 100%;
+	width: 90%;
 	max-width: 1100px;
 	display: inline;
 }
 
-#container {
-	display: inline;
-	float: left;
-	width: 674px;
-	height: 710px;
-	padding: 0 0 0 200px;
+#container{
+display: inline;
+    float: left;
+    width: 60%;
+    height: 710px;
+  padding-bottom: 102px;
+  margin-left: 40px;
 }
-
-#left {
-	display: inline;
-	width: 450px;
-	height: 800px;
+#left{
+	display:inline;
+	width:30%;
+	height: 1250px;
 	background-color: #FAFAFA;
 	float: right;
 }
@@ -117,7 +117,7 @@ input[type="number"] {
 
 #minimum {
 	border: 1px solid #dce0e0;
-	width: 320px;
+	width: 42%;
 	height: 48px;
 	border-radius: 4px;
 	margin-bottom: 20px;
@@ -148,11 +148,11 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 
 #maximum-date-increase-quantity, #minimum-date-increase-quantity {
 	border: none;
-	width: 58px;
+	width: 5%;
 	height: 49px;
 	cursor: pointer;
 	position: absolute;
-	left: 415px;
+	left: 18.7%;
 	color: #767676;
 	background-color: white;
 	border-left: 1px solid #DCE0E0;
@@ -162,7 +162,7 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 
 #maximum-date-decrease-quantity, #minimum-date-decrease-quantity {
 	border: none;
-	width: 58px;
+	width: 5%;
 	height: 49px;
 	cursor: pointer;
 	position: absolute;
@@ -170,6 +170,7 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 	background-color: white;
 	border-left: 1px solid #DCE0E0;
 	border-bottom: 1px solid #DCE0E0;
+	left: 23%;
 }
 
 .text-info {
