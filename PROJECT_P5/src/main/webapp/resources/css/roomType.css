@@ -12,7 +12,7 @@ display: inline;
     width: 60%;
     height: 710px;
   padding-bottom: 102px;
-  margin-left: 40px;
+  margin-left: 5%;
 }
 #left{
 	display:inline;
@@ -116,10 +116,10 @@ top: 300px;
     border: 1px solid;
 }
 
-.next{
-	position: relative;
+.next {
+    position: relative;
     top: 10px;
-    right: -20px;
+    right: -15px;
 }
 #reset-info{
 	position: relative;
@@ -194,12 +194,7 @@ span.previous{
 	margin-right: 0px;
 
 }
-#container{
-display: inline;
-    float: left;
-    width: 550px;
-    padding: 30px 90px 16px;
-}
+
 #reset-info {
     position: relative;
     top: 330px;
@@ -231,14 +226,14 @@ display: inline;
 	margin-right: 0px;
 
 }
-#container{
+/* #container{
 display: inline;
     float: left;
     width: 330px;
-    padding: 30px 30px 16px;
-}
+ 
+} */
 select {
-    width: 280px;
+    width: 150%;
     height: 80px;
     font-size: 20px;
 }
@@ -256,6 +251,10 @@ select {
 }
 h1{
 	font-size: 24px;
+	width: 150%;
+}
+h2{
+	width: 150%;
 }
 #left{
 	display: none;

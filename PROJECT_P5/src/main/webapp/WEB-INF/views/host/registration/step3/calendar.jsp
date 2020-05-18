@@ -11,7 +11,8 @@
 <link rel="stylesheet" href="/p5/css/reservationCalendar.css" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- <link rel="stylesheet" href="https://cdn.rawgit.com/dubrox/Multiple-Dates-Picker-for-jQuery-UI/master/jquery-ui.multidatespicker.css" /> -->
-
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 <Style>
 .abled {
 	display: none;
@@ -34,19 +35,29 @@
 		
 		$('#tabCalender').css('background','#bbb');
 	</script> 
-	
+		<div id="wrap">
+		<div class="info-container">
+			<i class="fa fa-lightbulb-o fa-3x" aria-hidden="true"></i><span
+				onclick="toggle()" class="close">X</span><br />게스트는 달력을 보고 예약 가능한 날짜에 예약 요청을 보냅니다. <hr /><br /> <img src="/p5/img/calendar-info.png" alt="" />호스팅을 원하는 날짜를 클릭하여 차단하세요.
+		</div>
+		<button class="info">
+			<i class="fa fa-lightbulb-o fa-3x" aria-hidden="true"></i>
+		</button>
+		
+		<span class="tip">달력을 업데이트하세요.</span><br /><div class="description">예약을 차단하거나 차단 해제할 날짜를 선택하세요.</div>
+		
+	<button id="manageMonth" onclick="manageMonth();">전체 차단/해제</button>
 	<!-- <form action="price" method="post"> -->
 	<div id="mdp-demo"></div>
 	<input type="text" id="altField" value="" name="blockingDate" />
 <!-- 	<input type="button" value="전체해제" id="mdpAbled" class="disabled" />
 	<input type="button" value="전체차단" id="mdpDisabled" class="disabled" /> -->
-	<button id="manageMonth" onclick="manageMonth();">전체 차단/해제</button>
 
 	<a href="./stayDate?hostId=${hostId }">이전</a>
 	<a href="./price?hostId=${hostId }">다음</a>
 	<!-- <input type="submit" value="다음" /> -->
 	
-
+</div>
 <script src="/p5/js/jquery-ui.min.js"></script>
 <script src="/p5/js/Calendar.js?v=<%=System.currentTimeMillis()%>"></script>
 </body>
@@ -304,7 +315,17 @@ $(window).bind("pageshow", function(event) {
 
 	
 
-	
+	$(function() {
+		$('.fa.fa-lightbulb-o.fa-3x').click(function(e) {
+$(".info").hide();
+$(".info-container").show();
+
+		});
+	});
+	function toggle(){
+		$(".info").show();
+		$(".info-container").hide();
+	}
 	
 	
 	
