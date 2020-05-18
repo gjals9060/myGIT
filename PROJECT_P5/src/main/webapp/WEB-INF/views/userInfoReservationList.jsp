@@ -10,6 +10,8 @@
 <head>
 <meta charset="UTF-8">
 <title>회원 예약 리스트</title>
+<script src="js/jquery-3.4.1.js"></script>
+
 <style>
 #wrap {
 	width: 1100px;
@@ -109,6 +111,8 @@
 
 </head>
 <body>
+	<jsp:include page="./header.jsp"></jsp:include>	
+
 	<div id="wrap">
 		<!-- 예약 container -->
 		<div class="reservation-list-main-title">예약하신 숙소리스트 입니다.</div>
@@ -139,6 +143,8 @@
 
 			<c:forEach var="index" begin="0" end="${fn:length(bookingList)-1}">
 			
+				<c:set var="booking" value="${bookingList[index]}" />
+
 				<div class="resercation-list-block">
 					<!-- <div class="reservation-list-num">
 						<p>12345</p>
@@ -149,14 +155,14 @@
 					<div class="reservaion-list-value">
 						<!-- 숙소 정보  -->
 						<div class="reservation-list-title">${hostList[index].name}</div>
-						<div class="reservation-list-date">체크 인 : ${bookingList[index].checkInDate} / 체크 아웃 : ${bookingList[index].checkOutDate}</div>
-						<div class="reservation-list-buy-date">예약일 : ${bookingList[index].bookingDate}</div>
-						<div class="reservation-list-price">결제금액 : ${bookingList[index].payment}원</div>
-						<div class="reservation-list-guestCount"> 예약인원 : ${bookingList[index].guestCount}</div>
+						<div class="reservation-list-date">체크 인 : ${booking.getCheckInDate()} / 체크 아웃 : ${booking.getCheckOutDate()}</div>
+						<div class="reservation-list-buy-date">예약일 : ${booking.bookingDate}</div>
+						<div class="reservation-list-price">결제금액 : ${booking.payment}원</div>
+						<div class="reservation-list-guestCount"> 예약인원 : ${booking.guestCount}</div>
 					</div>
 					<div class="reservation-list-refund">
-						<button class="reservation-list-refund-btn">후기등록</button>
-						<button class="reservation-list-refund-btn">환불</button>
+						<button id="reply_${index}" class="reservation-list-refund-btn">후기등록</button>
+						<button id="refund_${index}" class="reservation-list-refund-btn" onclick="return refund('${booking.id}','${booking.checkInDate}','${booking.payment}');">환불</button>
 					</div>
 				</div>
 
@@ -165,4 +171,79 @@
 		</div>
 	</div>
 </body>
+
+<script type="text/javascript">
+
+
+function refund(sBookingId, checkInDate, payment) {
+//function refund(bookingEntity) {
+	
+/* 	
+	console.log("bookingEntity : " + bookingEntity);
+	
+	//replaceAll prototype 선언
+	String.prototype.replaceAll = function(org, dest) {
+	    return this.split(org).join(dest);
+	}
+	bookingEntity = bookingEntity.replaceAll("^&","\"");
+	var bookingEntity = {bookingEntity};
+	console.log(bookingEntity); 
+*/
+	
+/* 	var bookingEntity = {
+		booking
+	}; */
+	
+	console.log("bookingId : " + sBookingId + ", checkInDate : " + checkInDate, "payment : " + payment);
+	var con_test = confirm("예약을 취소하고 환불하시겠습니까?");
+	
+	if(con_test == true){
+		
+		var bookingId = parseInt(sBookingId, 10);
+			
+		
+
+		$.ajax({
+			type : "POST",
+			url : "ajax/refund",
+			data : {"bookingId" : bookingId, "checkInDate" : checkInDate, "payment" : payment},
+			//data : JSON.stringify( bookingEntity ),
+			/* dataType : 'json',
+			contentType: "application/json", */
+			async : false,
+			success : function(result) {
+				
+				if(result){
+					alert("통신완료 : True");
+					//refresh(); // 화면 갱신
+
+				}else{
+					alert("통신완료 : False");
+				}
+				
+			}, error : function() {
+				alert("통신 실패");
+			}
+			
+		});
+		
+		
+		
+		
+		alert("예약취소되었습니다.");
+		
+	}else{
+		return false;
+	}
+	
+	
+}
+
+</script>
+
 </html>
+
+
+
+
+

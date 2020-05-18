@@ -365,6 +365,64 @@ public class GuestServiceImpl implements GuestService {
 		return mv;
 	}
 
+	@Override
+	public boolean refund(String sBookingId, String sCheckInDate, String sPayment) {
+	//public boolean refund(BookingEntity bookingEntity) {
+				
+
+		System.out.println("값 받았니? id: " + sBookingId);
+		System.out.println("값 받았니? checkInDate: " + sCheckInDate);
+		System.out.println("값 받았니? payment: " + sPayment);
+		
+		
+		SimpleDateFormat format0 = new SimpleDateFormat ( "yyyy-MM-dd HH:mm:ss.sss");
+		SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy.MM.dd");
+		SimpleDateFormat format2 = new SimpleDateFormat ( "yyyy.MM.dd HH:mm:ss");
+		
+		int id = Integer.parseInt(sBookingId);
+		
+		//System.out.println(bookingEntity.getHostId());
+		Date checkInDate = new Date();
+		try {
+			checkInDate = format0.parse(sCheckInDate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		Date cancelDate = new Date();
+		
+		// 시간 차이 계산후 refund 금액 계산
+		long diff = cancelDate.getTime() - checkInDate.getTime();
+		long diffDate = diff/(24*60*60*1000);
+		System.out.println("날짜 차이 : " + diffDate);
+		
+		String cancellationDate = format2.format(cancelDate);
+		
+		System.out.println("취소날짜,시간 : " + cancellationDate);
+		
+		// refund 금액 계산
+		
+		
+		
+		int refund = 10000;
+		
+		
+		
+//		int success = guestMapper.updateBooking(id, cancellationDate, refund);	// 실패면 0, 성공하면 row개수로 반환.	
+		
+//		System.out.println("success : " + success);
+		
+		/*if(bookingId == null) {
+			return false;
+		}else {
+			return true;
+		}*/
+		return false;
+	}
+	
+	
+
 	
 }
 

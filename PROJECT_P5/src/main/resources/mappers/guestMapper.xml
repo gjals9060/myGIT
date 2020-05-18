@@ -138,6 +138,21 @@
 	
 	</insert>
 	
+	<!-- refund -->
+	<update id="updateBooking" parameterType="String">
+
+		UPDATE
+			booking
+		SET
+			cancellation_date = TO_DATE(#{cancellationDate},'YYYY.MM.DD HH24:MI:SS'),
+    		refund = #{refund}
+		WHERE
+			id = #{bookingId}
+
+	</update>
+
+
+	
 	<!-- foreach문에서는 trigger로! .nextval이 안먹힌다 -->
 	<!-- 예약 차단일 등록 -->
 	<insert id="insertBlocking">

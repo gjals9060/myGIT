@@ -26,10 +26,16 @@ public interface GuestMapper {
 	
 	int insertBooking(BookingEntity booking);	//성공시 1
 	
+	int updateBooking(
+			@Param("bookingId") int id,
+			@Param("cancellationDate") String cancellationDate,
+			@Param("refund") int refund
+			);
+	
 	int insertBlocking(
-						@Param("hostId") int hostId, 
-						@Param("arrBlockingDate") String[] arrBlockingDate
-						);
+			@Param("hostId") int hostId, 
+			@Param("arrBlockingDate") String[] arrBlockingDate
+			);
 	
 	List<BookingEntity> selectBooking(String memberId);
 	
