@@ -9,15 +9,7 @@
  li {
 	list-style: none;
 }
-/*
-.efg {
-	margin: 5px;
-	padding: 5px;
-	border-width: 2px;
-	border-color: #aaa;
-	border-style: outset;
-	width: 500px;
-} */
+
 
 #wrap {
 	width:100%;
@@ -40,7 +32,7 @@
 }
 
 .hosting-list-li,
-.hosting-list-li_2 {
+.hosting-list-li-old {
 	margin: 50px 0px;
 }
 
@@ -82,29 +74,20 @@
 }
 
 /* 라디오 버튼 label 처리 */
+
 input[type="radio"]{
-   position: absolute;
-   width: 1px;
-   height: 1px;
-   padding: 0px;
-   margin: -1px;
-   overflow: hidden;
-   clip: rect(0, 0, 0, 0);
-   border: 0;
+
 } 
 
-input[type="radio"] + label {
-	display: inline-block;
-   	position: relative;
-   	cursor: pointer;
-   	-webkit-user-select: none;
-	
+label {
+	cursor: pointer;
 }
 
 input[type="radio"]:checked+label:before {
    background: #008489;
    border-color: #008489;
 }
+ 
 
 
 /* 미등록 숙소   */
@@ -206,7 +189,7 @@ function refresh(){
 			
 				
 				hostName = 
-				result += '	<li class="hosting-list-li_2"> '
+				result += '	<li class="hosting-list-li-old"> '
 						+ ' <label for="'+ hostingListId +'" class="hosting-list-block" >'
 						+ '	<input id="'+ hostingListId + '" type="radio" name="hostId" value="' + hosting.hostId + '" />	'
 						+ '	<img class="hosting-list-img" src="' + hosting.coverPhotoPath + '" alt="사진" />	' 
@@ -217,7 +200,7 @@ function refresh(){
 						+ '	</label></li>';
 				}); // each-END
 				
-			$('.hosting-list-li_2').remove();
+			$('.hosting-list-li-old').remove();
 			$('#hosting-list-ul').append(result);
 			
 	
