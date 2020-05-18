@@ -168,7 +168,7 @@
 }
 
 .user-info-update-password-block {
-	margin: 40px 0px;
+	margin: 30px 0px;
 }
 
 .user-info-update-password-title {
@@ -258,7 +258,7 @@
    margin: 10px auto 20px;
    border: 7px inset #ed2d55 !important;
    object-fit: cover;
-    object-position: center;
+   object-position: center;
 }
 
 .select {
@@ -309,7 +309,6 @@
 
 .profilePhoto table {
 	margin: 0 auto;
-	
 }
 
 .btnTheme {
@@ -325,4 +324,11 @@
 
 .userUpdateContent {
 	margin: 20px auto;
+}
+
+.user-info-update-password-error {
+	display: block;
+	font-size: 12px;
+	margin: 5px;
+	height: 5px;
 }

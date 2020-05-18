@@ -26,327 +26,298 @@
 	
 </head>
 <body>
-	<%@include file="header.jsp" %> 
-	
+	<%@include file="header.jsp" %>
+
 	<div id="wrap">
 		<div class="user-info-update-container">
-			<!-- 프로필 사진  -->
-			<!-- ${user.profilePhotoPath } -->
-			 <div class="profilePhotoTitle">프로필 사진</div>
-      <div class="profilePhoto">
-         <table>
-            <tr>
-               <td><div id="forMouseOut">
-               		<div class="photo">
-                     <!-- <img src="img/berry.jpg" alt=""
-                        class="nowProfilePhoto select" /> -->
-                  </div>
-                  </div></td>
-               <td><div class="profilePhotolist">
-               <!-- 
-                     <img src="img/berry.jpg" alt="" class="inputProfilePhoto select" /> <img
-                        src="img/bedroom.jpg" alt="" class="inputProfilePhoto" /> <img
-                        src="img/flower.jpg" alt="" class="inputProfilePhoto" />
-                     <img src="img/bread.jpg" alt="" class="inputProfilePhoto" /> <img
-                        src="img/away.jpg" alt="" class="inputProfilePhoto" /> <img
-                        src="img/hair.png" alt="" class="inputProfilePhoto" /> <img
-                        src="img/berry.jpg" alt="" class="inputProfilePhoto" /> <img
-                        src="img/bedroom.jpg" alt="" class="inputProfilePhoto" /> <img
-                        src="img/flower.jpg" alt="" class="inputProfilePhoto" /> <img
-                        src="img/bread.jpg" alt="" class="inputProfilePhoto" /> <img
-                        src="img/away.jpg" alt="" class="inputProfilePhoto" /> <img
-                        src="img/hair.png" alt="" class="inputProfilePhoto" /> <img
-                        src="img/berry.jpg" alt="" class="inputProfilePhoto" /> <img
-                        src="img/bedroom.jpg" alt="" class="inputProfilePhoto" /> <img
-                        src="img/flower.jpg" alt="" class="inputProfilePhoto" />
-                         -->
-                  </div></td>
-            </tr>
-         </table>
-      </div>
-      <div class="photoUploadButton">
-      <button class="photoUpload" onclick="$('#photoFile').trigger('click')">사진 등록</button>
-      </div>
-      <form id="fileUpload">
-      	<input type="file" id="photoFile" name="photoFile" accept="image/*" style="display: none" />
-      </form>
-      <script type="text/javascript">
-	      
-	function apply(){ // DB값으로 화면 갱신하고 적용시켜줘야 됨
-	// 프사의 선택자
-	var profilePhoto = $('img[data-isProfile="Y"]');
-	// DB의 정보 = 프사의 이미지 경로.
-	var profilePath = profilePhoto.attr("src");
-	// DB의 정보 = 프사의 ID
-	var profileId = profilePhoto.attr("data-id");
-		
-	profilePhoto.attr("class", "inputProfilePhoto select");
-	$(".photo").html('<img src="' + profilePath + '" alt="" class="nowProfilePhoto select" />');
-	$("#userImg").attr("src", profilePath);
-	
-	$(".photoButton").detach(); // 버튼 갱신을 위해
-		
-	   var menu = '<span class="photoButton">'
-	         + '<button onclick="' + 'deleteProfilePhoto(' + profileId + ');">'
-	         + '<i class="fas fa-times fa-2x"></i></button></span>';
-	
-	   var list = document.getElementsByClassName("inputProfilePhoto");
-	   
-	   
-	   $(".inputProfilePhoto").on({
-	 //     'mouseover' : function() {
-	  //       $(".photoButton").detach();
-	  //    },
-	      'click' : function() {
-	    	  
-	    	  changeProfilePhoto($(this).attr("data-id"));
-	 //        $(".inputProfilePhoto").attr("class", "inputProfilePhoto"); // ??
-	 //        var index = $(this).index();
-	 //        $(".inputProfilePhoto").eq(index).attr("class", "inputProfilePhoto select");
-	 //        $(".photo").html('<img src="' + $(".inputProfilePhoto").eq(index).attr("src") + '" alt="" class="nowProfilePhoto select" />');
-	 //        $("#userImg").attr("src", $(".inputProfilePhoto").eq(index).attr("src"));
-	      }
-	   })
-	   
-	   $(".photo").on({
-	      'mouseover' : function() {
-	         $(".photoButton").detach();
-	         $(this).after(menu);
-	      
-	      }, 
-	      'click' : function() {
-	         $(".photoButton").detach();
-	         $(this).after(menu);
-	        
-		  }
-	   })
-	   
-	   $("#forMouseOut").on({
-		 'mouseleave' : function(){
-		 	$(".photoButton").detach();
-		 }
-	   })
-	   
-	}
-	   
-	   
-	   
-	//*************************************** 백엔드에서 ************************************************
-	function unapply(){
-		$(".photo").on({
-		      'mouseover' : function() {
-		         $(".photoButton").detach();
-		      }, 
-		      'click' : function() {
-		    	 $(".photoButton").detach();
-			  }
-	   });
-	}
-	
-	$(function(){
-		showProfilePhoto();
-	})
-		// 프로필 사진 출력
-	function showProfilePhoto(){
-		$.ajax({
-			
-			type: "POST",
-			url: 'ajax/getProfilePhotoList',
-			async: false,
-			success: function (photoList) {
-				$('.profilePhotolist').empty(); // 일단 비우고
-				
-				if(!photoList.length){ // 출력할 사진이 없다면
-					
-						// 기본 이미지 출력				
-					$(".photo").html('<img src="img/defaultProfile.png" alt="defaultProfile.png" class="nowProfilePhoto select" />');
-						// 헤더 이미지에도 기본 이미지 적용
-					$("#userImg").attr("src", "img/defaultProfile.png");
-						
-					unapply(); // 버튼 생성 해제(지우는 효과만 적용)
-				
-				} else{ // 있으면..
-					
-					var photoResult = '';
-					$.each(photoList, function(i, photo){
-						// 화면에 출력되는 사진
-						photoResult +=
-			        	'	<img src="' + photo.path + '" alt="' + photo.originalName + '"'
-		        		+'	data-id="' + photo.id + '" data-isProfile="' + photo.isProfile + '" class="inputProfilePhoto" />	'
-			        	;
-	              	});
-					
-					// 내용을 넣고
-					$('.profilePhotolist').append(photoResult);
-					
-					// 효과 적용
-					apply();
-					
-				}
-			},
-			error: function (e) {
-				alert("통신 실패");
-			}
-		});
-	}
-	 
-		// 파일 업로드 이벤트
-	$("#photoFile").on("change", function(){
-		
-		var formData = new FormData($('#fileUpload')[0]);
-		addProfilePhoto(formData);
-		
-		$('#photoFile').val(""); // 초기화 - 취소를 누르면 작동하지 않는 효과를 줌 + 같은 이름의 파일 계속해서 업로드 가능
-	});
-		// 사진 추가(변경)
-	function addProfilePhoto(formData){
-	$.ajax({
-			type: "POST",
-			url: 'ajax/addProfilePhoto',
-			enctype: 'multipart/form-data', // 필수 
-			data: formData, // 필수 
-			processData: false, // 필수 
-			contentType: false, // 필수
-			cache: false,
-			async: false,
-			success: function (result) {
-				if(result){ // 성공
-					
-					showProfilePhoto(); // 사진 갱신
-					
-				} else{
-					alert("사진 추가(변경) 실패..");
-				}
-			},
-			error: function (e) {
-				alert("통신 실패");
-			}
-		});
-	}
-		// 사진 삭제
-	function deleteProfilePhoto(profileId){
-		$.ajax({
-			type: "POST",
-			url: 'ajax/deleteProfilePhoto',
-			data: 'photoId=' + profileId,
-			async: false,
-			success: function (result) {
-				if(result){ // 성공
-					
-					showProfilePhoto(); // 사진 갱신
-					
-				} else{
-					alert("사진 삭제 실패..");
-				}
-			},
-			error: function (e) {
-				alert("통신 실패");
-			}
-		});
-		$(".photoButton").remove();
-	}
-		
-		// 사진 선택 변경
-	function changeProfilePhoto(profileId){
-		$.ajax({
-			type: "POST",
-			url: 'ajax/changeProfilePhoto',
-			data: 'photoId=' + profileId,
-			async: false,
-			success: function (result) {
-				if(result){ // 성공
-					
-					showProfilePhoto(); // 사진 갱신
-					
-				} else{
-					alert("사진 선택 변경 실패..");
-				}
-			},
-			error: function (e) {
-				alert("통신 실패");
-			}
-		});
-	}
-   
-</script>
-      
-      <!-- profilePhoto end -->
 
-			 <div class="profilePhotoTitle">회원 정보 수정</div>
+			<div class="profilePhotoTitle">프로필 사진</div>
+			<div class="profilePhoto">
+				<table>
+					<tr>
+						<td><div id="forMouseOut">
+								<div class="photo"></div>
+							</div></td>
+						<td>
+							<div class="profilePhotolist"></div>
+						</td>
+					</tr>
+				</table>
+			</div>
+
+			<div class="photoUploadButton">
+				<button class="photoUpload"
+					onclick="$('#photoFile').trigger('click')">사진 등록</button>
+			</div>
+			<form id="fileUpload">
+				<input type="file" id="photoFile" name="photoFile" accept="image/*"
+					style="display: none" />
+			</form>
+			<script type="text/javascript">
+				function apply() { // DB값으로 화면 갱신하고 적용시켜줘야 됨
+					// 프사의 선택자
+					var profilePhoto = $('img[data-isProfile="Y"]');
+					// DB의 정보 = 프사의 이미지 경로.
+					var profilePath = profilePhoto.attr("src");
+					// DB의 정보 = 프사의 ID
+					var profileId = profilePhoto.attr("data-id");
+
+					profilePhoto.attr("class", "inputProfilePhoto select");
+					$(".photo").html('<img src="' + profilePath + '" alt="" class="nowProfilePhoto select" />');
+					$("#userImg").attr("src", profilePath);
+
+					$(".photoButton").detach(); // 버튼 갱신을 위해
+
+					var menu = '<span class="photoButton">'
+							+ '<button onclick="'
+							+ 'deleteProfilePhoto('
+							+ profileId
+							+ ');">'
+							+ '<i class="fas fa-times fa-2x"></i></button></span>';
+
+					var list = document.getElementsByClassName("inputProfilePhoto");
+
+					$(".inputProfilePhoto").on({'click' : function() {
+						changeProfilePhoto($(this).attr("data-id"));
+				
+						}
+					})
+
+					$(".photo").on({'mouseover' : function() {
+						$(".photoButton").detach();
+						$(this).after(menu);
+
+					},'click' : function() {
+						$(".photoButton").detach();
+						$(this).after(menu);
+
+						}
+					})
+
+					$("#forMouseOut").on({'mouseleave' : function() {
+						$(".photoButton").detach();
+						}
+					})
+
+				}
+
+				//*************************************** 백엔드에서 ************************************************
+				function unapply() {
+					$(".photo").on({
+						'mouseover' : function() {
+							$(".photoButton").detach();
+						},
+						'click' : function() {
+							$(".photoButton").detach();
+						}
+					});
+				}
+
+				$(function() {
+					showProfilePhoto();
+				})
+				// 프로필 사진 출력
+				function showProfilePhoto() {
+					$.ajax({
+						type : "POST",
+						url : 'ajax/getProfilePhotoList',
+						async : false,
+						success : function(photoList) {
+							$('.profilePhotolist').empty(); // 일단 비우고
+
+							if (!photoList.length) { // 출력할 사진이 없다면
+
+								// 기본 이미지 출력				
+								$(".photo").html(
+									'<img src="img/defaultProfile.png" alt="defaultProfile.png" class="nowProfilePhoto select" />'
+								);
+									// 헤더 이미지에도 기본 이미지 적용
+								$("#userImg").attr("src","img/defaultProfile.png");
+
+									unapply(); // 버튼 생성 해제(지우는 효과만 적용)
+
+							} else { // 있으면..
+
+								var photoResult = '';
+								$.each(photoList,function(i, photo) {
+								// 화면에 출력되는 사진
+									photoResult += '	<img src="' + photo.path + '" alt="' + photo.originalName + '"'
+		        					+'	data-id="' + photo.id + '" data-isProfile="' + photo.isProfile + '" class="inputProfilePhoto" />';
+								});
+
+								// 내용을 넣고
+								$('.profilePhotolist').append(photoResult);
+
+								// 효과 적용
+								apply();
+
+							}
+						},
+						error : function(e) {
+							alert("통신 실패");
+						}
+					});
+				}
+
+				// 파일 업로드 이벤트
+				$("#photoFile").on("change", function() {
+
+					var formData = new FormData($('#fileUpload')[0]);
+					addProfilePhoto(formData);
+
+					$('#photoFile').val(""); // 초기화 - 취소를 누르면 작동하지 않는 효과를 줌 + 같은 이름의 파일 계속해서 업로드 가능
+				});
+				// 사진 추가(변경)
+				function addProfilePhoto(formData) {
+					$.ajax({
+						type : "POST",
+						url : 'ajax/addProfilePhoto',
+						enctype : 'multipart/form-data', // 필수 
+						data : formData, // 필수 
+						processData : false, // 필수 
+						contentType : false, // 필수
+						cache : false,
+						async : false,
+						success : function(result) {
+							if (result) { // 성공
+
+								showProfilePhoto(); // 사진 갱신
+
+							} else {
+								alert("사진 추가(변경) 실패..");
+							}
+						},
+						error : function(e) {
+							alert("통신 실패");
+						}
+					});
+				}
+				// 사진 삭제
+				function deleteProfilePhoto(profileId) {
+					$.ajax({
+						type : "POST",
+						url : 'ajax/deleteProfilePhoto',
+						data : 'photoId=' + profileId,
+						async : false,
+						success : function(result) {
+							if (result) { // 성공
+
+								showProfilePhoto(); // 사진 갱신
+
+							} else {
+								alert("사진 삭제 실패..");
+							}
+						},
+						error : function(e) {
+							alert("통신 실패");
+						}
+					});
+					$(".photoButton").remove();
+				}
+
+				// 사진 선택 변경
+				function changeProfilePhoto(profileId) {
+					$.ajax({
+						type : "POST",
+						url : 'ajax/changeProfilePhoto',
+						data : 'photoId=' + profileId,
+						async : false,
+						success : function(result) {
+							if (result) { // 성공
+
+								showProfilePhoto(); // 사진 갱신
+
+							} else {
+								alert("사진 선택 변경 실패..");
+							}
+						},
+						error : function(e) {
+							alert("통신 실패");
+						}
+					});
+				}
+			</script>
+
+			<!-- profilePhoto end -->
+
+			<div class="profilePhotoTitle">회원 정보 수정</div>
 			<!-- 계정 -->
 			<div class="userUpdateContent">
-			<div class="user-info-update-value-block">
-				<div class="user-info-update-value-title">계정</div>
-				<div class="user-info-update-value">${user.email }</div>
-			</div>
-			
-			
-			<div class="user-info-update-value-block">
-				<div class="user-info-update-value-title">가입일</div>
-				<div class="user-info-update-value">
-					<fmt:parseDate var="date1" value="${user.registrationDate }" pattern="yyyy-MM-dd"/>
-					<fmt:formatDate value="${date1 }" pattern="yyyy.MM.dd"/>
+				<div class="user-info-update-value-block">
+					<div class="user-info-update-value-title">계정</div>
+					<div class="user-info-update-value">${user.email }</div>
 				</div>
-			</div>
 
-			<!-- 실명 -->
-			<div class="user-info-update-value-block">
-				<div class="user-info-update-value-title">실명</div>
-				<div class="user-info-update-value">
-					<input class="user-info-update-value-input"
-						id="userInfoUpdateValueFirstName" type="text"
-						value=${user.firstName } disabled /> 
-						<input class="user-info-update-value-input" id="userInfoUpdateValueLastName" type="text"
-						value=${user.lastName } disabled />
-					<button class="user-info-update-value-cancel btnTheme"
-						id="userInfoNameCancelBtn">취소</button>
-					<button class="user-info-update-value-btn btnTheme"
-						id="userInfoUpdateValueNameBtn">수정하기</button>
+
+				<div class="user-info-update-value-block">
+					<div class="user-info-update-value-title">가입일</div>
+					<div class="user-info-update-value">
+						<fmt:parseDate var="date1" value="${user.registrationDate }"
+							pattern="yyyy-MM-dd" />
+						<fmt:formatDate value="${date1 }" pattern="yyyy.MM.dd" />
+					</div>
 				</div>
-			</div>
 
-			<!-- 생년월일 -->
-			<div class="user-info-update-value-block">
-				<div class="user-info-update-value-title">생년월일</div>
-				<div class="user-info-update-value">
-					<input class="user-info-update-value-input"
-						id="userInfoUpdateValueBirthDate" type="date"
-						value=${user.birthDate } disabled />
-					<button class="user-info-update-value-cancel btnTheme" 
-						id="userInfoDateCancelBtn">취소</button>
-					<button class="user-info-update-value-btn btnTheme"
-						id="userInfoUpdateValueBirthDateBtn">수정하기</button>
-				</div>
-			</div>
-
-			<!-- 전화번호 -->
-
-			<div class="user-info-update-value-block">
-				<div class="user-info-update-value-title">전화번호</div>
-				<div class="user-info-update-value">
-					<input class="user-info-update-value-input" id="userInfoUpdateValuePhone" type="text"
-						value=${user.mobilePhone } disabled /> 
-					<input type="hidden" name="mobileAuthentication" value="${user.mobileAuthentication }" />
+				<!-- 실명 -->
+				<div class="user-info-update-value-block">
+					<div class="user-info-update-value-title">실명</div>
+					<div class="user-info-update-value">
+						<input class="user-info-update-value-input" id="userInfoUpdateValueFirstName" 
+							type="text" value=${user.firstName } disabled /> 
+						<input class="user-info-update-value-input" id="userInfoUpdateValueLastName" 
+							type="text" value=${user.lastName } disabled />
+						
+						<button class="user-info-update-value-cancel btnTheme"
+							id="userInfoNameCancelBtn">취소</button>
+						<button class="user-info-update-value-btn btnTheme"
+							id="userInfoUpdateValueNameBtn">수정하기</button>
+						<!-- 유효성 검사  -->
+						<div class="user-info-name-error" id="userFirstNameError"></div>
+						<div class="user-info-name-error" id="userLastNameError"></div>
+						
+						<input type="hidden" id="userFirstNamePass" value="y" />
+						<input type="hidden" id="userLastNamePass" value="y"/>
 					
-					<span id="authenticationResult" class="user-info-update-value-btn"></span>
-					<button id="mobileAuthenticationResult" class="user-info-update-value-btn btnTheme"></button>
-					
-					<!-- <button class="user-info-update-value-cancel btnTheme" 
-						id="userInfoPhoneCancelBtn">취소</button>
-					<button class="user-info-update-value-btn btnTheme"
-						id="userInfoUpdateValuePhoneBtn">수정하기</button> -->
-					
+						
+					</div>
 				</div>
-			</div>
 
-			<!-- 비밀번호 변경 -->
-			<div class="user-info-update-value-block">
-				<div class="user-info-update-value-title">
-					비밀번호 변경
+				<!-- 생년월일 -->
+				<div class="user-info-update-value-block">
+					<div class="user-info-update-value-title">생년월일</div>
+					<div class="user-info-update-value">
+						<input class="user-info-update-value-input" id="userInfoUpdateValueBirthDate" 
+							type="date" value=${user.birthDate } disabled />
+							
+						<button class="user-info-update-value-cancel btnTheme"
+							id="userInfoDateCancelBtn">취소</button>
+						<button class="user-info-update-value-btn btnTheme"
+							id="userInfoUpdateValueBirthDateBtn">수정하기</button>
+					</div>
 				</div>
-				<button id="modalBtn" class="btnTheme">수정하기</button>
+
+				<!-- 전화번호 -->
+
+				<div class="user-info-update-value-block">
+					<div class="user-info-update-value-title">전화번호</div>
+					<div class="user-info-update-value">
+						<input class="user-info-update-value-input" id="userInfoUpdateValuePhone" 
+							type="text" value=${user.mobilePhone } disabled /> 
+							
+						<input type="hidden" name="mobileAuthentication" value="${user.mobileAuthentication }" />
+
+						<span id="authenticationResult" class="user-info-update-value-btn"></span>
+						<button id="mobileAuthenticationResult"
+							class="user-info-update-value-btn btnTheme"></button>
+					</div>
+				</div>
+
+				<!-- 비밀번호 변경 -->
+				<div class="user-info-update-value-block">
+					<div class="user-info-update-value-title">비밀번호 변경</div>
+					<button id="modalBtn" class="btnTheme">수정하기</button>
+				</div>
 			</div>
-</div>
 		</div>
 
 	</div>
@@ -376,26 +347,30 @@
 					<div class="user-info-update-password-value">
 						<input class="user-info-update-password-input" type="password" id="userInputPassword" />
 					</div>
+					<div class="user-info-update-password-error" id="passwordError_1"></div>
 				</div>
 
-				<div class="user-info-update-password-error"></div>
 
 				<div class="user-info-update-password-block">
 					<div class="user-info-update-password-title">변경 비밀번호</div>
 					<div class="user-info-update-password-value">
 						<input class="user-info-update-password-input" type="password" id="newPassword" />
 					</div>
+					<div class="user-info-update-password-error" id="passwordError_2"></div>
 				</div>
-				<div class="user-info-update-password-error"></div>
+				<!-- <div class="user-info-update-password-error"></div> -->
 
 				<div class="user-info-update-password-block">
 					<div class="user-info-update-password-title">비밀번호확인</div>
 					<div class="user-info-update-password-value">
-						<input class="user-info-update-password-input" type="password" />
+						<input class="user-info-update-password-input" type="password" id="newPasswordCheck"/>
 					</div>
+					<div class="user-info-update-password-error" id="passwordError_3"></div>
 				</div>
-				<div class="user-info-update-password-error"></div>
-
+				
+				<input type="hidden" id="userPasswordPass" value="n"/>
+				<input type="hidden" id="userPasswordCheckPass" value="n"/>
+				
 				<button onclick="updateUserPassword()" class="btnTheme">변경</button>
 			</div>
 		</div>
@@ -414,6 +389,8 @@
 </body>
 
 <script>
+
+	//// 취소 후에 이름을 저장하기 위해서 만들어둔 변수 
 	var saveFirstName =$("#userInfoUpdateValueFirstName").val();
 	var saveLastName = $("#userInfoUpdateValueLastName").val(); 
 	var saveBirthDate = $('#userInfoUpdateValueBirthDate').val();
@@ -425,7 +402,43 @@
 	var firstNameInput = $("#userInfoUpdateValueFirstName");
 	var lastNameInput = $("#userInfoUpdateValueLastName");
 	
+	//////// 실명 유효성 검사 ///
 
+	// 유효성 검사에 필요한 변수 
+	var userFirstNamePass = $('#userFirstNamePass');
+	var userLastNamePass = $('#userLastNamePass');
+	
+	/// 이름 
+	firstNameInput.on('keyup', function() {
+		
+		var firstNameCheck = new RegExp(/^[가-힣]{1,20}|[A-Za-z]{1,60}$/);
+		
+		if(firstNameCheck.test(firstNameInput.val())){
+			$('#userFirstNameError').text('통과');
+			userFirstNamePass.val("y");
+		}else{
+			$('#userFirstNameError').text('이름은 최대 한글 20글자 or 영문 60글자');
+			userFirstNamePass.val("n");
+		}
+	});
+	
+	// 성
+	lastNameInput.on('keyup',function(){
+		var lastNameCheck = new RegExp(/^[가-힣]{1,10}|[A-Za-z]{1,30}$/);
+		
+		console.log(lastNameCheck.test(lastNameInput.val()));
+		if(lastNameCheck.test(lastNameInput.val())){
+			$('#userLastNameError').text('통과');
+			userLastNamePass.val("y");
+		}else {
+			$('#userLastNameError').text('성은 최대 한글 10글자 or 영문 30글자');
+			userLastNamePass.val("n");
+		}
+	});
+	
+	
+	
+	/// 이름 완료 버튼 클릭시
 	$("#userInfoUpdateValueNameBtn").on('click',function(){
 		if(firstNameInput.is(":disabled")){ //// firstName이 disabled라면 
 			firstNameInput.attr("disabled",false);
@@ -434,43 +447,49 @@
 			$('#userInfoUpdateValueNameBtn').text("완료");
 						
 		}else{
-	
 			var firstName = firstNameInput.val();
 			var lastName= lastNameInput.val();
-		var params = {
-			firstName : firstName,
-			lastName : lastName
-		};
-		//	alert(JSON.stringify(params));
-	 		 $.ajax({
-				url : "ajax/updateUserName",
-		//		data : "firstName:"+firstName
-		//			+ "lastName:"+lastName,
-				data : params,
-				type: "POST",
-				success: function(result){
-					if(result){
-						alert("회원정보 수정(이름, 성) 완료 :"+firstName);
-						
-						saveFirstName = firstName;
-						saveLastName = lastName;
-						// 성공 후 input
-						firstNameInput.attr("disabled",true);
-						lastNameInput.attr("disabled",true);
-						$('#userInfoUpdateValueNameBtn').text("수정하기");
-					}
-					
-					
-				},
-				error:function(result){
-					alert("통신실패")
-				}
-			});  
-
-			firstNameInput.attr("disabled",true);
-			lastNameInput.attr("disabled",true);
-			cancleName.css("display","none");
+			var params = {
+				firstName : firstName,
+				lastName : lastName
+			};
 			
+			/// 기본적으로는  y로 되어있으며 유효성에 실패하면 n으로 바뀜
+			if(userFirstNamePass.val()==="y" && userLastNamePass.val()==="y" ){
+				
+		 		 $.ajax({
+					url : "ajax/updateUserName",
+					data : params,
+					type: "POST",
+					success: function(result){
+						if(result){
+							alert("회원정보 수정(이름, 성) 완료 :"+firstName);
+							
+							saveFirstName = firstName;
+							saveLastName = lastName;
+							// 성공 후 input
+							firstNameInput.attr("disabled",true);
+							lastNameInput.attr("disabled",true);
+							$('#userInfoUpdateValueNameBtn').text("수정하기");
+						}
+						
+						
+					},
+					error:function(result){
+						alert("통신실패")
+					}
+				});  
+	
+				firstNameInput.attr("disabled",true);
+				lastNameInput.attr("disabled",true);
+				cancleName.css("display","none");
+				
+				$('#userFirstNameError').empty();
+				$('#userLastNameError').empty();
+				
+			}else{
+				alert('유효성 통과 못함');
+			} /// 유효성 검증
 		
 		} ////// if end
 		
@@ -486,6 +505,9 @@
 		$("#userInfoUpdateValueFirstName").attr('disabled',true);
 		$('#userInfoUpdateValueLastName').attr('disabled',true);
 		cancleName.css('display','none');
+		
+		$('#userFirstNameError').empty();
+		$('#userLastNameError').empty();
 		
 	});
 	
@@ -556,6 +578,7 @@
 	
 	var mobileAuthenticationResult = $('#mobileAuthenticationResult');
 	var authenticationResult = $('#authenticationResult');
+
 	
 	
 	phoneBtn.on('click',function(){
@@ -608,38 +631,74 @@
 
 
 	/// 비밀번호 변경하기 
+	// 비밀번호 유효성 
+	var newPassword = $('#newPassword');
+	var newPasswordCheck = $('#newPasswordCheck');
+	
+	newPassword.on('keyup',function(){
+		var passwordCheck = new RegExp(/^[A-Za-z0-9~!@#$%^&*()_+|<>?:{}]{8,16}$/);
+		
+		if(passwordCheck.test(newPassword.val())){
+			$('#passwordError_2').text('통과');
+			$('#userPasswordPass').val('y');
+		}else{
+			$('#passwordError_2').text('대소문자,숫자,특수문자 8~12자리');
+			$('#userPasswordPass').val('n');
+		}
+	});
+	
+	newPasswordCheck.on('keyup',function(){
+		if(newPassword.val() === newPasswordCheck.val()){
+			$('#passwordError_3').text('통과');
+			$('#userPasswordCheckPass').val('y');
+		}else{
+			$('#passwordError_3').text('일치하지 않습니다.');
+			$('#userPasswordCheckPass').val('n');
+		}
+	});
+	
+	
+	
+	
 	function updateUserPassword(){
+		
 		alert($("#userInputPassword").val());
 		var params = {
 				userPassword : $('#userInputPassword').val(),
 				newPassword : $('#newPassword').val()
 		}
 		
-		$.ajax({
-			type : "POST",
-			url : "ajax/updateUserPassword",
-			data : params,
-			async : false,
-			success : function(result){
-				if(result == 0){
-					
-					alert("기존의 비밀번호가 일치하지 않습니다.");
-					
-				} else if(result == 1){
-					
-					alert("비밀번호 변경 완료.");
-					location.replace("userInfoUpdate");
-					
-				} else{
-					
-					alert("비밀번호 변경 실패.");
-					
+		if($('#userPasswordPass').val()==='y' && $('#userPasswordCheckPass').val()==='y'){
+			$.ajax({
+				type : "POST",
+				url : "ajax/updateUserPassword",
+				data : params,
+				async : false,
+				success : function(result){
+					if(result == 0){
+						
+						alert("기존의 비밀번호가 일치하지 않습니다.");
+						$('#passwordError_1').text("기존의 비밀번호가 일치하지 않습니다.");
+						$('#passwordError_1').css('color','red');
+						
+					} else if(result == 1){
+						
+						alert("비밀번호 변경 완료.");
+						location.replace("userInfoUpdate");
+						
+					} else{
+						
+						alert("비밀번호 변경 실패.");
+						
+					}
+				},	
+				error : function(){
+					alert("통신 실패..");
 				}
-			},	
-			error : function(){
-				alert("통신 실패..");
-			}
-		});
+			});
+		}else{
+			alert("다시확인하세요");
+		}
 	}
 	
 		
@@ -651,6 +710,8 @@
 	////////////// 닫기 버튼 ///////////////
 		$(".close").on("click",function(){
 			$("#userInfoUpdatePasswordModify").css("display","none");
+			$('.user-info-update-password-error').empty();
+			$('.user-info-update-password-input').val('');
 		});
 
    ///// 전화번호 인증을 한 사용자라면 인증완료를 보여주고 아니라면 인증하기 버튼을 보여준다.
@@ -677,7 +738,7 @@
 	    var top = Math.ceil(( window.screen.height - 360 )/2)-100;
 
 
-		var phoneOption =  "width=370, height=360, resizable=no, scrollbars=no, status=no, top="+top+", left="+left+";";
+		var phoneOption =  "width=500, height=360, resizable=no, scrollbars=no, status=no, top="+top+", left="+left+";";
 		
 
 		var windowPop = window.open(phoneURL,"popwin",phoneOption);
