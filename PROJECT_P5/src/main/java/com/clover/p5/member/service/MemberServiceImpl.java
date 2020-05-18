@@ -316,18 +316,6 @@ public class MemberServiceImpl implements MemberService {
 		System.out.println("회원정보 수정(생년월일)에 실패했습니다.");
 		return false;
 	}
-	@Override
-	public boolean updateUserMobilePhone(HttpServletRequest req) {
-		int memberId = getSessionUserId(req);
-		String mobilePhone = req.getParameter("mobilePhone");
-		if(memberMapper.updateMobilePhone(memberId, mobilePhone) == 1) {
-			System.out.println("회원정보 수정(휴대전화 번호)을 완료했습니다.");
-			refreshUserSession(req); // 세션 갱신
-			return true;
-		}
-		System.out.println("회원정보 수정(휴대전화 번호)에 실패했습니다.");
-		return false;
-	}
 //******************************** 회원정보 수정-END ********************************************
 	
 	
@@ -434,9 +422,10 @@ public class MemberServiceImpl implements MemberService {
 //******************************** 인증 문자메세지 전송-END ********************************************
 
 	
-//******************************** 휴대전화 인증 ********************************************
+//******************************** 휴대전화 인증(변경) ********************************************
 	@Override
 	public int mobileAuthentication(HttpServletRequest req) {
+		String mobilePhone = req.getParameter("mobilePhone");
 		String authenticationCode = req.getParameter("authenticationCode");
 		String inputCode = req.getParameter("inputCode");
 		int userId = getSessionUserId(req);
@@ -451,15 +440,15 @@ public class MemberServiceImpl implements MemberService {
 		/***
 		** 통과했으면 DB에 결과를 저장
 		***/
-			if(memberMapper.updateMobileAuthentication(userId) == 1) {
-				refreshUserSession(req); // session 새로고침
+			if(memberMapper.updateMobileAuthentication(userId, mobilePhone) == 1) {
 				System.out.println("휴대전화 인증 결과를 DB에 저장했습니다.");
+				refreshUserSession(req); // session 새로고침
 				return 1;
 			}
 			System.out.println("휴대전화 인증 결과를 DB에 저장하지 못했습니다.");
 			return 2;
 	}
-//******************************** 휴대전화 인증-END ********************************************
+//******************************** 휴대전화 인증(변경)-END ********************************************
 
 	
 	

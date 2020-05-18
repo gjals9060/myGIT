@@ -27,7 +27,7 @@
 	</select>
 	
 	<!-- 호스트 사진 출력 -->
-	<select id="selectHostPhoto" parameterType="String" resultType="HostPhotoDTO">
+	<select id="selectHostPhotoList" parameterType="String" resultType="HostPhotoDTO">
 		
 		SELECT
 			*
@@ -40,6 +40,23 @@
 			
 		
 	</select>
+	
+	<!-- 대표 사진 -->
+	<select id="selectRepresentativePhoto" parameterType="String" resultType="HostPhotoDTO">
+		
+		SELECT
+			*
+		FROM
+			host_photo
+		WHERE
+			host_id = #{hostId}
+			AND
+				sort_order = 1
+			
+		
+	</select>
+	
+	
 	
 	<select id="selectBlocking" parameterType="String" resultType="Date">
 	
@@ -121,6 +138,21 @@
 	
 	</insert>
 	
+	<!-- refund -->
+	<update id="updateBooking" parameterType="String">
+
+		UPDATE
+			booking
+		SET
+			cancellation_date = TO_DATE(#{cancellationDate},'YYYY.MM.DD HH24:MI:SS'),
+    		refund = #{refund}
+		WHERE
+			id = #{bookingId}
+
+	</update>
+
+
+	
 	<!-- foreach문에서는 trigger로! .nextval이 안먹힌다 -->
 	<!-- 예약 차단일 등록 -->
 	<insert id="insertBlocking">
@@ -131,13 +163,13 @@
 				host_id,
 				check_in_date,
 				who
-								)
+			)
 			VALUES
 			(	
 				#{hostId},
 				TO_DATE(#{blockingDate}, 'YYYY.MM.DD'),
 				'G'
-														)
+			)
 		</foreach>
 	</insert>
 	

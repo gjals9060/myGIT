@@ -107,11 +107,6 @@ public class MemberController {
 	public boolean updateUserBirthDate(HttpServletRequest req, Date birthDate) {
 		return memberService.updateUserBirthDate(req, birthDate);
 	}
-	@RequestMapping("/ajax/updateUserMobilePhone") // 휴대전화 번호
-	@ResponseBody
-	public boolean updateUserMobilePhone(HttpServletRequest req) {
-		return memberService.updateUserMobilePhone(req);
-	}
 //********************************** 회원정보 수정-END *************************************
 	
 	
