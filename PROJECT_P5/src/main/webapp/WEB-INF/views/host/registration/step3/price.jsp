@@ -4,8 +4,9 @@
 <html>
 <script type="text/javascript"
 	src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-	<link rel="stylesheet" href="/p5/css/price.css" />
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+<link rel="stylesheet" href="/p5/css/price.css" />
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <head>
 <!--   <script type="text/javascript">
@@ -25,53 +26,61 @@
 	<input type="hidden" id="hostId" value="${hostId }" />
 	<%@include file="./hostHeaderStep3.jsp"%>
 
-	
+
 	<script>
-	//	$('.hosting-step').empty(); // 없어도 됨
-	//	$('.hosting-step').text("3단계 : 숙박 요금을 설정하세요");
-		$('nav').css('grid-template-columns' ,'repeat(3, 1fr)');
+		//	$('.hosting-step').empty(); // 없어도 됨
+		//	$('.hosting-step').text("3단계 : 숙박 요금을 설정하세요");
+		$('nav').css('grid-template-columns', 'repeat(3, 1fr)');
 		$('#progressBar').val('80');
-		
-		$('#tabPrice').css('background','#bbb');
+
+		$('#tabPrice').css('background', '#bbb');
 	</script>
-	
-	
-	
-	
+
+
+
+
 	<!-- <form action="finish" method="post"> -->
 
 	<!--0부터 9까지 숫자를 입력하지않으면 ""로 replace됨  -->
 	<div id="wrap">
 		<div id="container">
-			
-				<h1>숙소 요금 설정하기</h1>
-				<p class="info-text">예약을 받을 가능성을 높이세요</p>
-				<p class="description">스마트 요금을 설정하면 숙소가 위치한 지역에 대한 수요에 따라 1박 요금이 자동으로 조정되어 경쟁력을 유지할 수 있습니다.</p>
-				모든 날짜에 동일하게 적용할 기본 요금을 설정하세요
-				<!--0부터 9까지 숫자를 입력하지않으면 ""로 replace됨  -->
-				<br>
-				<h4>기본 요금</h4>
-				<h6>이 요금이 기본 요금이 됩니다.</h6>
-				<br>
-				<div id="price">
-					<span class="won">\</span><input type="text" name="price" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" onmouseout="origin()" />
-				</div>
-				<div class="suggestion">
-					제안요금:\20,455<i class="fa fa-question-circle-o" aria-hidden="true" onmouseleave="hide()"></i>
-					<p class="suggestion-info">제안 가격은 숙소의 퀄리티, 주변 숙소의 요금, 수요에 기반합니다.</p>
-				</div>
-	<!--  <input type="submit" value="다음" /> -->
-	<!-- </form> -->
-	<a href="./calendar?hostId=${hostId }" class="previous-link"><span class="previous">이전</span></a>
-	<button class="registration" onclick="completeStep3()"><span class="next">완료</span></button>
-	<button class="modification" onclick="modifyPrice()">다음</button>
-	<%-- <a href="finish?hostId=${hostId }">완료</a> --%>
-</div>
-		<div id="left">
-		<div id="info">
-			<i class="fa fa-lightbulb-o fa-3x" aria-hidden="true"></i><br>낮은 요금으로 시작하여 예약을 유도 하세요<br>
-			신규 호스트는 첫 예약을 유도하기 위해 낮은 요금으로 호스팅을 시작합니다. 제안 요금의 5% 내외로 요금을 설정하면 예약률이 4배가량 늘어납니다.
+
+			<h1>숙소 요금 설정하기</h1>
+			<p class="info-text">예약을 받을 가능성을 높이세요</p>
+			<p class="description">스마트 요금을 설정하면 숙소가 위치한 지역에 대한 수요에 따라 1박 요금이
+				자동으로 조정되어 경쟁력을 유지할 수 있습니다.</p>
+			모든 날짜에 동일하게 적용할 기본 요금을 설정하세요
+			<!--0부터 9까지 숫자를 입력하지않으면 ""로 replace됨  -->
+			<br>
+			<h4>기본 요금</h4>
+			<h6>이 요금이 기본 요금이 됩니다.</h6>
+			<br>
+			<div id="price">
+				<span class="won">\</span><input type="text" name="price"
+					onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"
+					onmouseout="origin()" />
+			</div>
+			<div class="suggestion">
+				제안요금:\20,455<i class="fa fa-question-circle-o" aria-hidden="true"
+					onmouseleave="hide()"></i>
+				<p class="suggestion-info">제안 가격은 숙소의 퀄리티, 주변 숙소의 요금, 수요에 기반합니다.</p>
+			</div>
+			<!--  <input type="submit" value="다음" /> -->
+			<!-- </form> -->
+			<a href="./calendar?hostId=${hostId }" class="previous-link"><span
+				class="previous">이전</span></a>
+			<button class="registration" onclick="completeStep3()">
+				<span class="next">완료</span>
+			</button>
+			<button class="modification" onclick="modifyPrice()">다음</button>
+			<%-- <a href="finish?hostId=${hostId }">완료</a> --%>
 		</div>
+		<div id="left">
+			<div id="info">
+				<i class="fa fa-lightbulb-o fa-3x" aria-hidden="true"></i><br>낮은
+				요금으로 시작하여 예약을 유도 하세요<br> 신규 호스트는 첫 예약을 유도하기 위해 낮은 요금으로 호스팅을
+				시작합니다. 제안 요금의 5% 내외로 요금을 설정하면 예약률이 4배가량 늘어납니다.
+			</div>
 		</div>
 	</div>
 

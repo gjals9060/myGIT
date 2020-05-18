@@ -88,6 +88,10 @@ nav {
 	background: #bbb;
 }
 
+.fifty {
+	top: 60px !important;
+}
+
 
 </style>
 </head>
@@ -113,6 +117,12 @@ nav {
 			<div class='progress-bar'>
 				<progress value="10" max="100" id="progressBar"></progress>
 			</div>
+			<div class="bar">
+				<div class="fifty">
+					<p></p>
+			</div>
+
+		</div>
 			
 			</c:when>
 			<c:when test="${isModification }">

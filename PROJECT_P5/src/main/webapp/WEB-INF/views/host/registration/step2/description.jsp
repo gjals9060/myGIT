@@ -15,12 +15,7 @@
 <body>
 
 	<input type="hidden" id="hostId" value="${hostId }" />
-		<div class="bar">
-			<div class="fifty">
-				<p></p>
-			</div>
-
-		</div>
+		
 	<%@include file="./hostHeaderStep2.jsp" %>
 
 	<script>

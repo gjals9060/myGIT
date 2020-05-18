@@ -14,12 +14,7 @@
 <body>
 	<input type="hidden" id="hostId" value="${hostId }" />
 	<%@include file="./hostHeaderStep2.jsp" %>
-		<div class="bar">
-			<div class="fifty">
-				<p></p>
-			</div>
-
-		</div>
+	
 	<script>
 	//	$('.hosting-step').empty();
 	//	$('.hosting-step').text("2단계:상세정보를 입력하세요");
