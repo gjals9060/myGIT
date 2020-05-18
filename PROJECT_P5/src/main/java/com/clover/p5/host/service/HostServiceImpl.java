@@ -137,8 +137,33 @@ public class HostServiceImpl implements HostService {
 //********************************** 호스트 사진 등록-END ***********************************************	
 
 
-
-//********************************** 호스트 사진 삭제(수정 필요) ***********************************************
+//****************************** 호스트 사진 삭제(서버 파일) ***********************************************
+	public boolean deleteServerFile(HttpServletRequest req, int hostPhotoId) {
+		
+		String defaultPath = req.getServletContext().getRealPath("/");
+		String folderPath = defaultPath + "resources" + File.separator + "upload" + File.separator + "host" + File.separator;
+		
+		String path = hostMapper.selectHostPhotoPath(hostPhotoId);
+		String saveName = path.substring(path.lastIndexOf("/") + 1);
+		// 서버에 파일이 저장된 경로
+		String deletePath = folderPath + saveName;
+		
+		File file = new File(deletePath);
+		if(file.exists()){
+			if(file.delete()){
+				System.out.println("파일 삭제 성공");
+				return true;
+			}else{
+				System.out.println("파일 삭제 실패");
+				return false;
+			} 
+		}
+		System.out.println("파일이 존재하지 않습니다.");
+		return true;
+		
+	}
+//**************************** 호스트 사진 삭제(서버 파일)-END ***********************************************	
+//********************************** 호스트 사진 삭제 ***********************************************
 	@Transactional
 	@Override
 	public boolean deleteHostPhoto(HttpServletRequest req) {
@@ -146,13 +171,17 @@ public class HostServiceImpl implements HostService {
 		int photoOrder = Integer.parseInt(req.getParameter("photoOrder"));
 		int photoCount = Integer.parseInt(req.getParameter("photoCount"));
 		int hostId = Integer.parseInt(req.getParameter("hostId"));
+		
+		if(!deleteServerFile(req, photoId)) {
+			return false;
+		}
 		if(hostMapper.deleteHostPhoto(photoId) != 1) {
-			System.out.println(photoId + "번 사진 삭제 실패");
+			System.out.println(photoId + "번 사진 삭제(DB) 실패");
 			return false;
 		}
 		if(photoOrder == 1 && photoCount > 1) { // 삭제한 사진이 커버사진이고 다른 사진이 존재했을 때
 			if(hostMapper.updateCoverPhotoOrder(hostId) != 1) {
-				System.out.println("커버 사진 order 대체 실패");
+				System.out.println("커버 사진 order 대체(DB) 실패");
 				return false;
 			}
 		}
@@ -160,7 +189,8 @@ public class HostServiceImpl implements HostService {
 		return true; // 삭제 성공
 	}
 //********************************** 호스트 사진 삭제-END ***********************************************
-	
+		
+			
 	
 //********************************** 호스트 사진 정렬 결과 저장 ***********************************************
 	@Override

@@ -579,7 +579,32 @@ public class MemberServiceImpl implements MemberService {
 //********************************** 프로필 사진 등록-END *******************************************
 
 	
-	
+//****************************** 프로필 사진 삭제(서버 파일) ***********************************************
+	public boolean deleteServerFile(HttpServletRequest req, int hostPhotoId) {
+		
+		String defaultPath = req.getServletContext().getRealPath("/");
+		String folderPath = defaultPath + "resources" + File.separator + "upload" + File.separator + "profile" + File.separator;
+		
+		String path = memberMapper.selectProfilePhotoPath(hostPhotoId);
+		String saveName = path.substring(path.lastIndexOf("/") + 1);
+		// 서버에 파일이 저장된 경로
+		String deletePath = folderPath + saveName;
+		
+		File file = new File(deletePath);
+		if(file.exists()){
+			if(file.delete()){
+				System.out.println("파일 삭제 성공");
+				return true;
+			}else{
+				System.out.println("파일 삭제 실패");
+				return false;
+			} 
+		}
+		System.out.println("파일이 존재하지 않습니다.");
+		return true;
+		
+	}
+//**************************** 프로필 사진 삭제(서버 파일)-END ***********************************************	
 //********************************** 프로필 사진 삭제 *******************************************
 	@Transactional
 	@Override
@@ -587,14 +612,17 @@ public class MemberServiceImpl implements MemberService {
 		int memberId = getSessionUserId(req);
 		int photoId = Integer.parseInt(req.getParameter("photoId"));
 		
+		if(!deleteServerFile(req, photoId)) {
+			return false;
+		}
 		if(memberMapper.deleteProfilePhoto(photoId) != 1) {
-			System.out.println("프로필 사진 삭제 중에 오류 발생");
+			System.out.println("프로필 사진 삭제(DB) 중에 오류 발생");
 			return false;
 		}
 			// 대체할 게 있나?
 		if(memberMapper.selectProfilePhotoCount(memberId) != 0) { // 있으면
 			if(memberMapper.updateAutoProfile(memberId) != 1) { // 대체에 실패
-				System.out.println("프로필 사진 삭제 이후 대체 중에 오류 발생");
+				System.out.println("프로필 사진 삭제(DB) 이후 대체 중에 오류 발생");
 				return false;
 			}
 			System.out.println(photoId + "번 프로필 사진 삭제 + 대체를 완료했습니다.");
