@@ -1,5 +1,6 @@
 package com.clover.p5.guest.mapper;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -27,16 +28,22 @@ public interface GuestMapper {
 	int insertBooking(BookingEntity booking);	//성공시 1
 	
 	int updateBooking(
-			@Param("bookingId") int id,
+			@Param("bookingId") String id,
 			@Param("cancellationDate") String cancellationDate,
-			@Param("refund") int refund
+			@Param("refund") String refund
 			);
 	
 	int insertBlocking(
 			@Param("hostId") int hostId, 
 			@Param("arrBlockingDate") String[] arrBlockingDate
 			);
+
+	int deleteBlocking(
+			@Param("hostId")String hostId,
+			@Param("dates")ArrayList<String> dates
+			);
 	
 	List<BookingEntity> selectBooking(String memberId);
+	
 	
 }

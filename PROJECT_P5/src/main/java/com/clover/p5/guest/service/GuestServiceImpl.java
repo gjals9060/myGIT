@@ -3,6 +3,7 @@ package com.clover.p5.guest.service;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -351,7 +352,7 @@ public class GuestServiceImpl implements GuestService {
 			hostList.add(host);
 		}
 		
-		System.out.println("날짜 확인 : " + bookingList.get(0).getCheckInDate());
+		//System.out.println("날짜 확인 : " + bookingList.get(0).getCheckInDate());
 		
 		mv.addObject("bookingList", bookingList);
 		mv.addObject("RepresentativePhotoList", RepresentativePhotoList);
@@ -364,14 +365,16 @@ public class GuestServiceImpl implements GuestService {
 		
 		return mv;
 	}
-
+	
+	@Transactional
 	@Override
-	public boolean refund(String sBookingId, String sCheckInDate, String sPayment) {
+	public boolean refund(String sBookingId, String hostId, String sCheckInDate, String sCheckOutDate, String sPayment) {
 	//public boolean refund(BookingEntity bookingEntity) {
 				
 
 		System.out.println("값 받았니? id: " + sBookingId);
 		System.out.println("값 받았니? checkInDate: " + sCheckInDate);
+		System.out.println("값 받았니? checkOutDate: " + sCheckOutDate);
 		System.out.println("값 받았니? payment: " + sPayment);
 		
 		
@@ -383,42 +386,110 @@ public class GuestServiceImpl implements GuestService {
 		
 		//System.out.println(bookingEntity.getHostId());
 		Date checkInDate = new Date();
+		Date checkOutDate = new Date();
+		
 		try {
 			checkInDate = format0.parse(sCheckInDate);
+			checkOutDate = format0.parse(sCheckOutDate);
+			
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("체크인 날짜 : " + sCheckInDate);
+		
+		
+		
+		
+		Date cancelDate = new Date();	// 시간 배제하고 일로 계산해야됨
+		
+		String sCancelDate = format1.format(cancelDate);
+		String cancellationDate = format2.format(cancelDate);	
+		try {
+			cancelDate = format1.parse(sCancelDate);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		Date cancelDate = new Date();
+		System.out.println("취소 날짜 : " + sCancelDate);
 		
 		// 시간 차이 계산후 refund 금액 계산
-		long diff = cancelDate.getTime() - checkInDate.getTime();
-		long diffDate = diff/(24*60*60*1000);
-		System.out.println("날짜 차이 : " + diffDate);
+		long diff = checkInDate.getTime() - cancelDate.getTime();
+		long diffDate = diff/(24 * 60 * 60 * 1000);
+		System.out.println("날짜 차이 : " + diffDate + "일");
 		
-		String cancellationDate = format2.format(cancelDate);
-		
-		System.out.println("취소날짜,시간 : " + cancellationDate);
-		
+		/*
+			refund 환불 정책
+			
+			계산날짜에 따른 다른 환급율로 환불
+			
+			취소 날짜	: CancellationDate
+			체크인 날짜	: CheckInDate
+			계산 날짜	: 체크인 - 취소일
+			
+			계산 날짜
+				7일 이상 ~			: 100%
+				5일 이상 ~	7일 미만	:  75%
+				3일 이상 ~ 5일 미만	:  50%
+				1일 이상 ~ 3일 미만	:  25%
+				당일 환급 없음		:   0%	
+			
+		*/
+				
 		// refund 금액 계산
 		
+		// 환급율
+		double rate;
+		
+		if(diffDate < 1) {
+			rate = 0.00;
+		}else if(diffDate >= 1 && diffDate < 3) {
+			rate = 0.25;
+		}else if(diffDate >= 3 && diffDate < 5) {
+			rate = 0.50;
+		}else if(diffDate >= 5 && diffDate < 7) {
+			rate = 0.75;
+		}else {
+			rate = 1.00;
+		}
+		
+		System.out.println(rate);
+		int refund = (int)(Integer.parseInt(sPayment) * rate);
+		System.out.println("환불금액 : " + refund + "원");
 		
 		
-		int refund = 10000;
+		
+		int success1 = guestMapper.updateBooking(id+"", cancellationDate, refund+"");	// 실패면 0, 성공하면 row개수로 반환.	
+		
+		Date startDate = checkInDate;
+		Date endDate = checkOutDate;
+		ArrayList<String> dates = new ArrayList<String>();	//checkOutDate 까지 포함
+		Date currentDate = startDate;
+		while (currentDate.compareTo(endDate) <= 0) {
+			dates.add(format1.format(currentDate));
+			Calendar c = Calendar.getInstance();
+			c.setTime(currentDate);
+			c.add(Calendar.DAY_OF_MONTH, 1);
+			currentDate = c.getTime();
+		}
+		dates.remove(format1.format(checkOutDate));
+//		for(String d : dates) {
+//			System.out.println(d);
+//		}
+		
+		int success2 = guestMapper.deleteBlocking(hostId, dates);
+
+		
+		System.out.println("success1 : " + success1);
+		System.out.println("success2 : " + success2);
 		
 		
-		
-//		int success = guestMapper.updateBooking(id, cancellationDate, refund);	// 실패면 0, 성공하면 row개수로 반환.	
-		
-//		System.out.println("success : " + success);
-		
-		/*if(bookingId == null) {
+		if(success1 == 0 || success2== 0) {
 			return false;
 		}else {
 			return true;
-		}*/
-		return false;
+		}
 	}
 	
 	

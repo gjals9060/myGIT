@@ -11,6 +11,8 @@
 <meta charset="UTF-8">
 <title>회원 예약 리스트</title>
 <script src="js/jquery-3.4.1.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+
 
 <style>
 #wrap {
@@ -152,18 +154,120 @@
 					<div class="reservation-list-img">
 						<img src="${RepresentativePhotoList[index].path}" alt="${RepresentativePhotoList[index].originalName}" />
 					</div>
-					<div class="reservaion-list-value">
+					<div id="reservaion-value_${index}" class="reservaion-list-value">
 						<!-- 숙소 정보  -->
 						<div class="reservation-list-title">${hostList[index].name}</div>
-						<div class="reservation-list-date">체크 인 : ${booking.getCheckInDate()} / 체크 아웃 : ${booking.getCheckOutDate()}</div>
-						<div class="reservation-list-buy-date">예약일 : ${booking.bookingDate}</div>
+						<div id="inDate_${index}" class="reservation-list-date">체크 인 : ${booking.getCheckInDate()}</div>
+						<div id="outDate_${index}" class="reservation-list-date">체크 아웃 : ${booking.getCheckOutDate()}</div>
+						<div id="bookingDate_${index}" class="reservation-list-buy-date">예약일 : ${booking.bookingDate}</div>
 						<div class="reservation-list-price">결제금액 : ${booking.payment}원</div>
 						<div class="reservation-list-guestCount"> 예약인원 : ${booking.guestCount}</div>
 					</div>
 					<div class="reservation-list-refund">
-						<button id="reply_${index}" class="reservation-list-refund-btn">후기등록</button>
-						<button id="refund_${index}" class="reservation-list-refund-btn" onclick="return refund('${booking.id}','${booking.checkInDate}','${booking.payment}');">환불</button>
+						
+						<button id="reply_${index}" class="reservation-list-refund-btn" onclick="">후기등록</button>
+						<button id="refund_${index}" class="reservation-list-refund-btn" onclick="return refund('${booking.id}','${booking.hostId}','${booking.checkInDate}','${booking.checkOutDate}','${booking.payment}');">예약취소</button>						
 					</div>
+					<div class="reservation-list-refund" id="state_${index}"></div>
+					
+						<script>
+					
+							function getFormatDate(date){	// Date -> YYYY.MM.DD형태로(String)
+								var year = date.getFullYear();              //yyyy
+								var month = (1 + date.getMonth());          //M
+								month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
+								var day = date.getDate();                   //d
+								day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
+								return  year + '.' + month + '.' + day;
+							}
+							
+							function parse(str) {	// String -> Date 파싱
+							    var y = str.substr(0, 4);
+							    var m = str.substr(5, 2);
+							    var d = str.substr(8, 2);
+							    return new Date(y,m-1,d);
+							}
+							
+							function formatS1(str) {	// String(YYYY.MM.DD HH:mm:ss.sss) -> String (YYYY.MM.DD)
+								var y = str.substr(0, 4);
+							    var m = str.substr(5, 2);
+							    var d = str.substr(8, 2);
+								return y + "." + m-1 + "." + d;
+							}
+							
+							function formatS2(str) {	// String(YYYY MM DD HH:mm:ss.sss) -> String (YYYY.MM.DD(HH:mm:ss))
+								var y = str.substr(0, 4);
+							    var m = str.substr(5, 2);
+							    var d = str.substr(8, 2);
+							    var t = str.substr(11, 8);
+								return y + "." + m-1 + "." + d +"("+ t +")";
+							}
+							
+						
+							// 날짜 값 세팅
+							$('#reservaion-value_${index}').ready(function(){
+								var checkInDate = formatS1("${booking.checkInDate}");
+								var checkOutDate = formatS1("${booking.checkOutDate}");
+								var bookingDate = formatS2("${booking.bookingDate}");
+								
+								$('#inDate_${index}').empty();
+								$('#inDate_${index}').append("체크 인 : " + checkInDate);
+								
+								$('#outDate_${index}').empty();
+								$('#outDate_${index}').append("체크아웃 : " + checkOutDate);
+
+								$('#bookingDate_${index}').empty();
+								$('#bookingDate_${index}').append("예약날짜 : " + bookingDate);
+							});
+							
+							// 상태 : 예약취소, 예약완료, 이용완료
+							$('#state_${index}').ready(function() {
+								
+								var sCheckOutDate = "${booking.checkOutDate}";
+								var sCancellationDate = "${booking.cancellationDate}";
+								var cancellationDate = formatS2(sCancellationDate);
+								var today = new Date();
+								var sToday = getFormatDate(today);
+								
+								today = parse(sToday);
+								console.log("s체크아웃 : " + sCheckOutDate + "취소날짜 : " + sCancellationDate + "sToday : " + sToday);
+								
+								//var checkOutDate = parse("테스트 날짜!");
+								var checkOutDate = parse(sCheckOutDate);
+								
+								console.log("체크아웃 : " + checkOutDate + "오늘 날짜 : " + today);
+								
+								var dateCount = parseInt(today - checkOutDate);
+								console.log("dateCount : " + dateCount);	
+								
+								//$('#state_'+index)
+								if(sCancellationDate != ""){
+									
+									$('#state_${index}').empty();
+									$('#state_${index}').append("예약 취소<br>취소날짜 : " + cancellationDate);
+									
+									$('#reply_${index}').hide();
+									$('#refund_${index}').hide();
+									
+								}else if(dateCount < 0) {
+									
+									$('#state_${index}').empty();
+									$('#state_${index}').append("예약 완료");
+									
+									$('#reply_${index}').hide();
+									
+								}else{
+									
+									$('#state_${index}').empty();
+									$('#state_${index}').append("이용 완료");
+									
+									$('#refund_${index}').hide();
+									
+								}
+								
+							});
+
+						</script>
 				</div>
 
 			</c:forEach>
@@ -175,26 +279,63 @@
 <script type="text/javascript">
 
 
-function refund(sBookingId, checkInDate, payment) {
-//function refund(bookingEntity) {
+/* function countState(sCheckOutDate, sCancellationDate) {
 	
-/* 	
-	console.log("bookingEntity : " + bookingEntity);
+	var today = new Date();
 	
-	//replaceAll prototype 선언
-	String.prototype.replaceAll = function(org, dest) {
-	    return this.split(org).join(dest);
+	function getFormatDate(date){	// Date -> YYYY.MM.DD형태로(String)
+		var year = date.getFullYear();              //yyyy
+		var month = (1 + date.getMonth());          //M
+		month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
+		var day = date.getDate();                   //d
+		day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
+		return  year + '.' + month + '.' + day;
 	}
-	bookingEntity = bookingEntity.replaceAll("^&","\"");
-	var bookingEntity = {bookingEntity};
-	console.log(bookingEntity); 
-*/
 	
-/* 	var bookingEntity = {
-		booking
-	}; */
 	
-	console.log("bookingId : " + sBookingId + ", checkInDate : " + checkInDate, "payment : " + payment);
+	function parse(str) {	// String -> Date 파싱
+	    var y = str.substr(0, 4);
+	    var m = str.substr(5, 2);
+	    var d = str.substr(8, 2);
+	    return new Date(y,m-1,d);
+	}
+	
+	
+	var sToday = getFormatDate(today);
+	
+	today = parse(sToday);
+	console.log("s체크아웃 : " + sCheckOutDate + "취소 : " + sCancellationDate + "sToday : " + sToday);
+	
+	//var checkOutDate = parse("테스트 날짜!");
+	var checkOutDate = parse(sCheckOutDate);
+	
+	console.log("체크아웃 : " + checkOutDate + "오늘 날짜 : " + today);
+	
+	var dateCount = parseInt(today - checkOutDate);
+	console.log("dateCount : " + dateCount);	
+	
+	if(sCancellationDate == null){
+		
+		alert("예약취소한 건은 후기등록이 불가능합니다.");
+		return false;
+		
+	}else if(dateCount < 0){
+		alert("체크아웃날짜 이후부터 후기등록이 가능합니다.");
+		return false;
+		
+	}else{
+		
+		alert("후기등록 gogo!");
+		return true;
+		
+	}
+	
+	
+}//end countState(); */
+
+function refund(sBookingId, hostId, checkInDate, checkOutDate, payment) {
+	
+	console.log("bookingId : " + sBookingId + "hostId : " + hostId + ", checkInDate : " + checkInDate + ", checkOutDate : " + checkOutDate + ", payment : " + payment);
 	var con_test = confirm("예약을 취소하고 환불하시겠습니까?");
 	
 	if(con_test == true){
@@ -206,7 +347,7 @@ function refund(sBookingId, checkInDate, payment) {
 		$.ajax({
 			type : "POST",
 			url : "ajax/refund",
-			data : {"bookingId" : bookingId, "checkInDate" : checkInDate, "payment" : payment},
+			data : {"bookingId" : bookingId, "hostId" : hostId, "checkInDate" : checkInDate, "checkOutDate" : checkOutDate, "payment" : payment},
 			//data : JSON.stringify( bookingEntity ),
 			/* dataType : 'json',
 			contentType: "application/json", */
@@ -214,11 +355,11 @@ function refund(sBookingId, checkInDate, payment) {
 			success : function(result) {
 				
 				if(result){
-					alert("통신완료 : True");
-					//refresh(); // 화면 갱신
+					alert("예약취소 성공 : True");
+					refresh(); // 화면 갱신
 
 				}else{
-					alert("통신완료 : False");
+					alert("예약취소 실패 : False");
 				}
 				
 			}, error : function() {
@@ -227,10 +368,6 @@ function refund(sBookingId, checkInDate, payment) {
 			
 		});
 		
-		
-		
-		
-		alert("예약취소되었습니다.");
 		
 	}else{
 		return false;
