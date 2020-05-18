@@ -31,6 +31,7 @@
 	padding: 30px 0px;
 }
 
+
 /* 메인 제목 */
 .hosting-list-main-title {
 	font-size: 30px;
@@ -38,7 +39,8 @@
 	margin: 40px 0px;
 }
 
-.hosting-list-li {
+.hosting-list-li,
+.hosting-list-li_2 {
 	margin: 50px 0px;
 }
 
@@ -64,8 +66,9 @@
 
 /* list block */
 .hosting-list-block {
-    padding: 50px 300px 50px 0px;
+   	padding: 50px 300px 50px 0px;
     border-bottom: 0.5px solid #bbb;
+    
 }
 
 /* 호스트가 등록한 사진 */
@@ -79,17 +82,41 @@
 }
 
 /* 라디오 버튼 label 처리 */
-/* input[type=radio]{
-	display: none;
-} */
+input[type="radio"]{
+   position: absolute;
+   width: 1px;
+   height: 1px;
+   padding: 0px;
+   margin: -1px;
+   overflow: hidden;
+   clip: rect(0, 0, 0, 0);
+   border: 0;
+} 
 
-input[type=radio]:checked {
-	background: #bbb;
+input[type="radio"] + label {
+	display: inline-block;
+   	position: relative;
+   	cursor: pointer;
+   	-webkit-user-select: none;
+	
+}
+
+input[type="radio"]:checked+label:before {
+   background: #008489;
+   border-color: #008489;
 }
 
 
+/* 미등록 숙소   */
 .hosting-list-type {
 	font-size: 20px;
+}
+
+.hosting-list-btn {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	float: left;
 }
 </style>
 </head>
@@ -107,10 +134,17 @@ input[type=radio]:checked {
 						<label for="newHosting" class="hosting-list-block"> 
 							<input class="hosting-list-input" id="newHosting" type="radio" name="hostId" value="0" /> 
 							<img class="hosting-list-img" src="/p5/img/room1.jpg" alt="사진" /> 
-							<div class="hosting-list-description">
+							<span class="hosting-list-description">
 								<span class="hosting-list-title">새로운 숙소 등록하기</span>
-							</div>
+							</span>
 						</label>
+				<!-- 		<script>
+							if($('.hosting-list-input').is('checked',true)){
+								$('hosting-list-li').css('background','#bbb');
+							}else {
+								$('hosting-list-li').css('background','none');
+							}
+						</script> -->
 					</li>
 
 					<li><span class="hosting-list-type">숙소 등록중</span></li>
@@ -119,9 +153,9 @@ input[type=radio]:checked {
 				</ul>
 			</div>
 			<!-- 버튼 -->
-			<div>
-				<button onclick="next()">다음</button>
+			<div class="hosting-list-btn">
 				<button onclick="deleteHost()">삭제</button>
+				<button onclick="next()">다음</button>
 			</div>
 		</div>
 	</div>
@@ -159,32 +193,31 @@ function refresh(){
 		//			async : false,
 		success : function(hostingList) {
 			//	alert(hostingList.length);
-			var result = ''; var hostName;
+			var result = ''; var hostName; 
+			
 			$.each(hostingList,function(i, hosting) {
-				var num = 1;
 				var hostingListId;
 				if(!hosting.hostName){
 					hostName = "";
 				} else{
 					hostName = hosting.hostName;
 				}
-				num++;
-				hostingListId='hostingListId_'+num;
+				hostingListId='hostingListId_'+i;
 			
 				
 				hostName = 
-				result += '	<li class="hosting-list-li"> '
+				result += '	<li class="hosting-list-li_2"> '
 						+ ' <label for="'+ hostingListId +'" class="hosting-list-block" >'
 						+ '	<input id="'+ hostingListId + '" type="radio" name="hostId" value="' + hosting.hostId + '" />	'
 						+ '	<img class="hosting-list-img" src="' + hosting.coverPhotoPath + '" alt="사진" />	' 
-						+ ' <div class="hosting-list-description">'
+						+ ' <span class="hosting-list-description">'
 						+ ' <span class="hosting-list-title">' + hostName +  ' </span> '
 						+ ' <span class="hosting-list-room"> '+ hosting.roomTypeName +' </span> '
-						+ ' </div> '
+						+ ' </span> '
 						+ '	</label></li>';
 				}); // each-END
 				
-			$('.hosting').remove();
+			$('.hosting-list-li_2').remove();
 			$('#hosting-list-ul').append(result);
 			
 	
@@ -221,7 +254,7 @@ function refresh(){
 			success : function(result) {
 				if(result){ // 호스트 삭제 성공
 					alert("삭제 성공");
-				/* 	refresh(); // 화면 갱신 */
+					refresh(); // 화면 갱신 
 					location.href="http://localhost:8081/p5/host/hostingList";
 				} else{
 					alert("호스팅 삭제 실패..");
