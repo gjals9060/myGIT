@@ -9,7 +9,7 @@
 <meta charset="UTF-8">
 <title>회원정보수정</title>
 
-<link rel="stylesheet" href="css/userInfoUpdate.css?ver0.1" />
+<link rel="stylesheet" href="css/userInfoUpdate.css" />
 
 <script type="text/javascript"
 	src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
@@ -133,11 +133,13 @@
 								);
 									// 헤더 이미지에도 기본 이미지 적용
 								$("#userImg").attr("src","img/defaultProfile.png");
-
+								$(".profilePhotolist").html("호스트 이용을 위해서는 프로필 사진 등록이 필요합니다.");
+								$(".profilePhotolist").css("text-align", "center");
 									unapply(); // 버튼 생성 해제(지우는 효과만 적용)
 
 							} else { // 있으면..
-
+								$(".profilePhotolist").html("");
+								$(".profilePhotolist").css("text-align", "left");
 								var photoResult = '';
 								$.each(photoList,function(i, photo) {
 								// 화면에 출력되는 사진
@@ -327,9 +329,12 @@
 	<!-- 비밀번호 변경 modal -->
 	<div id="userInfoUpdatePasswordModify" class="user-info-modal">
 		<span class="close">&times;</span>
-		<div id="modalPopup">
+		<div id="modalPopup" class="modal-popup">
+		<div class="modalWrap">
+		<br><br><br>
 			<div class="user-info-update-password-container">
 				<div class="user-info-update-password-label">비밀번호 변경</div>
+				<hr>
 				<!-- 임시 로그인으로 진입 여부 확인 -->
    		 <%
    		 if(request.getParameter("t") != null){
@@ -343,39 +348,39 @@
    		 }
    		%>	 
 				<div class="user-info-update-password-block">
-					<div class="user-info-update-password-title">현재 비밀번호</div>
-					<div class="user-info-update-password-value">
+					<span class="user-info-update-password-title">현재 비밀번호</span>
+					<span class="user-info-update-password-value">
 						<input class="user-info-update-password-input" type="password" id="userInputPassword" />
-					</div>
+					</span>
 					<div class="user-info-update-password-error" id="passwordError_1"></div>
 				</div>
 
 
 				<div class="user-info-update-password-block">
-					<div class="user-info-update-password-title">변경 비밀번호</div>
-					<div class="user-info-update-password-value">
+					<span class="user-info-update-password-title">변경 비밀번호</span>
+					<span class="user-info-update-password-value">
 						<input class="user-info-update-password-input" type="password" id="newPassword" />
-					</div>
+					</span>
 					<div class="user-info-update-password-error" id="passwordError_2"></div>
 				</div>
 				<!-- <div class="user-info-update-password-error"></div> -->
 
 				<div class="user-info-update-password-block">
-					<div class="user-info-update-password-title">비밀번호확인</div>
-					<div class="user-info-update-password-value">
-						<input class="user-info-update-password-input" type="password" id="newPasswordCheck"/>
-					</div>
-					<div class="user-info-update-password-error" id="passwordError_3"></div>
+					<span class="user-info-update-password-title">비밀번호확인</span>
+					<span class="user-info-update-password-value">
+						<input class="user-info-update-password-input" type="password" />
+					</span>
 				</div>
 				
 				<input type="hidden" id="userPasswordPass" value="n"/>
 				<input type="hidden" id="userPasswordCheckPass" value="n"/>
 				
-				<button onclick="updateUserPassword()" class="btnTheme">변경</button>
+				<button onclick="updateUserPassword()" class="modalBtnTheme">변경</button>
+				<br><br><br>&nbsp;
 			</div>
 		</div>
 	</div>
-
+</div>
 	<!-- 전화번호 인증에 사용되는 modal -->
 	<div id="blockingModal" class="user-info-modal">
 		<div id="blockingModalCon">

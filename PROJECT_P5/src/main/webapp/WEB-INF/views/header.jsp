@@ -204,6 +204,7 @@
 
 		<div class="modal-popup">
 		<div class="modalWrap">
+			<br><br><br>
 			<h1>로그인</h1>
 			<hr>
 			<form action="" onsubmit="return userLogin()">
@@ -218,19 +219,18 @@
 					<input type="password" class="user-login-input-value"
 						id="userPassword" name="userPassword" />
 				</div>
-				<div class="loginCheck"></div>
-				
-				<div>
+				<div class="rememberLogin">
 					<input type="checkbox" id="rememberMe" /> <label for="rememberMe">자동
 						로그인</label>
 				</div>
-				
-				<input type="submit" value="로그인" class="loginButtons" />
+				<div class="loginCheck"></div>
+				<input type="submit" value="로그인" class="loginButtons login" />
 			</form>
-			<input type="button" value="카카오톡으로 로그인하기" class="loginButtons"/>
+			<input type="button" value="카카오 로그인" class="loginButtons kakao"/>
 			<br>
 			<input type="button" id="emailUserAdd" value="이메일로 가입하기" class="loginButtons" /><br>
 			<button id="makeshiftPasswordBtn" class="loginButtons" >비밀번호를 잊어버리셨나요?</button>
+			<br><br><br>&nbsp;
 		</div>
 		</div>
 	</div>
@@ -245,6 +245,7 @@
 			<!-- 회원가입 1단계 ( 정보입력 )  -->
 			<div class="modal-popup">
 			<div class="modalWrap">
+				<br><br><br>
 				<h1>회원가입</h1>
 				<hr>
 				<div class="formTitle">이메일</div>
@@ -294,9 +295,10 @@
 						name="mobilePhone" />
 				</div>
 				<div class="form-input-check" id="telCheck"></div>
-				<input type="button" value="다음" id="btnSendEmail" />
+				<input type="button" value="다음" id="btnSendEmail" class="nextButton" />
 				<!-- <input type="submit" value="다음" /> -->
 				<!-- 이후에 바로 이메일 인증받는 페이지로 이동 -->
+				<br><br><br>&nbsp;
 			</div>
 			</div>
 		</div>
@@ -308,15 +310,19 @@
 			id="emailCheckClose" class="close">&times;</span>
 		<div class="modal-popup">
 			<div class="modalWrap">
+				<br><br><br>
 				<h1>이메일 인증</h1>
 				<hr>
 				<!-- 이메일 인증 input -->
 				<div id="toEmail"></div>
+				<div class="emailCheckWrap">
 				<input type="text" id="inputCode" /> <input type="button"
-					value="재요청" id="rerequest" />
+					value="재요청" id="rerequest" class="nextButton reEmail"/>
+					</div>
 				<!-- 이메일 인증번호 input -->
 				<input type="hidden" id="authenticationCode" /><input type="button"
-					value="완료" id="completeSignUp" />
+					value="완료" id="completeSignUp" class="nextButton compEmail" />
+					<br><br><br>&nbsp;
 			</div>
 		</div>
 	</div>
@@ -327,7 +333,10 @@
 			id="makeshiftPasswordClose" class="close">&times;</span>
 		<div class="modal-popup">
 		<div class="modalWrap">
+		<br><br><br>
 			<h1>임시 비밀번호 발급</h1>
+			<hr>
+			<br>
 			<div class="makeshift-password-input-wrap">
 				<div class="makeshift-password-input-block">
 					<div class="makeshift-password-input-title">이메일</div>
@@ -335,8 +344,9 @@
 						<input type="text" id="makeshiftInputEmail" />
 					</div>
 				</div>
+				<br>
 				<div id="temporaryPasswordButtonBlock">
-					<button id="sendTemporaryPassword"
+					<button id="sendTemporaryPassword" class="nextButton"
 						onclick='sendTemporaryPassword()'>요청</button>
 				</div>
 				<div class="makeshift-password-input-error"></div>
@@ -349,10 +359,12 @@
 							type="password" id="inputTemporaryPassword" />
 					</div>
 					<div>
-						<button onclick='temporaryLogIn()'>로그인</button>
+					<br>
+						<button onclick='temporaryLogIn()' class="loginButtons login">로그인</button>
 					</div>
 				</div>
 				</div>
+				<br><br><br>&nbsp;
 			</div>
 		</div>
 	</div>
@@ -537,19 +549,26 @@
 	var mobileSwitch = false;
 	
 	function headerSizeView() {
+		
+		if (window.location.pathname == "/p5/") {
+			isURLmain = true;
+		} else {
+			isURLmain = false;
+		}
+		
 		width_size = $(window).width();
 		var height = $(document).scrollTop();
 		$('#scrollId').val(height);
 
-		var a = 603;
+		var a = 607;
 		var b = 843;
 		
-		if (isURLmain = true) {
-			var a = 603;
-			var b = 843;
+		if (isURLmain == true) {
+			a = 607;
+			b = 843;
 		} else {
-			var a = 843;
-			var b = 0;				
+			a = 843;
+			b = -100;				
 		}
 		
 		if (height > 80) { // 스크롤의 위치가 80보다  클경우(scroll)
@@ -592,6 +611,7 @@
 			} else {
 				$('.title-logo-img').css("display", "block");
 				$('.useradd-login-form').css("display", "block");
+				$('#headerMobileButton').css("display", "none");
 			}
 
 		} else { /// 80보다 낮은 위치라면(top)
@@ -606,7 +626,6 @@
 			$('#presentationTitle').css('padding-top', '0px');
 			
 			if (width_size <= a) {
-				alert("1");
 				if(mobileSwitch = false) {
  					$('.title-logo-img ').css("height", "50px");
 					$('#headerMobileButton').css("display", "block");
@@ -626,6 +645,7 @@
 			$('.title-logo-img ').css("height", "100px");
 			$('.useradd-login-form').css("display", "block");
 			$('.input-info').css("display", "block");
+			$('#headerMobileButton').css("display", "none");
 		}
 	}
 }
