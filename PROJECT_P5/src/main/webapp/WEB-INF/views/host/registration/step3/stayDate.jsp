@@ -79,7 +79,7 @@ function check() {
    var check2=$('input[name="minimumStay"]').val();
     console.log(check);
   
-    if(check||check1==""||check2=="") {
+    if(check2>check1||check1==""||check2=="") {
       alert("잘못된 정보입니다");
     
      
@@ -116,6 +116,7 @@ $('input[name="minimumStay"]').keyup(function (e) {
 
 			$('#minium-warning').css("background-color","white");
 			$('#minium-warning').hide();
+			$('#minium-warning').text("");
 			$('#maximum').css("margin-top","0px");
 			$('#minimum').css("border-color","#dce0e0");
 			$('#minimum').css("background-color","white");
@@ -149,6 +150,7 @@ $('input[name="maximumStay"]').keyup(function (e) {
 			$('#minimum-date-decrease-quantity').css("background-color","#FFF5F2");
 			$('#minimum-date-increase-quantity').css("background-color","#FFF5F2");
 			
+			
 		return;
 	  }
 	  else{
@@ -162,6 +164,7 @@ $('input[name="maximumStay"]').keyup(function (e) {
 			$('.minimum-date').css("background-color","white");
 			$('#minimum-date-decrease-quantity').css("background-color","white");
 			$('#minimum-date-increase-quantity').css("background-color","white");
+			$('#minium-warning').text("");
 	  }
 	$('.maximum-date').val(num);
 	$(".max").text(num+"박");
@@ -242,13 +245,16 @@ $('input[name="maximumStay"]').keyup(function (e) {
 				  
 
 					$('#minium-warning').css("background-color","white");
-					$('#minium-warning').hide();
+			
 					$('#maximum').css("margin-top","0px");
 					$('#minimum').css("border-color","#dce0e0");
 					$('#minimum').css("background-color","white");
 					$('.minimum-date').css("background-color","white");
 					$('#minimum-date-decrease-quantity').css("background-color","white");
 					$('#minimum-date-increase-quantity').css("background-color","white");
+					$('#minium-warning').html("");
+					$('#minium-warning').hide();
+
 			  }
 			
 			$('.minimum-date').val(num);
@@ -289,6 +295,7 @@ $('input[name="maximumStay"]').keyup(function (e) {
 					$('.minimum-date').css("background-color","white");
 					$('#minimum-date-decrease-quantity').css("background-color","white");
 					$('#minimum-date-increase-quantity').css("background-color","white");
+					$('#minium-warning').text("");
 			  }
 			if (num <= 0) {
 				/* 	alert("더이상 줄일수 없습니다") */
@@ -324,13 +331,14 @@ $('input[name="maximumStay"]').keyup(function (e) {
 				  
 
 					$('#minium-warning').css("background-color","white");
-					$('#minium-warning').hide();
 					$('#maximum').css("margin-top","0px");
 					$('#minimum').css("border-color","#dce0e0");
 					$('#minimum').css("background-color","white");
 					$('.minimum-date').css("background-color","white");
 					$('#minimum-date-decrease-quantity').css("background-color","white");
 					$('#minimum-date-increase-quantity').css("background-color","white");
+					$('#minium-warning').html("");
+					$('#minium-warning').hide();
 			  }
 			$('.maximum-date').val(num);
 			$(".max").text(num+"박");
