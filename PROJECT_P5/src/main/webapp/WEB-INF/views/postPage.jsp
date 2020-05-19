@@ -21,7 +21,7 @@
 
 <link rel="stylesheet" href="css/reset.css" />
 <link rel="stylesheet" href="css/home.css" />
-<link rel="stylesheet" href="css/header.css?ver0.1" />
+<link rel="stylesheet" href="css/header.css" />
 
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
@@ -30,414 +30,7 @@
 	href="https://unpkg.com/swiper/css/swiper.min.css">
 
 <link rel="stylesheet" href="css/daterangepicker.css" />
-<style type="text/css">
-#wrap {
-	width: 100%;
-	max-width: 1100px;
-	margin: 10px auto;
-}
-
-table {
-	width: 100%;
-}
-
-hr {
-	margin: 20px 0 20px;
-}
-
-button {
-	border: none;
-	width: 15px;
-	background: none;
-}
-
-/* modalImgSlide */
-.modalImgSlide {
-	display: none;
-	background: black;
-	background: rgb(0, 0, 0, 0.8);
-	position: fixed;
-	z-index: 1;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	overflow: auto;
-	background: black;
-}
-
-/* --- postImgSlide --- */
-.postImgSlide {
-	position: relative;
-	width: 75%;
-}
-
-.postImg, .modalImg {
-	display: none;
-	text-align: center;
-}
-
-.postImg img, .modalImg img {
-	height: 300px;
-	cursor: pointer;
-	transition: 0.3s;
-	padding-top: 0.5%;
-}
-
-.modalImg img {
-	height: 600px;
-	/* 	min-width: 600px;
-	max-width: 900px; */
-}
-
-.postImg:hover {
-	opacity: 0.7;
-}
-
-.modalImgSlideButton {
-	color: white;
-}
-
-.postImgSlideButton, .modalImgSlideButton {
-	text-align: center;
-	margin: 15px;
-}
-
-.prev, .next {
-	cursor: pointer;
-	padding: 10px;
-	font-weight: bold;
-	font-size: 20px;
-	border-radius: 0 3px 3px 0;
-}
-
-.next {
-	left: 550px;
-	border-radius: 3px 0 0 3px;
-}
-
-.prev:hover, .next:hover {
-	background: rgba(0, 0, 0, 0.5);
-}
-
-.modalImgNumber {
-	color: white;
-}
-
-.postImgNumber, .modalImgNumber {
-	font-size: 12px;
-	top: 0px;
-	padding-top: 5%;
-}
-
-.postImgThumbnails, .modalImgThumbnails {
-	width: 85%;
-	min-width: 500px;
-	margin: 0 auto;
-}
-
-.modalImgThumbnails {
-	width: 90%;
-}
-
-.postImgThumbnails:after, .modalImgThumbnails:after {
-	content: "";
-	display: table;
-	clear: both;
-}
-
-.postImgThumbnail.active img, .postImgThumbnail img:hover,
-	.modalImgThumbnail.active img, .modalImgThumbnail img:hover {
-	opacity: 1;
-}
-
-.postImgThumbnail img, .modalImgThumbnail img {
-	cursor: pointer;
-	float: left;
-	opacity: 0.6;
-	object-fit: cover;
-	object-position: center;
-	width: 20%;
-	height: 80px;
-}
-
-.modalImgThumbnail img {
-	height: 100px;
-}
-
-/* --- postContent --- */
-.postContent {
-	min-width: 320px;
-	padding-left: 30px;
-}
-
-.postContentTable td:first-child {
-	width: 75%;
-	/* min-width: 500px; */
-	max-width: 1px;
-	font-size: 95%;
-	line-height: normal;
-}
-
-.postContent td:nth-child(2) {
-	text-align: right;
-}
-
-.contentTitle {
-	font-size: 28px;
-	font-weight: bolder;
-}
-
-.Title {
-	font-size: 19px;
-	margin: 0px 0px 25px 0px;
-	font-weight: bolder;
-}
-
-.contentIntro table td:first-child {
-	vertical-align: middle;
-	min-height: 400px;
-}
-
-.contentConven {
-	word-break: keep-all;
-}
-
-.contentConven img {
-	width: 25px;
-	height: 25px;
-}
-
-.contentProfile img {
-	width: 50px;
-	height: 50px;
-}
-
-.contentReview {
-	word-break: break-all;
-}
-
-.contentReview table td {
-	padding: 10px;
-	text-align: center;
-	vertical-align: middle;
-}
-
-.contentReview table td:nth-child(2) {
-	text-align: left;
-}
-
-.contentReview img {
-	width: 50px;
-	height: 50px;
-	object-fit: cover;
-	object-position: center;
-}
-
-.contentReviewStar {
-	font-size:
-}
-
-/* 예약창 */
-.contentReserv {
-	border: 1px solid black;
-	padding: 2%;
-	position: sticky;
-	top: 10%;
-	bottom: 25%;
-	left: 100%;
-	text-align: center;
-	width: 10%;
-	min-width: 170px;
-	background: #eee;
-}
-
-.contentReservTitle {
-	font-size: 17px;
-	margin: 15px 0 10px;
-	font-weight: bolder;
-}
-
-.contentReserv tr {
-	display: grid;
-}
-
-.contentReserv input {
-	vertical-align: middle;
-	text-align: center;
-	width: 100%;
-}
-
-.guestCount_reserve {
-	/* header 랑 간섭이 있어서 guestCount_input이 였던걸 guestCount_reserve 으로 바꿨습니다. by 허민 */
-	width: 60% !important;
-}
-
-.contentReserv input[type=submit], .contentReserv input[type=button] {
-	border: none;
-	width: 100%;
-	background: #ed2d55;
-	color: white;
-	font-size: 18px;
-	font-weight: bolder;
-	padding: 5px;
-	margin: 10px 0 0 0;
-}
-
-#dateCount {
-	margin: 20px 0 10px;
-}
-
-/* 지도 */
-.contentMap {
-	width: 60vw;
-	max-width: 700px;
-}
-
-.map {
-	width: 500px;
-	height: 400px;
-	margin-top: 10px;
-	z-index: 0;
-	text-align: center;
-	margin: 0 auto;
-	margin-bottom: 30px;
-}
-
-/* 페이징 */
-.pagination a {
-	color: black;
-	float: left;
-	padding: 8px 16px;
-	text-decoration: none;
-	transition: background-color .3s;
-}
-
-.pagination a.active {
-	background-color: dodgerblue;
-	color: white;
-}
-
-.pagination a:hover:not (.active ) {
-	background-color: #ddd;
-}
-
-@media ( min-width : 480px) and (max-width: 880px) {
-	#wrap {
-		width: 90%;
-		max-width: 880px;
-	}
-	.postImgSlide {
-		width: 100%;
-	}
-	.postContent {
-		padding: 0;
-	}
-	.postContent div {
-		width: 85vw;
-		margin: 0 auto;
-	}
-	.contentTitle {
-		width: none;
-	}
-	.reservTab {
-		display: none;
-	}
-	.contentReservFix {
-		display: block;
-	}
-	.postImg img, .modalImg img {
-		padding-top: 0.5%;
-	}
-	.modalImg img {
-		width: 100%;
-		height: auto;
-		min-width: 400px;
-		max-width: 800px;
-	}
-	.postImgThumbnails, .modalImgThumbnails {
-		min-width: 300px;
-	}
-	.postImgThumbnails img, .modalImgThumbnails img {
-		height: 70px;
-	}
-
-	/* 반응형 */
-	.contentReserv {
-		bottom: 0;
-		width: 100%;
-		margin: 0;
-		padding: 0;
-		left: 0;
-		vertical-align: middle;
-		text-align: center;
-		background: #eee;
-	}
-	.contentReserv table {
-		padding: 0 15px;
-	}
-	.contentReserv tr {
-		display: contents;
-	}
-}
-
-@media ( min-width : 0px) and (max-width: 480px) {
-	#wrap {
-		width: 90%;
-		max-width: 480px;
-		min-width: 360px;
-	}
-	.postImgSlide {
-		width: 100%;
-	}
-	.postContent {
-		padding: 0;
-	}
-	.postContent div {
-		width: 85vw;
-		margin: 0 auto;
-	}
-	.reservTab {
-		display: none;
-	}
-	.contentReservFix {
-		display: block;
-	}
-	.postImg img, .modalImg img {
-		padding-top: 0.5%;
-	}
-	.modalImg img {
-		width: 100%;
-		height: auto;
-		min-width: 300px;
-		max-width: 500px;
-	}
-	.postImgThumbnails, .modalImgThumbnails {
-		min-width: 300px;
-	}
-	.postImgThumbnails img, .modalImgThumbnails img {
-		height: 50px;
-	}
-
-	/* 반응형 */
-	.contentReserv {
-		bottom: 0;
-		width: 100%;
-		margin: 0;
-		padding: 0;
-		left: 0;
-		vertical-align: middle;
-		text-align: center;
-		background: #eee;
-	}
-	.contentReserv table {
-		padding: 0 15px;
-	}
-	.contentReserv tr {
-		display: contents;
-	}
-}
-</style>
+<link rel="stylesheet" href="css/postPage.css" />
 
 </head>
 <body>
@@ -621,7 +214,7 @@ button {
 						<hr>
 						<div class="contentReview">
 							<div class="contentReview Title">
-								후기 <span class="contentReviewStar">★${reviewAvg} (${reviewCount})</span>
+								후기 <span class="contentReviewStar"> <img src="/p5/img/star1.png" alt="" /> ${reviewAvg} (${reviewCount})</span>
 							</div>
 							<table class="contentReviewList" id="reviewList">
 							<tbody>
@@ -630,10 +223,9 @@ button {
 								<tr><td><img src="img/room1.jpg" alt="" /><br>가나다</td><td>★4<br>숙소가 굉장히 좋아요! 주변에 관광지도 많고 무엇보다 Host분이 굉장히 친절하세요!!</td></tr>
 								-->
 								<c:forEach var="review" items="${reviewList}">
-								
 									<tr>
-										<td><img src="${review.path}" alt="${review.originalName}" /><br>${review.firstName}<br>${review.creationDate}</td>
-										<td>★${review.rating}<br>${review.content}</td>
+										<td><img src="${review.path}" alt="${review.originalName}" /><div class="reviewFirstName">${review.firstName}</div><div class="reviewDate">${review.creationDate}</div></td>
+										<td><div class="reviewStarRating"><img src="/p5/img/star1.png" alt="" /> ${review.rating}</div>${review.content}</td>
 									</tr>
 								
 								</c:forEach>
@@ -660,7 +252,8 @@ button {
 						<hr>
 						<div class="contentRefund">
 							<div class="contentRefund Title">환불정책</div>
-							체크인 30일 전까지는 전액환불 가능합니다.
+							체크인 30일 전까지는 전액환불 가능합니다.<br><br>
+							7일 이상 ~ : 100%<br>5일 이상 ~ 7일 미만 : 75%<br>3일 이상 ~ 5일 미만 : 50%<br>1일 이상 ~ 3일 미만 : 25%<br>당일 : 0% (환급 없음)
 						</div>
 					</td>
 					<td class="reservTab"></td>
@@ -725,7 +318,7 @@ button {
 
 	</div>
 	<!-- wrap end -->
-
+<jsp:include page="./footer.jsp" />
 </body>
 
 <script type="text/javascript">

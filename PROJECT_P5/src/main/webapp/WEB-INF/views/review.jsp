@@ -11,23 +11,90 @@
 <link rel="stylesheet" href="css/reset.css" />
 <style type="text/css">
 
+/* 네이버 나눔 바른고딕 */
+@font-face {
+	font-family: 'NanumBarunGothic';
+	font-style: normal;
+	font-weight: 400;
+	src:
+		url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot');
+	src:
+		url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot?#iefix')
+		format('embedded-opentype'),
+		url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.woff')
+		format('woff'),
+		url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.ttf')
+		format('truetype');
+}
+
+@font-face {
+	font-family: 'NanumBarunGothic';
+	font-style: normal;
+	font-weight: 700;
+	src:
+		url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot');
+	src:
+		url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot?#iefix')
+		format('embedded-opentype'),
+		url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.woff')
+		format('woff'),
+		url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.ttf')
+		format('truetype')
+}
+
+@font-face {
+	font-family: 'NanumBarunGothic';
+	font-style: normal;
+	font-weight: 300;
+	src:
+		url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot');
+	src:
+		url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot?#iefix')
+		format('embedded-opentype'),
+		url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.woff')
+		format('woff'),
+		url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.ttf')
+		format('truetype');
+}
+
+.nanumbarungothic * {
+	font-family: 'NanumBarunGothic', sans-serif;
+}
+
+* {
+	font-family: NanumBarunGothic;
+	/* transition: 0.5s; */
+}
+
 #wrap {
 	width: 100%;
 	max-width: 600px;
+}
+
+#wrap hr {
+	margin: 0;
+    border: 2px outset rgba(255,255,255,0.5); 
 }
 
 .review {
 	text-align: center;
 }
 
+.reviewTitle {
+	margin: 20px 0;
+	font-size: 20px;
+	font-weight: bolder;
+}
+
 .reservNumber {
 	font-size: 80%;
+	margin-bottom: 7px;
 }
 
 .reservInfo {
-	width: 90%;
-	margin: 10px auto;
-	height: 100px;
+	width: 100%;
+	margin: 0px auto 10px;
+	height: 130px;
 }
 
 .reservInfo img {
@@ -35,25 +102,41 @@
 	vertical-align: middle;
 }
 
+.reservInfo th {
+	background: #ed2d55;
+	color: white;
+}
+
 .reservInfo tr {
 	border: 1px solid black;
+	background: #eee;
 }
 
 .reservInfo th, tr, td {
 	vertical-align: middle;
 }
 
+.reservInfo td:nth-child(4) {
+	padding-right: 20px;
+}
 .reservInfo td:first-child {
 	width: 15%;
+	padding-left: 20px;
 }
 
 .reservInfo td:nth-child(3), td:nth-child(4) {
 	width: 20%;
+	font-size: 85%;
 }
 
 .comment textarea {
-	width: 60%;
-	height: 100px;
+	width: 80%;
+    height: 100px;
+    BACKGROUND: #eee;
+    border: none;
+    resize: none;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 /* 별점 */
@@ -62,6 +145,10 @@
 	width: 15px;
 	height: 30px;
 	cursor: pointer;
+}
+
+.starBox {
+	font-family: none;
 }
 
 .starLeft {
@@ -81,15 +168,21 @@
 }
 
 #commentUpButton {
-	width: 15%;
-	height: 30px;
+    width: 25%;
+    height: 30px;
+    border: none;
+    border-radius: 10px;
+    background: #ed2d55;
+    color: white;
 }
+
 </style>
 </head>
 <body>
 	<div id="wrap">
 		<div class="review">
-			<br><br>숙소 이용은 어떠셨나요?<br><br>
+			<div class="reviewTitle">숙소 이용은 어떠셨나요?</div>
+			<hr>
 			<table class="reservInfo">
 				<tr>
 				<th colspan="2">
@@ -116,14 +209,12 @@
 			</div>
 			<br>
 			<div class="comment">
-				<textarea id="commentReview" placeholder="내용을 입력해주세요."></textarea>
+				<textarea id="commentReview" placeholder="후기를 입력해주세요."></textarea>
 				<br> <br>
 			</div>
 			<input type="button" value="등록" id="commentUpButton"
 				onclick="commentUp()" />
-				<br><br>
-				<br><br>
-				
+				<br>
 		</div>
 	</div>
 </body>
@@ -158,10 +249,8 @@
 		newForm.append($('<input/>', {type: 'hidden', name: 'rate', value: rate}));
 		newForm.append($('<input/>', {type: 'hidden', name: 'commentReview', value: commentReview}));
 	
-
 		// append form(to body)	
 		newForm.appendTo('body');
-		
 		
 		// submit form
 		newForm.submit();
@@ -170,14 +259,32 @@
 	}
 
 	/* 별점 */
-
+	
+	var printIdx = 0;
+	
+	$(".star").on('mouseover', function() {
+		var idx = $(this).index();
+		$(".star").removeClass("on");
+		for (var i = 0; i <= idx; i++) {
+			$(".star").eq(i).addClass("on");
+		}
+	});
+	
+	$(".starBox").on('mouseleave', function() {
+		idx = printIdx*2;
+		$(".star").removeClass("on");
+		for (var i = 0; i < idx; i++) {
+			$(".star").eq(i).addClass("on");
+		}
+	});
+	
 	$(".star").on('click', function() {
 		var idx = $(this).index();
 		$(".star").removeClass("on");
 		for (var i = 0; i <= idx; i++) {
 			$(".star").eq(i).addClass("on");
 		}
-		var printIdx = idx + 0.5;
+		printIdx = idx + 0.5;
 		if (printIdx >= 1)
 			printIdx = (idx / 2) + 0.5;
 

@@ -196,10 +196,12 @@
 								// append form(to body)	
 								newForm.appendTo('body');
 								
-								window.open("", "popup_window", "width=500, height=600, scrollbars=no");
+								window.open("", "popup_window", "width=500, height=450, scrollbars=no, toolbar=no, menubar=no, location=no : 주소창 표시안함, status=no");
 								
-								// submit form
 								newForm.submit();
+								
+								$("#reply_${index}").text("등록완료");
+								$('#reply_${index}').css("background", "#bbb");
 																
 							});
 						</script>
