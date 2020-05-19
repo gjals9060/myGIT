@@ -12,7 +12,11 @@
 <!-- services와 clusterer, drawing 라이브러리 불러오기 -->
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6252091adcb28726fdb95ebdf0b78361&libraries=services"></script>
-
+<style>
+.registration, .modification{
+	display: none;
+}
+</style>
 </head>
 <body>
 	<input type="hidden" id="hostId" value="${hostId }" />
@@ -59,10 +63,10 @@
 
 
 	<!--임시 이동  -->
-	<a class="registration" href="./roomCount"><span class="previous">이전</span></a>
-	<a class="registration" onclick="check()"><span class="next">다음</span></a>
-	<a class="modification" href="./roomCount?hostId=${hostId }">이전</a>
-	<a class="modification" href="./facilities?hostId=${hostId }">다음</a>
+	<a class="registration click-to-save" href="./roomCount"><span class="previous">이전</span></a>
+	<a class="registration click-to-save" onclick="check()"><span class="next">다음</span></a>
+	<a class="modification click-to-save" href="./roomCount?hostId=${hostId }">이전</a>
+	<a class="modification click-to-save" href="./facilities?hostId=${hostId }">다음</a>
 	<!-- <button id="next" onclick="inputAddress();">다음</button> -->
 	 </div>
   <div id="left">

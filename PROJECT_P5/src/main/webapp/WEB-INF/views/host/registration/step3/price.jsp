@@ -21,6 +21,11 @@
     }
     </script> -->
 <title>가격</title>
+<style>
+.registration, .modification{
+	display: none;
+}
+</style>
 </head>
 <body>
 	<input type="hidden" id="hostId" value="${hostId }" />
@@ -72,7 +77,7 @@
 			<button class="registration" onclick="completeStep3()">
 				<span class="next">완료</span>
 			</button>
-			<button class="modification" onclick="modifyPrice()">다음</button>
+			<button class="modification" onclick="modifyPrice()">완료</button>
 			<%-- <a href="finish?hostId=${hostId }">완료</a> --%>
 		</div>
 		<div id="left">

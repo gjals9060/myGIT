@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.clover.p5.guest.dto.HostInfoDTO;
+import com.clover.p5.guest.dto.HostSemiInfoDTO;
 import com.clover.p5.guest.dto.BookingEntity;
 import com.clover.p5.guest.dto.SearchInputDTO;
 
@@ -17,7 +18,7 @@ public interface GuestService {
 	String selectHost(HttpServletRequest request, Model model);
 	
 	// 지도 이동 반응형 리스트
-	List<HostInfoDTO> selectHostList(SearchInputDTO searchInputDto);
+	List<HostSemiInfoDTO> selectHostList(SearchInputDTO searchInputDto);
 	
 	// reservationList 이동
 	String reservationList(HttpServletRequest request, Model model);
