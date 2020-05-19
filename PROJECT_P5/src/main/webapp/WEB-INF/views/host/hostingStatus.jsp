@@ -18,7 +18,7 @@
 	display: grid;
 	grid-template-columns: 60% 40%;
 	margin: 30px 0px;
-	height: 1000px;
+	height: 800px;
 }
 
 /* 숙소상태페이지 타이틀 */
@@ -55,6 +55,7 @@
 /* 숙소수정관련 이미지 */
 .hosting-status-img {
 	background: #bbb;
+	height: 700px;
 }
 
 /* 숙소 변경,계속 버튼 */
@@ -83,6 +84,13 @@
 	padding: 6px 15px;
 	border-radius: 5px;
 }
+
+#hostingStatusImg {
+	width:100%;
+	height:100%;
+	object-fit: fill;
+    object-position: center;
+}
 </style>
 
 <!-- viewport  -->
@@ -99,7 +107,7 @@
 			<!-- 숙소상태,수정  -->
 			<div class="hosting-status-main">
 
-				<div class="hosting-status-title">등록한 단계에 따라 변함.</div>
+				<div class="hosting-status-title"></div>
 
 				<div class="hosting-status-block">
 					<div class="hosting-status-step">1단계</div>
@@ -138,7 +146,7 @@
 
 			<!-- 숙소 옆 빈공간 (이미지가 들어갈 자리) -->
 			<div class="hosting-status-img">
-				<img src="" alt="" />
+				<img id="hostingStatusImg" src="/p5/img/hostingStatus.jpg" alt="" />
 			</div>
 
 		</div>
@@ -183,20 +191,25 @@
 				data : "hostId=" + $('#hostId').val(),
 				success : function(host) {
 					//	alert(JSON.stringify(host)); // 내용 확인
+					$('.hosting-status-title').text('1단계까지 진행');
 					if (!host.name) { // step2 미완료
 						$('#modifyStep2').remove(); // step2 변경 X
 						$('#registerStep3').remove(); // step3 계속 X
 						$('#modifyStep3').remove(); // step3 변경 X
+						$('.hosting-status-title').text('2단계를 완료하세요!');
 						return;
 					}
 					if (!host.creationDate) { // step3 미완료
 						$('#registerStep2').remove(); // step2 계속 X
 						$('#modifyStep3').remove(); // step3 변경 X
+						$('.hosting-status-title').text('3단계를 완료하세요!');
 						return;
 					}
 					// step3 완료(등록 완료된 호스트 수정시 화면)
 					$('#registerStep2').remove(); // step2 계속 X
 					$('#registerStep3').remove(); // step3 계속 X
+					$('.hosting-status-title').text('최신 상태를 유지하세요!');
+					
 				},
 				error : function() {
 					alert("호스팅 상태 보기 실패..");

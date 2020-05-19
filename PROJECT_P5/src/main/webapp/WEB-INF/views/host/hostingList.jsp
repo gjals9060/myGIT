@@ -32,7 +32,7 @@
 
 .hosting-list-li,
 .hosting-list-li-old {
-	margin: 50px 0px;
+	margin: 60px 0px;
 }
 
 /* hostingList 설명 block */
@@ -185,7 +185,7 @@ function refresh(){
 				result += '	<li class="hosting-list-li-old"> '
 						+ '	<input id="'+ hostingListId + '" type="radio" name="hostId" value="' + hosting.hostId + '" />	'
 						+ ' <label for="'+ hostingListId +'" class="hosting-list-block" >'
-						+ '	<img class="hosting-list-img" src="' + hosting.coverPhotoPath +'" onError='+"'this.src="+'"/p5/img/defaultImg.jpg"'+"' />	" 
+						+ '	<img class="hosting-list-img" src="' + hosting.coverPhotoPath +'" onError='+'"this.src='+"'/p5/img/defaultImg.jpg'"+'" />	' 
 						+ ' <span class="hosting-list-description">'
 						+ ' <span class="hosting-list-title">' + hostName +  ' </span> '
 						+ ' <span class="hosting-list-room"> '+ hosting.roomTypeName +' </span> '

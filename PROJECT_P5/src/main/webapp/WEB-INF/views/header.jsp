@@ -380,6 +380,19 @@
 </body>
 <script>
 
+// ajax loading
+$(document).ready(function(){
+	$(document).ajaxStart(function() {
+		$('.ajax-loading').show();
+	});
+	$(document).ajaxStop(function() {
+		$('.ajax-loading').fadeOut();
+	})
+	
+}); 
+
+
+
 	var flag = true; // 날짜 출력 여부
 
 	var date = new Date();
@@ -752,12 +765,8 @@
 			type : "POST",
 			url : "/p5/ajax/sendTemporaryPassword",
 			data : 'userEmail=' + $('#makeshiftInputEmail').val(),
-			beforeSend: function(){
-				$('.ajax-loading').show();
-			},
-			async : false,
+			/* async : false, */
 			success : function(data) {
-				$('.ajax-loading').fadeOut();
 				if (!data) {
 					alert("임시 비밀번호 발송에 실패했습니다.");
 				} else {
@@ -957,12 +966,7 @@
 			type : "POST",
 			url : "/p5/ajax/logIn",
 			data : params,
-			beforeSend: function(){
-				$('.ajax-loading').show();
-			},
-			async : false,
 			success : function(result) {
-				$('.ajax-loading').fadeOut();
 				if (result == 0) { // 존재하지 않는 ID
 				
 					$('.loginCheck').empty();
