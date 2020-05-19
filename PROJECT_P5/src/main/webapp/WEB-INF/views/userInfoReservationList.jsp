@@ -20,32 +20,8 @@
 
 	<div id="wrap">
 		<!-- 예약 container -->
-		<div class="reservation-list-main-title">예약하신 숙소리스트 입니다.</div>
+		<div class="reservation-list-main-title">예약 숙소 리스트</div>
 		<div class="reservation-list-container">
-			<!-- 예약 리스트 블럭 (1개의 예약상태) 반복문을 돌려서 리스트 처리-->
-<!-- 
-			<div class="resercation-list-block">
-				<div class="reservation-list-num">
-					<p>12345</p>
-				</div>
-				<div class="reservation-list-img">
-					<img src="./img/어린왕자.jpg" alt="" />
-				</div>
-				<div class="reservaion-list-value">
-					숙소 정보 
-					<div class="reservation-list-title">경복궁</div>
-					<div class="reservation-list-guestCount">아파트 침대 1 욕실 1</div>
-					<div class="reservation-list-date">2020.04.02 ~ 2020.04.05</div>
-					<div class="reservation-list-buy-date">2020.04.01</div>
-					<div class="reservation-list-price">50000 원</div>
-				</div>
-				<div class="reservation-list-refund">
-					<button class="reservation-list-refund-btn">후기등록</button>
-					<button class="reservation-list-refund-btn">환불</button>
-				</div>
-			</div>
--->
-
 			<c:forEach var="index" begin="0" end="${fn:length(bookingList)-1}">
 			
 				<c:set var="booking" value="${bookingList[index]}" />
@@ -64,9 +40,10 @@
 						<div id="inDate_${index}" class="reservation-list-date">체크 인 : ${booking.getCheckInDate()}</div>
 						<div id="outDate_${index}" class="reservation-list-date">체크 아웃 : ${booking.getCheckOutDate()}</div>
 						<div id="bookingDate_${index}" class="reservation-list-buy-date">예약일 : ${booking.bookingDate}</div>
+						<div id="cancleDate_${index}" class="reservation-list-buy-cancle"></div>
 						<br>
 						<div class="reservation-list-price">결제 금액 : ${booking.payment}원</div>
-						<div class="reservation-list-guestCount"> 예약 인원 : ${booking.guestCount}인</div>
+						<div id="person_${index}" class="reservation-list-guestCount"> 예약 인원 : ${booking.guestCount}인</div>
 					</div>
 					<div class="reservation-list-refund">
 						
@@ -108,14 +85,6 @@
 								return y + "." + m-1 + "." + d +" <span class='dateText2'>("+ t +")</span>";
 							}
 							
-							function formatS3(str) {	// String(YYYY MM DD HH:mm:ss.sss) -> String (YYYY.MM.DD(HH:mm:ss))
-								var y = str.substr(0, 4);
-							    var m = str.substr(5, 2);
-							    var d = str.substr(8, 2);
-							    var t = str.substr(11, 8);
-								return y + "." + m-1 + "." + d +"<div class='dateText2'>("+ t +")</div>";
-							}
-							
 						
 							// 날짜 값 세팅
 							$('#reservaion-value_${index}').ready(function(){
@@ -132,13 +101,13 @@
 								$('#bookingDate_${index}').empty();
 								$('#bookingDate_${index}').append("예약일 : " + bookingDate);
 							});
-							
+
 							// 상태 : 예약취소, 예약완료, 이용완료
 							$('#state_${index}').ready(function() {
 								
 								var sCheckOutDate = "${booking.checkOutDate}";
 								var sCancellationDate = "${booking.cancellationDate}";
-								var cancellationDate = formatS3(sCancellationDate);
+								var cancellationDate = formatS2(sCancellationDate);
 								var today = new Date();
 								var sToday = getFormatDate(today);
 								
@@ -158,7 +127,12 @@
 									
 									$('#state_${index}').empty();
 									$('#state_${index}').append("예약<br>취소");
-											/* <div class='dateText1'>" + cancellationDate + "</div>" */
+									$('#cancleDate_${index}').append("취소일 : " + cancellationDate);
+									
+									$('#cancleDate_${index}').css("display", "block");
+									$('#inDate_${index}').css("display", "none");
+									$('#outDate_${index}').css("display", "none");
+									$('#person_${index}').css("display", "none");
 									
 									$('#reply_${index}').hide();
 									$('#refund_${index}').hide();
@@ -166,13 +140,14 @@
 									$('#state_${index}').prev().prev().prev().css("opacity", "0.5");
 									$('#state_${index}').parent().css("color", "#bbb");
 									
+									
 								}else if(dateCount < 0) {
 									
 									$('#state_${index}').empty();
 									$('#state_${index}').append("예약<br>완료");
 									
 									$('#reply_${index}').hide();
-									
+
 								}else{
 									
 									$('#state_${index}').empty();
@@ -293,6 +268,14 @@ function refund(sBookingId, hostId, checkInDate, checkOutDate, payment) {
 	
 	
 }
+
+/* 후기 등록이 완료되면 부분에 아래 추가해주기
+ 
+$("#reply_${index}").text("등록완료");
+$('reply_${index}').css("background", "#bbb");
+ 
+ */
+
 
 </script>
 

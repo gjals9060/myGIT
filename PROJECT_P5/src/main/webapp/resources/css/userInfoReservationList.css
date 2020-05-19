@@ -3,12 +3,13 @@
 #wrap {
 	max-width: 1100px;
 	width: 100%;
-	margin: auto;
+	margin: 30px auto 50px;
 }
 
 .reservation-list-main-title {
-	font-size: 30px;
+	font-size: 26px;
 	margin-bottom: 30px;
+	font-weight: bolder;
 }
 
 /* 예약 컨테이너 */
@@ -77,6 +78,10 @@
 /* 결제일 */
 .reservation-list-buy-date {
 	
+}
+
+.reservation-list-buy-cancle {
+	display: none;
 }
 
 /* 총 가격 */
