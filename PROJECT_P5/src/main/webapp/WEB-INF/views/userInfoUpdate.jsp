@@ -368,9 +368,11 @@
 				<div class="user-info-update-password-block">
 					<span class="user-info-update-password-title">비밀번호확인</span>
 					<span class="user-info-update-password-value">
-						<input class="user-info-update-password-input" type="password" />
+						<input class="user-info-update-password-input" type="password" id="newPasswordCheck" />
 					</span>
+					<div class="user-info-update-password-error" id="passwordError_3"></div>
 				</div>
+				
 				
 				<input type="hidden" id="userPasswordPass" value="n"/>
 				<input type="hidden" id="userPasswordCheckPass" value="n"/>
@@ -701,6 +703,7 @@
 					alert("통신 실패..");
 				}
 			});
+		
 		}else{
 			alert("다시확인하세요");
 		}
