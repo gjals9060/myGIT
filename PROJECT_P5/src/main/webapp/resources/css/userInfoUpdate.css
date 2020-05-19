@@ -6,6 +6,9 @@
 	margin: 0 auto;
 }
 
+button, input[type=text] {
+	outline: none;
+}
 
 /* 회원정보 페이지 컨테이너*/
 .user-info-update-container {
@@ -74,6 +77,11 @@
     left: 150px;
 
 } */
+
+#authenticationResult {
+	left: 30%;
+    bottom: 4px;
+}
 
 #mobileAuthenticationResult {
     color: #ed2d55;
@@ -183,11 +191,12 @@
 }
 
 /* blockModal에서 내용들  */
-#blockingModalCon {
-    width: 400px;
-    height: 500px;
-    background: white;
-    margin: 10% auto;
+#blockingImg {
+	position: relative;
+    top: 47%;
+    left: 47%;
+    width: 10%;
+    height: 40px;
 }
 
 #blockingModalCon p {
@@ -315,7 +324,7 @@
 }
 
 .btnTheme {
-	border: none;
+	border: none; 
     background: #ed2d55;
     color: white;
     border-radius: 30px;
@@ -349,6 +358,7 @@
 	font-size: 100%;
 }
 
+/* 비밀번호변경 modal에서 유효성 검사 text */
 .user-info-update-password-error {
 	display: block;
 	font-size: 12px;
@@ -359,4 +369,12 @@
 .modalWrap input[type="password"] {
 	min-width: max-content !important;
 	margin-right: 0 !important;
+}
+
+
+
+/* 회원정보 수정 유효성 검사 text */
+.user-info-name-error {
+	font-size: 14px;
+	margin-top: 5px;
 }

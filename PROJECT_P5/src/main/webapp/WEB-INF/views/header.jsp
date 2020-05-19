@@ -369,6 +369,11 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- ajax 로딩 -->
+	<div class="ajax-loading">
+		<img id="loadingBarImg" src="/p5/img/loading.gif" alt="" />
+	</div>
 
 
 
@@ -747,8 +752,12 @@
 			type : "POST",
 			url : "/p5/ajax/sendTemporaryPassword",
 			data : 'userEmail=' + $('#makeshiftInputEmail').val(),
+			beforeSend: function(){
+				$('.ajax-loading').show();
+			},
 			async : false,
 			success : function(data) {
+				$('.ajax-loading').fadeOut();
 				if (!data) {
 					alert("임시 비밀번호 발송에 실패했습니다.");
 				} else {
@@ -949,9 +958,13 @@
 			url : "/p5/ajax/logIn",
 			data : params,
 			async : false,
+			beforeSend: function(){
+				$('.ajax-loading').show();
+			},
 			success : function(result) {
+				$('.ajax-loading').fadeOut();
 				if (result == 0) { // 존재하지 않는 ID
-
+				
 					$('.loginCheck').empty();
 
 					$('.loginCheck').css({
@@ -972,7 +985,7 @@
 
 				} else if (result == 2) { // 로그인 성공
 
-					alert("로그인 성공");
+					/* alert("로그인 성공"); */
 					location.reload();
 
 				}
