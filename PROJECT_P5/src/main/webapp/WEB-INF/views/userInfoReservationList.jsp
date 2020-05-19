@@ -16,11 +16,12 @@
 <link rel="stylesheet" href="/p5/css/userInfoReservationList.css" />
 </head>
 <body>
-	<jsp:include page="./header.jsp"></jsp:include>	
-
+	<jsp:include page="./header.jsp" />
 	<div id="wrap">
 		<!-- 예약 container -->
 		<div class="reservation-list-main-title">예약 숙소 리스트</div>
+		<div class="refundNotice">예약 취소에 따른 환불 금액은 <a onclick="alert('환불정책')">환불 정책</a>에 따릅니다.</div>
+
 		<div class="reservation-list-container">
 			<c:forEach var="index" begin="0" end="${fn:length(bookingList)-1}">
 			
@@ -167,6 +168,7 @@
 
 		</div>
 	</div>
+	<jsp:include page="./footer.jsp" />
 </body>
 
 <script type="text/javascript">

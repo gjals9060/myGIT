@@ -7,9 +7,10 @@
 }
 
 .reservation-list-main-title {
-	font-size: 26px;
-	margin-bottom: 30px;
+	font-size: 28px;
+	margin-bottom: 20px;
 	font-weight: bolder;
+	padding-left: 5%;
 }
 
 /* 예약 컨테이너 */
@@ -116,8 +117,15 @@
 	margin: 7px 0;
 }
 
-.dateText2 {
-	font-size: 85%;
+.dateText2, {
+	font-size: 85% !important;
+}
+
+.refundNotice {
+	font-size: 95%;
+	color: #777;
+	margin-bottom: 30px;
+	padding-left: 6%;
 }
 
 
