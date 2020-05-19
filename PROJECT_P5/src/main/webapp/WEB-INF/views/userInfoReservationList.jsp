@@ -335,7 +335,7 @@
 
 function refund(sBookingId, hostId, checkInDate, checkOutDate, payment) {
 	
-	console.log("bookingId : " + sBookingId + "hostId : " + hostId + ", checkInDate : " + checkInDate + ", checkOutDate : " + checkOutDate + ", payment : " + payment);
+	console.log("bookingId : " + sBookingId + ", hostId : " + hostId + ", checkInDate : " + checkInDate + ", checkOutDate : " + checkOutDate + ", payment : " + payment);
 	var con_test = confirm("예약을 취소하고 환불하시겠습니까?");
 	
 	if(con_test == true){
@@ -355,11 +355,11 @@ function refund(sBookingId, hostId, checkInDate, checkOutDate, payment) {
 			success : function(result) {
 				
 				if(result){
-					alert("예약취소 성공 : True");
-					refresh(); // 화면 갱신
+					alert("예약취소 성공");
+					location.reload();
 
 				}else{
-					alert("예약취소 실패 : False");
+					alert("예약취소 실패");
 				}
 				
 			}, error : function() {
