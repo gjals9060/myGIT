@@ -139,7 +139,14 @@
 			'Y'
 							)
 	</insert>
-
+	
+	
+	<!-- 사진의 경로를 구함 -->
+	<select id="selectProfilePhotoPath" resultType="String">
+		SELECT path
+		FROM profile_photo
+		WHERE id = #{profilePhotoId}
+	</select>
 		<!-- 회원 프로필 사진 삭제 -->
 	<delete id="deleteProfilePhoto">
 		DELETE

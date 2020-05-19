@@ -255,6 +255,13 @@
 		</foreach>
 	</insert>
 	
+	
+	<!-- 사진의 경로를 구함 -->
+	<select id="selectHostPhotoPath" resultType="String">
+		SELECT path
+		FROM host_photo
+		WHERE id = #{hostPhotoId}
+	</select>
 	<!-- 호스트에 등록된 사진을 삭제 -->
 	<delete id="deleteHostPhoto"> <!-- 파라미터 타입은 안써줘도 되는가 -->
 		DELETE

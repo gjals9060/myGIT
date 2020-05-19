@@ -83,9 +83,7 @@
 			        LEFT JOIN member m
 			        ON h.member_id = m.id
 			WHERE
-			    h.name IS NOT NULL
-			AND 
-			    m.id IS NOT NULL
+			    h.creation_date IS NOT NULL
 			AND
 				(h.latitude BETWEEN #{swLatitude} AND #{neLatitude})
 			AND
@@ -172,6 +170,21 @@
 			)
 		</foreach>
 	</insert>
+	
+	<delete id="deleteBlocking">
+		DELETE 
+		
+		FROM
+		    blocking 
+		<where>
+			host_id = #{hostId}
+			AND
+		    <foreach collection="dates" item="checkInDate" open="" close="" separator="OR">
+		        (check_in_date = TO_DATE(#{checkInDate},'YYYY.MM.DD'))
+		    </foreach>
+	    </where>
+	</delete>
+	
 	
 	<select id="selectBooking" parameterType="String" resultType="BookingEntity">
 		

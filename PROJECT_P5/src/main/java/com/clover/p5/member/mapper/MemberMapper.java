@@ -56,6 +56,8 @@ public interface MemberMapper {
 	int selectProfilePhotoCount(int memberId);
 	// 프로필 사진 등록
 	int insertProfilePhoto(ProfilePhotoVO vo);
+	// 프로필 사진 경로 검색
+	String selectProfilePhotoPath(int profilePhotoId);
 	// 프로필 사진 삭제
 	int deleteProfilePhoto(int profilePhotoId);
 	// 삭제된 프로필 사진 채우기

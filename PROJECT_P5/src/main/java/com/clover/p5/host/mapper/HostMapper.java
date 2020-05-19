@@ -67,6 +67,8 @@ public interface HostMapper {
 	int selectHostPhotoSortOrderMax(int hostId);
 	// 호스트 사진 등록
 	int insertHostPhoto(List<HostPhotoVO> photoList);
+	// 호스트 사진 경로 검색
+	String selectHostPhotoPath(int hostPhotoId);
 	// 호스트 사진 삭제
 	int deleteHostPhoto(int hostPhotoId);
 	// 커버 사진 삭제시에 order 대체

@@ -249,31 +249,37 @@ herder>* {
 }
 /* 드롭다운 화면  */
 .user-drop-down {
-	position: absolute;
-	width: 200px;
-	height: 250px;
-	border: 1px solid;
-	right: 100px;
-	display: none;
-	background: white;
+position: absolute;
+    width: 170px;
+    height: 250px;
+    border: 1px solid;
+    right: 100px;
+    display: none;
+    background: white;
+    height: min-content;
+    border: 1px solid #bbb;
+    box-shadow: 4px 4px 7px 0px rgba(0, 0, 0, 0.3);
 }
 
 /* user label  */
 .user-drop-down-label {
-	font-size: 20px;
-	padding: 10px;
-	border-bottom: 1px solid;
-	cursor: default;
+    font-size: 20px;
+    padding: 10px;
+    border-bottom: 1px solid;
+    cursor: default;
+    background: #eb2b55;
+    color: white;
+    font-weight: bolder;
 }
 
 /* 메뉴 버튼 */
 .user-drop-down-menu-btn {
 	cursor: pointer;
-	padding: 8px;
+	padding: 10px;
 }
 
 .user-drop-down-menu-btn:hover {
-	background: #bbb;
+	background: #ddd;
 }
 
 /* modal 화면 */
@@ -300,7 +306,7 @@ herder>* {
 	background: white;
 	width: 30%;
 	min-width: 400px;
-	padding: 10% 0;
+	min-height: max-content;
 }
 
 /* login*/
@@ -308,31 +314,99 @@ herder>* {
 	
 }
 
-.modalWrap input[type="text"], .modalWrap input[type="password"], .modalWrap input[type="date"] {
+.modalWrap input[type="text"], .modalWrap input[type="password"],
+	.modalWrap input[type="date"] {
 	margin: 10px;
 	width: 60%;
 	min-width: 200px;
 	height: 25px;
 	text-align: center;
 	vertical-align: middle;
+	padding: 1px;
 }
 
 .loginCheck {
 	text-align: center;
+	vertical-align: middle;
 	margin: 0 auto;
+	font-size: 80%;
+	margin: 10px auto;
+}
+
+.rememberLogin {
+	text-align: center;
+	vertical-align: middle;
+	font-size: 90%;
 }
 
 .loginButtons {
-	margin: 10px;
+	margin: 5px 0;
 	width: 60%;
 	min-width: 200px;
 	height: 30px;
+	border: none;
+	font-size: 80%;
+}
+
+.loginButtons.login {
+	background: #ed2d55;
+	color: white;
+	font-weight: bolder;
+	font-size: 100%;
+	height: 35px;
+	margin-top: 10px;
+}
+
+.loginButtons.kakao {
+	background: #FFE500;
+	font-weight: bolder;
+	font-size: 100%;
+	height: 35px;
+	margin-bottom: 10px;
 }
 
 /* 회원가입 경고문 */
 .form-input-check {
 	text-align: center;
+	vertical-align: middle;
 	padding-top: 10px;
+	font-size: 80%;
+	padding-top: 10px;
+}
+
+.nextButton {
+	border: none;
+	background: #ed2d55;
+	color: white;
+	border-radius: 5px;
+	width: 60%;
+	height: 32px;
+	margin: 10px;
+	font-size: 100%;
+}
+
+.emailCheckWrap {
+	width: 60%;
+	margin: 0 auto;
+}
+.emailCheckWrap input[type="text"] {
+    width: 70%;
+    min-width: 100px;
+    margin-left: 0;
+}
+
+.nextButton.reEmail {
+    background: #bbb;
+    width: 10%;
+    min-width: max-content;
+    height: 31px;
+    margin: 10px 0;
+    font-size: smaller;
+}
+
+#toEmail {
+	margin: 25px 0 15px 0;
+	font-size: 90%;
 }
 
 /* 애니메이션  */
@@ -381,7 +455,6 @@ to {
 /*  임시 비밀번호 wrap*/
 .makeshift-password-input-wrap {
 	margin: 10px auto;
-	width: 50%;
 }
 
 /* 임시비빌번호 block */
@@ -448,7 +521,7 @@ to {
 @media screen and (max-width: 768px) {
 }
  */
-@media screen and (max-width : 620px) {
+@media screen and (max-width : 624px) {
 	header {
 		display: block !important;
 		max-width: -webkit-fill-available;
@@ -477,7 +550,7 @@ to {
 		margin: 10px;
 		width: 33%;
 	}
- 	.fa-2x {
+	.fa-2x {
 		font-size: 2em;
 	}
 	.inputWrap {
