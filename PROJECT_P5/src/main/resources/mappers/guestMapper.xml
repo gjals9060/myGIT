@@ -22,7 +22,7 @@
 		        host_type ht
 		        ON h.host_type_id = ht.id
 		WHERE
-			h.id = #{id}
+			h.id = #{id}	
 	
 	</select>
 	
@@ -218,7 +218,7 @@
 		WHERE
 			member_id = #{memberId}
 		ORDER BY
-			check_in_date
+			check_in_date DESC
 	
 	</select>
 	
@@ -234,6 +234,47 @@
 		)
 		
 	</insert>
+	
+	<select id="selectProfilePhoto" parameterType="Integer" resultType="ProfilePhoto">
+	
+		SELECT
+		    *
+		FROM
+		    profile_photo
+		WHERE
+		    is_profile = 'Y'
+		    AND
+		        member_id = #{memberId}
+	
+	</select>
+	
+	<select id="selectReviewList" parameterType="String" resultType="ReviewInfoDTO">
+		
+		SELECT
+		    r.booking_id, r.rating, r.content, TO_CHAR(r.creation_date,'YYYY.MM.DD') AS creation_date,
+		    pp.path, pp.original_name, m.first_name, m.last_name
+		FROM
+		    review r
+		    INNER JOIN 
+		    booking b
+		    ON r.booking_id = b.id
+		    
+		    INNER JOIN 
+		    member m
+		    ON m.id = b.member_id
+		        
+		    INNER JOIN 
+		    profile_photo pp
+		    ON b.member_id = pp.member_id
+		WHERE
+		    b.host_id = #{hostId}
+		    AND pp.is_profile = 'Y'
+		ORDER BY
+			r.creation_date
+			
+		
+	</select>
+	
 	
 </mapper>
 
