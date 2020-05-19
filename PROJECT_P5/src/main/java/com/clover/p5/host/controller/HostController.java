@@ -75,8 +75,8 @@ public class HostController {
 	// 호스트 삭제
 	@RequestMapping("/host/deleteHost")
 	@ResponseBody
-	public boolean deleteHost(int hostId) {
-		return hostService.deleteHost(hostId);
+	public boolean deleteHost(HttpServletRequest req) {
+		return hostService.deleteHost(req);
 	}
 	
 	

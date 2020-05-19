@@ -28,7 +28,7 @@ public interface HostService {
 	Host getHost(int hostId);
 	
 	// 호스트 삭제
-	boolean deleteHost(int hostId);
+	boolean deleteHost(HttpServletRequest req);
 	
 	
 	// 호스트 수정 1단계 - roomType.jsp
