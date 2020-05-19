@@ -75,21 +75,11 @@
 
 /* 라디오 버튼 label 처리 */
 
-input[type="radio"]{
 
-} 
 
-label {
-	cursor: pointer;
-}
 
-input[type="radio"]:checked+label:before {
-   background: #008489;
-   border-color: #008489;
-}
+
  
-
-
 /* 미등록 숙소   */
 .hosting-list-type {
 	font-size: 20px;
@@ -114,20 +104,14 @@ input[type="radio"]:checked+label:before {
 				<ul id="hosting-list-ul">
 					<!-- 새로운 숙소 등록  -->
 					<li class="hosting-list-li">
+						<input class="hosting-list-input" id="newHosting" type="radio" name="hostId" value="0" /> 
 						<label for="newHosting" class="hosting-list-block"> 
-							<input class="hosting-list-input" id="newHosting" type="radio" name="hostId" value="0" /> 
 							<img class="hosting-list-img" src="/p5/img/room1.jpg" alt="사진" /> 
 							<span class="hosting-list-description">
 								<span class="hosting-list-title">새로운 숙소 등록하기</span>
 							</span>
 						</label>
-				<!-- 		<script>
-							if($('.hosting-list-input').is('checked',true)){
-								$('hosting-list-li').css('background','#bbb');
-							}else {
-								$('hosting-list-li').css('background','none');
-							}
-						</script> -->
+
 					</li>
 
 					<li><span class="hosting-list-type">숙소 등록중</span></li>
