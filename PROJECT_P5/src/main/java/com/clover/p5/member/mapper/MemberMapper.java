@@ -21,6 +21,19 @@ public interface MemberMapper {
 	// 회원정보 검색(ID로)
 	Member selectMember(int memberId);
 	
+	// 자동 로그인 정보 삭제
+	int deleteRememberMe(int memberId);
+	// 자동 로그인 정보 저장
+	int insertRememberMe(@Param("cookieValue") String cookieValue,
+							@Param("memberId") int memberId);
+	// 자동 로그인 유효여부 검색
+	int selectRememberMeCount(String cookieValue);
+	// 자동 로그인할 회원ID 검색
+	int selectRememberMeMemberId(String cookieValue);
+	
+	
+	
+	
 	
 	
 	

@@ -29,12 +29,6 @@ public class HostController {
 
 	
 	
-	@RequestMapping("/test")
-	public void test(String data) {
-		System.out.println("확인하자! " + data);
-	}
-	
-	
 	
 	
 	
@@ -152,7 +146,7 @@ public class HostController {
 	}
 	
 	
-	@RequestMapping("ajax/completeStep3")
+	@RequestMapping("/ajax/completeStep3")
 	@ResponseBody
 	public boolean completeStep3(int price, int hostId) {
 		return hostService.completeRegistration(price, hostId);

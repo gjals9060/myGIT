@@ -71,8 +71,25 @@
 	</beans:bean>
 
 
+	<!-- 자동 로그인 인터셉터 -->
+  	<interceptors>
+    	<interceptor>
+	        <mapping path="/**" />
+	      <!--   <exclude-mapping path="/ajax/**" />
+	        <exclude-mapping path="/host/registration/**" />
+	        <exclude-mapping path="/host/modification/**" /> -->
+	        <beans:bean id="rememberMeInterceptor" class="com.clover.p5.member.interceptor.RememberMeInterceptor" />
+    	</interceptor>
+    </interceptors>
+     
+
+
+
+
+
+
 
 	<tx:annotation-driven transaction-manager="transactionManager" />
-
+	
 	
 </beans:beans>

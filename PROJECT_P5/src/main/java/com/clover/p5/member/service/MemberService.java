@@ -3,6 +3,7 @@ package com.clover.p5.member.service;
 import java.sql.Date;
 import java.util.List;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -29,8 +30,9 @@ public interface MemberService {
 	
 	// 로그인
 	int logIn(HttpServletRequest req, HttpServletResponse res);
+	void logOut(HttpServletRequest req);
 	
-	
+	Cookie refreshCookie(HttpServletRequest req, int memberId);
 	
 	
 	// 임시 비밀번호 생성

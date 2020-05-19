@@ -41,7 +41,7 @@
 
 		<!-- 정보입력-->
 		<div class="input-info">
-			<form action="reservationList" method="post">
+			<form action="/p5/reservationList" method="post">
 
 				<!--지역 입력  -->
 				<div class="input-search-value-input">
@@ -835,7 +835,7 @@
 			function() {
 				var params = $('form[name="newMember"]').serialize();
 				var inputEmail = $('#inputEmail').val();
-
+			
 				$.ajax({
 					type : "POST",
 					url : "/p5/ajax/validateSignUp",
@@ -853,6 +853,8 @@
 										console.log(field.name + " - "
 												+ field.message);
 									});
+							console.log("");
+							console.log("");
 						}
 					},
 					error : function() {

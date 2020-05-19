@@ -135,7 +135,25 @@ public class MemberServiceImpl implements MemberService {
 
 	
 	
-	
+	public Cookie refreshCookie(HttpServletRequest req, int memberId) {
+		String sessionId = req.getSession().getId();
+		String cookieValue = sessionId + System.currentTimeMillis();
+		Cookie cookie = new Cookie("rememberMe", cookieValue);
+		
+		System.out.println(cookieValue + "\t" + memberId);
+		
+		if(memberMapper.deleteRememberMe(memberId) == 1) {
+			System.out.println("기존의 쿠키 정보를 DB에서 삭제했습니다.");
+		}; // 기존의 쿠키 정보 삭제
+		if(memberMapper.insertRememberMe(cookieValue, memberId) == 1) {
+			System.out.println("새로운 쿠키 정보를 DB에 입력했습니다.");
+		}; // 새로운 쿠키 정보 입력
+		
+		cookie.setPath("/");
+		cookie.setMaxAge(60*60*24*7);
+		
+		return cookie;
+	}
 
 
 	
@@ -147,28 +165,6 @@ public class MemberServiceImpl implements MemberService {
 //******************************** 로그인 ********************************************
 	@Override
 	public int logIn(HttpServletRequest req, HttpServletResponse res) {
-	
-	/***
-	** 쿠키 테스트
-	***/
-		String sessionId = req.getSession().getId();
-		System.out.println(sessionId);
-		
-		Cookie cookie = new Cookie("cookieTest", "dmdkdkdkdkdkdkdkdk");
-		
-		cookie.setPath("/");
-        cookie.setMaxAge(60*60*24*7);
-        
-
-		String rememberMe = req.getParameter("rememberMe");
-		if(rememberMe.equals("true")) {
-			System.out.println("자동 로그인에 체크하셨군요?");
-			
-			res.addCookie(cookie);
-		}
-		
-		
-//***************************************************************************************
 		String userEmail = req.getParameter("userEmail");
 		String password = req.getParameter("userPassword");
 		
@@ -181,8 +177,13 @@ public class MemberServiceImpl implements MemberService {
 			return 1; // 비밀번호 불일치
 		}
 		
-		req.getSession().setAttribute("user", member); // 세션에 정보 저장
+		String isRememberMe = req.getParameter("rememberMe");
+		if(isRememberMe.equals("true")) {
+			System.out.println("자동 로그인에 체크하셨군요?");
+			res.addCookie(refreshCookie(req, member.getId()));
+		}
 		
+		req.getSession().setAttribute("user", member); // 세션에 정보 저장
 		return 2; // 로그인 성공
 	}
 //******************************** 로그인-END ********************************************
@@ -733,6 +734,18 @@ public class MemberServiceImpl implements MemberService {
         return list;
 	}
 //******************************** 백엔드 유효성 검사 결과-END ********************************************
+
+
+
+	@Override
+	public void logOut(HttpServletRequest req) {
+		int memberId = getSessionUserId(req);
+		if(memberMapper.deleteRememberMe(memberId) == 1) {
+			System.out.println("자동 로그인 정보를 DB에서 삭제했습니다.");
+		}
+		req.getSession().invalidate();
+		System.out.println("로그아웃을 완료(세션 초기화)했습니다.");
+	}
 
 
 

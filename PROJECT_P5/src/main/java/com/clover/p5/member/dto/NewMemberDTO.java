@@ -2,27 +2,33 @@ package com.clover.p5.member.dto;
 
 import java.sql.Date;
 
-import javax.validation.constraints.NotEmpty;
-
-
 public class NewMemberDTO {
 	
 	
-	@NotEmpty(message="이메일 입력해라")
+//	@Pattern(regexp ="/^[A-Za-z0-9]([-_\\.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_\\.]?[A-Za-z0-9])*\\.[A-Za-z]{2,3}$/i")
 	private String email;
-	@NotEmpty(message="비밀번호 입력해라")
+//	@NotBlank(message = "비밀번호를 입력해주세요")
+//	@Pattern(regexp =
+///		"/^[A-Za-z0-9~!@#$%^&*()_+|<>?:{}]{8,16}$/",
+//	message = "비밀번호는 8~16자리 영문대소문자,숫자,특수문자(~!@#$%^&*()_+|<>?:{})를 사용해주세요")
 	private String password;
-	
-	
+//	@NotBlank(message = "비밀번호확인을 입력해주세요")
 	private String passwordCheck;
-	@NotEmpty(message="이름 입력해라")
-	private String firstName;
 	
-	@NotEmpty(message="성 입력해라")
+//	@NotBlank(message = "이름을 입력해주세요")
+///	@Pattern(regexp = "/^[가-힣]{1,20}$|^[A-Za-z]{1,60}$/",
+//	message = "최대 한글 20글자 또는 영문 60글자까지 가능합니다")
+	private String firstName;
+//	@NotBlank(message="성을 입력해주세요")
+//	@Pattern(regexp = "/^[가-힣]{1,10}$|^[A-Za-z]{1,30}$/",
+//	message = "최대 한글 10글자 또는 영문 30글자까지 가능합니다")
 	private String lastName;
 	
-//	@NotEmpty(message="생년월일 입력해라")
+//	@NotBlank(message="생년월일을 입력해주세요")
 	private Date birthDate;
+	//@NotBlank(message="휴대전화번호를 입력해주세요")
+//	@Pattern(regexp = "/^01[016789]([1-9][0-9]{2,3})([0-9]{4})$/",
+//	message = "휴대전화 번호의 형식이 올바르지 않습니다")
 	private String mobilePhone;
 	private String registrationDate;
 	

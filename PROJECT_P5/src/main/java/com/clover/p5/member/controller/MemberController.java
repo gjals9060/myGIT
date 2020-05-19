@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -69,8 +68,8 @@ public class MemberController {
 	
 	@RequestMapping("/ajax/logOut") // 로그아웃
 	@ResponseBody // 세션을 초기화한다.
-	public void logOut(HttpSession session) {
-		session.invalidate(); // 세션 초기화
+	public void logOut(HttpServletRequest req) {
+		memberService.logOut(req);
 		return;
 	}
 //********************************** 로그인, 로그아웃-END ******************************************	

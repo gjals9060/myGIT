@@ -121,7 +121,7 @@
 	
 		<!-- 회원 프로필 사진 유무를 검색 -->
 	<select id="selectProfilePhotoCount" resultType="int">
-		SELECT count(*)
+		SELECT COUNT(*)
 		FROM profile_photo
 		WHERE member_id = #{memberId}
 	</select>
@@ -183,6 +183,33 @@
 
 
 
+
+	<delete id="deleteRememberMe">
+		DELETE
+		FROM remember_me
+		WHERE member_id = #{memberId} 		
+	</delete>
+	<insert id="insertRememberMe">
+		INSERT INTO remember_me
+		VALUES
+		(
+			#{cookieValue},
+			#{memberId},
+			SYSDATE + 7	
+							)
+	</insert>
+	<select id="selectRememberMeCount" parameterType="string" resultType="int">
+		SELECT COUNT(*)
+		FROM remember_me
+		WHERE cookie_value = #{cookieValue}
+			AND cookie_limit > SYSDATE
+	</select>
+	<select id="selectRememberMeMemberId" parameterType="String" resultType="int">
+		SELECT member_id
+		FROM remember_me
+		WHERE cookie_value = #{cookieValue}
+			AND cookie_limit > SYSDATE
+	</select>
 
 
 
