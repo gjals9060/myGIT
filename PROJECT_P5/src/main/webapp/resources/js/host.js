@@ -19,14 +19,7 @@
 			data : params
 		}); // AJAX-END
 	});*/
-	/*$(window).bind("pagehide", function (event) {
-		var url = setSaveURL(); // 정보를 처리할 적절한 곳으로 보낸다.
-		$.ajax({
-			type : "POST",
-			url : '/p5/test',
-			data : 'data='+url
-		}); // AJAX-END
-	});*/
+
 	
 		// 최신 정보만 보여주게써~
 	$(window).bind("pageshow", function (event) {

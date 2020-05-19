@@ -27,7 +27,7 @@ public class RememberMeInterceptor extends HandlerInterceptorAdapter {
          
         // session 객체를 가져옴
         HttpSession session = req.getSession();
-        System.out.println("자동로그인 하러왔나요?");
+ //       System.out.println("자동로그인 하러왔나요?");
         // login처리를 담당하는 사용자 정보를 담고 있는 객체를 가져옴
         if (session.getAttribute("user") == null ){// 로그인된 세션이 없는 경우...
             // 우리가 만들어 논 쿠키를 꺼내온다.
