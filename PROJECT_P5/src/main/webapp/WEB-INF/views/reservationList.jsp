@@ -565,8 +565,8 @@ button {
 																+ '<tr>'
 																+ '<td>'
 																+ 'TYPE : '
-																+ item.htName / item.htName
-																+ ' guests : '
+																+ item.htName + '/ ' + item.rtName
+																+ '&nbsp;guests : '
 																+ item.capacity
 																+ '</td>'
 																+ '<td>'
