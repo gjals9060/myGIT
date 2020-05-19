@@ -95,7 +95,7 @@ nav {
 <body>
 	<header>
 	
-		<a id="logoImg" href="../hostingStatus?hostId=${hostId}">
+		<a class="click-to-save" id="logoImg" href="../hostingStatus?hostId=${hostId}">
 		<img src="/p5/img/p5Host.png" alt="안보임" /></a>
 		<div class="hosting-step">1단계 : 기본사항을 입력하세요</div>
 		
@@ -124,10 +124,10 @@ nav {
 			<c:when test="${isModification }">
 				<!-- 수정  -->
 				<nav class="modification-tab">
-					<a class="step-tab" href="./roomType?hostId=${hostId}" id="tabRoomType">숙소형태</a>
-					<a class="step-tab" href="./roomCount?hostId=${hostId}" id="tabRoomCount">인원</a>
-					<a class="step-tab" href="./address?hostId=${hostId}" id="tabAddress">위치</a> 
-					<a class="step-tab" href="./facilities?hostId=${hostId}" id="tabFacilities">편의시설</a>
+					<a class="step-tab click-to-save" href="./roomType?hostId=${hostId}" id="tabRoomType">숙소형태</a>
+					<a class="step-tab click-to-save" href="./roomCount?hostId=${hostId}" id="tabRoomCount">인원</a>
+					<a class="step-tab click-to-save" href="./address?hostId=${hostId}" id="tabAddress">위치</a> 
+					<a class="step-tab click-to-save" href="./facilities?hostId=${hostId}" id="tabFacilities">편의시설</a>
 				</nav>
 				
 			</c:when>

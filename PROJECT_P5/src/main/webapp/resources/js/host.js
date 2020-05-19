@@ -9,7 +9,7 @@
 	var hostId = $('#hostId').val();
 	
 		// 알아서 저장하겠다우~
-	$(window).bind("pagehide", function (event) {
+	/*$(window).bind("pagehide", function (event) {
 		var params = setParams(); // 저장할 정보를 담은 보따리를 받아서
 			if(!params){return;} // 유효성에 어긋나면 저장 안함
 		var url = setSaveURL(); // 정보를 처리할 적절한 곳으로 보낸다.
@@ -18,7 +18,7 @@
 			url : url,
 			data : params
 		}); // AJAX-END
-	});
+	});*/
 	/*$(window).bind("pagehide", function (event) {
 		var url = setSaveURL(); // 정보를 처리할 적절한 곳으로 보낸다.
 		$.ajax({
@@ -54,6 +54,20 @@
 			}); // AJAX-END
 		}
 	});
+	
+$('.click-to-save').on('click', function(){
+	saveParams();
+});
+function saveParams(){
+	var params = setParams(); // 저장할 정보를 담은 보따리를 받아서
+		if(!params){return;} // 유효성에 어긋나면 저장 안함
+	var url = setSaveURL(); // 정보를 처리할 적절한 곳으로 보낸다.
+	$.ajax({
+		type : "POST",
+		url : url,
+		data : params
+	}); // AJAX-END
+}
 	
 function ajaxRefresh(url){
 	$.ajax({
@@ -313,8 +327,8 @@ $('#addressInfo').append( ' 주소 : ' + host.address);
 
 
 
-if(urlInfo.indexOf('/p5/host/registration/') !== -1){$('.modification').remove();}
-if(urlInfo.indexOf('/p5/host/modification/') !== -1){$('.registration').remove();}
+if(urlInfo.indexOf('/p5/host/registration/') !== -1){$('.modification').remove(); $('.registration').show();}
+if(urlInfo.indexOf('/p5/host/modification/') !== -1){$('.registration').remove(); $('.modification').show();} 
 
 
 

@@ -10,6 +10,11 @@
 <link rel="stylesheet" href="/p5/css/name.css" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+<style>
+.registration, .modification{
+	display: none;
+}
+</style>
 </head>
 <body>
 	<input type="hidden" id="hostId" value="${hostId }" />
@@ -36,9 +41,9 @@
 	<!--2단계마지막  -->
 	<input type="text" name="name" placeholder="숙소 이름" id="inputText" onkeyup="countWords()"/><span id="descriptionWord">50</span> 
 <div class="warning"></div>
-	<a href="./description?hostId=${hostId }" class="previous-link"><span class="previous">이전</span></a>
+	<a href="./description?hostId=${hostId }" class="previous-link click-to-save"><span class="previous">이전</span></a>
 	<button class="registration" onclick="completeStep2()"><span class="next">다음</span></button>
-	<a class="modification" href="../hostingStatus?hostId=${hostId }">다음</a>
+	<a class="modification click-to-save" href="../hostingStatus?hostId=${hostId }">다음</a>
 </div>
 <div id="left"><div id="info"><i class="fa fa-lightbulb-o fa-3x" aria-hidden="true"></i><br>경치가 좋은 Anam-dong, Seongbuk-gu 숙소</div>
 </div></div>
