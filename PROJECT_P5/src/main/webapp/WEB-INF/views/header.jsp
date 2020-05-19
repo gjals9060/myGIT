@@ -957,10 +957,10 @@
 			type : "POST",
 			url : "/p5/ajax/logIn",
 			data : params,
-			async : false,
 			beforeSend: function(){
 				$('.ajax-loading').show();
 			},
+			async : false,
 			success : function(result) {
 				$('.ajax-loading').fadeOut();
 				if (result == 0) { // 존재하지 않는 ID
