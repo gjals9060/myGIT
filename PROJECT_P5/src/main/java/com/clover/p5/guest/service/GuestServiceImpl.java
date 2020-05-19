@@ -19,10 +19,11 @@ import com.clover.p5.guest.dto.BookingEntity;
 import com.clover.p5.guest.dto.HostInfoDTO;
 import com.clover.p5.guest.dto.HostPhotoDTO;
 import com.clover.p5.guest.dto.HostSemiInfoDTO;
+import com.clover.p5.guest.dto.ReviewInfoDTO;
 import com.clover.p5.guest.dto.SearchHostDTO;
 import com.clover.p5.guest.dto.SearchInputDTO;
 import com.clover.p5.guest.mapper.GuestMapper;
-import com.clover.p5.host.mapper.HostMapper;
+import com.clover.p5.member.dto.ProfilePhoto;
 
 @Service
 public class GuestServiceImpl implements GuestService {
@@ -60,22 +61,16 @@ public class GuestServiceImpl implements GuestService {
 		// 호스트 정보
 		HostInfoDTO hostInfoDto = guestMapper.selectHost(id);
 		
+		// 호스트 프로필 사진
+		ProfilePhoto profilePhoto = guestMapper.selectProfilePhoto(hostInfoDto.getMemberId());
+		
 		// 호스트 사진 리스트
 		List<HostPhotoDTO> hostPhotoDto = guestMapper.selectHostPhotoList(id);
 		//System.out.println(hostPhotoDto.get(0).getPath());
 		
 		// 호스트 block 날짜 리스트
 		List<Date> blocking = guestMapper.selectBlocking(id);
-
-//		
-//		for(HostPhotoDTO dto : hostPhotoDto) {
-//			String beforePath = dto.getPath();
-//			System.out.println("전 : " + beforePath);
-//			
-//			String afterPath = beforePath.replace("\\", "/");	//java에서 특수문자' \ '은 ' \" ' 으로 쓰임
-//			System.out.println("후 : " + afterPath);
-//			dto.setPath(afterPath);
-//		}
+		
 		StringBuffer sbBlocking = new StringBuffer();
 		
 		for(Date d : blocking) {
@@ -96,16 +91,49 @@ public class GuestServiceImpl implements GuestService {
 		
 		System.out.println("sBlocking : " + sBlocking);
 		
-		model.addAttribute("host", hostInfoDto);
+		// 호스트 리뷰 리스트(기본 review 정보 + 멤버 프로필 사진)
+		List<ReviewInfoDTO> reviewList = guestMapper.selectReviewList(id);
+		
+		// 리뷰 전체정보
+		double reviewSum = 0;
+		double reviewAvg = 0;
+		int reviewCount = reviewList.size();
+		for(ReviewInfoDTO dto: reviewList) {
+			double rate = Double.parseDouble(dto.getRating());
+			reviewSum += rate;
+		}
+		reviewAvg = Math.round((reviewSum/(double)reviewCount) * 100)/100.0;
+		System.out.println("평균 평점 : " + reviewAvg);
+		
+		
+		
+		// 헤더 검색 필터 정보
 		model.addAttribute("address", address);
 		model.addAttribute("startDate", startDate);
 		model.addAttribute("endDate", endDate);
 		model.addAttribute("checkInDatecheckOutDate", checkInDatecheckOutDate);
 		model.addAttribute("guestCount", guestCount);
 		
+		// 호스트 정보
+		model.addAttribute("host", hostInfoDto);
+		
+		// 호스트 프로필 사진
+		model.addAttribute("profilePhoto", profilePhoto);
+		
+		// 호스트 사진 리스트
 		model.addAttribute("hostPhoto", hostPhotoDto);
+		
+		// 호스트 블로킹 리스트
 		model.addAttribute("blocking", sBlocking);
-				
+		
+		// 호스트 리뷰 리스트
+		model.addAttribute("reviewList", reviewList);
+		
+		// 호스트 리뷰 전체정보(개수, 평균 평점)
+		model.addAttribute("reviewCount", reviewCount);
+		model.addAttribute("reviewAvg", reviewAvg);
+		
+		
 		return "postPage";	
 	}
 
@@ -330,8 +358,6 @@ public class GuestServiceImpl implements GuestService {
 		return "reservationFinish";
 	}
 
-
-	
 	@Override
 	public ModelAndView userInfoReservationList(HttpServletRequest request, ModelAndView mv) {
 		
@@ -354,6 +380,7 @@ public class GuestServiceImpl implements GuestService {
 		}
 		
 		//System.out.println("날짜 확인 : " + bookingList.get(0).getCheckInDate());
+		System.out.println("잘왔니?");
 		
 		mv.addObject("bookingList", bookingList);
 		mv.addObject("RepresentativePhotoList", RepresentativePhotoList);
@@ -491,6 +518,71 @@ public class GuestServiceImpl implements GuestService {
 		}else {
 			return true;
 		}
+	}
+
+	@Override
+	public ModelAndView moveReview(HttpServletRequest request, ModelAndView mv) {
+
+		String memberId = request.getParameter("memberId");
+		String bookingId = request.getParameter("bookingId");
+		String hostName = request.getParameter("hostName");
+		String checkInDate = request.getParameter("checkInDate");
+		String checkOutDate = request.getParameter("checkOutDate");
+		String hostPhotoPath = request.getParameter("hostPhotoPath");
+		String hostPhotoName = request.getParameter("hostPhotoName");
+		
+		SimpleDateFormat format0 = new SimpleDateFormat ( "yyyy-MM-dd HH:mm:ss.sss");
+		SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy.MM.dd");
+		
+		try {
+			Date checkIn = format0.parse(checkInDate);
+			Date checkOut = format0.parse(checkOutDate);
+			checkInDate = format1.format(checkIn);
+			checkOutDate = format1.format(checkOut);
+			
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+				
+		mv.addObject("bookingId", bookingId);
+		mv.addObject("hostName", hostName);
+		mv.addObject("checkInDate", checkInDate);
+		mv.addObject("checkOutDate", checkOutDate);
+		mv.addObject("hostPhotoPath", hostPhotoPath);
+		mv.addObject("hostPhotoName", hostPhotoName);
+		
+				
+		mv.setViewName("review"); // 뷰의 이름
+		
+		return mv;
+	}
+
+	@Override
+	public String registReview(HttpServletRequest request, ModelAndView mv) {
+
+		String memberId = request.getParameter("memberId");
+		String bookingId = request.getParameter("bookingId"); 
+		String rate = request.getParameter("rate");
+		String commentReview = request.getParameter("commentReview");
+		
+		System.out.println("확인 : " + memberId);
+		System.out.println("확인 : " + bookingId);
+		System.out.println("확인 : " + rate);
+		System.out.println("확인 : " + commentReview);
+		
+		Date today = new Date();
+		SimpleDateFormat format0 = new SimpleDateFormat ( "yyyy.MM.dd HH:mm:ss");
+		String creationDate = format0.format(today);
+		System.out.println("today : " + creationDate);
+		
+		int success = guestMapper.insertReview(bookingId, rate, commentReview, creationDate);
+		
+		System.out.println("리뷰등록 성공여부 : " + success);
+		
+		
+		request.setAttribute("memberId", memberId);
+		return "forward:userInfoReservationList";
 	}
 	
 	

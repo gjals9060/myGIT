@@ -9,9 +9,11 @@ import org.apache.ibatis.annotations.Param;
 import com.clover.p5.guest.dto.HostInfoDTO;
 import com.clover.p5.guest.dto.HostPhotoDTO;
 import com.clover.p5.guest.dto.HostSemiInfoDTO;
+import com.clover.p5.guest.dto.ReviewInfoDTO;
 import com.clover.p5.guest.dto.BookingEntity;
 import com.clover.p5.guest.dto.SearchHostDTO;
 import com.clover.p5.host.dto.BlockingDTO;
+import com.clover.p5.member.dto.ProfilePhoto;
 
 public interface GuestMapper {
 
@@ -46,5 +48,14 @@ public interface GuestMapper {
 	
 	List<BookingEntity> selectBooking(String memberId);
 	
+	int insertReview(
+			@Param("bookingId") String bookingId,
+			@Param("rate")String rate,
+			@Param("content")String content,
+			@Param("creationDate")String creationDate
+			);
 	
+	ProfilePhoto selectProfilePhoto(int memberId);
+	
+	List<ReviewInfoDTO> selectReviewList(@Param("hostId")String hostId);
 }

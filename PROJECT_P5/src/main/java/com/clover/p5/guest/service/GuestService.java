@@ -34,6 +34,10 @@ public interface GuestService {
 	
 	// 환불처리
 	boolean refund(String sBookingId, String hostId, String sCheckInDate, String sCheckOutDate, String sPayment);
-	//boolean refund(BookingEntity bookingEntity);
+	
+	// review 이동
+	ModelAndView moveReview(HttpServletRequest request, ModelAndView mv);
+	
+	String registReview(HttpServletRequest request, ModelAndView mv);
 	
 }

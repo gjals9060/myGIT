@@ -295,7 +295,9 @@
 							id="userInfoDateCancelBtn">취소</button>
 						<button class="user-info-update-value-btn btnTheme"
 							id="userInfoUpdateValueBirthDateBtn">수정하기</button>
+						<div class="user-info-name-error" id="birthDateError"></div>
 					</div>
+					<input type="hidden"  id="birthDatePass" value="y" />
 				</div>
 
 				<!-- 전화번호 -->
@@ -310,7 +312,7 @@
 
 						<span id="authenticationResult" class="user-info-update-value-btn"></span>
 						<button id="mobileAuthenticationResult"
-							class="user-info-update-value-btn btnTheme"></button>
+							class="user-info-update-value-btn btnTheme">수정하기</button>
 					</div>
 				</div>
 
@@ -385,10 +387,7 @@
 </div>
 	<!-- 전화번호 인증에 사용되는 modal -->
 	<div id="blockingModal" class="user-info-modal">
-		<div id="blockingModalCon">
-			<img src="img/PopupLoader.gif" alt="" style="pointer-eventsm: none" />
-			<p>팝업창을 확인해주세요!</p>
-		</div>
+		<img src="/p5/img/loading.gif" alt="" id="blockingImg" />
 	</div>
 
 	<jsp:include page="footer.jsp" />
@@ -396,56 +395,75 @@
 </body>
 
 <script>
-
-	//// 취소 후에 이름을 저장하기 위해서 만들어둔 변수 
+	// 취소 후에 데이터 값을 저장하기 위해 만든 변수. (변경되지 않았다면 input에 있는 value사용)
 	var saveFirstName =$("#userInfoUpdateValueFirstName").val();
 	var saveLastName = $("#userInfoUpdateValueLastName").val(); 
 	var saveBirthDate = $('#userInfoUpdateValueBirthDate').val();
 
-	
-	/////////////////// 실명 수정하기 /////////////////////
+	//이름, 성 (유효성, 입력, ajax)
 	var cancleName=$('#userInfoNameCancelBtn'); // 실명 취소버튼 
+	var firstNameInput = $("#userInfoUpdateValueFirstName"); // 입력받은 이름
+	var lastNameInput = $("#userInfoUpdateValueLastName"); // 입력받은 성 
 	
-	var firstNameInput = $("#userInfoUpdateValueFirstName");
-	var lastNameInput = $("#userInfoUpdateValueLastName");
 	
-	//////// 실명 유효성 검사 ///
-
-	// 유효성 검사에 필요한 변수 
-	var userFirstNamePass = $('#userFirstNamePass');
-	var userLastNamePass = $('#userLastNamePass');
+	// 실명 유효성 검사 
+	//유효성 검사에 필요한 변수 
+	var userFirstNamePass = $('#userFirstNamePass'); // 유효성 체크 값을 넣어줌 (이름)
+	var userLastNamePass = $('#userLastNamePass'); // 유효성 체크 값을 넣어줌 (성)
 	
-	/// 이름 
-	firstNameInput.on('keyup', function() {
+	// 이름을 입력할 때 keyup
+	firstNameInput.on('keyup', function() { 
 		
-		var firstNameCheck = new RegExp(/^[가-힣]{1,20}|[A-Za-z]{1,60}$/);
+		// 이름에 대한 정규식 (이름은 최대 한글 20글자 or 영문 60글자)
+		var firstNameCheck = RegExp(/^[가-힣]{1,20}$|^[A-Za-z]{1,60}$/);
 		
-		if(firstNameCheck.test(firstNameInput.val())){
-			$('#userFirstNameError').text('통과');
-			userFirstNamePass.val("y");
-		}else{
-			$('#userFirstNameError').text('이름은 최대 한글 20글자 or 영문 60글자');
+		// 이름을 입력하지 않았거나 null 일 때 
+		if(firstNameInput.val()=='' || firstNameInput.val()==null){
+			$('#userFirstNameError').css('color','red');
+			$('#userFirstNameError').text('이름을 입력해주세요');
 			userFirstNamePass.val("n");
+		}else{
+			// 정규식에 통과했을 때 
+			if(firstNameCheck.test(firstNameInput.val())){
+				$('#userFirstNameError').css('color','blue');
+				$('#userFirstNameError').text('이름으로 사용 가능합니다.');
+				userFirstNamePass.val("y");
+			}else{ // 통과하지 못했을 때
+				$('#userFirstNameError').css('color','red');
+				$('#userFirstNameError').text('이름은 한글 또는 영문으로 작성해주세요.');
+				userFirstNamePass.val("n");
+			}
 		}
 	});
 	
-	// 성
+	// 성을 입력할 때 keyup
 	lastNameInput.on('keyup',function(){
-		var lastNameCheck = new RegExp(/^[가-힣]{1,10}|[A-Za-z]{1,30}$/);
+		// 성 입력에 대한 정규식 
+		var lastNameCheck = RegExp(/^[가-힣]{1,10}$|^[A-Za-z]{1,30}$/);
 		
-		console.log(lastNameCheck.test(lastNameInput.val()));
-		if(lastNameCheck.test(lastNameInput.val())){
-			$('#userLastNameError').text('통과');
-			userLastNamePass.val("y");
-		}else {
-			$('#userLastNameError').text('성은 최대 한글 10글자 or 영문 30글자');
+		// 성을 입력하지 않았거나 null일 때 
+		if(lastNameInput.val()=='' || lastNameInput.val()==null){
+			$('#userLastNameError').css('color','red');
+			$('#userLastNameError').text('성을 입력해주세요');
 			userLastNamePass.val("n");
+		}else{
+			
+			console.log(lastNameCheck.test(lastNameInput.val()));
+			
+			if(lastNameCheck.test(lastNameInput.val())){ // lastNameCheck.test()의 값이 true
+				$('#userLastNameError').css('color','blue');
+				$('#userLastNameError').text('성으로 사용 가능합니다.');
+				userLastNamePass.val("y");
+			}else {
+				$('#userLastNameError').css('color','red');
+				$('#userLastNameError').text('성은 한글 또는 영문으로 작성해주세요.');
+				userLastNamePass.val("n");
+			}
 		}
 	});
 	
 	
-	
-	/// 이름 완료 버튼 클릭시
+	// 실명(성,이름) 완료 버튼 클릭시
 	$("#userInfoUpdateValueNameBtn").on('click',function(){
 		if(firstNameInput.is(":disabled")){ //// firstName이 disabled라면 
 			firstNameInput.attr("disabled",false);
@@ -461,7 +479,7 @@
 				lastName : lastName
 			};
 			
-			/// 기본적으로는  y로 되어있으며 유효성에 실패하면 n으로 바뀜
+			// 기본적으로는  y로 되어있으며 유효성을 통과하지 못하면 n
 			if(userFirstNamePass.val()==="y" && userLastNamePass.val()==="y" ){
 				
 		 		 $.ajax({
@@ -470,7 +488,7 @@
 					type: "POST",
 					success: function(result){
 						if(result){
-							alert("회원정보 수정(이름, 성) 완료 :"+firstName);
+							alert('변경되었습니다.');
 							
 							saveFirstName = firstName;
 							saveLastName = lastName;
@@ -478,9 +496,8 @@
 							firstNameInput.attr("disabled",true);
 							lastNameInput.attr("disabled",true);
 							$('#userInfoUpdateValueNameBtn').text("수정하기");
+							$('#userFirstNameSpan').text(firstName);
 						}
-						
-						
 					},
 					error:function(result){
 						alert("통신실패")
@@ -495,11 +512,9 @@
 				$('#userLastNameError').empty();
 				
 			}else{
-				alert('유효성 통과 못함');
+				alert('실명을 다시 확인해주세요!');
 			} /// 유효성 검증
-		
 		} ////// if end
-		
 	}); 
 	
 	// 실명 취소시 
@@ -515,53 +530,90 @@
 		
 		$('#userFirstNameError').empty();
 		$('#userLastNameError').empty();
-		
 	});
 	
 	
 	
 	
-	////////////////// 생년월일 /////////////////
+	// 생년월일 (유효성, 입력, ajax)
 	var cancelDate = $("#userInfoDateCancelBtn");
-	
 	var birthDateInput = $("#userInfoUpdateValueBirthDate"); // input
 	var birthDateBtn = $("#userInfoUpdateValueBirthDateBtn"); // 수정 
 	
+	var birthDatePass = $('#birthDatePass'); // 유효성 검사 결과 default는 y
+	// 생년월일을 수정할 때
+	
 
+	birthDateInput.on('change',function(){
+		
+		// 생년월일 정규식 
+		var birthDateCheck = RegExp(/^\d{4}-?\d{2}-?\d{2}$/);
+		
+		if(birthDateInput.val()==null || birthDateInput.val()==''){ // 생년월일이 ''거나 null값
+			$('#birthDateError').text("생년월일을 입력해주세요!");
+			$('#birthDateError').css('color','red');
+			birthDatePass.val('n');
+			birthDateInput.val('1900-01-01');
+		}else{ // 그렇지 않다면 유효성 검사
+			if(birthDateCheck.test(birthDateInput.val())){
+				$('#birthDateError').text("사용 가능합니다.");
+				$('#birthDateError').css('color','blue')
+				birthDatePass.val('y');
+			}else{
+				$('#birthDateError').text("생년월일을 확인해주세요.");
+				$('#birthDateError').css('color','red');
+				birthDatePass.val('n');
+			}
+			
+		}
+			
+	});
 	
 	
+	// 생년월일 수정하기 눌렀을 때
 	birthDateBtn.on("click", function() {
 		var birthDate = birthDateInput.val();
 		
 		$('#userInfoUpdateValueBirthDateBtn').text('완료');
 		
-		if(birthDateInput.is(":disabled")){
+		if(birthDateInput.is(":disabled")){ // 수정하기를 눌렀을 때
 			birthDateInput.attr("disabled",false);
 			cancelDate.css("display","inline");
-		}else{
-			alert(birthDate);
-			$.ajax({
-				url : "ajax/updateUserBirthDate",
-				type: "POST",
-			//	data : "birthDate:"+birthDate,
-				data : "birthDate="+birthDate,
-				success: function(result){
-					if(result){
-						
-						alert('회원정보 수정(생년월일) 완료');
-						saveBirthDate = birthDate;
-						
+			
+		}else{ // 완료하기를 눌렀을 때
+			// 유효성 검사가 통과되었을 때
+			if(birthDatePass.val()=='y'){
+		
+		
+				alert(birthDate);
+				$.ajax({
+					url : "ajax/updateUserBirthDate",
+					type: "POST",
+					data : "birthDate="+birthDate,
+					success: function(result){
+						if(result){
+							
+							alert('회원정보 수정(생년월일) 완료');
+							saveBirthDate = birthDate;
+								
+						}
+					},
+					error: function(){
+						alert('실패');
 					}
-				},
-				error: function(){
-					alert('실패');
-				}
-			});
-			
-			
-			////// ajax 처리 후 
-			birthDateInput.attr("disabled",true);
-			cancelDate.css("display","none");
+				});
+				
+					
+				//ajax 처리 후 
+				birthDateInput.attr("disabled",true);
+				cancelDate.css("display","none");
+					
+				$('#userInfoUpdateValueBirthDateBtn').text('수정하기');
+				$('#birthDateError').text('');
+				
+			}else{ // 유효성 검사 실패
+				alert("생년월일을 확인해주세요.");
+			}
 		}
 	});
 	
@@ -573,6 +625,7 @@
 		$('#userInfoUpdateValueBirthDate').val(saveBirthDate);
 		$('#userInfoUpdateValueBirthDate').attr('disabled',true);
 		cancelDate.css('display','none');
+		$('#birthDateError').text('');
 	});
 	
 	
@@ -643,13 +696,15 @@
 	var newPasswordCheck = $('#newPasswordCheck');
 	
 	newPassword.on('keyup',function(){
+		
+		
 		var passwordCheck = new RegExp(/^[A-Za-z0-9~!@#$%^&*()_+|<>?:{}]{8,16}$/);
 		
 		if(passwordCheck.test(newPassword.val())){
 			$('#passwordError_2').text('통과');
 			$('#userPasswordPass').val('y');
 		}else{
-			$('#passwordError_2').text('대소문자,숫자,특수문자 8~12자리');
+			$('#passwordError_2').text('대소문자,숫자,특수문자 8~16자리');
 			$('#userPasswordPass').val('n');
 		}
 	});
@@ -730,7 +785,7 @@
          $('#authenticationResult').text("인증완료");
          $('#authenticationResult').css("color", "blue");
          $('#authenticationResult').css("font-weight", "bold");
-         $('#mobileAuthenticationResult').remove();
+         /* $('#mobileAuthenticationResult').remove(); */
       } else{
      	 $('#mobileAuthenticationResult').text("인증하기");
       }
@@ -742,11 +797,11 @@
 		
 		var phoneURL = '/p5/phoneCertification';
 		
-	    var left = Math.ceil(( window.screen.width - 370 )/2);
-	    var top = Math.ceil(( window.screen.height - 360 )/2)-100;
+	    var left = Math.ceil(( window.screen.width - 500 )/2);
+	    var top = Math.ceil(( window.screen.height - 500 )/2)-100;
 
 
-		var phoneOption =  "width=500, height=360, resizable=no, scrollbars=no, status=no, top="+top+", left="+left+";";
+		var phoneOption =  "width=500, height=500, resizable=no, scrollbars=no, status=no, top="+top+", left="+left+";";
 		
 
 		var windowPop = window.open(phoneURL,"popwin",phoneOption);

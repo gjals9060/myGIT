@@ -70,6 +70,15 @@ public class GuestController {
 		return guestService.userInfoReservationList(request, mv);
 	}
 	
+	@RequestMapping(value = "/moveReview", method = RequestMethod.POST)
+	public ModelAndView review(HttpServletRequest request, ModelAndView mv) {	
+		return guestService.moveReview(request, mv);
+	}
+	
+	@RequestMapping(value = "/registReview", method = RequestMethod.POST)
+	public String registReview(HttpServletRequest request, ModelAndView mv) {	
+		return guestService.registReview(request, mv);
+	}
 	
 	
 }

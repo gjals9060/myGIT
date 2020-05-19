@@ -10,7 +10,6 @@
 	list-style: none;
 }
 
-
 #wrap {
 	width:100%;
 	max-width: 1100px;
@@ -33,7 +32,7 @@
 
 .hosting-list-li,
 .hosting-list-li-old {
-	margin: 50px 0px;
+	margin: 60px 0px;
 }
 
 /* hostingList 설명 block */
@@ -58,9 +57,8 @@
 
 /* list block */
 .hosting-list-block {
-   	padding: 50px 300px 50px 0px;
+    padding: 50px 300px 50px 20px;
     border-bottom: 0.5px solid #bbb;
-    
 }
 
 /* 호스트가 등록한 사진 */
@@ -75,8 +73,14 @@
 
 /* 라디오 버튼 label 처리 */
 
+input[type=radio] {
+	display: none;
+}
 
-
+input[type=radio]:checked+label {
+	border: 1px solid #ed2d55;
+	box-sizing: border-box;
+}
 
 
  
@@ -106,7 +110,7 @@
 					<li class="hosting-list-li">
 						<input class="hosting-list-input" id="newHosting" type="radio" name="hostId" value="0" /> 
 						<label for="newHosting" class="hosting-list-block"> 
-							<img class="hosting-list-img" src="/p5/img/room1.jpg" alt="사진" /> 
+							<img class="hosting-list-img" src="/p5/img/defaultImg.jpg" alt="사진" /> 
 							<span class="hosting-list-description">
 								<span class="hosting-list-title">새로운 숙소 등록하기</span>
 							</span>
@@ -127,8 +131,8 @@
 		</div>
 	</div>
 	
-<!-- <script src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script> -->
 <script>
+
 	function next() {
 		// 체크 여부
 		var isChecked = $('input[name="hostId"]:checked').length;
@@ -152,6 +156,7 @@
 		}); // AJAX-END
 	});
 	
+	
 	// 화면 갱신
 function refresh(){
 	$.ajax({
@@ -159,6 +164,11 @@ function refresh(){
 		url : "getHostingList",
 		//			async : false,
 		success : function(hostingList) {
+			if(hostingList==0){
+				$('.hosting-list-type').text('새로운 숙소를 등록해주세요.');
+			}else{
+				
+		
 			//	alert(hostingList.length);
 			var result = ''; var hostName; 
 			
@@ -170,24 +180,26 @@ function refresh(){
 					hostName = hosting.hostName;
 				}
 				hostingListId='hostingListId_'+i;
-			
 				
 				hostName = 
 				result += '	<li class="hosting-list-li-old"> '
-						+ ' <label for="'+ hostingListId +'" class="hosting-list-block" >'
 						+ '	<input id="'+ hostingListId + '" type="radio" name="hostId" value="' + hosting.hostId + '" />	'
-						+ '	<img class="hosting-list-img" src="' + hosting.coverPhotoPath + '" alt="사진" />	' 
+						+ ' <label for="'+ hostingListId +'" class="hosting-list-block" >'
+						+ '	<img class="hosting-list-img" src="' + hosting.coverPhotoPath +'" onError='+'"this.src='+"'/p5/img/defaultImg.jpg'"+'" />	' 
 						+ ' <span class="hosting-list-description">'
 						+ ' <span class="hosting-list-title">' + hostName +  ' </span> '
 						+ ' <span class="hosting-list-room"> '+ hosting.roomTypeName +' </span> '
-						+ ' </span> '
+						+ ' </span> ' 
 						+ '	</label></li>';
+						
+			
 				}); // each-END
+
 				
 			$('.hosting-list-li-old').remove();
 			$('#hosting-list-ul').append(result);
 			
-	
+			}
 		},
 		
 		error : function() {

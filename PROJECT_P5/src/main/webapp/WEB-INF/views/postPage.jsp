@@ -512,7 +512,7 @@ button {
 								<tr>
 									<td><div class="contentTitle">${host.name}</div></td>
 									<td rowspan="4"><span class="contentProfile"><img
-											src="img/room1.jpg" alt="" /></span><br>${host.firstName }님</td>
+											src="${profilePhoto.path}" alt="${profilePhoto.originalName}" /></span><br>${host.firstName }님</td>
 								</tr>
 								<tr>
 									<td>작성일 ${host.creationDate } | 수정일${host.modificationDate }</td>
@@ -621,12 +621,27 @@ button {
 						<hr>
 						<div class="contentReview">
 							<div class="contentReview Title">
-								후기 <span class="contentReviewStar">★ 4.5 (21)</span>
+								후기 <span class="contentReviewStar">★${reviewAvg} (${reviewCount})</span>
 							</div>
 							<table class="contentReviewList" id="reviewList">
+							<tbody>
+								<!-- 
+								<tr><td><img src="img/room1.jpg" alt="" /><br>라마바</td><td>★1<br>별로입니다.</td></tr>
+								<tr><td><img src="img/room1.jpg" alt="" /><br>가나다</td><td>★4<br>숙소가 굉장히 좋아요! 주변에 관광지도 많고 무엇보다 Host분이 굉장히 친절하세요!!</td></tr>
+								-->
+								<c:forEach var="review" items="${reviewList}">
+								
+									<tr>
+										<td><img src="${review.path}" alt="${review.originalName}" /><br>${review.firstName}<br>${review.creationDate}</td>
+										<td>★${review.rating}<br>${review.content}</td>
+									</tr>
+								
+								</c:forEach>
+								
+							</tbody>
 								<!-- 					<tr></tr> -->
 							</table>
-							<div class="pagination">
+							<!-- <div class="pagination">
 								<div class="pagingPrev">
 									<a class="paging" onclick="commentLoad(nowCommentPage-1)">&laquo;</a>
 								</div>
@@ -640,7 +655,7 @@ button {
 								<div class="pagingNext">
 									<a class="paging" onclick="commentLoad(nowCommentPage+1)">&raquo;</a>
 								</div>
-							</div>
+							</div> -->
 						</div> <!-- contentReview end --> <br> <br>
 						<hr>
 						<div class="contentRefund">
@@ -881,7 +896,7 @@ button {
    /* 댓글 */
    var commentCount = 0;
    var commentStar = 0;
-/* 
+
    function commentLoad() {
       $("#reviewList").children("tbody").after('<tr>'+'<td><img src="img/room1.jpg" alt="" /><br>가나다</td>'
             + '<td>★4<br>숙소가 굉장히 좋아요! 주변에 관광지도 많고 무엇보다 Host분이 굉장히 친절하세요!!</td>'
@@ -889,7 +904,7 @@ button {
       $("#reviewList").children("tbody").after('<tr>'+
       '<td><img src="img/room1.jpg" alt="" /><br>라마바</td><td>★1<br>별로입니다.</td></tr>');
    }
-   commentLoad(); */
+   commentLoad();
    
    function commentMore() {
       /* 댓글 더보기 (상단부터 오래된 댓글) -> 화면 프린트 시 최근 댓글이 위로 프린트됨 */
@@ -1185,11 +1200,11 @@ button {
    
    var nowCommentPage = 1;
 	commentLoad(nowCommentPage);
-
+ 
 	function commentLoad(n) {
 			nowCommentPage = n;
 			var nn = Math.ceil(n/5)-1;
-	
+	 
 			/* 댓글 정보 리스트 */
 	/* 		var commentWriterImgList = ["img/back.jpg", "img/berry.jpg", "img/bread.jpg", "img/coffee.jpg", "img/fox.jpg", "img/water.jpg", "img/flower.jpg"];
 			var commentWriterList = ["가나", "다라", "마바", "사아", "자차", "카타", "파하"];
@@ -1197,7 +1212,7 @@ button {
 			var commentContentList = ["좋아요", "숙소가 굉장히 좋아요!", "주변에 관광지도 많아요", "무엇보다 Host분이 굉장히 친절하세요!!", "별로입니다.", "그냥 그래요", "ㅁㅇㅁㄴㅇㅁㅇㅁㄴㅇ" ];
 	 */		
 			/* 한페이지당 댓글 출력 갯수 3개로 설정 */
-		 var paging = document.getElementsByClassName("paging");
+		  var paging = document.getElementsByClassName("paging");
 	
 	/* 		var commentNum = 3;
 		   var pagingNumber = Math.ceil(commentWriterList.length/commentNum); 
@@ -1218,11 +1233,11 @@ button {
 			   $(".pagingNum").append('<a class="paging" onclick="commentLoad(' + i + ')">' + i + '</a>');
 		}
 		    */
-		   for (var i = 0; i < paging.length; i++) {
+		   /* for (var i = 0; i < paging.length; i++) {
 			   paging[i].className = paging[i].className.replace(" active", "");
 			}
 		    
-			paging[n].className += " active";		    
+			paging[n].className += " active";	 */	    
 		   /* paging[n-(nn*5)].className += " active"; */
 		   
 		   /* 01234
@@ -1243,9 +1258,9 @@ button {
 			            + '<td>★' + commentStarList[startNum+1] +'<br>'+ commentContentList[startNum+1] +'</td></tr>');
 				$("#reviewList").children("tbody").children("tr:last").after('<tr>'+'<td><img src="' + commentWriterImgList[startNum+2] +'" alt="" /><br>' + commentWriterList[startNum+2] + ' </td>'
 			            + '<td>★' + commentStarList[startNum+2] +'<br>'+ commentContentList[startNum+2] +'</td></tr>');
- */
+ */ 
 	}
- 
+  
 	
 	
 	// 휴대전화 인증 여부 검사

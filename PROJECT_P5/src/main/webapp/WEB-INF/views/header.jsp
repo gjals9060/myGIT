@@ -117,7 +117,8 @@
 							<img id="userImg" src="${user.profilePhotoPath }" alt="" />
 						</c:otherwise>
 					</c:choose>
-				</span> ${user.firstName }
+				</span> 
+				<span id="userFirstNameSpan">${user.firstName }</span>
 			</button>
 
 			<script>
@@ -226,7 +227,7 @@
 				<div class="loginCheck"></div>
 				<input type="submit" value="로그인" class="loginButtons login" />
 			</form>
-			<input type="button" value="카카오 로그인" class="loginButtons kakao"/>
+			<input type="button" value="카카오 로그인" class="loginButtons kakao" onclick="alert('준비중입니다.')"/>
 			<br>
 			<input type="button" id="emailUserAdd" value="이메일로 가입하기" class="loginButtons" /><br>
 			<button id="makeshiftPasswordBtn" class="loginButtons" >비밀번호를 잊어버리셨나요?</button>
@@ -368,11 +369,29 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- ajax 로딩 -->
+	<div class="ajax-loading">
+		<img id="loadingBarImg" src="/p5/img/loading.gif" alt="" />
+	</div>
 
 
 
 </body>
 <script>
+
+// ajax loading
+$(document).ready(function(){
+	$(document).ajaxStart(function() {
+		$('.ajax-loading').show();
+	});
+	$(document).ajaxStop(function() {
+		$('.ajax-loading').fadeOut();
+	})
+	
+}); 
+
+
 
 	var flag = true; // 날짜 출력 여부
 
@@ -558,8 +577,7 @@
 		
 		width_size = $(window).width();
 		var height = $(document).scrollTop();
-		$('#scrollId').val(height);
-
+		
 		var a = 607;
 		var b = 843;
 		
@@ -571,7 +589,7 @@
 			b = -100;				
 		}
 		
-		if (height > 80) { // 스크롤의 위치가 80보다  클경우(scroll)
+		if (height > 0) { // 스크롤의 위치가 80보다  클경우(scroll)
 			$('header').css({
 				"position" : "fixed",
 				"box-shadow" : "1px 1px 10px 0px #bbb",
@@ -747,7 +765,7 @@
 			type : "POST",
 			url : "/p5/ajax/sendTemporaryPassword",
 			data : 'userEmail=' + $('#makeshiftInputEmail').val(),
-			async : false,
+			/* async : false, */
 			success : function(data) {
 				if (!data) {
 					alert("임시 비밀번호 발송에 실패했습니다.");
@@ -950,10 +968,9 @@
 			type : "POST",
 			url : "/p5/ajax/logIn",
 			data : params,
-			async : false,
 			success : function(result) {
 				if (result == 0) { // 존재하지 않는 ID
-
+				
 					$('.loginCheck').empty();
 
 					$('.loginCheck').css({
@@ -974,7 +991,7 @@
 
 				} else if (result == 2) { // 로그인 성공
 
-					alert("로그인 성공");
+					/* alert("로그인 성공"); */
 					location.reload();
 
 				}
