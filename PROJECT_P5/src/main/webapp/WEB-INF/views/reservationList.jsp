@@ -369,8 +369,7 @@ button {
 				var geocoder = new kakao.maps.services.Geocoder();
 
 				// 주소로 좌표를 검색합니다
-				geocoder
-						.addressSearch(
+				geocoder.addressSearch(
 								keyword,
 								function(result, status) {
 
@@ -555,22 +554,18 @@ button {
 														var ss = '';
 
 														ss += '<hr>'
-																+ '<article onclick="gogo('
-																+ item.id
-																+ ')" id="place'
-																+ index
-																+ '">'
+																+ '<article onclick="gogo('+ item.id+ ')" id="place'+ index+ '">'
 																+ '<div>'
 																+ '<table border="1">'
 																+ '<tr>'
 																+ '<td rowspan="4" align = "center">'
-																+ '<img alt="home" src="./img/room1.jpg" style="width: 150px; height: 100px;">'
+																+ '<img alt="' + item.originalName + '" src="' + item.path + '" style="width: 150px; height: 100px;">'
 																+ '</td>'
 																+ '</tr>'
 																+ '<tr>'
 																+ '<td>'
 																+ 'TYPE : '
-																+ item.type
+																+ item.htName / item.htName
 																+ ' guests : '
 																+ item.capacity
 																+ '</td>'

@@ -71,20 +71,36 @@
 	
 	</select>
 	
-	<select id="selectHostList" parameterType="SearchHostDTO" resultType="HostInfoDTO">
+	<select id="selectHostList" parameterType="SearchHostDTO" resultType="HostSemiInfoDTO">
 		<!--
 		CDATA 사용 이유!
 		https://epthffh.tistory.com/entry/Mybatis-%EC%97%90%EC%84%9C-CDATA-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0
 		-->
-			SELECT 
-			    h.*, m.first_name, m.last_name
-			FROM 
-			    host h
-			        LEFT JOIN member m
-			        ON h.member_id = m.id
-			WHERE
-			    h.creation_date IS NOT NULL
-			AND
+		SELECT 
+		    h.id, h.member_id, h.name, h.description, h.description_etc, h.capacity, 
+		    h.bed_count, h.bathroom_count, h.room_count, h.address, h.latitude, h.longitude,
+		    rt.name AS rt_name, ht.name AS ht_name, hp.original_name , hp.path, hp.sort_order
+		FROM 
+		    host_photo hp
+		        INNER JOIN host h
+		        ON(hp.host_id = h.id)
+		            
+		        INNER JOIN member m
+		        ON(m.id = h.member_id)
+		
+		        INNER JOIN profile_photo pp
+		        ON(m.id = pp.member_id)
+		        
+		        INNER JOIN room_type rt
+		        ON h.room_type_id = rt.id
+		        
+		        INNER JOIN host_type ht
+		        ON h.host_type_id = ht.id
+		WHERE
+		    h.creation_date IS NOT NULL
+		    AND
+		        hp.sort_order = 1
+		    			AND
 				(h.latitude BETWEEN #{swLatitude} AND #{neLatitude})
 			AND
 				(h.longitude BETWEEN #{swLongitude} AND #{neLongitude})
@@ -108,8 +124,15 @@
 			                    TO_DATE(#{sEndDate},'YYYY.MM.DD'))
 				)
 			</if>
-			ORDER BY
-				h.id	
+		        
+		GROUP BY
+		    h.id, h.member_id, h.name, h.description, h.description_etc, h.capacity, 
+		    h.bed_count, h.bathroom_count, h.room_count, h.address, h.latitude, h.longitude,
+		    rt.name, ht.name, hp.original_name , hp.path, hp.sort_order    
+		HAVING
+		    count(hp.id) != 0
+		    AND
+		    count(pp.id) != 0
 				
 
 		

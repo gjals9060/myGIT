@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.clover.p5.guest.service.GuestService;
 import com.clover.p5.guest.dto.HostInfoDTO;
+import com.clover.p5.guest.dto.HostSemiInfoDTO;
 import com.clover.p5.guest.dto.BookingEntity;
 import com.clover.p5.guest.dto.SearchInputDTO;
 
@@ -28,7 +29,7 @@ public class GuestController {
 
 	@ResponseBody
 	@RequestMapping(value="/ajax/Hosts", method = RequestMethod.POST)
-	public List<HostInfoDTO> ajaxMap(@RequestBody SearchInputDTO searchInputDto) {	
+	public List<HostSemiInfoDTO> ajaxMap(@RequestBody SearchInputDTO searchInputDto) {	
 		return guestService.selectHostList(searchInputDto);
 	}
 	
@@ -40,13 +41,8 @@ public class GuestController {
 			@RequestParam(value="checkInDate")String sCheckInDate,
 			@RequestParam(value="checkOutDate")String sCheckOutDate,
 			@RequestParam(value="payment")String sPayment
-			//@RequestBody BookingEntity bookingEntity
-			
 			) {	
-		//System.out.println(bookingEntity);
 		return guestService.refund(sBookingId, hostId, sCheckInDate, sCheckOutDate, sPayment);
-		//return guestService.refund(bookingEntity);
-		
 	}
 
 	@RequestMapping("/reservationList")
