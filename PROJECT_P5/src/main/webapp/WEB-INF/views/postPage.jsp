@@ -276,7 +276,7 @@
 									${host.price}/1박</td>
 								<td>
 									<div class="contentReservTitle">날짜</div> <input type="text"
-									id="reservationDate" name="checkInDatecheckOutDate"
+									id="reservationDate" name="reservationDate"
 									autocomplete="off" placeholder="날짜 선택" onchange="countRDate()" />
 									<!-- header 와 구분 -->
 								</td>
@@ -529,12 +529,12 @@
    
    var sw = true;	// 날짜 출력 여부
    
-   var date1 = new Date();
-   var date2 = new Date();
-   date2.setMonth(date1.getMonth() + 3);
+   var pMinDate = new Date();
+   var pMaxDate = new Date();
+   pMaxDate.setMonth(pMinDate.getMonth() + 3);
     
    	var blockingStr = "${blocking}";
-   	console.log(blockingStr);
+   	console.log("블로킹날짜 : " + blockingStr);
 	var blockingArr = blockingStr.split(',');
 /* 	
 	for(var i in blockingArr){
@@ -611,10 +611,11 @@
 	}
 	
 	// 받은 start, end 데이트 파싱
+/*
 	var	startDate = '${startDate}';
 	var endDate = '${endDate}';
 	
-	if((startDate == '' || startDate == null) && (endDate == '' || endDate == null)) {
+ 	if((startDate == '' || startDate == null) && (endDate == '' || endDate == null)) {
 		startDate = endDate = getFormatDate(new Date());		 
 	}
 
@@ -623,56 +624,38 @@
 	
 	console.log("start : " + sDate);
 	console.log("end : " + eDate);
-	
+*/	
 	
    $(function() {
       $('#reservationDate').daterangepicker({	
-    	  // start,endDate 값 넣을 때는 Date 형식이 지켜져야함.
-    	  // YYYY.MM.DD 라는 형식이 원래 존재하지않기 때문...
                "autoApply" : true,
-               "startDate" : sDate,
-               "endDate" : eDate,
-               "minDate" : date1,
-               "maxDate" : date2,
+               /* "startDate" : sDate,
+               "endDate" : eDate, */
+               "minDate" : pMinDate,
+               "maxDate" : pMaxDate,
                "maxSpan" : {"days" : maximumStay},
                "isInvalidDate" : function(ele) {
                    var currDate = moment(ele._d).format('YYYY.MM.DD');
-                   return [blockingStr].indexOf(currDate) != -1;
+                   
+                   return [${blocking}].indexOf(currDate) != -1;
             	}
                
             }, function(start, end, label) {
             	
             	sw = true;
-            	var startDay = start.format("YYYY.MM.DD");
-            	var endDay = end.format("YYYY.MM.DD");
-				
-            	//console.log("endDay값 : " + endDay);
-            	//console.log("endDay의 타임스탬프 : " + end);
-
-            	//var tsNewDate = new Date(xDate).getTime();	// timestamp로 변환
-            	
-            	//console.log("xDate의 타임스탬프 : " + tsNewDate);
-            	//console.log("xDate값 : " + getFormatDate(new Date(tsNewDate)));
-            	//console.log("xPrevDate값 : " + getFormatPrevDate(new Date(tsNewDate)));
-            	//console.log("xNextDate값 : " + getFormatNextDate(new Date(tsNewDate)));
-            	//console.log("xNextDate 타임스탬프 : " + new Date(getFormatNextDate(new Date(tsNewDate))).getTime() );
-            	
-				//var setTypeXDate = getOtherFormat(new Date(tsNewDate));	// MM/(DD-1)/yyyy
-            	//var koreanDate = getKoreanFormat(new Date(tsNewDate));	// yyyy년 MM월 DD일
-            	//console.log(setTypeXDate);
-            	
-            	//var setTypeMinDate = getMinDateFormat(new Date(start));
-            	//console.log("start : " + setTypeMinDate);
+            	var startDayP = start.format("YYYY.MM.DD");
+            	var endDayP = end.format("YYYY.MM.DD");
     			
             	// start 선택하고 end로 min 또는 자신 선택못함 
-				if(startDay == endDay) {
-					$('#reservationDate').data('daterangepicker').setStartDate(sDate);
-					$('#reservationDate').data('daterangepicker').setEndDate(eDate);
+				if(startDayP == endDayP) {
+					$('#reservationDate').data('daterangepicker').setStartDate();
+					$('#reservationDate').data('daterangepicker').setEndDate();
             		alert("호스트의 최소 숙박일 수가 " + minimumStay + "박" + (minimumStay+1) + "일 부터 입니다." );
 					sw = false;
             	}else{
             		sw = true;
             	}
+
             	
 				// endDate가 비활성날짜보다 클 때 비활성 이전 날짜로 알림 후 맞춰짐(x)
 				// 그냥 오늘 날짜로 초기화 하기로 함.
@@ -686,8 +669,8 @@
 	            		var koreanDate = getKoreanFormat(new Date(blockDate));	// yyyy년 MM월 DD일
 	            		
 	            		//$('#reservationDate').data('daterangepicker').setEndDate(setTypeXDate);
-	            		$('#reservationDate').data('daterangepicker').setStartDate(sDate);
-						$('#reservationDate').data('daterangepicker').setEndDate(eDate);
+	            		$('#reservationDate').data('daterangepicker').setStartDate();
+						$('#reservationDate').data('daterangepicker').setEndDate();
 	            		
 	            		alert("호스트의 사정으로 " + koreanDate + "는 예약이 불가능합니다.");
 	            		sw = false;
@@ -698,27 +681,15 @@
 				
 
             });	   
-      		var checkInDatecheckOutDate = '${checkInDatecheckOutDate}';
-
-			var startDate = '${startDate}';
-			var endDate = '${endDate}';
+      		/* var reservationDate = '${checkInDatecheckOutDate}';
 			
-			function parse(str) {	// String -> Date 파싱
-			    var y = str.substr(0, 4);
-			    var m = str.substr(5, 2);
-			    var d = str.substr(8, 2);
-			    return new Date(y,m-1,d);
-			}
-			var date1 = parse(startDate);
-			var date2 = parse(endDate);
+			console.log("date 확인 : " + reservationDate);
 			
-			console.log("date 확인 : " + checkInDatecheckOutDate);
-			
-			if(checkInDatecheckOutDate != ''){
-				$("#reservationDate").val(checkInDatecheckOutDate);
+			if(reservationDate != ''){
+				$("#reservationDate").val(reservationDate);
 			}else{
 			  	$("#reservationDate").val('');	// 초기 입력 없으면 '날짜 선택' 값 = null
-			}
+			} */
 
    });
    
