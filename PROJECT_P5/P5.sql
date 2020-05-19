@@ -22,6 +22,7 @@ DROP TABLE host_photo CASCADE CONSTRAINTS;
 DROP TABLE host CASCADE CONSTRAINTS;
 DROP TABLE host_type CASCADE CONSTRAINTS;
 DROP TABLE profile_photo CASCADE CONSTRAINTS;
+DROP TABLE remember_me CASCADE CONSTRAINTS;
 DROP TABLE member CASCADE CONSTRAINTS;
 DROP TABLE room_type CASCADE CONSTRAINTS;
 
@@ -44,12 +45,15 @@ DROP SEQUENCE SEQ_profile_photo_id;
 
 /* Create Sequences */
 
-CREATE SEQUENCE SEQ_blocking_id INCREMENT BY 1 START WITH 1 NOCACHE;
-CREATE SEQUENCE SEQ_booking_id INCREMENT BY 1 START WITH 1 NOCACHE;
-CREATE SEQUENCE SEQ_host_id INCREMENT BY 1 START WITH 1 NOCACHE;
-CREATE SEQUENCE SEQ_host_photo_id INCREMENT BY 1 START WITH 1 NOCACHE;
-CREATE SEQUENCE SEQ_member_id INCREMENT BY 1 START WITH 1 NOCACHE;
-CREATE SEQUENCE SEQ_profile_photo_id INCREMENT BY 1 START WITH 1 NOCACHE;
+CREATE SEQUENCE SEQ_blocking_id INCREMENT BY 1 START WITH 1;
+CREATE SEQUENCE SEQ_booking_id INCREMENT BY 1 START WITH 1;
+CREATE SEQUENCE SEQ_email_authentication_id INCREMENT BY 1 START WITH 1;
+CREATE SEQUENCE SEQ_host_id INCREMENT BY 1 START WITH 1;
+CREATE SEQUENCE SEQ_host_photo_id INCREMENT BY 1 START WITH 1;
+CREATE SEQUENCE SEQ_member_id INCREMENT BY 1 START WITH 1;
+CREATE SEQUENCE SEQ_place_id INCREMENT BY 1 START WITH 1;
+CREATE SEQUENCE SEQ_place_photo_id INCREMENT BY 1 START WITH 1;
+CREATE SEQUENCE SEQ_profile_photo_id INCREMENT BY 1 START WITH 1;
 
 
 
@@ -163,6 +167,15 @@ CREATE TABLE profile_photo
 );
 
 
+CREATE TABLE remember_me
+(
+	cookie_value varchar2(100) NOT NULL,
+	member_id number,
+	cookie_limit date,
+	PRIMARY KEY (cookie_value)
+);
+
+
 CREATE TABLE review
 (
 	booking_id number NOT NULL,
@@ -232,6 +245,12 @@ ALTER TABLE profile_photo
 ;
 
 
+ALTER TABLE remember_me
+	ADD FOREIGN KEY (member_id)
+	REFERENCES member (id)
+;
+
+
 ALTER TABLE host
 	ADD FOREIGN KEY (room_type_id)
 	REFERENCES room_type (id)
@@ -251,6 +270,36 @@ END;
 
 /
 
+CREATE OR REPLACE TRIGGER TRI_booking_id BEFORE INSERT ON booking
+FOR EACH ROW
+BEGIN
+	SELECT SEQ_booking_id.nextval
+	INTO :new.id
+	FROM dual;
+END;
+
+/
+
+CREATE OR REPLACE TRIGGER TRI_email_authentication_id BEFORE INSERT ON email_authentication
+FOR EACH ROW
+BEGIN
+	SELECT SEQ_email_authentication_id.nextval
+	INTO :new.id
+	FROM dual;
+END;
+
+/
+
+CREATE OR REPLACE TRIGGER TRI_host_id BEFORE INSERT ON host
+FOR EACH ROW
+BEGIN
+	SELECT SEQ_host_id.nextval
+	INTO :new.id
+	FROM dual;
+END;
+
+/
+
 CREATE OR REPLACE TRIGGER TRI_host_photo_id BEFORE INSERT ON host_photo
 FOR EACH ROW
 BEGIN
@@ -260,6 +309,47 @@ BEGIN
 END;
 
 /
+
+CREATE OR REPLACE TRIGGER TRI_member_id BEFORE INSERT ON member
+FOR EACH ROW
+BEGIN
+	SELECT SEQ_member_id.nextval
+	INTO :new.id
+	FROM dual;
+END;
+
+/
+
+CREATE OR REPLACE TRIGGER TRI_place_id BEFORE INSERT ON place
+FOR EACH ROW
+BEGIN
+	SELECT SEQ_place_id.nextval
+	INTO :new.id
+	FROM dual;
+END;
+
+/
+
+CREATE OR REPLACE TRIGGER TRI_place_photo_id BEFORE INSERT ON place_photo
+FOR EACH ROW
+BEGIN
+	SELECT SEQ_place_photo_id.nextval
+	INTO :new.id
+	FROM dual;
+END;
+
+/
+
+CREATE OR REPLACE TRIGGER TRI_profile_photo_id BEFORE INSERT ON profile_photo
+FOR EACH ROW
+BEGIN
+	SELECT SEQ_profile_photo_id.nextval
+	INTO :new.id
+	FROM dual;
+END;
+
+/
+
 
 
 

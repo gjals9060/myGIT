@@ -57,7 +57,7 @@ public class HostServiceImpl implements HostService {
 	  String defaultPath = request.getServletContext().getRealPath("/");
 	  
       //파일 기본경로 _ 상세경로
-      String folderPath = defaultPath + "resources" + File.separator + "upload" + File.separator + "host" + File.separator;
+      String folderPath = defaultPath + "resources" + File.separator + "upload" + File.separator + "host" + File.separator + hostId + File.separator;
       System.out.println("저장 경로 : " + folderPath);
       
 	/**
@@ -100,7 +100,7 @@ public class HostServiceImpl implements HostService {
     		String savePath = folderPath + saveName;
     		
     		// DB에 저장될 최종 path
-    		String path = request.getContextPath() + "/upload/host/" + saveName;
+    		String path = request.getContextPath() + "/upload/host/" + hostId + "/" + saveName;
     		System.out.println("이미지 경로 : " + path);
     		
     		sortOrder++;
@@ -138,10 +138,10 @@ public class HostServiceImpl implements HostService {
 
 
 //****************************** 호스트 사진 삭제(서버 파일) ***********************************************
-	public boolean deleteServerFile(HttpServletRequest req, int hostPhotoId) {
+	public boolean deleteServerFile(HttpServletRequest req, int hostId, int hostPhotoId) {
 		
 		String defaultPath = req.getServletContext().getRealPath("/");
-		String folderPath = defaultPath + "resources" + File.separator + "upload" + File.separator + "host" + File.separator;
+		String folderPath = defaultPath + "resources" + File.separator + "upload" + File.separator + "host" + File.separator + hostId + File.separator;
 		
 		String path = hostMapper.selectHostPhotoPath(hostPhotoId);
 		String saveName = path.substring(path.lastIndexOf("/") + 1);
@@ -172,7 +172,7 @@ public class HostServiceImpl implements HostService {
 		int photoCount = Integer.parseInt(req.getParameter("photoCount"));
 		int hostId = Integer.parseInt(req.getParameter("hostId"));
 		
-		if(!deleteServerFile(req, photoId)) {
+		if(!deleteServerFile(req, hostId, photoId)) {
 			return false;
 		}
 		if(hostMapper.deleteHostPhoto(photoId) != 1) {
@@ -406,7 +406,31 @@ public class HostServiceImpl implements HostService {
 
 	
 	@Override
-	public boolean deleteHost(int hostId) {
+	public boolean deleteHost(HttpServletRequest req) {
+		int hostId = Integer.parseInt(req.getParameter("hostId"));
+		
+		String defaultPath = req.getServletContext().getRealPath("/");
+		String folderPath = defaultPath + "resources" + File.separator + "upload" + File.separator + "host" + File.separator + hostId;
+		File folder = new File(folderPath);
+		try {
+			while(folder.exists()) {
+				File[] fileList = folder.listFiles(); //파일리스트 얻어오기
+						
+				for (int i = 0; i < fileList.length; i++) {
+					fileList[i].delete(); //파일 삭제 
+					System.out.println("파일이 삭제되었습니다.");
+				}
+						
+				if(fileList.length == 0 && folder.isDirectory()){ 
+					folder.delete(); //대상폴더 삭제
+					System.out.println("폴더가 삭제되었습니다.");
+				}
+	        }
+		} catch(Exception e) {
+			System.out.println("관련 파일 삭제 중에 오류 발생");
+			return false;
+		}
+		
 		if(hostMapper.deleteHost(hostId) == 1) {
 			System.out.println(hostId + "번 호스트 삭제 성공했습니다.");
 			return true;

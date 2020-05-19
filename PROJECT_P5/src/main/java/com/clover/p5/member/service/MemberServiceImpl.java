@@ -506,7 +506,7 @@ public class MemberServiceImpl implements MemberService {
 		String defaultPath = req.getServletContext().getRealPath("/");
 		  
 	      //파일 기본경로 _ 상세경로
-	      String folderPath = defaultPath + "resources" + File.separator + "upload" + File.separator + "profile" + File.separator;
+	      String folderPath = defaultPath + "resources" + File.separator + "upload" + File.separator + "profile" + File.separator + memberId + File.separator;
 	      System.out.println("저장 경로 : " + folderPath);
 	      
 		/**
@@ -540,7 +540,7 @@ public class MemberServiceImpl implements MemberService {
     		String savePath = folderPath + saveName;
     		
     		// DB에 저장될 최종 path
-    		String path = req.getContextPath() + "/upload/profile/" + saveName;
+    		String path = req.getContextPath() + "/upload/profile/" + memberId + "/" + saveName;
     		System.out.println("이미지 경로 : " + path);
     		
     		ProfilePhotoVO profilePhotoVo = new ProfilePhotoVO(memberId, originalName, fileSize, path);
@@ -580,10 +580,10 @@ public class MemberServiceImpl implements MemberService {
 
 	
 //****************************** 프로필 사진 삭제(서버 파일) ***********************************************
-	public boolean deleteServerFile(HttpServletRequest req, int hostPhotoId) {
+	public boolean deleteServerFile(HttpServletRequest req, int memberId, int hostPhotoId) {
 		
 		String defaultPath = req.getServletContext().getRealPath("/");
-		String folderPath = defaultPath + "resources" + File.separator + "upload" + File.separator + "profile" + File.separator;
+		String folderPath = defaultPath + "resources" + File.separator + "upload" + File.separator + "profile" + File.separator + memberId + File.separator;
 		
 		String path = memberMapper.selectProfilePhotoPath(hostPhotoId);
 		String saveName = path.substring(path.lastIndexOf("/") + 1);
@@ -612,7 +612,7 @@ public class MemberServiceImpl implements MemberService {
 		int memberId = getSessionUserId(req);
 		int photoId = Integer.parseInt(req.getParameter("photoId"));
 		
-		if(!deleteServerFile(req, photoId)) {
+		if(!deleteServerFile(req, memberId, photoId)) {
 			return false;
 		}
 		if(memberMapper.deleteProfilePhoto(photoId) != 1) {
