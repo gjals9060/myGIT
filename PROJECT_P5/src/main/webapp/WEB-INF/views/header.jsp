@@ -226,7 +226,7 @@
 				<div class="loginCheck"></div>
 				<input type="submit" value="로그인" class="loginButtons login" />
 			</form>
-			<input type="button" value="카카오 로그인" class="loginButtons kakao"/>
+			<input type="button" value="카카오 로그인" class="loginButtons kakao" onclick="alert('준비중입니다.')"/>
 			<br>
 			<input type="button" id="emailUserAdd" value="이메일로 가입하기" class="loginButtons" /><br>
 			<button id="makeshiftPasswordBtn" class="loginButtons" >비밀번호를 잊어버리셨나요?</button>
@@ -558,8 +558,7 @@
 		
 		width_size = $(window).width();
 		var height = $(document).scrollTop();
-		$('#scrollId').val(height);
-
+		
 		var a = 607;
 		var b = 843;
 		
@@ -571,7 +570,7 @@
 			b = -100;				
 		}
 		
-		if (height > 80) { // 스크롤의 위치가 80보다  클경우(scroll)
+		if (height > 0) { // 스크롤의 위치가 80보다  클경우(scroll)
 			$('header').css({
 				"position" : "fixed",
 				"box-shadow" : "1px 1px 10px 0px #bbb",
