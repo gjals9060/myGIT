@@ -97,7 +97,7 @@ nav {
 </head>
 <body>
 	<header>
-		<a id="logoImg" href="../hostingStatus?hostId=${hostId}"><img src="/p5/img/p5Host.png" alt="안보임" /></a>
+		<a class="click-to-save" id="logoImg" href="../hostingStatus?hostId=${hostId}"><img src="/p5/img/p5Host.png" alt="안보임" /></a>
 		<div class="hosting-step">2단계 : 숙소에 대한 정보(사진, 설명, 제목)</div>
 		
 		<c:set var="path" value="${requestScope['javax.servlet.forward.servlet_path']}" />
@@ -129,9 +129,9 @@ nav {
 			
 				<!-- 수정  -->
 			<nav>
-				<a class="step-tab" href="./photo?hostId=${hostId }" id="tabPhoto">사진등록</a>
-				<a class="step-tab" href="./description?hostId=${hostId }" id="tabDescription">숙소설명</a>
-				<a class="step-tab" href="./name?hostId=${hostId }" id="tabTitle">숙소명</a>
+				<a class="step-tab click-to-save" href="./photo?hostId=${hostId }" id="tabPhoto">사진등록</a>
+				<a class="step-tab click-to-save" href="./description?hostId=${hostId }" id="tabDescription">숙소설명</a>
+				<a class="step-tab click-to-save" href="./name?hostId=${hostId }" id="tabTitle">숙소명</a>
 			</nav>
 			
 			</c:when>

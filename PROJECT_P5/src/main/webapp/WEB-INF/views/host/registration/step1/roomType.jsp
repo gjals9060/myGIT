@@ -7,6 +7,11 @@
 <title>숙소형태</title>
 <link rel="stylesheet" href="/p5/css/roomType.css" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+.registration, .modification{
+	display: none;
+}
+</style>
 </head>
 <body>
 	<input type="hidden" id="hostId" value="${hostId }" />
@@ -28,7 +33,7 @@
 			<!--숙소 종류 
 value를 0부터 2까지 설정 0이면 아파트 1이면 주택 2이면 팬션 -->
 			<select name="hostTypeId" id="checkType">
-				<option value="">선택</option>
+				<option value="" class="registration">선택</option>
 				<option value="A1">아파트</option>
 				<option value="B2">주택</option>
 				<option value="C3">팬션</option>
@@ -37,7 +42,7 @@ value를 0부터 2까지 설정 0이면 아파트 1이면 주택 2이면 팬션 
 value를 0부터 2까지 설정 0이면 전체 1이면 개인실 2이면 다인실 -->
 			<h2>숙소유형을 등록해봐요</h2>
 			<select name="roomTypeId" id="checkRoom">
-				<option value="">선택</option>
+				<option value="" class="registration">선택</option>
 				<option value="A1">전체</option>
 				<option value="B2">개인실</option>
 				<option value="C3">다인실</option>
@@ -46,15 +51,15 @@ value를 0부터 2까지 설정 0이면 전체 1이면 개인실 2이면 다인�
 			<!-- </form> -->
 			<!--페이지 넘어가기(임시방안)  -->
 			<!--페이지 넘어가기(임시방안)  -->
-			<button id="reset-info">
+			<button id="reset-info" class="registration">
 				<span class="previous">이전</span>
 			</button>
 			<!-- The Modal -->
 			<div id="myModal" class="modal">
-
+	
 				<!-- Modal content -->
 				<div class="modal-content">
-					<span class="close">&times;</span>
+					<span class="close registration">&times;</span>
 					<p class="reset-title">입력하신 내용을 저장하세요</p>
 					<p>몇 가지 세부정보만 추가하시면 숙소 정보를 저장할 수 있습니다. 호스트 되기나 숙소 등록에 관해 궁금한 점이
 						있으시면 P5 도움말 센터를 방문하여 다 자세히 알아보시기 바랍니다.</p>
@@ -64,8 +69,8 @@ value를 0부터 2까지 설정 0이면 전체 1이면 개인실 2이면 다인�
 			</div>
 			<!--  <a class="registration" href="../hostingList">이전</a> -->
 			<a class="registration" onclick="check()"><span class="next">다음</span></a>
-			<a class="modification" href="../hostingStatus?hostId=${hostId }">이전</a>
-			<a class="modification" href="./roomCount?hostId=${hostId }">다음</a>
+			<a class="modification click-to-save" href="../hostingStatus?hostId=${hostId }">이전</a>
+			<a class="modification click-to-save" href="./roomCount?hostId=${hostId }">다음</a>
 		</div>
 	</div>
 
@@ -82,6 +87,7 @@ value를 0부터 2까지 설정 0이면 전체 1이면 개인실 2이면 다인�
 				alert("선택해주세요");
 				return;
 			} else {
+				saveParams();
 				location.href = "roomCount";
 			}
 		}

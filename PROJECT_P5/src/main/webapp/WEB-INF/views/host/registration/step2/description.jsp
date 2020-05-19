@@ -38,8 +38,8 @@
 				<h1>정보를 추가하시겠어요? (선택사항)</h1>
 				<h3>자세한 내용을 공유하려면 아래 추가 필드를 사용하세요.</h3>
 				<textarea id="countEtc" name="descriptionEtc" rows="10" cols="50"></textarea>
-	<a href="./photo?hostId=${hostId }" class="previous-link"><span class="previous">이전</span></a>
-	<a onclick="check()" class="next-link"><span class="next">다음</span></a>
+	<a href="./photo?hostId=${hostId }" class="previous-link click-to-save"><span class="previous">이전</span></a>
+	<a onclick="check()" class="next-link click-to-save"><span class="next">다음</span></a>
 
 </div>
 		<div id="left"></div>

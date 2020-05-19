@@ -6,6 +6,11 @@
 <title>인원</title>
 <link rel="stylesheet" href="/p5/css/roomCount.css" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+.registration, .modification{
+	display: none;
+}
+</style>
 </head>
 <body>
 <input type="hidden" id="hostId" value="${hostId }" />
@@ -134,10 +139,10 @@
 		<!-- <input type="submit" value="다음" /> -->
 	<!-- </form> -->
 	<!--페이지 넘어가기(임시방안)  -->
-<a class="registration" href="./roomType"><span class="previous">이전</span></a>
-<a class="registration" href="./address"><span class="next">다음</span></a>
-	<a class="modification" href="./roomType?hostId=${hostId }">이전</a>
-	<a class="modification" href="./address?hostId=${hostId }">다음</a>
+<a class="registration click-to-save" href="./roomType"><span class="previous">이전</span></a>
+<a class="registration click-to-save" href="./address"><span class="next">다음</span></a>
+	<a class="modification click-to-save" href="./roomType?hostId=${hostId }">이전</a>
+	<a class="modification click-to-save" href="./address?hostId=${hostId }">다음</a>
 
 </div>
 <div id="left">
