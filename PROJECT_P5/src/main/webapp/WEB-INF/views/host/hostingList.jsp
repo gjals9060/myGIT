@@ -58,9 +58,8 @@
 
 /* list block */
 .hosting-list-block {
-   	padding: 50px 300px 50px 0px;
+    padding: 50px 300px 50px 20px;
     border-bottom: 0.5px solid #bbb;
-    
 }
 
 /* 호스트가 등록한 사진 */
@@ -75,8 +74,14 @@
 
 /* 라디오 버튼 label 처리 */
 
+input[type=radio] {
+	display: none;
+}
 
-
+input[type=radio]:checked+label {
+	border: 1px solid #ed2d55;
+	box-sizing: border-box;
+}
 
 
  
@@ -174,8 +179,8 @@ function refresh(){
 				
 				hostName = 
 				result += '	<li class="hosting-list-li-old"> '
-						+ ' <label for="'+ hostingListId +'" class="hosting-list-block" >'
 						+ '	<input id="'+ hostingListId + '" type="radio" name="hostId" value="' + hosting.hostId + '" />	'
+						+ ' <label for="'+ hostingListId +'" class="hosting-list-block" >'
 						+ '	<img class="hosting-list-img" src="' + hosting.coverPhotoPath + '" alt="사진" />	' 
 						+ ' <span class="hosting-list-description">'
 						+ ' <span class="hosting-list-title">' + hostName +  ' </span> '

@@ -117,7 +117,8 @@
 							<img id="userImg" src="${user.profilePhotoPath }" alt="" />
 						</c:otherwise>
 					</c:choose>
-				</span> ${user.firstName }
+				</span> 
+				<span id="userFirstNameSpan">${user.firstName }</span>
 			</button>
 
 			<script>

@@ -418,7 +418,7 @@
 	/// 이름 
 	firstNameInput.on('keyup', function() {
 		
-		var firstNameCheck = new RegExp(/^[가-힣]{1,20}|[A-Za-z]{1,60}$/);
+		var firstNameCheck = RegExp(/^[가-힣]{1,20}$|^[A-Za-z]{1,60}$/);
 		
 		if(firstNameCheck.test(firstNameInput.val())){
 			$('#userFirstNameError').text('통과');
@@ -431,7 +431,7 @@
 	
 	// 성
 	lastNameInput.on('keyup',function(){
-		var lastNameCheck = new RegExp(/^[가-힣]{1,10}|[A-Za-z]{1,30}$/);
+		var lastNameCheck = RegExp(/^[가-힣]{1,10}$|^[A-Za-z]{1,30}$/);
 		
 		console.log(lastNameCheck.test(lastNameInput.val()));
 		if(lastNameCheck.test(lastNameInput.val())){
@@ -478,6 +478,7 @@
 							firstNameInput.attr("disabled",true);
 							lastNameInput.attr("disabled",true);
 							$('#userInfoUpdateValueNameBtn').text("수정하기");
+							$('#userFirstNameSpan').text(firstName);
 						}
 						
 						
@@ -562,6 +563,8 @@
 			////// ajax 처리 후 
 			birthDateInput.attr("disabled",true);
 			cancelDate.css("display","none");
+			
+			$('#userInfoUpdateValueBirthDateBtn').text('수정하기');
 		}
 	});
 	
@@ -643,13 +646,15 @@
 	var newPasswordCheck = $('#newPasswordCheck');
 	
 	newPassword.on('keyup',function(){
+		
+		
 		var passwordCheck = new RegExp(/^[A-Za-z0-9~!@#$%^&*()_+|<>?:{}]{8,16}$/);
 		
 		if(passwordCheck.test(newPassword.val())){
 			$('#passwordError_2').text('통과');
 			$('#userPasswordPass').val('y');
 		}else{
-			$('#passwordError_2').text('대소문자,숫자,특수문자 8~12자리');
+			$('#passwordError_2').text('대소문자,숫자,특수문자 8~16자리');
 			$('#userPasswordPass').val('n');
 		}
 	});
