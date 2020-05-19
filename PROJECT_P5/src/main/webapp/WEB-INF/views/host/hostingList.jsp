@@ -90,11 +90,36 @@ input[type=radio]:checked+label {
 }
 
 .hosting-list-btn {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-around;
-	float: left;
+	position: relative;
+	padding-top: 40px;
 }
+
+#nextBtn {
+	margin-left: 40%;
+	background: #E51E51;
+	font-size: 15px;
+	font-weight: bold;
+	color: white;
+	border: none;
+}
+
+#nextBtn,
+#deleteBtn {
+	width: 15%;
+	height: 30px;
+	box-sizing: border-box;
+	outline: none;
+	border-radius: 10px;
+}
+
+#deleteBtn {
+	font-size: 15px;
+	font-weight: bold;
+	color: #E51E51;
+	background: white;
+	border: 1px solid #E51E51;
+}
+
 </style>
 </head>
 <body>
@@ -125,8 +150,8 @@ input[type=radio]:checked+label {
 			</div>
 			<!-- 버튼 -->
 			<div class="hosting-list-btn">
-				<button onclick="deleteHost()">삭제</button>
-				<button onclick="next()">다음</button>
+				<button onclick="deleteHost()" id="deleteBtn">삭제</button>
+				<button onclick="next()" id="nextBtn">다음</button>
 			</div>
 		</div>
 	</div>
@@ -166,6 +191,8 @@ function refresh(){
 		success : function(hostingList) {
 			if(hostingList==0){
 				$('.hosting-list-type').text('새로운 숙소를 등록해주세요.');
+				$('.hosting-list-li-old').remove();
+				$('#hosting-list-ul').append(result);
 			}else{
 				
 		

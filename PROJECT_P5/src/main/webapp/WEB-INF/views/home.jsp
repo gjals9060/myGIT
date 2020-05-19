@@ -30,8 +30,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 
 </head>
-<body>
-<%-- 	<jsp:include page="./header.jsp"></jsp:include>	 --%>
+<body onload="changeImg()">
 	<%@include file="./header.jsp" %>
 		
 		<div id="presentationTitle">Peace / Place / Pleasure / Present / People </div>
@@ -42,31 +41,56 @@
 		 <section>
 			
 			<div class="pop-img-block" id="fristBlock">
-		 		<img src="img/bedroom.jpg" alt="" class="push-area-img" id="fristImg" />
+		 		<img src="" alt="" class="push-area-img" id="fristImg" />
 		 		<div class="figcaption" >종로</div>
 		 	</div>
-		 
+	
 		 	<div class="pop-img-block">
-		 		<img src="img/cafe.jpg" alt="" class="push-area-img" />
-		 		<div class="figcaption">경복궁</div>
+		 		<img src="" alt="" class="push-area-img" id="busan"/>
+		 		<div class="figcaption">부산</div>
 		 	</div>
 		 		
 		 	<div class="pop-img-block">
-		 		<img src="img/berry.jpg" alt="" class="push-area-img" />
-		 		<div class="figcaption">연신내</div>
+		 		<img src="/p5/img/jeonju_0.jpg" alt="" class="push-area-img" />
+		 		<div class="figcaption">전주</div>
 		 	</div>
 		 	
 		 	<div class="pop-img-block">
-		 	<img src="img/juice.jpg" alt="" class="push-area-img" />
-		 		<div class="figcaption">신림</div>
+		 	<img src="/p5/img/incheon_0.jpg" alt="" class="push-area-img" />
+		 		<div class="figcaption">인천</div>
 		 	</div>
 		 	
 		 	<div class="pop-img-block">
-		 		<img src="img/back.jpg" alt="" class="push-area-img" />
-		 		<div class="figcaption">을지로</div>
+		 		<img src="/p5/img/pohang_0.jpg" alt="" class="push-area-img" />
+		 		<div class="figcaption">포항</div>
 		 	</div>
 
 		 </section>
+		 
+		 	<script>
+		 		
+		 		var jongloImg = new Array();
+		 		jongloImg[0] = '/p5/img/jonglo/jonglo_0.jpg';
+		 		jongloImg[1] = '/p5/img/jonglo/jonglo_1.jpg';
+		 		jongloImg[2] = '/p5/img/jonglo/jonglo_2.jpg';
+		 		
+		 		var busanImg = new Array();
+		 		busanImg[0] = '/p5/img/busan/busan_0.jpg';
+		 		busanImg[1] = '/p5/img/busan/busan_1.jpg';
+		 		busanImg[2] = '/p5/img/busan/busan_2.jpg';
+		 		
+		 		function changeImg(){
+		 			var num = Math.round(Math.random()*2);
+		 			
+		 			var jonglo = document.getElementById("fristImg");
+		 			var busan = document.getElementById("busan");
+		 			
+		 			jonglo.src= jongloImg[num];
+		 			busan.src= busanImg[num];
+		 			
+		 			setTimeout(changeImg,5000);
+		 		}
+		 	</script>
 	 </div>
 	
 

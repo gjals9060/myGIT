@@ -155,6 +155,7 @@
 
 	
 	<script>
+	
 		$(window).bind("pageshow", function(event) {
 
 			$.ajax({
@@ -191,18 +192,21 @@
 				data : "hostId=" + $('#hostId').val(),
 				success : function(host) {
 					//	alert(JSON.stringify(host)); // 내용 확인
-					$('.hosting-status-title').text('1단계까지 진행');
+					$('.hosting-status-title').text('오류가 발생했어요'); 
 					if (!host.name) { // step2 미완료
+						
+						
+						
 						$('#modifyStep2').remove(); // step2 변경 X
 						$('#registerStep3').remove(); // step3 계속 X
 						$('#modifyStep3').remove(); // step3 변경 X
-						$('.hosting-status-title').text('2단계를 완료하세요!');
+						$('.hosting-status-title').text('숙소등록을 계속 진행해볼까요?');
 						return;
 					}
 					if (!host.creationDate) { // step3 미완료
 						$('#registerStep2').remove(); // step2 계속 X
 						$('#modifyStep3').remove(); // step3 변경 X
-						$('.hosting-status-title').text('3단계를 완료하세요!');
+						$('.hosting-status-title').text('이제 마지막 단계입니다!');
 						return;
 					}
 					// step3 완료(등록 완료된 호스트 수정시 화면)

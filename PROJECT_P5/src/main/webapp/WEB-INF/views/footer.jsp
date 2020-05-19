@@ -6,6 +6,8 @@
 <meta charset="UTF-8">
 <title>footer</title>
 <link rel="stylesheet" href="/p5/css/footer.css" />
+<!-- viewport  -->
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 </head>
 <body>
 
