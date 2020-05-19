@@ -221,6 +221,28 @@
 			check_in_date
 	
 	</select>
-
+	
+	<insert id="insertReview" >
+		
+		INSERT 
+		INTO review
+		VALUES(
+			#{bookingId},
+			#{rate},
+			#{content},
+			TO_DATE(#{creationDate},'YYYY.MM.DD HH24:MI:SS')
+		)
+		
+	</insert>
+	
 </mapper>
+
+
+
+
+
+
+
+
+
 	

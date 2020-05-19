@@ -354,6 +354,7 @@ public class GuestServiceImpl implements GuestService {
 		}
 		
 		//System.out.println("날짜 확인 : " + bookingList.get(0).getCheckInDate());
+		System.out.println("잘왔니?");
 		
 		mv.addObject("bookingList", bookingList);
 		mv.addObject("RepresentativePhotoList", RepresentativePhotoList);
@@ -491,6 +492,71 @@ public class GuestServiceImpl implements GuestService {
 		}else {
 			return true;
 		}
+	}
+
+	@Override
+	public ModelAndView moveReview(HttpServletRequest request, ModelAndView mv) {
+
+		String memberId = request.getParameter("memberId");
+		String bookingId = request.getParameter("bookingId");
+		String hostName = request.getParameter("hostName");
+		String checkInDate = request.getParameter("checkInDate");
+		String checkOutDate = request.getParameter("checkOutDate");
+		String hostPhotoPath = request.getParameter("hostPhotoPath");
+		String hostPhotoName = request.getParameter("hostPhotoName");
+		
+		SimpleDateFormat format0 = new SimpleDateFormat ( "yyyy-MM-dd HH:mm:ss.sss");
+		SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy.MM.dd");
+		
+		try {
+			Date checkIn = format0.parse(checkInDate);
+			Date checkOut = format0.parse(checkOutDate);
+			checkInDate = format1.format(checkIn);
+			checkOutDate = format1.format(checkOut);
+			
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+				
+		mv.addObject("bookingId", bookingId);
+		mv.addObject("hostName", hostName);
+		mv.addObject("checkInDate", checkInDate);
+		mv.addObject("checkOutDate", checkOutDate);
+		mv.addObject("hostPhotoPath", hostPhotoPath);
+		mv.addObject("hostPhotoName", hostPhotoName);
+		
+				
+		mv.setViewName("review"); // 뷰의 이름
+		
+		return mv;
+	}
+
+	@Override
+	public String registReview(HttpServletRequest request, ModelAndView mv) {
+
+		String memberId = request.getParameter("memberId");
+		String bookingId = request.getParameter("bookingId"); 
+		String rate = request.getParameter("rate");
+		String commentReview = request.getParameter("commentReview");
+		
+		System.out.println("확인 : " + memberId);
+		System.out.println("확인 : " + bookingId);
+		System.out.println("확인 : " + rate);
+		System.out.println("확인 : " + commentReview);
+		
+		Date today = new Date();
+		SimpleDateFormat format0 = new SimpleDateFormat ( "yyyy.MM.dd HH:mm:ss");
+		String creationDate = format0.format(today);
+		System.out.println("today : " + creationDate);
+		
+		int success = guestMapper.insertReview(bookingId, rate, commentReview, creationDate);
+		
+		System.out.println("리뷰등록 성공여부 : " + success);
+		
+		
+		request.setAttribute("memberId", memberId);
+		return "forward:userInfoReservationList";
 	}
 	
 	

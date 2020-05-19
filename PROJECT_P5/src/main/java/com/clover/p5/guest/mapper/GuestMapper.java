@@ -46,5 +46,11 @@ public interface GuestMapper {
 	
 	List<BookingEntity> selectBooking(String memberId);
 	
+	int insertReview(
+			@Param("bookingId") String bookingId,
+			@Param("rate")String rate,
+			@Param("content")String content,
+			@Param("creationDate")String creationDate
+			);
 	
 }

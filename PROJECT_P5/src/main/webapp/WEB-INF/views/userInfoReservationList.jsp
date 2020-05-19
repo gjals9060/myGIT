@@ -160,7 +160,48 @@
 								}
 								
 							});
+							
+							$('#reply_${index}').on('click', function() {
+								
+								alert("후기 등록으로 이동");
+								
+								var userId = "${user.id}";	
+								var bookingId = "${booking.id}";
+								var hostName = "${hostList[index].name}";
+								var checkInDate = "${booking.getCheckInDate()}";
+								var checkOutDate = "${booking.getCheckOutDate()}";
+								var hostPhotoPath = "${RepresentativePhotoList[index].path}";
+								var hostPhotoName = "${RepresentativePhotoList[index].originalName}";
+								
+								/*jQuery form 전송 방식*/
+								// create element(form)
+								var newForm = $('<form><form>');
+								
+								// set attribute(form)
+								newForm.attr("name","newForm");
+								newForm.attr("method","POST");
+								newForm.attr("action","moveReview");
+								newForm.attr("target","popup_window");
+								
+								// create element & set attribute (input)
+								newForm.append($('<input/>', {type: 'hidden', name: 'memberId', value: userId}));
+								newForm.append($('<input/>', {type: 'hidden', name: 'bookingId', value: bookingId}));
+								newForm.append($('<input/>', {type: 'hidden', name: 'hostName', value: hostName}));
+								newForm.append($('<input/>', {type: 'hidden', name: 'checkInDate', value: checkInDate}));
+								newForm.append($('<input/>', {type: 'hidden', name: 'checkOutDate', value: checkOutDate}));
+								newForm.append($('<input/>', {type: 'hidden', name: 'hostPhotoPath', value: hostPhotoPath}));
+								newForm.append($('<input/>', {type: 'hidden', name: 'hostPhotoName', value: hostPhotoName}));
+								
 
+								// append form(to body)	
+								newForm.appendTo('body');
+								
+								window.open("", "popup_window", "width=500, height=600, scrollbars=no");
+								
+								// submit form
+								newForm.submit();
+																
+							});
 						</script>
 				</div>
 

@@ -5,7 +5,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="reset.css" />
+<script src="js/jquery-3.4.1.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+
+<link rel="stylesheet" href="css/reset.css" />
 <style type="text/css">
 
 #wrap {
@@ -95,11 +98,11 @@
 				<th>체크아웃</th>
 				</tr>
 				<tr>
-					<td><img src="img/bedroom.jpg" /></td>
-					<td><div class="reservNumber">[예약번호]</div>
-					숙소이름</td>
-					<td>2020. 4. 15</td>
-					<td>2020. 6. 15</td>
+					<td><img src="${hostPhotoPath}" alt="${hostPhotoName}"/></td>
+					<td><div class="reservNumber">[예약번호:${bookingId}]</div>
+					${hostName}</td>
+					<td>${checkInDate}</td>
+					<td>${checkOutDate}</td>
 				</tr>
 			</table>
 			<br>
@@ -125,13 +128,44 @@
 	</div>
 </body>
 
-<script type="text/javascript" src="jquery-3.4.1.js"></script>
 <script type="text/javascript">
 	/* 후기 등록 */
 	function commentUp() {
-		alert($("#starNum").text());
-		alert($("#commentReview").val());
+		
+		var userId = "${user.id}";
+		var bookingId = "${bookingId}";
+		var rate = $("#starNum").text();
+		var commentReview = $("#commentReview").val();
+		
+		alert(rate);
+		alert(commentReview);
+		
 		alert("후기가 등록되었습니다.");
+		
+		/*jQuery form 전송 방식*/
+		// create element(form)
+		var newForm = $('<form><form>');
+		
+		// set attribute(form)
+		newForm.attr("name","newForm");
+		newForm.attr("method","POST");
+		newForm.attr("action","registReview");
+		newForm.attr("target","_self");
+		
+		// create element & set attribute (input)
+		newForm.append($('<input/>', {type: 'hidden', name: 'memberId', value: userId}));
+		newForm.append($('<input/>', {type: 'hidden', name: 'bookingId', value: bookingId}));
+		newForm.append($('<input/>', {type: 'hidden', name: 'rate', value: rate}));
+		newForm.append($('<input/>', {type: 'hidden', name: 'commentReview', value: commentReview}));
+	
+
+		// append form(to body)	
+		newForm.appendTo('body');
+		
+		
+		// submit form
+		newForm.submit();
+		
 		window.close();
 	}
 
