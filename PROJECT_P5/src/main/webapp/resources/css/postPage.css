@@ -209,6 +209,7 @@ button {
 
 .contentReview table td:nth-child(2) {
 	width: 75%;
+	max-width: 150px;
 	text-align: left;
 }
 
@@ -222,10 +223,12 @@ button {
 .reviewFirstName {
 	font-size: 16px;
     margin: 3px;
+    width: 100% !important;
 }
 
 .reviewDate {
 	font-size: 85%;
+	width: 100% !important;
 }
 
 .contentReviewStar img {
@@ -374,6 +377,7 @@ button {
 		vertical-align: middle;
 		text-align: center;
 		background: #eee;
+		font-size: 90%;
 	}
 	.contentReserv table {
 		padding: 0 15px;
@@ -431,6 +435,7 @@ button {
 		vertical-align: middle;
 		text-align: center;
 		background: #eee;
+		font-size: 80%;
 	}
 	.contentReserv table {
 		padding: 0 15px;
