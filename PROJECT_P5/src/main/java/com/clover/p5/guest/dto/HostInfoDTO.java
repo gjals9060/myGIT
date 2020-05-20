@@ -15,7 +15,7 @@ public class HostInfoDTO {
 
 	// 호스트정보
 	private int id;
-	private int MemberId;
+	private int memberId;
 	private String name;
 	private String description;
 	private String descriptionEtc;
@@ -80,10 +80,10 @@ public class HostInfoDTO {
 		this.id = id;
 	}
 	public int getMemberId() {
-		return MemberId;
+		return memberId;
 	}
 	public void setMemberId(int memberId) {
-		MemberId = memberId;
+		this.memberId = memberId;
 	}
 	public String getName() {
 		return name;
@@ -250,7 +250,7 @@ public class HostInfoDTO {
 	@Override
 	public String toString() {
 		return "HostInfoDTO [firstName=" + firstName + ", lastName=" + lastName + ", htName=" + htName + ", rtName="
-				+ rtName + ", id=" + id + ", MemberId=" + MemberId + ", name=" + name + ", description=" + description
+				+ rtName + ", id=" + id + ", memberId=" + memberId + ", name=" + name + ", description=" + description
 				+ ", descriptionEtc=" + descriptionEtc + ", hostTypeId=" + hostTypeId + ", roomTypeId=" + roomTypeId
 				+ ", capacity=" + capacity + ", roomCount=" + roomCount + ", bedCount=" + bedCount + ", bathroomCount="
 				+ bathroomCount + ", address=" + address + ", latitude=" + latitude + ", longitude=" + longitude
