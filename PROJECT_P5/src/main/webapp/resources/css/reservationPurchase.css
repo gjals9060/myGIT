@@ -149,6 +149,7 @@
     outline: none;
     margin: 40px auto;
     font-size: 100%;
+    border-radius: 10px; 
 }
 
 /* #payment-window i {

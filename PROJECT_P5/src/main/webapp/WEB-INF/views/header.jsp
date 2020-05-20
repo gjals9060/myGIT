@@ -567,14 +567,16 @@ $(document).ready(function(){
 	
 
 	var mobileSwitch = false;
+	var headerHeight = $('header').innerHeight();
 	
 	function headerSizeView() {
-		
+		headerHeight = $('header').innerHeight();
 		if (window.location.pathname == "/p5/") {
 			isURLmain = true;
 		} else {
 			isURLmain = false;
 		}
+		
 		
 		width_size = $(window).width();
 		var height = $(document).scrollTop();
@@ -590,7 +592,7 @@ $(document).ready(function(){
 			b = -100;				
 		}
 		
-		if (height > 0) { // 스크롤의 위치가 80보다  클경우(scroll)
+		if (height > headerHeight) { // 스크롤의 위치가 80보다  클경우(scroll)
 			$('header').css({
 				"position" : "fixed",
 				"box-shadow" : "1px 1px 10px 0px #bbb",
