@@ -159,7 +159,8 @@ button {
 }
 
 #mapWrapper {
-	float: right;
+	margin: 5px 5px;
+	float: left;
 	width: 570px;
 	height: 570px;
 	top: 110px;
