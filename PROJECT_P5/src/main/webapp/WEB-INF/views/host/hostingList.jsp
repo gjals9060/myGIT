@@ -165,7 +165,7 @@ input[type=radio]:checked+label {
 		var hostId = $('input[name="hostId"]:checked').val();
 
 		if (!isChecked) { // 체크하지 않았으면
-			alert("선택해라..");
+			alert("새로운 숙소나 미등록 숙소를 선택해주세요.");
 		} else { // 체크했으면
 			location.href = "hostingStatus?hostId=" + hostId;
 		}
@@ -254,7 +254,7 @@ function refresh(){
 				return;
 			}
 			if (hostId == 0) {
-				alert("삭제할!! 호스팅!!!");
+				alert("삭제할 호스팅을 선택해주세요.");
 				return;
 			}
 

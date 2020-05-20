@@ -110,25 +110,8 @@ input {
 }  
 
 
-form {
-	margin-top: 50px;
-	color: #767676;
-}
-
-input[type="submit"] {
-	position: relative;
-	left: 10px;
-	background-color: #008489;
-	border-color: #008489;
-	color: white;
-	height: 50px;
-	width: 100px;
-	border-radius: 20%;
-	padding: 20px;
-	top: 50px;
-}
 /*이전 다음  */
-a[href="./address"]{
+/* a[href="./address"]{
 	position: relative;
     top: 160px;
     width: 80px;
@@ -139,27 +122,39 @@ a[href="./address"]{
     border-radius: 10px;
     border: 1px solid;
    left: 30px;
-}
-.next{
-	position: relative;
-    top: 10px;
-    right: -20px;
-}
-a[href="./roomType"] {
-    position: relative;
-    top: 150px;
-    background-size: 20px;
-   
-    left: -40%;
-    font-size: 20px;
-    color: #008489;
-}
-span.previous{
-	position: relative;
-    color: #008489;
-    margin-left: 30px;
+} */
 
+/* 버튼을 감싸고 있는 div */
+.room-count-btn-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 40%;
+    margin-top: 30px;
+    font-size: 20px;
 }
+
+/* 이전 버튼 */
+#prevBtn {
+	padding: 5px;
+}
+
+#prevBtn:visited {
+	color: #008489;
+}
+
+/* 다음 버튼 */
+#nextBtn {
+    text-decoration: none;
+    width: 75px;
+    background: #008489;
+    color: white;
+    text-align: center;
+    padding: 5px;
+    border-radius: 10px;
+}
+
 
 /*미디어 쿼리  */
 @media (max-width: 768px){
