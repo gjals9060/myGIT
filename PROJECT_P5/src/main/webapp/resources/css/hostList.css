@@ -44,11 +44,11 @@ td {
 }
 
 .bed-room {
-	width: 10%;
+	width: 5%;
 }
 
 .bed-count {
-	width: 10%
+	width: 5%
 }
 
 .address {
@@ -56,7 +56,7 @@ td {
 }
 
 .btn {
-	width: 10%;
+	width: 20%;
 }
 
 .host-room-div {
@@ -78,6 +78,17 @@ td {
 
 span {
 	vertical-align: super;
+}
+
+.hosting-list-btn-group {
+    background: #E51E51;
+    border-radius: 5px;
+    outline: none;
+    font-size: 16px;
+    padding: 9px;
+    border: none;
+    color: white;
+    margin: 0px 9px;
 }
 
 @media ( max-width :768px) and (min-width:450px) {

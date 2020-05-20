@@ -19,6 +19,10 @@
 </head>
 <body>
 	<%@include file="./hostHeaderStep2.jsp"%>
+	<div id="photoAjaxLoading">
+		<img src="/p5/img/photoLoading.gif" alt="사진 없음" />
+		<span>저장중...</span>
+	</div>
 	<script>
 		//	$('.hosting-step').empty();
 		//	$('.hosting-step').text("2단계:상세정보를 입력하세요");
@@ -36,7 +40,7 @@
 
 	<div id="infoContent" class="info-modal">
 
-
+	
 		<div class="info-content">
 			<span class="info-close">&times;</span>
 			<p class="info-tip">멋진 숙소 사진을 위한 팁</p>
@@ -146,6 +150,18 @@
 </body>
 
 <script type="text/javascript">
+	$(document).ready(function(){
+		$(document).ajaxStart(function() {
+			$('#photoAjaxLoading').show();
+		});
+		$(document).ajaxStop(function() {
+			$('#photoAjaxLoading').fadeOut();
+		})
+		
+	}); 
+
+
+
 	function apply() {
 		$(".photoList").sortable({
 			items : "img:not(.addPhoto)",

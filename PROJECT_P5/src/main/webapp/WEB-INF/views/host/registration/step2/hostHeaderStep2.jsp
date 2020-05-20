@@ -117,10 +117,11 @@ nav {
 			<div class='progress-bar'>
 				<progress value="10" max="100" id="progressBar"></progress>
 			</div>
-			<div class="bar">
+			
+	<!-- 		<div class="bar">
 				<div class="fifty">
 					<p></p>
-			</div>
+			</div> -->
 
 		</div>
 			
