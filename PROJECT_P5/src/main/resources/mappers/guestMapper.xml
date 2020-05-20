@@ -248,6 +248,20 @@
 	
 	</select>
 	
+	<select id="selectReviewCheck" parameterType="String" resultType="String">
+	
+		SELECT
+		    r.creation_date
+		FROM review r
+		    RIGHT JOIN booking b
+		    ON b.id = r.booking_id
+		WHERE 
+		    b.member_id = #{memberId}
+		ORDER BY
+		    b.booking_date DESC
+	
+	</select>
+	
 	<select id="selectReviewList" parameterType="String" resultType="ReviewInfoDTO">
 		
 		SELECT
