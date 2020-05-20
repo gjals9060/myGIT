@@ -232,6 +232,9 @@ public class GuestServiceImpl implements GuestService {
 		
 		// 호스트 정보
 		model.addAttribute("host", hostInfoDto);
+		// postPage에서  host.memberId가 아닌 member.dto에 있는 Member로 계속 참조함...
+		model.addAttribute("hostMID", hostInfoDto.getMemberId());
+
 		
 		// 호스트 프로필 사진
 		model.addAttribute("profilePhoto", profilePhoto);

@@ -108,7 +108,7 @@
 											src="${profilePhoto.path}" alt="${profilePhoto.originalName}" /></span><br>${host.firstName }님</td>
 								</tr>
 								<tr>
-									<td>작성일 ${host.creationDate } | 수정일${host.modificationDate }</td>
+									<td>작성일 ${host.creationDate }<%-- | 수정일${host.modificationDate } --%></td>
 								</tr>
 								<tr>
 									<td><span class="contentLocation">${host.address }</span></td>
@@ -266,9 +266,20 @@
 		<div class="contentReserv">
 
 			<c:set var="userId" value="${user.id}" />
+			<c:set var="hostMemberId" value="${hostMID}" />
 			<c:choose>
+				<c:when test="${userId eq hostMemberId}">
+					
+					<div class="contentReservTitle">예약</div>
+					<br>
+					<div>
+						본인 숙소에는<br>예약할 수 없습니다.
+					</div>
+					<br>
+					
+				</c:when>
 				<c:when test="${userId != null}">
-					<form action="reservationPurchase" method="post"
+					<form id="formToBooking" action="reservationPurchase" method="post"
 						onsubmit="return isMobileAuthentication();">
 						<table>
 							<tr>
@@ -324,7 +335,9 @@
 <script type="text/javascript">
 	
 	var sw = true;	// 날짜 출력 여부
-
+	var userId = "${user.id}";
+	var hostMemberId = "${hostMID}";
+	/*호스트 == 유저 면 예약막기 */
 	
    /* 이미지 슬라이드 */
    var slideIndex = 1;
