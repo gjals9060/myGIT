@@ -145,8 +145,9 @@
 
 	</div>
 	<!-- wrap end -->
-	<a href="../hostingStatus?hostId=${hostId }" class="previous-link"><span class="previous">이전</span></a>
-	<a href="./description?hostId=${hostId }" class="next-link"><span class="next">다음</span></a>
+	<div class="photo-btn-group">
+		<a href="../hostingStatus?hostId=${hostId }" class="previous-link" id="prevBtn">이전</a>
+		<a href="./description?hostId=${hostId }" class="next-link" id="nextBtn">다음</a>
 	</div>
 </body>
 
