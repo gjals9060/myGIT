@@ -419,7 +419,7 @@ public class GuestServiceImpl implements GuestService {
 						+	booking.getGuestCount() + "명"
 						;
 			
-			sendMobileCode(mobilePhone, content);
+			//sendMobileCode(mobilePhone, content);	//문자 낭비를 막기위해 주석중.
 			
 			System.out.println("문자 수신자 : " + mobilePhone + ", 문자내용 확인 : " + content);
 		}
