@@ -322,25 +322,32 @@ public class MemberServiceImpl implements MemberService {
 	
 //******************************** 비밀번호 변경 ********************************************
 	@Override
-	public int updateUserPassword(HttpServletRequest req) {
+	public boolean checkPresentPassword(HttpServletRequest req) {
 		String userPassword = req.getParameter("userPassword");
-		String newPassword = req.getParameter("newPassword");
 		int userId = getSessionUserId(req);
 		
 		Member member = memberMapper.selectMember(userId);
 		if(!passwordEncoder.matches(userPassword, member.getPassword())) {
 			System.out.println("기존 비밀번호 불일치");
-			return 0; // 비밀번호 불일치
+			return false; // 비밀번호 불일치
 		}
+		System.out.println("기존 비밀번호 일치 확인");
+		return true;
+	}
+	
+	@Override
+	public boolean updateUserPassword(HttpServletRequest req) {
+		String newPassword = req.getParameter("newPassword");
+		int userId = getSessionUserId(req);
+	
 			// 해싱값을 DB에 저장한다.
 		String HashedNewPassword = passwordEncoder.encode(newPassword);
 		if(memberMapper.updatePassword(userId, HashedNewPassword) == 1) {
 			System.out.println("비밀번호 변경 완료");
-			return 1;
+			return true;
 		}
-		
 		System.out.println("비밀번호 변경 실패");
-		return 2;
+		return false;
 	}
 //******************************** 비밀번호 변경-END ********************************************
 	

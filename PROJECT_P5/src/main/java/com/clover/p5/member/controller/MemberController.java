@@ -118,9 +118,14 @@ public class MemberController {
 	
 	
 //********************************** 비밀번호 변경 *************************************
+	@RequestMapping("/ajax/checkPresentPassword") // 현재 비밀번호 확인
+	@ResponseBody // 기존의 비밀번호를 확인한다
+	public boolean checkPresentPassword(HttpServletRequest req) {
+		return memberService.checkPresentPassword(req);
+	}
 	@RequestMapping("/ajax/updateUserPassword") // 비밀번호 변경
-	@ResponseBody // 기존의 비밀번호를 확인받고 새로운 비밀번호로 변경한다.
-	public int updateUserPassword(HttpServletRequest req) {
+	@ResponseBody // 새로운 비밀번호로 변경한다.
+	public boolean updateUserPassword(HttpServletRequest req) {
 		return memberService.updateUserPassword(req);
 	}
 //********************************** 비밀번호 변경-END *************************************	
