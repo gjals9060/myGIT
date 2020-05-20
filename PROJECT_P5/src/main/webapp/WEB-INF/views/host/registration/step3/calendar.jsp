@@ -26,6 +26,10 @@
 <body>
 	<input type="hidden" id="hostId" value="${hostId }" />
 	<%@include file="./hostHeaderStep3.jsp"%>
+	<div id="photoAjaxLoading">
+		<img src="/p5/img/photoLoading.gif" alt="사진 없음" />
+		<span>저장중...</span>
+	</div>
 		
 	<script>
 	//	$('.hosting-step').empty(); // 없어도 됨
@@ -62,6 +66,17 @@
 <script src="/p5/js/Calendar.js?v=<%=System.currentTimeMillis()%>"></script>
 </body>
 <script>
+
+$(document).ready(function(){
+	$(document).ajaxStart(function() {
+		$('#photoAjaxLoading').show();
+	});
+	$(document).ajaxStop(function() {
+		$('#photoAjaxLoading').fadeOut();
+	})
+	
+}); 
+
 $('#mdp-demo').multiDatesPicker({
 	dateFormat : "yy.mm.dd",
 //	altField : '#altField',

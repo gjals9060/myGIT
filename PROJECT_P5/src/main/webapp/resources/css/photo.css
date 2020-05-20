@@ -8,6 +8,13 @@
    vertical-align: middle;
 }
 
+/* 사진이 올라가는 동안 ajax loading */
+#photoAjaxLoading {
+    position: fixed;
+    top: 1%;
+    right: 2%;
+}
+
 img {
    opacity: 1;
    
