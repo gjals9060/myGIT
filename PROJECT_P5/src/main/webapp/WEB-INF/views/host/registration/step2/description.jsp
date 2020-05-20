@@ -40,8 +40,10 @@
 				<textarea id="countEtc" name="descriptionEtc" rows="10" cols="50" onkeyup="countEtc()"></textarea>
 				<span id="etcWord"></span>
 				<div class="etc-warning"></div>
-	<a href="./photo?hostId=${hostId }" class="previous-link click-to-save"><span class="previous">이전</span></a>
-	<a onclick="check()" class="next-link click-to-save"><span class="next">다음</span></a>
+	<div class="description-btn-group">
+				<a href="./photo?hostId=${hostId }"class="previous-link click-to-save" id="prevBtn">이전</a>
+				<a onclick="check()" class="next-link click-to-save" id="nextBtn">다음</a>
+			</div>
 
 </div>
 		<div id="left"></div>
