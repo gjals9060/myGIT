@@ -823,10 +823,11 @@ $(document).ready(function(){
 			async : false,
 			success : function(data) {
 				if (data) { // 입력한 임시 비밀번호가 올바르면;
-					alert("임시비밀번호로 비밀번호가 변경됐습니다. 비밀번호 변경을 권고드립니다.");
+					alert("임시비밀번호로 변경됐습니다.");
+					alert("비밀번호를 변경해주세요.");
 					location.href = "/p5/userInfoUpdate?t=1"; // 비밀번호 변경을 위해 마이페이지로 보냄
 				} else { // 아니면
-					alert("비밀번호가 일치하지 않습니다. 발급받은 임시 비밀번호를 사용해주세요.");
+					alert("비밀번호가 일치하지 않습니다. 발급받은 임시비밀번호를 사용해주세요.");
 					inputTemporaryPassword.focus();
 				}
 			},
@@ -943,7 +944,7 @@ $(document).ready(function(){
 	
 //============================ 이름, 성, 생년월일 유효성 ===============================
 				if(!firstName.trim()){
-					alert("이름을 입력하세요.");
+					alert("이름을 입력해주세요.");
 					$('input[name="firstName"]').val("");
 					$('input[name="firstName"]').focus();
 					return;
@@ -954,7 +955,7 @@ $(document).ready(function(){
 					return;
 				}
 				if(!lastName.trim()){
-					alert("성을 입력하세요.");
+					alert("성을 입력해주세요.");
 					$('input[name="lastName"]').val("");
 					$('input[name="lastName"]').focus();
 					return;
@@ -965,7 +966,7 @@ $(document).ready(function(){
 					return;
 				}
 				if(!birthDate){
-					alert("생년월일을 입려해주세요.");
+					alert("생년월일을 입력해주세요.");
 					$('input[name="birthDate"]').focus();
 					return;
 				}
@@ -973,12 +974,12 @@ $(document).ready(function(){
 				
 //=========================== 휴대전화 유효성 ===============================
 				if(!mobilePhone){
-					alert("휴대전화 번호를 입력해주세요.");
+					alert("휴대전화번호를 입력해주세요.");
 					$('input[name="mobilePhone"]').focus();
 					return;
 				}
 				if(!reMobilePhone.test(mobilePhone)){
-					alert("휴대전화 번호를 확인해주세요.");
+					alert("휴대전화번호를 확인해주세요.");
 					$('input[name="mobilePhone"]').focus();
 					return;
 				}
@@ -1055,7 +1056,7 @@ $(document).ready(function(){
 								logInModalOn(); // 로그인 modal 전환
 
 							} else { // DB에 저장 실패
-								alert("회원가입을 정상적으로 완료하지 못했습니다..");
+								alert("회원가입에 실패했습니다. 다시 시도해주세요.");
 							}
 						},
 						error : function() {
@@ -1146,7 +1147,7 @@ $(document).ready(function(){
 			async : false,
 			success : function() {
 
-				alert("로그아웃 했다");
+				alert("로그아웃되었습니다.");
 				/* 	location.reload(); // 페이지 새로 고침 */
 				location.href = "/p5/";
 
