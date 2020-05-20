@@ -75,21 +75,57 @@ footer {
 	display: inline;
 }
 
+@media (max-width :1000px) and (min-width:769px){
+	.footer-description {
+		grid-template-columns: none;
+		grid-template-rows: repeat(2, 1fr);
+		font-size: 15px;
+	}
+	.footer-sitemap {
+		font-size: 15px;
+		padding: 10px;
+	}
+	
+	.footer-sitemap * {
+	    padding: 0px;
+	    margin: 20px !important;
+	    font-size: 12px;
+	}
+	
+	.sitemap-title {
+	    font-size: 20px;
+	    font-weight: bold;
+	    margin: 10px !important;
+	}
+	
+	#hostDescription {
+		border-right: none;
+		border-bottom: 1px solid #bbb;
+	}	
+
+	
+}
+
 @media ( max-width :768px) and (min-width:460px) {
 	.footer-description {
 		grid-template-columns: none;
 		grid-template-rows: repeat(2, 1fr);
-		font-size: 13px;
-	}
-	
-	.footer-user {
-		padding :0px 45px;
+		font-size: 12px;
 	}
 	
 	#hostDescription {
 		border-right: none;
 		border-bottom: 1px solid #bbb;
 	}
+	
+	.footer-description {
+		font-size: 13px;
+	}
+	
+	.footer-user {
+		padding :0px 45px;
+	}
+
 	
 	.footer-sitemap {
 		font-size: 13px;
@@ -112,5 +148,11 @@ footer {
 	}
 	.footer-copyright * {
    		font-size: 13px;
+	}
+	
+	.user-description * {
+	    list-style: none;
+	    padding: 10px;
+	    font-size: 12px;
 	}
 }
