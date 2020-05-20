@@ -8,12 +8,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.clover.p5.member.dto.ErrorFieldDTO;
 import com.clover.p5.member.dto.NewMemberDTO;
 import com.clover.p5.member.dto.ProfilePhoto;
 import com.clover.p5.member.service.MemberService;
@@ -27,13 +25,23 @@ public class MemberController {
 	private MemberService memberService;
 	
 	
+	
+	
+	@RequestMapping("/ajax/isEmailAvailable") // 이메일 중복여부 검사
+	@ResponseBody
+	public boolean isEmailAvailable(String email) {
+		return memberService.isEmailAvailable(email);
+	}
+	
+	
+	
 //********************************** 회원가입 ******************************************
-	@RequestMapping("/ajax/validateSignUp") // 회원가입 유효성 검사
+	/*@RequestMapping("/ajax/validateSignUp") // 회원가입 유효성 검사
 	@ResponseBody
 	public List<ErrorFieldDTO> validateSignUp(NewMemberDTO newMemberDto, Errors errors) {
 		System.out.println(newMemberDto);
 		return memberService.validationResult(errors);
-	}
+	}*/
 	
 	@RequestMapping("/ajax/sendEmailAuthenticationCode") // 인증메일 발송
 	@ResponseBody // 이메일을 발송하고 해시된 인증번호를 반환한다.

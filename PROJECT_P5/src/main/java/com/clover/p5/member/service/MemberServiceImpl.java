@@ -749,6 +749,16 @@ public class MemberServiceImpl implements MemberService {
 
 
 
+	@Override
+	public boolean isEmailAvailable(String email) {
+		if(memberMapper.selectEmailCount(email) == 0) {
+			return true; // 사용가능
+		}
+		return false; // 이미 사용중인 이메일
+	}
+
+
+
 	
 
 

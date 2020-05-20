@@ -290,10 +290,11 @@
 				</div>
 				<div class="form-input-check" id="dateCheck"></div>
 
-				<div class="formTitle">전화번호</div>
+				<div class="formTitle">휴대전화</div>
 				<div class="formInput">
 					<input type="text" class="input-value" id="inputTel"
-						name="mobilePhone" />
+						name="mobilePhone"
+						onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" />
 				</div>
 				<div class="form-input-check" id="telCheck"></div>
 				<input type="button" value="다음" id="btnSendEmail" class="nextButton" />
@@ -851,35 +852,123 @@ $(document).ready(function(){
 	$('#btnSendEmail').on(
 			'click',
 			function() {
-				var params = $('form[name="newMember"]').serialize();
-				var inputEmail = $('#inputEmail').val();
 			
+			 	var email = $('input[name="email"]').val();
+				var password = $('input[name="password"]').val();
+				var passwordCheck = $('input[name="passwordCheck"]').val();
+				var firstName = $('input[name="firstName"]').val();
+				var lastName = $('input[name="lastName"]').val();
+				var birthDate = $('input[name="birthDate"]').val();
+				var mobilePhone = $('input[name="mobilePhone"]').val(); 
+				
+				var reEmail = RegExp(/^[A-Za-z0-9]([-_\.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_\.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/i);
+				var rePassword = RegExp(/^[A-Za-z0-9~!@#$%^&*()_+|<>?:{}]{8,16}$/);
+				var reFirstName = RegExp(/^[가-힣]{1,20}$|^[A-Za-z]{1,60}$/);
+				var reLastName = RegExp(/^[가-힣]{1,10}$|^[A-Za-z]{1,30}$/);
+				var reMobilePhone = RegExp(/^01[016789]([1-9][0-9]{2,3})([0-9]{4})$/);
+				
+			//	alert(email+"\n"+password+"\n"+passwordCheck+"\n"+firstName+"\n"+lastName+"\n"+birthDate+"\n"+mobilePhone);
+//============================ 이메일 유효성 ===============================				
+				if(!email.trim()){
+					alert("이메일을 입력하세요.");
+					$('input[name="email"]').val("");
+					$('input[name="email"]').focus();
+					return;
+				}
+				if(!reEmail.test(email)){
+					alert("이메일을 확인해주세요.");
+					$('input[name="email"]').focus();
+					return;
+				}
+				var isEmailAvailable;
 				$.ajax({
 					type : "POST",
-					url : "/p5/ajax/validateSignUp",
-					data : params,
+					url : "/p5/ajax/isEmailAvailable",
+					data : "email=" + email,
+					async : false, // 동기
 					success : function(result) {
-						if (!result.length) { // 유효성 탈락 항목이 없다.
-							alert("통과");
-							sendEmailAuthenticationCode(inputEmail); // 인증메일 발송
-							emailAuthenticationModalOn(); // 화면 전환
-						} else { // 유효성 탈락 항목이 있을 때
-							alert(result.length
-									+ "건의 유효성 탈락 항목 정보를 console.log에서 확인하세요.");
-							$.each(result,
-									function(index, field) { // 추가로 가져온 값들을 추가해준다
-										console.log(field.name + " - "
-												+ field.message);
-									});
-							console.log("");
-							console.log("");
-						}
+						isEmailAvailable = result; // 결과를 담는다
 					},
 					error : function() {
-						alert("통신 실패..");
+						alert("이메일 중복확인 통신 실패..");
 					}
-				}); // ajax-end
+				}); // ajax-end 	
+				if(!isEmailAvailable){ // 이미 사용중이면
+					alert("이미 사용중인 이메일입니다.");
+					$('input[name="email"]').focus();
+					return;
+				}
+//==========================================================================
+	
+//============================ 비밀번호 유효성 ===============================		
+				if(!password){
+					alert("비밀번호를 입력하세요.");
+					$('input[name="password"]').focus();
+					return;
+				}
+				if(!rePassword.test(password)){
+					alert("비밀번호는 8~16자리의 영문, 숫자, 특수문자만 사용 가능합니다.\n사용가능 특수문자 :\n~!@#$%^&*()_+|<>?:{}");
+					$('input[name="password"]').focus();
+					return;
+				}
+				if(password !== passwordCheck){
+					alert("비밀번호가 일치하지 않습니다.");
+					$('input[name="passwordCheck"]').focus();
+					return;
+				}
+//============================================================================	
+	
+//============================ 이름, 성, 생년월일 유효성 ===============================
+				if(!firstName.trim()){
+					alert("이름을 입력하세요.");
+					$('input[name="firstName"]').val("");
+					$('input[name="firstName"]').focus();
+					return;
+				}
+				if(!reFirstName.test(firstName)){
+					alert("이름은 한글 20자, 또는 영문60자 이하로 입력해주세요.");
+					$('input[name="firstName"]').focus();
+					return;
+				}
+				if(!lastName.trim()){
+					alert("성을 입력하세요.");
+					$('input[name="lastName"]').val("");
+					$('input[name="lastName"]').focus();
+					return;
+				}
+				if(!reLastName.test(lastName)){
+					alert("성은 한글 10자, 또는 영문30자 이하로 입력해주세요.");
+					$('input[name="lastName"]').focus();
+					return;
+				}
+				if(!birthDate){
+					alert("생년월일을 입려해주세요.");
+					$('input[name="birthDate"]').focus();
+					return;
+				}
+//===========================================================================			
+				
+//=========================== 휴대전화 유효성 ===============================
+				if(!mobilePhone){
+					alert("휴대전화 번호를 입력해주세요.");
+					$('input[name="mobilePhone"]').focus();
+					return;
+				}
+				if(!reMobilePhone.test(mobilePhone)){
+					alert("휴대전화 번호를 확인해주세요.");
+					$('input[name="mobilePhone"]').focus();
+					return;
+				}
+//===========================================================================		
+				
+			//	alert("모든 유효성 통과^^!");
+	
+				sendEmailAuthenticationCode(email); // 인증메일 발송
+				emailAuthenticationModalOn(); // 화면 전환
 			});
+	
+	
+	
 
 	// 이메일 인증에서 뒤로가기
 	$('#emailCheckBack').on('click', function() {
@@ -910,13 +999,19 @@ $(document).ready(function(){
 
 	// '(회원가입)완료' 클릭
 	$("#completeSignUp").on("click", function() { // 로딩이미지 필요
+		if(!$('#inputCode').val().trim()){
+			alert("인증번호를 입력해주세요.");
+			$('#inputCode').val("");
+			$('#inputCode').focus();
+			return;
+		}
 		var params = {
 			authenticationCode : $('#authenticationCode').val(), // 인증번호(해시)
 			inputCode : $('#inputCode').val().trim()
 		// 입력값
 		};
 		var paramsNewMember = $('form[name="newMember"]').serialize(); // 방금 입력한 회원정보
-
+		
 		$.ajax({
 			type : "POST",
 			url : "/p5/ajax/emailAuthentication",
@@ -929,7 +1024,7 @@ $(document).ready(function(){
 						type : "POST",
 						url : "/p5/ajax/completeSignUp",
 						data : paramsNewMember,
-						async : false,
+				//		async : false,
 						success : function(result) {
 							if (result) { // DB에 저장 성공 
 
@@ -947,6 +1042,7 @@ $(document).ready(function(){
 
 				} else { // 인증번호 불일치
 					alert("인증번호가 일치하지 않습니다.");
+					$('#inputCode').focus();
 				}
 			},
 			error : function() {
@@ -957,13 +1053,24 @@ $(document).ready(function(){
 
 	// 로그인 시도
 	function userLogin() { // 로딩이미지 필요
-
+		var email = $('#userEmail').val();
+		if(!email.trim()){
+			$('.loginCheck').empty();
+			$('.loginCheck').css({
+				"color" : "red"
+			});
+			$('.loginCheck').append('아이디를 입력하세요.');
+			$('#userEmail').val("");
+			$('#userEmail').focus();
+			return false;
+		}
+		
 		var params = {
-			userEmail : $('#userEmail').val(),
+			userEmail : email,
 			userPassword : $('#userPassword').val(),
 			rememberMe : $('#rememberMe').prop("checked")
 		};
-
+		
 		$.ajax({
 			type : "POST",
 			url : "/p5/ajax/logIn",
@@ -978,6 +1085,7 @@ $(document).ready(function(){
 					});
 
 					$('.loginCheck').append('아이디가 존재하지 않습니다.');
+					$('#userEmail').focus();
 
 				} else if (result == 1) { // 비밀번호 불일치
 
@@ -986,8 +1094,9 @@ $(document).ready(function(){
 					$('.loginCheck').css({
 						"color" : "red"
 					});
-
+					
 					$('.loginCheck').append('비밀번호가 일치하지 않습니다.');
+					$('#userPassword').focus();
 
 				} else if (result == 2) { // 로그인 성공
 
