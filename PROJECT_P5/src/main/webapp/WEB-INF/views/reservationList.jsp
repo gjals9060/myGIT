@@ -175,8 +175,10 @@ button {
 }
 /* 리스트 */
 .list-img {
-	width: 300px;
+	width: 100px;
 	height: 200px;
+	   object-fit: contain;   
+	   background: black;
 }
 
 table {
