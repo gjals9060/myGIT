@@ -79,7 +79,7 @@ footer {
 	display: inline;
 }
 
-@media ( max-width :768px) and (min-width:460px) {
+@media ( max-width :786px) {
 	.footer-description {
 		grid-template-columns: none;
 		grid-template-rows: repeat(2, 1fr);
