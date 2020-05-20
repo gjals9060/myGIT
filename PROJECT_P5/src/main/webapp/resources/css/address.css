@@ -1,23 +1,24 @@
 @charset "UTF-8";
 
-#wrap{
-	width:90%;
-	max-width:1100px;
+#wrap {
+	width: 90%;
+	max-width: 1100px;
 	display: inline;
+}
 
+#container {
+	display: inline;
+	float: left;
+	width: 60%;
+	height: 710px;
+	padding-bottom: 102px;
+	margin-left: 5%;
+	margin-top: 3%;
 }
-#container{
-display: inline;
-    float: left;
-    width: 60%;
-    height: 710px;
-  padding-bottom: 102px;
-  margin-left: 5%;
-  margin-top: 3%;
-}
-#left{
-	display:inline;
-	width:30%;
+
+#left {
+	display: inline;
+	width: 30%;
 	height: 1250px;
 	background-color: #FAFAFA;
 	float: right;
@@ -28,9 +29,11 @@ header img {
 	height: 30px;
 	vertical-align: middle;
 }
-.location{
-	margin-top: 5%;
+
+.location {
+	margin: 30px 0;
 }
+
 h5 {
 	display: inline;
 	margin-left: 30px;
@@ -46,23 +49,25 @@ h2 {
 }
 /*주소 입력창  */
 #sample5_address {
-width: 289px;
-    margin-left: 0px;
-    height: 40px;
-    margin-bottom: 10px;
-    border-top: 2px solid #EEEEEE;
-    border-left: 2px solid #EEEEEE;
+	width: 289px;
+	margin-left: 0px;
+	height: 35px;
+	margin-bottom: 10px;
+	border-top: 2px solid #EEEEEE;
+	border-left: 2px solid #EEEEEE;
+	padding: 0 20px;
 }
 
-#checkAddress{
+#checkAddress {
 	width: 300px;
-    margin-left: 0px;
-    height: 40px;
-    margin-bottom: 10px;
-    border-top: 2px solid #EEEEEE;
-    border-left: 2px solid #EEEEEE;
+	margin-left: 0px;
+	height: 40px;
+	margin-bottom: 10px;
+	border-top: 2px solid #EEEEEE;
+	border-left: 2px solid #EEEEEE;
 }
- button {
+
+button {
 	background-color: #ffffff;
 	color: black;
 	width: 60px;
@@ -70,40 +75,32 @@ width: 289px;
 	border-color: #ffffff;
 	border-radius: 5px;
 	position: absolute;
-
 }
-#map-save-btn{
 
-      background-color: #ffffff;
-    color: black;
-    width: 80px;
-    height: 36px;
-    border-color: #ffffff;
-    border-radius: 5px;
- position: relative;
-    top: -300px;
-    z-index: 10;
-    outline: none;
-    border: none;
-    font-weight: bold;
-
+#addressInfo {
+	line-height: 1.5em;
+	vertical-align: middle;
 }
-#map-set-btn{
 
-    background-color: #ffffff;
-    color: black;
-    width: 80px;
-    height: 36px;
-    border-color: #ffffff;
-    border-radius: 5px;
-  position: relative;
-    top: -300px;
-    z-index: 10;
-    outline: none;
-    border: none;
-    font-weight: bold;
-
+.mapSetButtons button {
+	background-color: #008489;
+	color: white;
+	width: 300px;
+	min-width: max-content;
+	height: 36px;
+	border-color: #ffffff;
+	border-radius: 10px;
+	outline: none;
+	border: none;
+	font-weight: bold;
+	position: unset;
+	margin: 10px 0 20px;
 }
+
+#map-save-btn {
+	background: #ffbc58 !important;
+}
+
 input[type="submit"] {
 	margin-top: 50px;
 	position: relative;
@@ -115,11 +112,13 @@ input[type="submit"] {
 	width: 100px;
 	border-radius: 20%;
 }
-#address2{
+
+#address2 {
 	margin-top: 10px;
-    border: 1px solid #A9A9A9;
-    height: 46px;
-    width: 200px;
+	border: 1px solid #A9A9A9;
+	height: 35px;
+	width: 200px;
+	padding: 0 20px;
 }
 /*진행바  */
 progress {
@@ -176,16 +175,13 @@ a[onclick="check()"] {
 	right: -20px;
 }
 
-a[href="./roomCount"]{
-
-    position: relative;
-    top: 335px;
-    background-size: 20px;
-    font-size: 20px;
-    color: #008489;
-
-   
-    }
+a[href="./roomCount"] {
+	position: relative;
+	top: 335px;
+	background-size: 20px;
+	font-size: 20px;
+	color: #008489;
+}
 
 span.previous {
 	position: relative;
@@ -193,25 +189,22 @@ span.previous {
 	margin-left: 30px;
 }
 
-
-@media (max-width : 768px) {
+@media ( max-width : 768px) {
 	#wrap {
 		width: 768px;
 		margin-left: 0px;
 		margin-right: 0px;
 	}
-	
 	#left {
 		display: none;
 	}
-a[href="./roomCount"] {
-	position: relative;
-    top: 350px;
-   
-    background-size: 20px;
-    left: -0px;
-}
-/* #map-save-btn {
+	a[href="./roomCount"] {
+		position: relative;
+		top: 350px;
+		background-size: 20px;
+		left: -0px;
+	}
+	/* #map-save-btn {
     background-color: #ffffff;
     color: black;
     width: 60px;
@@ -270,8 +263,8 @@ a[href="./roomType"] {
 		position: relative;
 		left: 180px;
 	}
-	#checkAddress{
-	width: 70%;
+	#checkAddress {
+		width: 70%;
 	}
 	h1 {
 		font-size: 24px;
@@ -279,27 +272,27 @@ a[href="./roomType"] {
 	#left {
 		display: none;
 	}
-a[href="./roomCount"] {
-	position: relative;
-    top: 50px;
-   color:#008489;
-    background-size: 20px;
-    font-size: 20px;
-   
-}
-a[onclick="check()"] {
-    position: relative;
-    top: 30px;
-    width: 80px;
-    height: 45px;
-    background-color: #008489;
-    float: right;
-    color: white;
-    border-radius: 10px;
-    border: 1px solid;
-    right: 5%;
-  
-}
+	a[href="./roomCount"] {
+		position: relative;
+		top: 50px;
+		color: #008489;
+		background-size: 20px;
+		font-size: 20px;
+	}
+	a[onclick="check()"] {
+		position: relative;
+		top: 30px;
+		width: 80px;
+		height: 45px;
+		background-color: #008489;
+		float: right;
+		color: white;
+		border-radius: 10px;
+		border: 1px solid;
+		right: 5%;
+	}
 }
 
-
+.registration, .modification {
+	display: none;
+}
