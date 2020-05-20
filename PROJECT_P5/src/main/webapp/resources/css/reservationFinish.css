@@ -1,34 +1,28 @@
 @charset "UTF-8";
-#wrap{
-	width: 1100px;
-}
-/* .img img ,.description{
-	border: 1px solid #ed2d55;
-} */
-img{
-	display:inline;
-	float:left;
-width:150px;
-height: 125px;
-}
-.description{
-	display:inline;
-	float:left;
-	margin-left: 20px;
-	margin-right: 120px;
-}
-.message{
-position: absolute;
-position: absolute;
-    top: 300px;
 
+#wrap {
+	max-width: 1100px;
+	width: 100%;
+	margin: 50px auto;
 }
-.move{
-	margin-left: 306px;
+
+#reservationFinish img {
+	width: 150px;
+	height: 125px;
 }
-.finish-img img{
-	display:inline;
-	float:left;
-	width: 400px;
-	height: 450px;
+
+.description {
+	
+}
+
+.message {
+	
+}
+
+.move {
+	
+}
+
+.finish-img img {
+	
 }
