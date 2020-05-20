@@ -145,12 +145,14 @@ a[href="./address"]{
     top: 10px;
     right: -20px;
 }
-a[href="./roomType"]{
-	position: relative;
+a[href="./roomType"] {
+    position: relative;
     top: 150px;
-    background: url(../img/previousArrow.png) no-repeat;
     background-size: 20px;
-    left: -300px;
+   
+    left: -40%;
+    font-size: 20px;
+    color: #008489;
 }
 span.previous{
 	position: relative;
@@ -158,10 +160,12 @@ span.previous{
     margin-left: 30px;
 
 }
+
 /*미디어 쿼리  */
 @media (max-width: 768px){
 	#wrap{
-	width:768px;
+
+	max-width:768px;
 	margin-left: 0px;
 	margin-right: 0px;
 
@@ -173,9 +177,11 @@ span.previous{
 a[href="./roomType"] {
     position: relative;
     top: 120px;
-    background: url(../img/previousArrow.png) no-repeat;
     background-size: 20px;
-    left: -280px;
+    /* left: -280px; */
+    left: -50%;
+    color: #008489;
+    font-size: 20px;
 }
 a[href="./address"] {
     position: relative;
@@ -188,6 +194,23 @@ a[href="./address"] {
     border-radius: 10px;
     border: 1px solid;
     left: 30px;
+}
+}
+@media (max-width: 613px){
+		#wrap{
+	max-width:613px;
+	margin-left: 0px;
+	margin-right: 0px;
+
+}
+a[href="./roomType"] {
+    position: relative;
+    top: 170px;
+    background-size: 20px;
+    /* left: -280px; */
+    left: -50%;
+    color: #008489;
+    font-size: 20px;
 }
 }
 /*모바일  */
@@ -214,16 +237,17 @@ h1{
 a[href="./roomType"] {
     position: relative;
     top: 346px;
-    background: url(../img/previousArrow.png) no-repeat;
+   color:#008489;
     background-size: 20px;
     left: -265px;
 }
 a[href="./roomType"] {
     position: relative;
-    top: 175px;
-    background: url(../img/previousArrow.png) no-repeat;
-    background-size: 20px;
-    left: -265px;
+    top: 170px;
+  
+ 
+    left: -90%;
+    font-size: 18px;
 }
 }
 	

@@ -124,10 +124,13 @@ top: 300px;
 #reset-info{
 	position: relative;
     top: 280px;
-    background: url(../img/previousArrow.png) no-repeat;
+  /*   background: url(../img/previousArrow.png) no-repeat; */
     background-size: 20px;
     left: -400px;
     border: none;
+      color: #008489;
+    background-color: white;
+    font-size: 20px;
 }
 span.previous{
 	position: relative;
@@ -196,12 +199,18 @@ span.previous{
 }
 
 #reset-info {
-    position: relative;
-    top: 330px;
-    background: url(../img/previousArrow.png) no-repeat;
+position: relative;
+    top: 350px;
+ 
     background-size: 20px;
-    left: -400px;
+  
+    left: 0%;
+    font-size: 20px;
     border: none;
+    width: 80px;
+    height: 45px;
+    color: #008489;
+    background-color: white;
 }
 #left{
 	display: none;
@@ -262,7 +271,7 @@ h2{
 #reset-info {
     position: relative;
     top: 200px;
-    background: url(../img/previousArrow.png) no-repeat;
+ 
     background-size: 20px;
     left: -20px;
     border: none;
