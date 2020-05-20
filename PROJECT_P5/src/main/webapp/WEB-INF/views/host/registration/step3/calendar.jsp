@@ -53,7 +53,7 @@
 	<button id="manageMonth" onclick="manageMonth();">전체 차단/해제</button>
 	<!-- <form action="price" method="post"> -->
 	<div id="mdp-demo"></div>
-	<input type="text" id="altField" value="" name="blockingDate" />
+	<!-- <input type="text" id="altField" value="" name="blockingDate" /> -->
 <!-- 	<input type="button" value="전체해제" id="mdpAbled" class="disabled" />
 	<input type="button" value="전체차단" id="mdpDisabled" class="disabled" /> -->
 
