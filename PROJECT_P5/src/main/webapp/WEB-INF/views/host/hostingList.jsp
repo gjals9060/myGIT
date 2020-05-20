@@ -143,7 +143,7 @@ input[type=radio]:checked+label {
 
 					</li>
 
-					<li><span class="hosting-list-type">숙소 등록중</span></li>
+					<li><span class="hosting-list-type"></span></li>
 					
 					
 				</ul>
@@ -165,7 +165,7 @@ input[type=radio]:checked+label {
 		var hostId = $('input[name="hostId"]:checked').val();
 
 		if (!isChecked) { // 체크하지 않았으면
-			alert("선택해라..");
+			alert("호스팅을 선택해주세요.");
 		} else { // 체크했으면
 			location.href = "hostingStatus?hostId=" + hostId;
 		}
@@ -177,7 +177,7 @@ input[type=radio]:checked+label {
 
 		$.ajax({
 			type : "POST",
-			url : "registration/reset",
+			url : "./registration/reset",
 		}); // AJAX-END
 	});
 	
@@ -190,9 +190,8 @@ function refresh(){
 		//			async : false,
 		success : function(hostingList) {
 			if(hostingList.length == 0){
-				$('.hosting-list-type').text('새로운 숙소를 등록해주세요.');
 				$('.hosting-list-li-old').remove();
-				$('#hosting-list-ul').append(result);
+				$('.hosting-list-type').text('새로운 숙소를 등록해주세요.');
 			}else{
 				
 		
@@ -224,6 +223,7 @@ function refresh(){
 
 				
 			$('.hosting-list-li-old').remove();
+			$('.hosting-list-type').text('등록중인 숙소');
 			$('#hosting-list-ul').append(result);
 			
 			}
@@ -239,32 +239,24 @@ function refresh(){
 	
 	// 호스트 삭제 메소드
 	function deleteHost(){
+		// 체크 여부
+		var isChecked = $('input[name="hostId"]:checked').length;
+		// 선택 호스팅의 호스트ID
+		var hostId = $('input[name="hostId"]:checked').val();
+		
+		if (!isChecked || hostId == 0) { // 체크하지 않았으면 or 새로운 숙소 등록하기 선택
+			alert("삭제할 호스팅을 선택해주세요.");
+			return;
+		}
 	
-	var deleteValue = confirm("삭제하시겠습니까? ");
-
+		var deleteValue = confirm("삭제하시겠습니까?");
 		if (deleteValue) {
-
-			// 체크 여부
-			var isChecked = $('input[name="hostId"]:checked').length;
-			// 선택 호스팅의 호스트ID
-			var hostId = $('input[name="hostId"]:checked').val();
-
-			if (!isChecked) { // 체크하지 않았으면
-				alert("삭제할 호스팅을 선택해주세요.");
-				return;
-			}
-			if (hostId == 0) {
-				alert("삭제할!! 호스팅!!!");
-				return;
-			}
-
 			$.ajax({
 				type : "POST",
 				url : "deleteHost",
 				data : "hostId=" + hostId,
 				success : function(result) {
 					if (result) { // 호스트 삭제 성공
-						alert("삭제 성공");
 						refresh(); // 화면 갱신 
 					} else {
 						alert("호스팅 삭제 실패..");
@@ -274,9 +266,6 @@ function refresh(){
 					alert("통신 실패..");
 				}
 			});
-		}else {
-			
-			alert('취소되었습니다.');
 		}
 	}
 </script>

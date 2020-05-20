@@ -125,7 +125,7 @@
 				data : params,
 				success : function(result) {
 					if (result) {
-						alert("호스트 등록 완료!");
+				//		alert("호스트 등록 완료!");
 						location.href = "finish?hostId=" + $('#hostId').val();
 					} else {
 						alert("완료 실패..");
