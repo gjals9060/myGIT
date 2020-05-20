@@ -26,7 +26,7 @@
 				<th class="bed-count">침대</th>
 				<th class="bed-count">욕실</th>
 				<th class="address">위치</th>
-				<th class="btn">설정</th>
+				<th class="btnSet">설정</th>
 			</tr>
 
 
@@ -69,7 +69,7 @@ function refresh(){
 				+'<td>' + host.bedCount + '</td>	'
 				+'<td>' + host.bathroomCount + '</td>	'
 				+'<td>' + host.address + '</td>	'
-				+'<th class="btn">	'
+				+'<th class="btnSet">	'
 				+'<button class="hosting-list-btn-group" "id="hostListModifyBtn" onclick="location.href=\'./hostingStatus?hostId=' + host.id + '\'">수정</button>	'
 				+'</th>	'
 				+'</tr>	'
