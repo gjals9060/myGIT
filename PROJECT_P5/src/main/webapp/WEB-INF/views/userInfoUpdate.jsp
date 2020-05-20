@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원정보수정</title>
+<title>P5 :: 회원정보수정</title>
 
 <link rel="stylesheet" href="css/userInfoUpdate.css" />
 
@@ -307,10 +307,8 @@
 					<div class="user-info-update-value">
 						<input class="user-info-update-value-input" id="userInfoUpdateValuePhone" 
 							type="text" value=${user.mobilePhone } disabled /> 
-							
+							<span id="authenticationResult" class=""></span>
 						<input type="hidden" name="mobileAuthentication" value="${user.mobileAuthentication }" />
-
-						<span id="authenticationResult" class="user-info-update-value-btn"></span>
 						<button id="mobileAuthenticationResult"
 							class="user-info-update-value-btn btnTheme">수정하기</button>
 					</div>

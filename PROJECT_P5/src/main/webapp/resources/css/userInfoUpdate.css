@@ -79,8 +79,8 @@ button, input[type=text] {
 } */
 
 #authenticationResult {
-	left: 30%;
-    bottom: 4px;
+/* 	left: 30%;
+    bottom: 4px; */
 }
 
 #mobileAuthenticationResult {
@@ -235,13 +235,12 @@ button, input[type=text] {
 	padding-left: 30px;
 	text-align: left;
 	max-width: max-content;
-	min-width: 300px;
 	border-radius: 10px;
 	padding: 20px;
-	width: 100%;
 	vertical-align: middle;
 	font-size: 85%;
     color: #bbb;
+    line-height: 1.5em;
 }
 
 .inputProfilePhoto {
