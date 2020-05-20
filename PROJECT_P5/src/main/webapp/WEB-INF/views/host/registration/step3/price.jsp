@@ -61,12 +61,12 @@
 			<h6>이 요금이 기본 요금이 됩니다.</h6>
 			<br>
 			<div id="price">
-				<span class="won">\</span><input type="text" name="price"
-					onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"
-					onmouseout="origin()" />
+				<span class="won">&#8361;</span><input type="text" name="price"
+					
+					onmouseout="origin()" id="input"/>
 			</div>
 			<div class="suggestion">
-				제안요금:\20,455<i class="fa fa-question-circle-o" aria-hidden="true"
+				제안요금:&#8361;20,455<i class="fa fa-question-circle-o" aria-hidden="true"
 					onmouseleave="hide()"></i>
 				<p class="suggestion-info">제안 가격은 숙소의 퀄리티, 주변 숙소의 요금, 수요에 기반합니다.</p>
 			</div>
@@ -168,6 +168,44 @@
 			}); // AJAX-END
 		}
 	</script>
+	<script>
+	//3자리 단위마다 콤마 생성
+	function addCommas(x) {
+	    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
+	 
+	//모든 콤마 제거
+	function removeCommas(x) {
+	    if(!x || x.length == 0) return "";
+	    else return x.split(",").join("");
+	}
+
+
+	$("#input").on("focus", function() {
+		
+	    var x = $(this).val();
+	    x = removeCommas(x);
+	    $(this).val(x);
+	}).on("focusout", function() {
+	    var x = $(this).val();
+	    if(x && x.length > 0) {
+	        if(!$.isNumeric(x)) {
+	            x = x.replace(/[^0-9]/g,"");
+	        }
+	        x = addCommas(x);
+	        $(this).val(x);
+	    }
+	}).on("keyup", function() {
+	    $(this).val($(this).val().replace(/[^0-9]/g,""));
+	});
+
+
+
+</script>
+
+
+
+
 </body>
 
 </html>
