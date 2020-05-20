@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
@@ -14,7 +15,8 @@
 <title>메인</title>
 <link rel="stylesheet" href="css/reset.css" />
 <script src="js/jquery-3.4.1.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript"
+	src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script> -->
 <script type="text/javascript" src="js/daterangepicker.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,6 +24,122 @@
 
 <link rel="stylesheet" href="css/daterangepicker.css" />
 <style>
+table {
+	width: 729px;
+	height: 222px;
+}
+
+.info-modal {
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 100; /* Sit on top */
+	padding-top: 100px; /* Location of the box */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0, 0, 0); /* Fallback color */
+	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.info-content {
+	background-color: #fefefe;
+	margin: auto;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 568px;
+	height: 432px;
+	z-index: 10;
+} /* The Close Button */
+.info-close {
+	color: #aaaaaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.info-tip {
+	font-size: 24px;
+	font-weight: bold;
+	margin-top: 50px;
+}
+
+.info-first {
+    margin-left: 25px;
+    margin-top: 30px;
+    color: #484848;
+    font-size: 18px;
+    font-weight: bold;
+}
+.info-last {
+    /* margin-top: 30px; */
+    color: #484848;
+    /* font-size: 18px; */
+    /* font-weight: bold; */
+}
+.info-second {
+	margin-left: 20px;
+	font-size: 18px;
+	color: #484848;
+	font-weight: bold;
+}
+
+.info-third {
+	margin-left: 20px;
+	font-size: 18px;
+	color: #484848;
+	font-weight: bold;
+}
+
+.second {
+    position: relative;
+    top: 22px;
+    left: -10px;
+}
+
+.third {
+    position: relative;
+    top: 24px;
+    left: -7px;
+    background-color: black;
+    width: 24px;
+    
+}
+.info-img-first {
+    position: relative;
+    top: 39px;
+    /* left: -7px; */
+    float: left;
+    left: -5px;
+}
+
+#complete {
+	color: white;
+	background-color: #008489;
+	width: 80px;
+	height: 48px;
+	border: none;
+	margin-top: 20px;
+	border-radius: 10px;
+}
+
+.close:hover, .close:focus {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
+}
+.description{
+margin: -20px;
+}
+</style>
+
+<style>
+#wrap {
+	overflow: auto;
+}
+
 button {
 	display: inline;
 }
@@ -34,10 +152,9 @@ button {
 	float: right;
 	width: 570px;
 	height: 570px;
-	position: fixed;
 	top: 110px;
 	right: 0;
-	z-index: 3;
+	z-index: -15;
 	border: 2px solid;
 }
 
@@ -49,10 +166,23 @@ button {
 	vertical-align: middle;
 	text-align: right;
 	float: right;
-	position: fixed;
-	top: 116px;
-	right: 300px;
+	/* top: 116px; */
+	left: 300px;
 	z-index: 4;
+	position: relative;
+}
+/* 리스트 */
+.list-img {
+	width: 300px;
+	height: 200px;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+th, td {
+	padding: 0;
 }
 
 @media all and (max-width:768px) {
@@ -250,6 +380,62 @@ button {
 	</form>
 --%>
 	<div id="wrap">
+		<h1>장기숙박</h1>
+		<span class="tip">여행 날짜와 게스트 인원수를 입력하면 1박당 총 요금을 확인할 수 있습니다.</span>
+		<hr />
+		<span class="tip2">내 집 같은 편안한 공간한 달 이상 숙박하고 숙박비를 절약해보세요.
+			<button id="info">자세히 알아보기</button>
+		</span>
+
+		<div id="infoContent" class="info-modal">
+
+
+			<div class="info-content">
+				<span class="info-close">&times;</span>
+				<h1>장기 숙박</h1>
+				<span class="description">4주 이상의 편안한 숙박</span> <img src="/p5/img/reservation-info1.png" alt=""
+					class="info-img-first" />
+				<p class="info-first">내 집 같은 편안함 </p>
+				<p class="info-first-tip">주방, 와이파이 등 한 달 이상의 장기 숙박에 필요한
+					각종 편의시설이 완비되어 있습니다.</p>
+				<br> <img src="/p5/img/reservation-info2.png" alt="" class="second" />
+				<p class="info-second">유연하게 머물 수 있는 숙소</p>
+				<p class="info-second-tip">임대 기간에 대한 계약 의무 없이 필요한 기간만 숙박하실 수 있습니다. 한 달 이상 숙박하면 숙박비를 절약할
+					수 있습니다.</p>
+				<br> <img src="/p5/img/p5info.jpg" alt="" class="third" />
+				<p class="info-third">P5의 장점</p>
+				<br />
+				<p class="info-last">연중무휴 지원이 제공되는 에어비앤비에서 실제로 숙박한 게스트가 남긴 후기를 읽고 숙소를 안심하고 예약하세요</p>
+				<button id="complete">완료</button>
+			</div>
+
+		</div>
+
+		<!-- <!-- The Modal -->
+		<!-- <div id="myModal" class="modal">
+
+  Modal content
+  <div class="modal-content">
+    <span class="close">&times;</span>
+  <h1>장기 숙박</h1>
+<span>4주 이상의 편안한 숙박</span>
+
+<p>내 집 같은 편안함</p>
+<p>주방, 와이파이 등 한 달 이상의 장기 숙박에 필요한 각종 편의시설이 완비되어 있습니다.</p>
+
+
+<p>유연하게 머물 수 있는 숙소</p>
+<p>임대 기간에 대한 계약 의무 없이 필요한 기간만 숙박하실 수 있습니다. 한 달 이상 숙박하면 숙박비를 절약할 수 있습니다.</p>
+
+
+<p>에어비앤비의 장점</p>
+<p>연중무휴 지원이 제공되는 에어비앤비에서 실제로 숙박한 게스트가 남긴 후기를 읽고 숙소를 안심하고 예약하세요.</p>
+
+   
+  </div>
+
+</div> -->
+		-->
 
 		<!--<div id="map" style="width:100%;height:350px;"></div>-->
 		<div id="mapWrapper">
@@ -261,7 +447,8 @@ button {
 		</div>
 		<button class="close-btn">&times;</button>
 
-		<div id="button1" class='toggleBG' style="float: right; position: fixed; top: 120px; right: 450px; z-index: 5;">
+		<div id="button1" class='toggleBG'
+			style="float: right; /* position: fixed; */ /* top: 120px; */ position: relative; left: 80px; z-index: 5; top: 5px;">
 			<button class='toggleFG'></button>
 		</div>
 
@@ -269,12 +456,15 @@ button {
 			<strong><font size="2"> 지도를 움직이며 검색 &nbsp; </font></strong>
 		</button>
 
-		<button id="button2" class="buttonMap" style="vertical-align: middle; text-align: center; float: right; position: fixed; top: 116px; right: 300px; z-index: 4;">
+		<button id="button2" class="buttonMap"
+			style="vertical-align: middle; text-align: center; float: right; position: fixed; top: 116px; right: 300px; z-index: 4;">
 			<strong><font size="2"> 이 지역 검색 &nbsp; </font></strong>
 		</button>
 
-		<div id="loading" class="buttonMap" style="vertical-align: middle; text-align: center; float: right; position: fixed; top: 116px; right: 300px; z-index: 6;">
-			<img alt="loading" src="img/loading.gif" style="width: 35px; height: 35px;">
+		<div id="loading" class="buttonMap"
+			style="vertical-align: middle; text-align: center; float: right; position: fixed; top: 116px; right: 300px; z-index: 6;">
+			<img alt="loading" src="img/loading.gif"
+				style="width: 35px; height: 35px;">
 		</div>
 
 
@@ -332,7 +522,8 @@ button {
 			}
 		</script>
 
-		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6252091adcb28726fdb95ebdf0b78361&libraries=services"></script>
+		<script type="text/javascript"
+			src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6252091adcb28726fdb95ebdf0b78361&libraries=services"></script>
 		<script>
 			var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 			mapOption = {
@@ -369,7 +560,8 @@ button {
 				var geocoder = new kakao.maps.services.Geocoder();
 
 				// 주소로 좌표를 검색합니다
-				geocoder.addressSearch(
+				geocoder
+						.addressSearch(
 								keyword,
 								function(result, status) {
 
@@ -554,33 +746,44 @@ button {
 														var ss = '';
 
 														ss += '<hr>'
-																+ '<article onclick="gogo('+ item.id+ ')" id="place'+ index+ '">'
+																+ '<article onclick="gogo('
+																+ item.id
+																+ ')" id="place'
+																+ index
+																+ '">'
 																+ '<div>'
 																+ '<table border="1">'
 																+ '<tr>'
 																+ '<td rowspan="4" align = "center">'
-																+ '<img alt="' + item.originalName + '" src="' + item.path + '" style="width: 150px; height: 100px;">'
+																+ '<img class="list-img" alt="' + item.originalName + '" src="' + item.path  + '"  style="width: 300px; height: 200px;"  >'
 																+ '</td>'
 																+ '</tr>'
 																+ '<tr>'
 																+ '<td>'
 																+ 'TYPE : '
-																+ item.htName + '/ ' + item.rtName
-																+ '&nbsp;guests : '
-																+ item.capacity
-																+ '</td>'
-																+ '<td>'
-																+ '&nbsp; address :'
-																+ item.address
-																+ '</td>'
+																+ item.htName
+																+ '/ '
+																+ item.rtName
+																+ "</td>"
 																+ '</tr>'
 																+ '<tr>'
 																+ '<td>'
 																+ '<h3>'
 																+ item.name
 																+ '</h3>'
+
 																+ '</td>'
-																+ '<td>'
+																/* + '<td>'
+																+ '&nbsp; address :'
+																+ item.address
+																+ '</td>' */
+																+ '</tr>'
+																+ '<tr>'
+																+ '<td class="capacity">'
+																+ '&nbsp;guests : '
+																+ item.capacity
+																+ '</td>'
+																+ '<td  class="count">'
 																+ ' room '
 																+ item.roomCount
 																+ ' bed '
@@ -787,7 +990,86 @@ button {
 				$('.toggleBG').css("visibility", "hidden");
 				$('.close-btn').css("visibility", "hidden");
 			});
+			/* 			/*정보  */
+
+			// Get the modal
+			/* var modal = document.getElementById("myModal");
+
+			 // Get the button that opens the modal
+			 var btn = document.getElementById("myBtn");
+
+			 // Get the <span> element that closes the modal
+			 var span = document.getElementsByClassName("close")[0];
+
+			 // When the user clicks the button, open the modal 
+			 btn.onclick = function() {
+			 modal.style.display = "block";
+			 }
+
+			 // When the user clicks on <span> (x), close the modal
+			 span.onclick = function() {
+			 modal.style.display = "none";
+			 }
+
+			 // When the user clicks anywhere outside of the modal, close it
+			 window.onclick = function(event) {
+			 if (event.target == modal) {
+			 modal.style.display = "none";
+			 }
+			 }/*지도 보이기  */
+			/* $('.close').click(function(e) {
+			
+			 $('.modal').hide();
+
+			 }); */
+
+			// Get the modal
+			var modal = document.getElementById("infoContent");
+
+			// Get the button that opens the modal
+			var btn = document.getElementById("info");
+
+			// Get the <span> element that closes the modal
+			var span = document.getElementsByClassName("info-close")[0];
+			var btn2 = document.getElementById("complete")
+			var btn3 = document.getElementById("map")
+
+			// When the user clicks the button, open the modal 
+			btn.onclick = function() {
+				modal.style.display = "block";
+
+			}
+
+			// When the user clicks on <span> (x), close the modal
+			span.onclick = function() {
+				modal.style.display = "none";
+			}
+			btn2.onclick = function() {
+				modal.style.display = "none";
+			}
+
+			// When the user clicks anywhere outside of the modal, close it
+			window.onclick = function(event) {
+				if (event.target == modal) {
+					modal.style.display = "none";
+
+				}
+			}
+			$('.close').click(function(e) {
+
+				$('#map').css("visibility", "visible");
+				$('.buttonMap').css("visibility", "visible");
+
+			});
+			$('#info').click(function(e) {
+
+				$('#map').css("visibility", "visible");
+				$('.buttonMap').css("visibility", "visible");
+
+			});
 		</script>
+
+
 	</div>
 	<jsp:include page="./footer.jsp"></jsp:include>
 </body>
