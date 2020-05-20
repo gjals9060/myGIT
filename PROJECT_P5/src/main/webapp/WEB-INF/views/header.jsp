@@ -145,17 +145,17 @@
 			</div>
 			<script>
 				$('#btnHostReservationList').on('click', function() {
-					alert("등록한 숙소 리스트로 이동");
+				//	alert("등록한 숙소 리스트로 이동");
 					location.href = "/p5/host/hostList";
 				});
 
 				$('#btnUserInfoUpdate').on('click', function() {
-					alert("회원정보수정으로 이동");
+				//	alert("회원정보수정으로 이동");
 					location.href = "/p5/userInfoUpdate";
 				});
 
 				$('#btnUserReservationList').on('click', function() {
-					alert("예약 숙소리스트로 이동");
+				//	alert("예약 숙소리스트로 이동");
 					
 					var userId = ${user.id};
 					/*jQuery form 전송 방식*/

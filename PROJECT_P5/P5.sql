@@ -230,24 +230,28 @@ ALTER TABLE host
 ALTER TABLE booking
 	ADD FOREIGN KEY (member_id)
 	REFERENCES member (id)
+	ON DELETE SET NULL
 ;
 
 
 ALTER TABLE host
 	ADD FOREIGN KEY (member_id)
 	REFERENCES member (id)
+	ON DELETE CASCADE
 ;
 
 
 ALTER TABLE profile_photo
 	ADD FOREIGN KEY (member_id)
 	REFERENCES member (id)
+	ON DELETE CASCADE
 ;
 
 
 ALTER TABLE remember_me
 	ADD FOREIGN KEY (member_id)
 	REFERENCES member (id)
+	ON DELETE CASCADE
 ;
 
 
