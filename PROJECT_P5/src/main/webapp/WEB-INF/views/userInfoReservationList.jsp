@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원 예약 리스트</title>
+<title>P5 :: 예약 리스트</title>
 <script src="js/jquery-3.4.1.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 <link rel="stylesheet" href="/p5/css/reset.css" />
