@@ -1,7 +1,10 @@
 @charset "UTF-8";
 
 footer {
-	
+	/*지도 안보이기  */
+	z-index: 100;
+    position: relative;
+    bottom: 0px;
 }
 
 /* 호스트와 게스트 이용 방법  */
@@ -15,6 +18,8 @@ footer {
 	border: 2px solid #E51E51;
 	padding: 20px;
 	display: grid;
+	/*지도 안보이기  */
+	background:white;
 	grid-template-columns: repeat(2, 1fr);
 }
 
@@ -69,63 +74,29 @@ footer {
 /* 이용약관등과 같은 정보  */
 .footer-copyright {
 	padding: 30px 0px;
+	/*지도 가리기  */
+	background: white; 
 }
 
 .footer-copyright * {
 	display: inline;
 }
 
-@media (max-width :1000px) and (min-width:769px){
-	.footer-description {
-		grid-template-columns: none;
-		grid-template-rows: repeat(2, 1fr);
-		font-size: 15px;
-	}
-	.footer-sitemap {
-		font-size: 15px;
-		padding: 10px;
-	}
-	
-	.footer-sitemap * {
-	    padding: 0px;
-	    margin: 20px !important;
-	    font-size: 12px;
-	}
-	
-	.sitemap-title {
-	    font-size: 20px;
-	    font-weight: bold;
-	    margin: 10px !important;
-	}
-	
-	#hostDescription {
-		border-right: none;
-		border-bottom: 1px solid #bbb;
-	}	
-
-	
-}
-
 @media ( max-width :768px) and (min-width:460px) {
 	.footer-description {
 		grid-template-columns: none;
 		grid-template-rows: repeat(2, 1fr);
-		font-size: 12px;
-	}
-	
-	#hostDescription {
-		border-right: none;
-		border-bottom: 1px solid #bbb;
-	}
-	
-	.footer-description {
 		font-size: 13px;
 	}
 	
 	.footer-user {
 		padding :0px 45px;
 	}
-
+	
+	#hostDescription {
+		border-right: none;
+		border-bottom: 1px solid #bbb;
+	}
 	
 	.footer-sitemap {
 		font-size: 13px;
@@ -148,11 +119,5 @@ footer {
 	}
 	.footer-copyright * {
    		font-size: 13px;
-	}
-	
-	.user-description * {
-	    list-style: none;
-	    padding: 10px;
-	    font-size: 12px;
 	}
 }
