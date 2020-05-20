@@ -278,14 +278,14 @@ hr {
 
 
 
-		<!-- <div class="test1"> -->
+		<div class="test1"> 
 			<div id="button1" class='toggleBG'>
 				<button class='toggleFG'></button>
 			</div>
 			<button id="button1" class="buttonMap button-bar">
 				<strong><font size="2"> 지도를 움직이며 검색 &nbsp; </font></strong>
 			</button>
-		<!-- </div> -->
+		 </div> 
 
 		<!-- <div class="test2" style="vertical-align: middle; text-align: center;  position: fixed; top: 116px; right: 300px; z-index: 4;"> -->
 			<button id="button2" class="buttonMap button-bar">
@@ -538,7 +538,9 @@ hr {
 				$('#info').append(message);
 				 */
 				if (!toggle) {
-					$('#button1').hide();
+					/* $('#button1').hide(); */
+					$('.test1').hide();
+					alert("보임!");
 					$('#button2').show();
 
 					$('#button2').on('click', function() {
@@ -546,7 +548,7 @@ hr {
 						console.log("button2 입력");
 						ajaxAction();
 
-						$('#button1').show();
+						$('.test1').show();
 						$('#button2').hide();
 
 					});
