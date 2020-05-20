@@ -175,31 +175,24 @@ button {
 	display: none;
 }
 
-/* 버튼관련 css */
-/* 
-#button1 {
-	vertical-align: middle;
-	text-align: right;
-	float: right;
-	top: 116px;
-	left: 300px;
-	z-index: 4;
-	position: relative;
-} */
 .button-bar {
     position: relative;
     right: 38%;
-    z-index: 10;
+    z-index: 4;
     top: 35px;
     text-align: right;
 }
 
 .toggleBG {
 	background: #53FF4C;
-	width: 70px;
-	height: 30px;
-	border: 1px solid #53FF4C;
-	border-radius: 15px;
+    width: 70px;
+    height: 30px;
+    border: 1px solid #53FF4C;
+    border-radius: 15px;
+    position: absolute;
+    top: 160px;
+    z-index: 5;
+    left: 36px;
 }
 
 .toggleFG {
@@ -211,6 +204,11 @@ button {
     position: absolute;
     left: 0px;
     border: 1px solid;
+}
+
+#button2 {
+	width: 100px;
+    text-align: center;
 }
 
 /* 리스트 */
@@ -280,20 +278,21 @@ hr {
 
 
 
-		<div class="test1">
+		<!-- <div class="test1"> -->
 			<div id="button1" class='toggleBG'>
 				<button class='toggleFG'></button>
 			</div>
 			<button id="button1" class="buttonMap button-bar">
 				<strong><font size="2"> 지도를 움직이며 검색 &nbsp; </font></strong>
 			</button>
-		</div>
+		<!-- </div> -->
 
-		<div class="test2" style="vertical-align: middle; text-align: center;  position: fixed; top: 116px; right: 300px; z-index: 4;">
-			<button id="button2" class="buttonMap">
+		<!-- <div class="test2" style="vertical-align: middle; text-align: center;  position: fixed; top: 116px; right: 300px; z-index: 4;"> -->
+			<button id="button2" class="buttonMap button-bar">
 				<strong><font size="2"> 이 지역 검색 &nbsp; </font></strong>
 			</button>
-		</div> 
+			<input type="hidden" value="n" />
+	<!-- 	</div> --> 
 		
 		
 
