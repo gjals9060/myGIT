@@ -72,14 +72,15 @@
 			</div>
 			<!--  <input type="submit" value="다음" /> -->
 			<!-- </form> -->
-			<a href="./calendar?hostId=${hostId }" class="previous-link"><span
-				class="previous">이전</span></a>
-			<button class="registration" onclick="completeStep3()">
-				<span class="next">완료</span>
-			</button>
-			<button class="modification" onclick="modifyPrice()">완료</button>
-			<%-- <a href="finish?hostId=${hostId }">완료</a> --%>
+			<div class="price-btn-group">
+				<a href="./calendar?hostId=${hostId }" id="prevBtn" class="previous-link">이전</a>
+				<button class="registration" id="nextBtn" onclick="completeStep3()">완료</button>
+				<button class="modification" id="nextBtn" onclick="modifyPrice()">완료</button>
+			</div>
+			
 		</div>
+		
+		
 		<div id="left">
 			<div id="info">
 				<i class="fa fa-lightbulb-o fa-3x" aria-hidden="true"></i><br>낮은
