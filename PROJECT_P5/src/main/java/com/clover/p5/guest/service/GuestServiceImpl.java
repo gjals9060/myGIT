@@ -412,9 +412,11 @@ public class GuestServiceImpl implements GuestService {
 		if(flag) {
 			
 			String content = 
-							" [P5] 예약완료 안내 \r\n"
-						+	"host : " + hostName + " 예약이 완료되었습니다. \r\n"
-						+	" 자세한 내용은 홈페이지를 참조해주세요."
+							" [P5]예약안내 \r\n"
+						+	"'가나다라마바사아..'" + "\r\n"
+						+	checkInDate + " ~ " + checkOutDate + "\r\n"
+						+	booking.getPayment() + "원\r\n"
+						+	booking.getGuestCount() + "명"
 						;
 			
 			sendMobileCode(mobilePhone, content);
@@ -470,14 +472,14 @@ public class GuestServiceImpl implements GuestService {
 	
 	@Transactional
 	@Override
-	public boolean refund(String sBookingId, String hostId, String sCheckInDate, String sCheckOutDate, String sPayment) {
+	public boolean refund(String mobilePhone,String sBookingId, String hostId, String sCheckInDate, String sCheckOutDate, String sPayment) {
 	//public boolean refund(BookingEntity bookingEntity) {
 				
 
-		System.out.println("값 받았니? id: " + sBookingId);
-		System.out.println("값 받았니? checkInDate: " + sCheckInDate);
-		System.out.println("값 받았니? checkOutDate: " + sCheckOutDate);
-		System.out.println("값 받았니? payment: " + sPayment);
+		//System.out.println("값 받았니? id: " + sBookingId);
+		//System.out.println("값 받았니? checkInDate: " + sCheckInDate);
+		//System.out.println("값 받았니? checkOutDate: " + sCheckOutDate);
+		//System.out.println("값 받았니? payment: " + sPayment);
 		
 		
 		SimpleDateFormat format0 = new SimpleDateFormat ( "yyyy-MM-dd HH:mm:ss.sss");
@@ -583,14 +585,29 @@ public class GuestServiceImpl implements GuestService {
 		int success2 = guestMapper.deleteBlocking(hostId, dates);
 
 		
-		System.out.println("success1 : " + success1);
+		System.out.println("success1 : " + success1); 
 		System.out.println("success2 : " + success2);
 		
 		
 		if(success1 == 0 || success2== 0) {
 			return false;
 		}else {
-			return true;
+/*			//========	문자전송	=========
+			if(flag) {
+				
+				String content = 
+								" [P5] 예약알림 \r\n"
+							+	"host : " + sBookingId + " 예약이 완료되었습니다. \r\n"
+							+	" 자세한 내용은 홈페이지를 참조해주세요."
+							;
+				
+				sendMobileCode(mobilePhone, content);
+				
+				System.out.println("문자 수신자 : " + mobilePhone + ", 문자내용 확인 : " + content);
+			}
+			
+			//===========================
+*/			return true;
 		}
 	}
 

@@ -282,7 +282,7 @@
 								</td>
 								<td><div class="contentReservTitle">인원</div> <span
 									class="guestInput"><input type='text' name='guestCount'
-										id="guestCount_reserve" class="guestCount_reserve" value="">
+										id="guestCount_reserve" class="guestCount_reserve" value="" readonly="readonly">
 
 										<button id="increaseQuantity" onclick="return increase();">▲</button>
 										<button id="decreaseQuantity" onclick="return decrease();">▼</button>
@@ -322,7 +322,10 @@
 </body>
 
 <script type="text/javascript">
-
+	
+	var sw = true;	// 날짜 출력 여부
+	
+	
    /* 이미지 슬라이드 */
    var slideIndex = 1;
    showSildes(slideIndex);
@@ -517,17 +520,9 @@
 	// 로그인 안되어있을시에 로그인 유도 
 	$('#goLogin').on('click', logInModalOn);
    
-    // purchase으로 가시전 날짜 확인
-   	function gogo() {
-		if(!sw){
-			alert("날짜를 선택하세요!");
-			return false;
-		}else{
-			return true;
-		}
-	}
+
    
-   var sw = true;	// 날짜 출력 여부
+
    
    var pMinDate = new Date();
    var pMaxDate = new Date();
@@ -714,7 +709,7 @@
 	   		$("#reservationDate").val('');
 	   		$('#dateCnt').val('');
 	   		$("#dateCount").empty();
-			$("#dateCount").html("날짜 선택해주세요."); 
+			$("#dateCount").html("날짜를 선택해주세요."); 
 			
 	   		
 	   	}
@@ -857,6 +852,40 @@
 		
 		return isAuthentication;
 	}
+	
+    // purchase으로 가시전 날짜 유효성 확인
+   	function gogo() {
+    	
+    	if($('#dateCnt').val() == null || $('#dateCnt').val() == "" || 
+    			$("#reservationDate").val() == null || $("#reservationDate").val() == null){
+    		
+			sw = false;
+			$('#reservationDate').val("");
+			$('#reservationDate').focus();
+			
+    	}else{
+    	
+			var date = $("#reservationDate").val().split(" - ");
+			var checkInDate = date[0].split(".");
+			var checkInDate1 = new Date(checkInDate[0], checkInDate[1]-1, checkInDate[2]);
+			var checkOutDate = date[1].split(".");
+			var checkOutDate1 = new Date(checkOutDate[0], checkOutDate[1]-1, checkOutDate[2]);
+			var dateCount = parseInt(checkOutDate1-checkInDate1)/(24*60*60*1000);
+		   	
+			if(dateCount == 0){
+				sw = false;
+				$('#reservationDate').val("");
+				$('#reservationDate').focus();
+			}
+    	}
+		if(!sw){
+			alert("날짜를 선택하세요!");
+			return false;
+		}else{
+			return true;
+		}
+	}// end -gogo()
+	
 </script>
 
 </html>

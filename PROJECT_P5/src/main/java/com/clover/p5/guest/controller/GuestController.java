@@ -36,13 +36,14 @@ public class GuestController {
 	@ResponseBody
 	@RequestMapping(value="/ajax/refund", method = RequestMethod.POST)
 	public boolean ajaxRefund(
+			@RequestParam(value="mobilePhone")String mobilePhone,
 			@RequestParam(value="bookingId")String sBookingId,
 			@RequestParam(value="hostId")String hostId,
 			@RequestParam(value="checkInDate")String sCheckInDate,
 			@RequestParam(value="checkOutDate")String sCheckOutDate,
 			@RequestParam(value="payment")String sPayment
 			) {	
-		return guestService.refund(sBookingId, hostId, sCheckInDate, sCheckOutDate, sPayment);
+		return guestService.refund(mobilePhone, sBookingId, hostId, sCheckInDate, sCheckOutDate, sPayment);
 	}
 
 	@RequestMapping("/reservationList")
