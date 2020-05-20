@@ -12,6 +12,19 @@
 <script type="text/javascript" src="js/jquery-3.4.1.js"></script>
 <title>Insert title here</title>
 <link rel="stylesheet" href="css/reservationFinish.css" />
+<script type="text/javascript">
+
+	// 예약가능 : 0, 누군가 먼저 예약 : 1, 중복요청 : 2
+	var reservationFlag = "${reservationFlag}";
+	
+	if(reservationFlag == "1"){	//
+		
+		alert("다른 사용자가 선점하여 예약이 불가능합니다.");
+		location.href = "postPage?id=" + ${host.id} + "&address="
+		+ "&startDate=&endDate=&guestCount=";
+	}
+
+</script>
 </head>
 <body>
 <h1>에약이 완료되었습니다</h1>

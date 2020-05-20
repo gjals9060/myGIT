@@ -274,7 +274,10 @@
 
         if (typeof options.isInvalidDate === 'function')
             this.isInvalidDate = options.isInvalidDate;
-
+// ================================ 추가 작성 ================================
+        if (typeof options.isP5InvalidDate === 'function')
+            this.isP5InvalidDate = options.isP5InvalidDate;        
+// ================================ 추가 작성 ================================ 
         if (typeof options.isCustomDate === 'function')
             this.isCustomDate = options.isCustomDate;
 
@@ -523,7 +526,12 @@
         isInvalidDate: function() {
             return false;
         },
-
+// ================================ 추가 작성 ================================
+        isP5InvalidDate: function() {
+            return false;
+        },
+// ================================ 추가 작성 ================================
+        
         isCustomDate: function() {
             return false;
         },
@@ -827,6 +835,10 @@
 					// decides it's invalid
                     if (this.isInvalidDate(calendar[row][col]))
                         classes.push('off', 'disabled');
+// ================================ 추가 작성 ================================
+                    if (this.isP5InvalidDate(calendar[row][col]))
+                        classes.push('off', 'disabled');
+// ================================ 추가 작성 ================================
 
                     // highlight the currently selected start date
                     if (calendar[row][col].format('YYYY.MM.DD') == this.startDate.format('YYYY.MM.DD'))

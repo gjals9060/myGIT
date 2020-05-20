@@ -34,6 +34,17 @@ public class GuestController {
 	}
 	
 	@ResponseBody
+	@RequestMapping(value="/ajax/finish", method = RequestMethod.POST)
+	public int ajaxReservation(@RequestBody BookingEntity bookingEntity) {	
+		return guestService.selectBookingCheck(bookingEntity);
+	}
+	
+	@RequestMapping(value = "/reservationFinish", method = RequestMethod.POST)
+	public String reservationFinish(BookingEntity booking, HttpServletRequest request, Model model) {	
+		return guestService.reservationFinish(booking, request, model);
+	}
+	
+	@ResponseBody
 	@RequestMapping(value="/ajax/refund", method = RequestMethod.POST)
 	public boolean ajaxRefund(
 			@RequestParam(value="mobilePhone")String mobilePhone,
@@ -61,10 +72,6 @@ public class GuestController {
 		return guestService.reservationPurchase(request, model);
 	}
 	
-	@RequestMapping(value = "/reservationFinish", method = RequestMethod.POST)
-	public String reservationFinish(BookingEntity booking, HttpServletRequest request, Model model) {	
-		return guestService.reservationFinish(booking, request, model);
-	}
 	
 	@RequestMapping(value = "/userInfoReservationList", method = RequestMethod.POST)
 	public ModelAndView userInfoReservationList(HttpServletRequest request, ModelAndView mv) {	

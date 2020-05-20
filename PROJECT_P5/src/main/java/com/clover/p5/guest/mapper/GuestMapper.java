@@ -58,4 +58,20 @@ public interface GuestMapper {
 	ProfilePhoto selectProfilePhoto(int memberId);
 	
 	List<ReviewInfoDTO> selectReviewList(@Param("hostId")String hostId);
+	
+	int selectCheckBooking(
+			@Param("hostId")String hostId,
+			@Param("memberId")String memberId,
+			@Param("checkInDate")String checkInDate,
+			@Param("checkOutDate")String checkOutDate
+			
+			);
+	
+	int selectCheckBlocking(	//checkOutDate 체크아웃 하루전날로(미포함)!!!!!!!!!!!!!!!!
+			@Param("hostId")String hostId,
+			@Param("checkInDate")String checkInDate,
+			@Param("checkOutDate")String checkOutDate
+			);
+	
+	
 }

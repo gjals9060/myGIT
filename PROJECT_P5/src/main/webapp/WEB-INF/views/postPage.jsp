@@ -324,7 +324,7 @@
 <script type="text/javascript">
 	
 	var sw = true;	// 날짜 출력 여부
-	
+
 	
    /* 이미지 슬라이드 */
    var slideIndex = 1;
@@ -629,7 +629,7 @@
                "minDate" : pMinDate,
                "maxDate" : pMaxDate,
                "maxSpan" : {"days" : maximumStay},
-               "isInvalidDate" : function(ele) {
+               "isP5InvalidDate" : function(ele) {
                    var currDate = moment(ele._d).format('YYYY.MM.DD');
                    
                    return [${blocking}].indexOf(currDate) != -1;

@@ -275,6 +275,36 @@
 		
 	</select>
 	
+	<select id="selectCheckBooking" parameterType="String" resultType="Integer">
+	
+		SELECT 
+		    count(b.id) AS bCount
+		FROM
+		    booking b
+		WHERE
+		    b.host_id = #{hostId}
+		    AND b.member_id = #{memberId}
+		    AND b.check_in_date = TO_DATE(#{checkInDate},'YYYY.MM.DD')
+		    AND b.check_out_date = TO_DATE(#{checkOutDate},'YYYY.MM.DD')
+	
+	</select>
+	
+	
+	<select id="selectCheckBlocking" parameterType="String" resultType="Integer">
+	
+		SELECT 
+		    count(bk.id) AS bkCount 
+		FROM
+		    blocking bk
+		WHERE
+		    bk.check_in_date BETWEEN TO_DATE(#{checkInDate},'YYYY.MM.DD') AND TO_DATE(#{checkOutDate},'YYYY.MM.DD') 
+		    AND bk.host_id = #{hostId}	
+	
+	
+	</select>
+	
+	
+	
 	
 </mapper>
 

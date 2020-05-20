@@ -43,6 +43,77 @@ public class GuestServiceImpl implements GuestService {
 	private BCryptPasswordEncoder passwordEncoder;
 	
 	@Override
+	public int selectBookingCheck(BookingEntity bookingEntity) {
+
+		
+		// 사전 DB 확인... 
+		
+		// host_id, member_id, check_in_date, check_out_date 등 확인해서  구분
+		// 확인1 먼저  중복 아니면 블로킹혹인해서 구분 => 그냥 동시에 하자
+		
+		// 확인 1 (selectCheckBooking) : 요청들어온 booking 데이터와 같은 데이터가 DB에 존재하는지 여부 확인. 
+		//			=> 페이지 새로고침시 중복제거됨
+		
+		// 확인 2 (selectCheckBlocking): 요청들어온 booking 데이터의 check in ~ out 에 blocking이 이미 존재하는지 여부 확인
+		// 			존재하면 DB처리 안하고 postPage.jsp로 리턴, 존재하지않으면 DB처리 후 넘어감.
+		//			=> 다른 사용자와 동시간 접속, 중복 예약방지
+		// 구분 : 확인한 결과에 따라 구분하여 처리
+		
+		
+		System.out.println("혼자야? " + bookingEntity);	//체크인,아웃 YYYY.MM.DD로 들어옴, id=-1, bookingDate= , cancellationDate= , refund=-1
+		
+		int checkBooking = guestMapper.selectCheckBooking(
+				bookingEntity.getHostId()+"", bookingEntity.getMemberId()+"", 
+				bookingEntity.getCheckInDate(), bookingEntity.getCheckOutDate()
+				);
+		
+		// checkBlocking할때 checkOutDate 체크아웃 하루전날로(미포함)!!!!!!!!!!!!!!!!
+		// 전날작업
+		SimpleDateFormat format = new SimpleDateFormat ( "yyyy.MM.dd");
+		String SCOD = bookingEntity.getCheckOutDate();
+		
+		int checkBlocking = -1;
+		try {
+			Date DCOD = format.parse(SCOD);
+			Date yDCOD = new Date(DCOD.getTime()+(1000*60*60*24* - 1));	// 체크아웃 하루 전날		
+			String ySCOD = format.format(yDCOD);
+			System.out.println("체크아웃전날 : " + ySCOD);
+			checkBlocking = guestMapper.selectCheckBlocking(bookingEntity.getHostId()+"", bookingEntity.getCheckInDate(), ySCOD);
+			
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		// 예약가능 : 0, 누군가 먼저 예약 : 1, 중복요청 : 2
+		if(checkBooking == 0 && checkBlocking == 0) {
+			
+			if(checkBlocking == -1) {
+				System.out.println("요청들어온 checkOutDate format 형식 오류!");
+			}
+			System.out.println("선 예약있니?몇 개? 선예약없으면 0 : " + checkBlocking + ", 중복요청아니면 0 : "+ checkBooking);
+			return 0;	// 예약 가능	
+			
+		}else if(checkBooking == 0 && checkBlocking != 0){
+			
+			System.out.println("선 예약있니?몇 개? 선예약없으면 0 : " + checkBlocking + ", 중복요청아니면 0 : "+ checkBooking);
+			return 1;	// 누군가 먼저 예약
+			
+		}else{
+			
+			System.out.println("선 예약있니?몇 개? 선예약없으면 0 : " + checkBlocking + ", 중복요청아니면 0 : "+ checkBooking);
+			return 2;	// 중복요청
+			
+		}
+		
+}
+
+
+	
+	
+	
+	@Override
 	public String sendMobileCode(String mobileNumber, String content) {
 		
 		// 6자리 숫자 난수 생성(100000 ~ 999999)
@@ -303,7 +374,7 @@ public class GuestServiceImpl implements GuestService {
 		
 		int payment = dateCount * hostPrice;
 		
-		System.out.println("날짜 : " + reservationDate);
+		System.out.println("날짜 : " + reservationDate);	//체크 인-아웃
 		System.out.println("인원 : " + guestCount);
 		System.out.println("호스트 id : " + hostId);
 		System.out.println("유저 id : " + memberId);
@@ -334,7 +405,6 @@ public class GuestServiceImpl implements GuestService {
 	public String reservationFinish(BookingEntity booking, HttpServletRequest request, Model model) {
 		
 		boolean flag = true;	// 문자전송 flag
-		System.out.println("\n reservationFinish 페이지 이동");
 		
 		String mobilePhone = request.getParameter("mobilePhone");
 		String hostName = request.getParameter("hostName");
@@ -345,7 +415,7 @@ public class GuestServiceImpl implements GuestService {
 		SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy.MM.dd HH:mm:ss");
 		SimpleDateFormat format2 = new SimpleDateFormat ( "yyyy.MM.dd");
 		
-		Date today = new Date();
+		Date today = new Date();	// 예약일 날짜
 		
 		String bookingDate = format1.format(today);	// Date => String
 		//today = format1.parse(bookingDate);		// String => Date
@@ -359,79 +429,102 @@ public class GuestServiceImpl implements GuestService {
 		
 		System.out.println("booking : " + booking.toString());
 		
+		// DB check
+		// 예약가능 : 0, 누군가 먼저 예약 : 1, 중복요청 : 2
+		int result = selectBookingCheck(booking);
 		
-		if(guestMapper.insertBooking(booking) == 1) {
-			
-			System.out.println("DB booking insert 성공");
-			
-			try {
-				Date dCID = format2.parse(checkInDate);
-				Date dCOD = format2.parse(checkOutDate);
-				long diff = dCOD.getTime() - dCID.getTime();
-				//System.out.println(diff);
-				long diffDays = diff / (24 * 60 * 60 * 1000);	
-				//System.out.println("차이" + diffDays);
-				for(int i = 0;i<diffDays;i++ ) {
-					long day = dCID.getTime() + i * (24 * 60 * 60 * 1000);
-					String sDay = format2.format(day);	// yyyy.MM.dd
-					//String sDay = format0.format(day);	// MM/dd/yyyy
+		System.out.println("\n reservationFinish 페이지 요청");
+		
+		String reservationFlag = result + "";
+		
+		if(result == 0) {
+			System.out.println("예약할게");
+			// DB로 예약
+			if(guestMapper.insertBooking(booking) == 1) {
+				
+				System.out.println("DB booking insert 성공");
+				
+				try {
+					Date dCID = format2.parse(checkInDate);
+					Date dCOD = format2.parse(checkOutDate);
+					long diff = dCOD.getTime() - dCID.getTime();
+					//System.out.println(diff);
+					long diffDays = diff / (24 * 60 * 60 * 1000);	
+					//System.out.println("차이" + diffDays);
+					for(int i = 0;i<diffDays;i++ ) {
+						long day = dCID.getTime() + i * (24 * 60 * 60 * 1000);
+						String sDay = format2.format(day);	// yyyy.MM.dd
+						//String sDay = format0.format(day);	// MM/dd/yyyy
+						
+						System.out.println(sDay);
+						listBlockingDate.add(sDay);
+					}//end - for
 					
-					System.out.println(sDay);
-					listBlockingDate.add(sDay);
-				}//end - for
+					checkInDate = format2.format(dCID);
+					checkOutDate = format2.format(dCOD);
+					
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
 				
-				checkInDate = format2.format(dCID);
-				checkOutDate = format2.format(dCOD);
-				
-			} catch (ParseException e) {
-				e.printStackTrace();
+			}else {
+				System.out.println("DB booking insert 실패");
+				flag = false;
 			}
 			
-		}else {
-			System.out.println("DB booking insert 실패");
-			flag = false;
-		}
-		
-		
-		
-		String[] arrBlockingDate = listBlockingDate.toArray(new String[listBlockingDate.size()]);
-		
+			
+			
+			String[] arrBlockingDate = listBlockingDate.toArray(new String[listBlockingDate.size()]);
+			
 
-		if(guestMapper.insertBlocking(booking.getHostId(), arrBlockingDate) == arrBlockingDate.length) {
-			System.out.println("DB blocking insert 성공");
-		}else {
-			System.out.println("DB blocking insert 실패");
-			flag = false;
+			if(guestMapper.insertBlocking(booking.getHostId(), arrBlockingDate) == arrBlockingDate.length) {
+				System.out.println("DB blocking insert 성공");
+			}else {
+				System.out.println("DB blocking insert 실패");
+				flag = false;
+			}
+			
+
+		
+			
+			//========	문자전송	=========
+			if(flag) {
+				
+				String content = 
+								" [P5]예약안내 \r\n"
+							+	"'가나다라마바사아..'" + "\r\n"
+							+	checkInDate + " ~ " + checkOutDate + "\r\n"
+							+	booking.getPayment() + "원\r\n"
+							+	booking.getGuestCount() + "명"
+							;
+				
+				//sendMobileCode(mobilePhone, content);	//문자 낭비를 막기위해 주석중.
+				
+				System.out.println("문자 수신자 : " + mobilePhone + ", 문자내용 확인 : " + content);
+			}
+			
+			//===========================
+
+									
+		}else if(result == 1){	// 누군가 먼저 예약 : 1
+			
+			System.out.println("늦었어ㅠ 누가 예약 했다구!");
+			
+		}else {	// 중복요청 : 2
+			
+			System.out.println("중복요청이넹");
+			
 		}
 		
 		HostInfoDTO host = guestMapper.selectHost(booking.getHostId()+"");
-
-	
-		
-		//========	문자전송	=========
-		if(flag) {
-			
-			String content = 
-							" [P5]예약안내 \r\n"
-						+	"'가나다라마바사아..'" + "\r\n"
-						+	checkInDate + " ~ " + checkOutDate + "\r\n"
-						+	booking.getPayment() + "원\r\n"
-						+	booking.getGuestCount() + "명"
-						;
-			
-			//sendMobileCode(mobilePhone, content);	//문자 낭비를 막기위해 주석중.
-			
-			System.out.println("문자 수신자 : " + mobilePhone + ", 문자내용 확인 : " + content);
-		}
-		
-		//===========================
-		
-		
 		
 		model.addAttribute("booking", booking);
 		model.addAttribute("host", host);
 		
+		model.addAttribute("reservationFlag", reservationFlag);
+		
 		return "reservationFinish";
+		
 	}
 
 	@Override
