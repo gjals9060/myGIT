@@ -30,7 +30,7 @@ table {
 }
 
 #list {
-	height: 1000px;
+	height: 574px;
 	overflow: auto;
 	width: 60%;
 }
@@ -168,6 +168,7 @@ button {
 	z-index: -15;
 	border: 2px solid;
 	visibility: visible;
+	margin-top: 30px;
 }
 
 .close-btn {
@@ -248,7 +249,7 @@ hr {
 /* 지도관련 css */
 #map {
     width: 100%;
-    height: 1000px;
+    height: 100%;
     position: relative;
 }
 
@@ -566,14 +567,18 @@ hr {
 			<button class='toggleFG'></button>
 		</div>
 
-		<button id="button1" class="buttonMap">
-			<strong><font size="2"> 지도를 움직이며 검색 &nbsp; </font></strong>
-		</button>
+		<div class="test1">
+			<button id="button1" class="buttonMap">
+				<strong><font size="2"> 지도를 움직이며 검색 &nbsp; </font></strong>
+			</button>
+		</div>
 
-		<button id="button2" class="buttonMap"
-			style="vertical-align: middle; text-align: center; float: right; position: fixed; top: 116px; right: 300px; z-index: 4;">
-			<strong><font size="2"> 이 지역 검색 &nbsp; </font></strong>
-		</button>
+		<div class="test2">
+			<button id="button2" class="buttonMap"
+				style="vertical-align: middle; text-align: center; float: right; position: fixed; top: 116px; right: 300px; z-index: 4;">
+				<strong><font size="2"> 이 지역 검색 &nbsp; </font></strong>
+			</button>
+		</div>
 
 		<div id="loading" class="buttonMap"
 			style="vertical-align: middle; text-align: center; float: right; position: fixed; top: 116px; right: 300px; z-index: 6;">
