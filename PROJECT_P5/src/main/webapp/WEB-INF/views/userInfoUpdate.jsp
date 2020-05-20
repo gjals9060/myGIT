@@ -366,7 +366,7 @@
 				<!-- <div class="user-info-update-password-error"></div> -->
 
 				<div class="user-info-update-password-block">
-					<span class="user-info-update-password-title">비밀번호확인</span>
+					<span class="user-info-update-password-title">비밀번호 확인</span>
 					<span class="user-info-update-password-value">
 						<input class="user-info-update-password-input" type="password" id="newPasswordCheck" />
 					</span>
@@ -688,91 +688,114 @@
 
 
 
-	/// 비밀번호 변경하기 
-	// 비밀번호 유효성 
-	var newPassword = $('#newPassword');
-	var newPasswordCheck = $('#newPasswordCheck');
 	
-	newPassword.on('keyup',function(){
+	
+	
+		// 비밀번호 유효성 
+		/// 비밀번호 변경하기 
+	function updateUserPassword(){
+		$('.user-info-update-password-error').empty();
 		
-		
+		var userPassword = $('#userInputPassword');
+		var newPassword = $('#newPassword');
+		var newPasswordCheck = $('#newPasswordCheck');
 		var passwordCheck = new RegExp(/^[A-Za-z0-9~!@#$%^&*()_+|<>?:{}]{8,16}$/);
 		
+		if(!userPassword.val()){
+			$('#passwordError_1').text('비밀번호를 입력하세요.');
+			$('#passwordError_1').css("color", "red");
+			$('#passwordError_1').css("font-size", "14px");
+			userPassword.focus();
+			return;
+		}
+		var isPass;
+		$.ajax({
+			type : "POST",
+			url : "/p5/ajax/checkPresentPassword",
+			data : "userPassword=" + userPassword.val(),
+			async : false,
+			success : function(result){
+				isPass = result;
+			},	
+			error : function(){
+				alert("비밀번호 확인 통신 실패..");
+			}
+		});
+		
+		if(isPass){
+			$('#passwordError_1').text('');
+		} else{
+			$('#passwordError_1').text("비밀번호가 일치하지 않습니다.");
+			$('#passwordError_1').css("color", "red");
+			$('#passwordError_1').css("font-size", "14px");
+			userPassword.focus();
+			return;
+		}
+		
+		if(!newPassword.val()){
+			$('#passwordError_2').text('새 비밀번호를 입력해주세요.');
+			$('#passwordError_2').css("color", "red");
+			$('#passwordError_2').css("font-size", "14px");
+			newPassword.focus();
+			return;
+		}
+		
 		if(passwordCheck.test(newPassword.val())){
-			$('#passwordError_2').text('통과');
-			$('#userPasswordPass').val('y');
+			$('#passwordError_2').text('');
 		}else{
-			$('#passwordError_2').text('대소문자,숫자,특수문자 8~16자리');
-			$('#userPasswordPass').val('n');
-		}
-	});
-	
-	newPasswordCheck.on('keyup',function(){
-		if(newPassword.val() === newPasswordCheck.val()){
-			$('#passwordError_3').text('통과');
-			$('#userPasswordCheckPass').val('y');
-		}else{
-			$('#passwordError_3').text('일치하지 않습니다.');
-			$('#userPasswordCheckPass').val('n');
-		}
-	});
-	
-	
-	
-	
-	function updateUserPassword(){
-		
-		alert($("#userInputPassword").val());
-		var params = {
-				userPassword : $('#userInputPassword').val(),
-				newPassword : $('#newPassword').val()
+			$('#passwordError_2').text('8 ~ 16자리의 영문, 숫자, 특수문자를 사용해주세요.\n사용 가능 특수문자 : ~!@#$%^&*()_+|<>?:{}');
+			$('#passwordError_2').html($('#passwordError_2').html().replace(/\n/g, '<br/>'));
+			$('#passwordError_2').css("color", "red");
+			$('#passwordError_2').css("font-size", "14px");
+			newPassword.focus();
+			return;
 		}
 		
-		if($('#userPasswordPass').val()==='y' && $('#userPasswordCheckPass').val()==='y'){
-			$.ajax({
-				type : "POST",
-				url : "ajax/updateUserPassword",
-				data : params,
-				async : false,
-				success : function(result){
-					if(result == 0){
-						
-						alert("기존의 비밀번호가 일치하지 않습니다.");
-						$('#passwordError_1').text("기존의 비밀번호가 일치하지 않습니다.");
-						$('#passwordError_1').css('color','red');
-						
-					} else if(result == 1){
-						
-						alert("비밀번호 변경 완료.");
-					//	location.replace("userInfoUpdate");
-						
-					} else{
-						
-						alert("비밀번호 변경 실패.");
-						
-					}
-				},	
-				error : function(){
-					alert("통신 실패..");
+		if(!newPasswordCheck.val()){
+			$('#passwordError_3').text('새 비밀번호를 한 번 더 입력해주세요.');
+			$('#passwordError_3').css("color", "red");
+			$('#passwordError_3').css("font-size", "14px");
+			newPasswordCheck.focus();
+			return;
+		}
+		if(newPassword.val() !== newPasswordCheck.val()){
+			$('#passwordError_3').text('새 비밀번호와 일치하지 않습니다.');
+			$('#passwordError_3').css("color", "red");
+			$('#passwordError_3').css("font-size", "14px");
+			newPasswordCheck.focus();
+			return;
+		}
+		
+		$.ajax({
+			type : "POST",
+			url : "/p5/ajax/updateUserPassword",
+			data : "newPassword=" + newPassword.val(),
+			async : false,
+			success : function(result){
+				if(result){
+					alert("비밀번호를 변경했습니다.");
+					$("#userInfoUpdatePasswordModify").css("display","none");
+				} else{
+					alert("비밀번호 변경에 실패했습니다.");
 				}
-			});
-		
-		}else{
-			alert("다시확인하세요");
-		}
+			},	
+			error : function(){
+				alert("비밀번호 변경 통신 실패..");
+			}
+		});
 	}
 	
 		
 	/////////////// 비밀번호 변경 모달 /////////////
 		$('#modalBtn').on("click", function() {
+			$('.user-info-update-password-error').empty();
+			$('.user-info-update-password-input').val('');
 			$("#userInfoUpdatePasswordModify").css("display","block");
 		});
 	
 	////////////// 닫기 버튼 ///////////////
 		$(".close").on("click",function(){
 			$("#userInfoUpdatePasswordModify").css("display","none");
-			$('.user-info-update-password-error').empty();
-			$('.user-info-update-password-input').val('');
 		});
 
    ///// 전화번호 인증을 한 사용자라면 인증완료를 보여주고 아니라면 인증하기 버튼을 보여준다.

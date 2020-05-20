@@ -4,6 +4,8 @@
 	max-width: 1100px;
 	display: inline;
 }
+
+
 .fifty {
 
 		top: 63px;
@@ -107,39 +109,41 @@ textarea:focus{
 color:red;
 }
 /*이전 다음버튼  */
-.description-btn-group {
-	display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    font-size: 20px;
-    width: 70%;
-    margin-top: 30px;
-}
-
-/* 이전 버튼 */
-#prevBtn {
-	padding: 10px;
-}
-
-#prevBtn:visited {
-	color: #008489;
-}
-
-
-/* 다음버튼 */
-#nextBtn {
-    display: inline;
-    width: 75px;
-    background: #008489;
-    border-radius: 10px;
+.next-link{
+	    position: relative;
+    top: 285px;
+    width: 80px;
+    height: 45px;
+    background-color: #008489;
+    float: right;
     color: white;
-    text-align: center;
-    text-decoration: none;
-    padding: 10px 5px;
-    font-size: 20px;
-    cursor: pointer;
+    border-radius: 10px;
+    border: 1px solid;
 }
 
+.next{
+	position: relative;
+    top: 10px;
+    right: -20px;
+}
+.previous-link{
+
+    position: relative;
+    top: 110px;
+    background-size: 20px;
+    /* left: -450px; */
+    right: 70%;
+    border: none;
+    font-size: 20px;
+    color: #008489;
+
+}
+span.previous{
+	position: relative;
+    color: #008489;
+    margin-left: 30px;
+
+}
 /*미디어 쿼리  */
 @media (max-width: 768px){
 #wrap{

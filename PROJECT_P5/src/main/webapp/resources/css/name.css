@@ -112,39 +112,30 @@ font-weight:bold;
 color:red;
 }
 /* 이전다음 */
-.name-btn-group {
-	display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    font-size: 20px;
-    width: 70%;
-    margin-top: 30px;
+.previous-link {
+    position: relative;
+    top: 355px;
+    background: url(../img/previousArrow.png) no-repeat;
+    background-size: 20px;
+    left: -50px;
 }
-
-/* 이전 버튼 */
-#prevBtn {
-	padding: 10px;
-}
-
-#prevBtn:visited {
+span.previous {
+	position: relative;
 	color: #008489;
+	margin-left: 30px;
 }
-
-
-/* 다음버튼 */
-#nextBtn {
-    display: inline;
-    width: 75px;
-    background: #008489;
-    border-radius: 10px;
+.registration {
+    position: relative;
+    top: 345px;
+    width: 80px;
+    height: 45px;
+    background-color: #008489;
+    float: right;
     color: white;
-    text-align: center;
-    text-decoration: none;
-    padding: 10px 5px;
-    font-size: 20px;
-    cursor: pointer;
+    border-radius: 10px;
+    border: 1px solid;
+ 
 }
-
 /*테블릿  */
 @media ( max-width : 768px) {
 #wrap {

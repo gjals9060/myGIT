@@ -131,7 +131,6 @@ select {
     padding-top: 10px;
 }
 
-
 /* 다음버튼 */
 #nextBtn {
 	display: inline;
@@ -144,6 +143,7 @@ select {
     padding: 5px;
     font-size: 20px;
 }
+
 
 
 /* span.previous {

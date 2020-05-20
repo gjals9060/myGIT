@@ -22,53 +22,58 @@
 </head>
 <body>
 	<input type="hidden" id="hostId" value="${hostId }" />
-	<%@include file="./hostHeaderStep1.jsp"%>
-
+	<%@include file="./hostHeaderStep1.jsp" %>
+	
 	<script>
 		$('#progressBar').val('60');
 		$('#tabAddress').css('background','#bbb');
 	</script>
-	<div id="wrap">
-		<div id="container">
-			<h1 class="location">숙소의 위치를 입력해주세요</h1>
-			<div class="pin">
-				<h1>핀이 놓인 위치가 정확한가요?</h1>
-				필요한 경우 핀이 정확한 위치에 자리하도록 조정할 수 있어요. 도착 시 숙소를 찾을 수 있도록 예약이 확정된 게스트만 핀을
-				볼 수 있습니다.
-			</div>
-			<div class="vertInput">
-				도로명/지번 : <input type="text" id="sample5_address"
-					onclick="sample5_execDaumPostcode()" placeholder="주소 검색하기" readonly>
-			</div>
-			<input type="hidden" name="address" readonly="readonly"
-				id="checkAddress" /> <input type="hidden" name="latitude"
-				readonly="readonly" id="lat" /> <input type="hidden"
-				name="longitude" readonly="readonly" id="lon" />
-			<br>
-			<div id="map" style="width: 300px; height: 300px; margin-top: 10px;">
+<div id="wrap">
+	<div id="container">
+<h1 class="location">숙소의 위치를 입력해주세요</h1> <div class="pin"><h1>핀이 놓인 위치가 정확한가요?</h1>필요한 경우 핀이 정확한 위치에 자리하도록 조정할 수 있어요. 도착 시 숙소를 찾을 수 있도록 예약이 확정된 게스트만 핀을 볼 수 있습니다.</div>
+	<div class="vertInput">도로명/지번 : 
+	<input type="text" id="sample5_address"
+		onclick="sample5_execDaumPostcode()" placeholder="주소 검색하기" readonly></div>
+	<!-- <input type="button" onclick="sample5_execDaumPostcode()" value="주소 검색"> -->
+	<!--  <form action="facilities" method="post" name="formAddress"> -->
+	<input type="hidden" name="address" readonly="readonly" id="checkAddress" />
+	<input type="hidden" name="latitude" readonly="readonly" id="lat" />
+	<input type="hidden" name="longitude" readonly="readonly" id="lon"/>
+	<!-- </form> -->
+	<br>
+	<!-- <div id="map" style="width: 300px; height: 300px; margin-top: 10px; display: none"> -->
+	<div id="map" style="width: 300px; height: 300px; margin-top: 10px;">
 
-
-			</div>
-			<div class="mapSetButtons">
-				<button id="map-set-btn">조정하기</button>
-				<button id="map-save-btn">저장하기</button>
-			</div>
-
-			<div id="result"></div>
-
-			<div id="addressInfo"></div>
-			<div class="address-btn-group">
-				<a class="registration click-to-save" id="prevBtn" href="./roomCount">이전</a> 
-				<a class="registration click-to-save" id="nextBtn" onclick="check()">다음</a> 
-			</div>
-			
-			<div class="address-btn-group">
-				<a class="modification click-to-save" id="prevBtn" href="./roomCount?hostId=${hostId }">이전</a> 
-				<a class="modification click-to-save" id="nextBtn" href="./facilities?hostId=${hostId }">다음</a>
-			</div>
-		</div>
-		<div id="left"></div>
+<!-- 		
+		<button id="focusbtn"
+			style="background-color: #FFFFFF; width: 33px; height: 35px; margin-right: 2px; position: absolute; top: 105px; right: 0; z-index: 5; border: none; border-radius: 10px;"
+			onclick="panTo()">
+			<img alt="focus" src="../../img/focus.png"
+				style="width: 100%; height: 100%;">
+		</button>
+		
+-->	
 	</div>
+	<div class="mapSetButtons">
+	<button id="map-set-btn">조정하기</button>
+	<button id="map-save-btn">저장하기</button>
+	</div>
+	
+	<div id="result"></div>
+	
+	<div id="addressInfo"></div>
+		
+	<!--임시 이동  -->
+	<a class="registration click-to-save" href="./roomCount"><span class="previous">이전</span></a>
+	<a class="registration click-to-save" onclick="check()"><span class="next">다음</span></a>
+	<a class="modification click-to-save" href="./roomCount?hostId=${hostId }">이전</a>
+	<a class="modification click-to-save" href="./facilities?hostId=${hostId }">다음</a>
+	<!-- <button id="next" onclick="inputAddress();">다음</button> -->
+	 </div>
+  <div id="left">
+  
+  </div>
+  </div>
 </body>
 
 

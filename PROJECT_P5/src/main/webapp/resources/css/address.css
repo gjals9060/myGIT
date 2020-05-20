@@ -101,6 +101,18 @@ button {
 	background: #ffbc58 !important;
 }
 
+input[type="submit"] {
+	margin-top: 50px;
+	position: relative;
+	left: 310px;
+	background-color: #008489;
+	border-color: #008489;
+	color: white;
+	height: 50px;
+	width: 100px;
+	border-radius: 20%;
+}
+
 #address2 {
 	margin-top: 10px;
 	border: 1px solid #A9A9A9;
@@ -144,42 +156,38 @@ progress::-webkit-progress-value {
 progress::-webkit-progress-bar {
 	background: white;
 }
-
 /*이전 다음  */
-.address-btn-group{
-	display: flex;
-    margin-top: 10px;
-    padding: 10px 0px;
-    width: 362px;
-    justify-content: space-between;
-    flex-wrap: wrap;	
-    font-size: 20px;
+a[onclick="check()"] {
+	position: relative;
+	top: 320px;
+	width: 80px;
+	height: 45px;
+	background-color: #008489;
+	float: right;
+	color: white;
+	border-radius: 10px;
+	border: 1px solid;
 }
 
-/* 이전 버튼 */
-#prevBtn {
-	padding: 10px;
+.next {
+	position: relative;
+	top: 10px;
+	right: -20px;
 }
 
-#prevBtn:visited {
+a[href="./roomCount"] {
+	position: relative;
+	top: 335px;
+	background-size: 20px;
+	font-size: 20px;
 	color: #008489;
 }
 
-
-/* 다음버튼 */
-#nextBtn {
-    display: inline;
-    width: 75px;
-    background: #008489;
-    border-radius: 10px;
-    color: white;
-    text-align: center;
-    text-decoration: none;
-    padding: 10px 5px;
-    font-size: 20px;
-    cursor: pointer;
+span.previous {
+	position: relative;
+	color: #008489;
+	margin-left: 30px;
 }
-
 
 @media ( max-width : 768px) {
 	#wrap {

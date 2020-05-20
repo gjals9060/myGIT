@@ -153,40 +153,11 @@ input[type="checkbox"]:checked+label:before {
 	}
 }
 /* 이전 다음 버튼 모음 div */
-/*이전 다음  */
-.facilities-btn-group{
-	display: flex;
-    margin-top: 10px;
-    padding: 10px 0px;
-    justify-content: space-between;
-    flex-wrap: wrap;	
-    font-size: 20px;
-}
-
-/* 이전 버튼 */
-#prevBtn {
-	padding: 10px;
-}
-
-#prevBtn:visited {
-	color: #008489;
-}
-
-
-/* 다음버튼 */
-#nextBtn {
-    display: inline;
-    width: 75px;
-    background: #008489;
-    border-radius: 10px;
-    color: white;
-    text-align: center;
-    text-decoration: none;
-    padding: 10px 5px;
-    font-size: 20px;
-    cursor: pointer;
-}
-
+.facilities-btn-group {
+	display: felx;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}	
 
 /* button[onclick="completeStep1()"] {
 	position: relative;
