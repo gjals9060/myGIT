@@ -139,7 +139,7 @@
 		<!-- <input type="submit" value="다음" /> -->
 	<!-- </form> -->
 	<!--페이지 넘어가기(임시방안)  -->
-<a class="registration click-to-save" href="./roomType"><span class="previous">이전</span></a>
+<a class="registration click-to-save" href="./roomType">이전s</a>
 <a class="registration click-to-save" href="./address"><span class="next">다음</span></a>
 	<a class="modification click-to-save" href="./roomType?hostId=${hostId }">이전</a>
 	<a class="modification click-to-save" href="./address?hostId=${hostId }">다음</a>

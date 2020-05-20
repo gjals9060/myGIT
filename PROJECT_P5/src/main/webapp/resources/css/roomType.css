@@ -104,7 +104,7 @@ top: 300px;
     position: relative;
 } 
 /*이전 다음버튼  */
-.registration{
+#check{
 	position: relative;
     top: 295px;
     width: 80px;
@@ -121,16 +121,20 @@ top: 300px;
     top: 10px;
     right: -15px;
 }
-#reset-info{
-	position: relative;
-    top: 280px;
-  /*   background: url(../img/previousArrow.png) no-repeat; */
+#reset-info {
+    position: relative;
+    top: 310px;
+    /* background: url(../img/previousArrow.png) no-repeat; */
     background-size: 20px;
-    left: -400px;
+   
     border: none;
-      color: #008489;
+    /* float: left; */
+    color: #008489;
     background-color: white;
     font-size: 20px;
+    
+    font-stretch: 100%;
+    float: left;
 }
 span.previous{
 	position: relative;
@@ -189,6 +193,9 @@ span.previous{
 	height: 48px;
 	font-weight: bold;
 }
+#checkRoom{
+margin-left: -100px;
+}
 /*미디어 쿼리  */
 @media (max-width: 768px){
 	#wrap{
@@ -203,17 +210,21 @@ position: relative;
     top: 350px;
  
     background-size: 20px;
-  
-    left: 0%;
+  float:left;
+    left: 20%;
     font-size: 20px;
     border: none;
     width: 80px;
     height: 45px;
     color: #008489;
     background-color: white;
+    font-stretch: 0%;
 }
 #left{
 	display: none;
+}
+#checkRoom{
+margin-left: 0px;
 }
 .registration{
     position: relative;

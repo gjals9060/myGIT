@@ -52,7 +52,7 @@ value를 0부터 2까지 설정 0이면 전체 1이면 개인실 2이면 다인�
 			<!--페이지 넘어가기(임시방안)  -->
 			<!--페이지 넘어가기(임시방안)  -->
 			<button id="reset-info" class="registration">
-				<span class="previous">이전</span>
+			❮이전
 			</button>
 			<!-- The Modal -->
 			<div id="myModal" class="modal">
@@ -68,7 +68,7 @@ value를 0부터 2까지 설정 0이면 전체 1이면 개인실 2이면 다인�
 
 			</div>
 			<!--  <a class="registration" href="../hostingList">이전</a> -->
-			<a class="registration" onclick="check()"><span class="next">다음</span></a>
+			<a class="registration" onclick="check()" id="check"><span class="next">다음</span></a>
 			<a class="modification click-to-save" href="../hostingStatus?hostId=${hostId }">이전</a>
 			<a class="modification click-to-save" href="./roomCount?hostId=${hostId }">다음</a>
 		</div>

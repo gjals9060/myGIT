@@ -73,6 +73,8 @@
 		</div>
 	</div>
 	<script src="/p5/js/host.js?v=<%=System.currentTimeMillis()%>"></script>
+	
+	
 </body>
 <script>
 
@@ -351,7 +353,17 @@ $('input[name="maximumStay"]').keyup(function (e) {
 	});
 
 
+	function funcThisSize() {
+	    $("#innerWidth").html( window.innerWidth );
+	    $("#innerHeight").html( window.innerHeight );
+	    $("#outerWidth").html( window.outerWidth );
+	    $("#outerHeight").html( window.outerHeight );
+	}
 
+	$(function(){
+	    $(window).resize( funcThisSize );
+	    funcThisSize();
+	});
 
 </script>
 </html>
