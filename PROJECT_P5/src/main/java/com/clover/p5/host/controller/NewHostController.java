@@ -39,9 +39,9 @@ public class NewHostController {
 	@RequestMapping("/host/registration/getNewHost")
 	@ResponseBody
 	public NewHostDTO refreshNewHost(@ModelAttribute("newHost") NewHostDTO newHost) {
-		System.out.println("=============== 화면을 갱신합니다 ===============");
-		System.out.println(newHost);
-		System.out.println("===================================================\n");
+//		System.out.println("=============== 화면을 갱신합니다 ===============");
+//		System.out.println(newHost);
+//		System.out.println("===================================================\n");
 		return newHost;
 	}
 		// 화면 전환(페이지 이동)시 입력한 정보를 저장 - AJAX

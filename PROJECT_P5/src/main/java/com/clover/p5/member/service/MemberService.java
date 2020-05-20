@@ -17,6 +17,7 @@ import com.clover.p5.member.dto.ProfilePhoto;
 public interface MemberService {
 	
 	
+	boolean isEmailAvailable(String email);
 	
 	// 이메일 인증번호 발송
 	String sendEmailCode(String email);
