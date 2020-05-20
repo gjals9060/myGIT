@@ -32,12 +32,14 @@
 				<h1>게스트에게 숙소에 대해 설명해주세요.</h1>
 				<h4>숙소에 대해 간략히 설명해주세요. 숙소와 주변 지역에 대한 정보에서 시작해 게스트와 어떻게 소통하고 싶은지 등의 내용을 적어주세요.</h4>
 
-				<textarea id="countDescription" name="description" rows="10" cols="50" onkeyup="countWords()"></textarea>
-				<span id="descriptionWord">500</span>
+				<textarea id="countDescription"  class="description"name="description" rows="10" cols="50" onkeyup="countWords()"></textarea>
+				<span id="descriptionWord"></span>
 				<div class="warning"></div>
 				<h1>정보를 추가하시겠어요? (선택사항)</h1>
 				<h3>자세한 내용을 공유하려면 아래 추가 필드를 사용하세요.</h3>
 				<textarea id="countEtc" name="descriptionEtc" rows="10" cols="50"></textarea>
+				<span id="etcWord"></span>
+				<div class="etc-warning"></div>
 	<a href="./photo?hostId=${hostId }" class="previous-link click-to-save"><span class="previous">이전</span></a>
 	<a onclick="check()" class="next-link click-to-save"><span class="next">다음</span></a>
 
@@ -51,6 +53,17 @@
 	
 </body>
 <script>
+$( document ).ready(function() {
+	var content1 = $("#countDescription").val();
+	var content2 = $("#countEtc").val();
+	
+	var someVarName = localStorage.getItem("someVarKey");
+	var someVarName2 = localStorage.getItem("someVarKey2");
+	$("#descriptionWord").html(someVarName );
+	alert(someVarName2);
+	$(".description").val(localStorage.getItem("someVarKey2"));
+	$("#etcWord").html(1300 - content2.length);
+});
 	function check() {
 		var content = $("#countDescription").val();
 
@@ -59,7 +72,7 @@
 			$('#countDescription').focus();
 			return;
 		}
-		if (content.length > 500) {
+		if (content.length > 1300) {
 			$('#countDescription').focus();
 			return;
 		} else {
@@ -70,8 +83,8 @@
 	/*글자수 구하기  */
 	function countWords() {
 		var content = $("#countDescription").val();
-		if (content.length > 500) {
-			$('.warning').html("제목을 500자 이하로 줄여주세요.");
+		if (content.length > 1300) {
+			$('.warning').html("설명을 1300자 이하로 줄여주세요.");
 			$('.warning').show();
 
 			$('#countDescription').css("outline-color", "red");
@@ -80,9 +93,30 @@
 			$('.warning').hide();
 			$('#countDescription').css("outline-color", "#008489");
 		}
+		var someVarName = 1300 - content.length;
+		var someVarName2 =  $("#countDescription").val();
+		localStorage.setItem("someVarKey", someVarName);
+		localStorage.setItem("someVarKey2",  $("#countDescription").val());
+		$("#descriptionWord").html(1300 - content.length);
 
-		$("#descriptionWord").html(500 - content.length);
+	}
+	/*글자수 구하기  */
+	function countEtc() {
+		var content1 = $("#countEtc").val();
+		if (content1.length > 1300) {
+			$('.etc-warning').html("설명을 1300자 이하로 줄여주세요.");
+			$('.etc-warning').show();
+
+			$('#countEtc').css("outline-color", "red");
+
+		} else {
+			$('.etc-warning').hide();
+			$('#countEtc').css("outline-color", "#008489");
+		}
+
+		$("#etcWord").html(1300 - content.length);
 
 	}
 </script>
+
 </html>
