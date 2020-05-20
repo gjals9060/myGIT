@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
@@ -14,7 +15,8 @@
 <title>메인</title>
 <link rel="stylesheet" href="css/reset.css" />
 <script src="js/jquery-3.4.1.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript"
+	src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script> -->
 <script type="text/javascript" src="js/daterangepicker.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,6 +27,12 @@
 table {
 	width: 729px;
 	height: 222px;
+}
+
+#list {
+	height: 1000px;
+	overflow: auto;
+	width: 60%;
 }
 
 .info-modal {
@@ -134,11 +142,12 @@ table {
 .description {
 	margin: -20px;
 }
-</style>
 
-<style>
 #wrap {
-	overflow: auto;
+	width: 100%;
+	/* display: flex;
+	flex-wrap: wrap;
+	justify-content: center; */
 }
 
 button {
@@ -177,8 +186,8 @@ button {
 .list-img {
 	width: 100px;
 	height: 200px;
-	   object-fit: contain;   
-	   background: black;
+	object-fit: contain;
+	background: black;
 }
 
 table {
@@ -192,20 +201,57 @@ th, td {
 hr {
 	width: 792px;
 }
-.type{
-color: #717171;
+
+.type {
+	color: #717171;
 }
 
-.title{
-font-size: 30px;
+.title {
+	font-size: 30px;
 }
-.capacity{
-color: #717171;
+
+.capacity {
+	color: #717171;
 }
-.star-img{
-height: 12px;
-width: 12px;
+
+.star-img {
+	height: 12px;
+	width: 12px;
 }
+
+.buttonMap {
+	background: white;
+	width: 230px;
+	height: 40px;
+	border-radius: 10px;
+}
+
+.toggleBG {
+	background: #53FF4C;
+	width: 70px;
+	height: 30px;
+	border: 1px solid #53FF4C;
+	border-radius: 15px;
+}
+
+.toggleFG {
+	background: #FFFFFF;
+	width: 30px;
+	height: 30px;
+	border: none;
+	border-radius: 15px;
+	position: relative;
+	left: 0px;
+}
+
+/* 지도관련 css */
+#map {
+    width: 100%;
+    height: 1000px;
+    position: relative;
+}
+
+
 @media all and (max-width:768px) {
 	.map-btn {
 		display: block;
@@ -302,7 +348,181 @@ width: 12px;
 	}
 }
 </style>
-<style type="text/css">
+
+<!-- style>
+#wrap {
+	width: 100%;
+	/* display: flex;
+	flex-wrap: wrap;
+	justify-content: center; */
+}
+
+button {
+	display: inline;
+}
+
+.map-btn {
+	display: none;
+}
+
+#mapWrapper {
+	float: right;
+	width: 570px;
+	height: 570px;
+	top: 110px;
+	right: 0;
+	z-index: -15;
+	border: 2px solid;
+	visibility: visible;
+}
+
+.close-btn {
+	display: none;
+}
+
+#button1 {
+	vertical-align: middle;
+	text-align: right;
+	float: right;
+	/* top: 116px; */
+	left: 300px;
+	z-index: 4;
+	position: relative;
+}
+/* 리스트 */
+.list-img {
+	width: 100px;
+	height: 200px;
+	object-fit: contain;
+	background: black;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+th, td {
+	padding: 0;
+}
+
+hr {
+	width: 792px;
+}
+
+.type {
+	color: #717171;
+}
+
+.title {
+	font-size: 30px;
+}
+
+.capacity {
+	color: #717171;
+}
+
+.star-img {
+	height: 12px;
+	width: 12px;
+}
+
+@media all and (max-width:768px) {
+	.map-btn {
+		display: block;
+	}
+	#mapWrapper {
+		visibility: hidden;
+		width: 100%;
+		height: 100%;
+		float: right;
+		width: 100%;
+		height: 100%;
+		position: fixed;
+		top: 110px;
+		right: 0px;
+		z-index: 3;
+		border: 2px solid;
+	}
+	.buttonMap {
+		visibility: hidden;
+		vertical-align: middle;
+		text-align: right;
+		float: right;
+		position: fixed;
+		top: 116px;
+		right: 25%;
+		z-index: 4;
+	}
+	.toggleBG {
+		visibility: hidden;
+		background: #53FF4C;
+		width: 70px;
+		height: 30px;
+		border: 1px solid #53FF4C;
+		border-radius: 15px;
+	}
+	.close-btn {
+		width: 10%;
+		height: 5%;
+		float: right;
+		position: fixed;
+		top: 10.5%;
+		z-index: 5;
+		display: inline-block;
+		right: 0;
+		visibility: hidden;
+	}
+}
+
+@media all and (max-width:480px) {
+	.map-btn {
+		display: block;
+	}
+	#mapWrapper {
+		visibility: hidden;
+		width: 100%;
+		height: 100%;
+		float: right;
+		width: 100%;
+		height: 100%;
+		position: fixed;
+		top: 110px;
+		right: 0px;
+		z-index: 3;
+		border: 2px solid;
+	}
+	button#button1.buttonMap {
+		visibility: hidden;
+		vertical-align: middle;
+		text-align: right;
+		float: right;
+		position: fixed;
+		top: 116px;
+		right: 25%;
+		z-index: 4;
+	}
+	.toggleBG {
+		visibility: hidden;
+		background: #53FF4C;
+		width: 70px;
+		height: 30px;
+		border: 1px solid #53FF4C;
+		border-radius: 15px;
+		right: 55%;
+	}
+	.close-btn {
+		visibility: hidden;
+		width: 10%;
+		height: 5%;
+		float: left;
+		position: fixed;
+		top: 10.5%;
+		z-index: 5;
+		display: inline-block;
+	}
+}
+</style> -->
+<!-- <style type="text/css">
 .buttonMap {
 	background: white;
 	width: 230px;
@@ -327,87 +547,17 @@ width: 12px;
 	position: relative;
 	left: 0px;
 }
-</style>
+</style> -->
 
 </head>
 <body>
 	<jsp:include page="./header.jsp"></jsp:include>
 
-	<%-- 	
-		<form action="reservationList" method="post">
-		<!--지역 입력  -->
-		지역 <input type="text" name="address" id="address" style="width:200px;" value="${address}" />
-		<!--달력에 필요할 jquery plugin  -->
-
-		<!--  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" /> -->
-		날짜 <input type="text" name="checkInDatecheckOutDate" id="checkInDatecheckOutDate" value="${checkInDatecheckOutDate}" />
-
-		<script type="text/javascript">
-		var date = new Date();
-		var date2 = new Date();
-		date2.setMonth(date.getMonth() + 3);	
-		$(function() {
-				
-				$('input[name="checkInDatecheckOutDate"]').daterangepicker(
-						{
-							"autoApply" : true,
-							"startDate" : "${startDate}",
-							"endDate" : "${endDate}",
-							"minDate" : date,
-							"maxDate" : date2
-						},
-						function(start, end, label) {
-							console.log('New date range selected: '
-									+ start.format('YYYY-MM-DD') + ' to '
-									+ end.format('YYYY-MM-DD')
-									+ ' (predefined range: ' + label + ')');
-						});
-			});
-		</script>
-		<!--인원  -->
-
-		인원 <input type='text' name='guestCount' id="guestCount" class="guestCount_input" value="${guestCount}">
-
-		<button id="increaseQuantity">▲</button>
-		<button id="decreaseQuantity">▼</button>
-		<!--인원 카운트 다운 0미만은 줄일수 없게함  -->
-
-		<script>
-			$(function() {
-				$('#decreaseQuantity').click(function(e) {
-					e.preventDefault();
-					var stat = $('.guestCount_input').val();
-					var num = parseInt(stat, 10);
-					num--;
-					if (num < 0) {
-						alert('더이상 줄일수 없습니다.');
-						num = 0;
-					}
-					$('.guestCount_input').val(num);
-				});
-				$('#increaseQuantity').click(function(e) {
-					e.preventDefault();
-					var stat = $('.guestCount_input').val();
-					var num = parseInt(stat, 10);
-					num++;
-
-					$('.guestCount_input').val(num);
-				});
-			});
-		</script>
-
-		<input type="submit" id="searchKeyword" name="searchKeyword" value="검색" />
-
-	</form>
---%>
 	<div id="wrap">
-	<!--<div id="map" style="width:100%;height:350px;"></div>-->
+		<div class="list-map-block"></div>
 		<div id="mapWrapper">
-			<!--     	
-				<input type="button" id="plusLevel" value="확대">
-	    		<input type="button" id="minusLevel" value="축소">
-	    		-->
-			<div id="map" style="width: 100%; height: 100%; position: fixed"></div>
+
+			<div id="map" style=""></div>
 		</div>
 		<button class="close-btn">&times;</button>
 
@@ -419,48 +569,17 @@ width: 12px;
 			<strong><font size="2"> 지도를 움직이며 검색 &nbsp; </font></strong>
 		</button>
 
-		<button id="button2" class="buttonMap" style="vertical-align: middle; text-align: center; float: right; position: fixed; top: 116px; right: 300px; z-index: 4;">
+		<button id="button2" class="buttonMap"
+			style="vertical-align: middle; text-align: center; float: right; position: fixed; top: 116px; right: 300px; z-index: 4;">
 			<strong><font size="2"> 이 지역 검색 &nbsp; </font></strong>
 		</button>
 
-		<div id="loading" class="buttonMap" style="vertical-align: middle; text-align: center; float: right; position: fixed; top: 116px; right: 300px; z-index: 6;">
-			<img alt="loading" src="img/loading.gif" style="width: 35px; height: 35px;">
+		<div id="loading" class="buttonMap"
+			style="vertical-align: middle; text-align: center; float: right; position: fixed; top: 116px; right: 300px; z-index: 6;">
+			<img alt="loading" src="img/loading.gif"
+				style="width: 35px; height: 35px;">
 		</div>
 
-
-
-<!-- 	<span class="tip-info"> --> 
-		<!-- <h1>장기숙박</h1> -->
-		<!-- <span class="tip">여행 날짜와 게스트 인원수를 입력하면 1박당 총 요금을 확인할 수 있습니다.</span>
-		<hr />
-		<span class="tip2">내 집 같은 편안한 공간한 달 이상 숙박하고 숙박비를 절약해보세요.
-			<button id="info">자세히 알아보기</button>
-		</span>
-
-		<div id="infoContent" class="info-modal">
-
-
-			<div class="info-content">
-				<span class="info-close">&times;</span>
-				<h1>장기 숙박</h1>
-				<span class="description">4주 이상의 편안한 숙박</span> <img src="/p5/img/reservation-info1.png" alt="" class="info-img-first" />
-				<p class="info-first">내 집 같은 편안함</p>
-				<p class="info-first-tip">주방, 와이파이 등 한 달 이상의 장기 숙박에 필요한 각종 편의시설이 완비되어 있습니다.</p>
-				<br> <img src="/p5/img/reservation-info2.png" alt="" class="second" />
-				<p class="info-second">유연하게 머물 수 있는 숙소</p>
-				<p class="info-second-tip">임대 기간에 대한 계약 의무 없이 필요한 기간만 숙박하실 수 있습니다. 한 달 이상 숙박하면 숙박비를 절약할 수 있습니다.</p>
-				<br> <img src="/p5/img/p5info.jpg" alt="" class="third" />
-				<p class="info-third">P5의 장점</p>
-				<br />
-				<p class="info-last">연중무휴 지원이 제공되는 에어비앤비에서 실제로 숙박한 게스트가 남긴 후기를 읽고 숙소를 안심하고 예약하세요</p>
-				<button id="complete">완료</button>
-			</div>
-
-		</div>
-</span> 
-
-
-		
 
 		<!-- 	<h1>지도 좌표 정보</h1> -->
 		<div id="info"></div>
@@ -514,7 +633,8 @@ width: 12px;
 			}
 		</script>
 
-		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6252091adcb28726fdb95ebdf0b78361&libraries=services"></script>
+		<script type="text/javascript"
+			src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6252091adcb28726fdb95ebdf0b78361&libraries=services"></script>
 		<script>
 			var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 			mapOption = {
@@ -736,8 +856,7 @@ width: 12px;
 
 														var ss = '';
 
-														ss += 
-																 '<article onclick="gogo('
+														ss += '<article onclick="gogo('
 																+ item.id
 																+ ')" id="place'
 																+ index
@@ -747,30 +866,28 @@ width: 12px;
 																+ '<tr>'
 																+ '<td rowspan="4" align = "center">'
 																+ '<img class="list-img" alt="' + item.originalName + '" src="' + item.path  + '"  style="width: 300px; height: 200px;"  >'
-														
+
 																+ '</td>'
 																+ '</tr>'
 																+ '<tr>'
 																+ '<td class="type">'
-															
+
 																+ item.htName
 																+ '/ '
 																+ item.rtName
 																+ "</td>"
-																+"<td>"
-																
-																+'<td><div class="reviewStarRating">'
-																+'<img src="/p5/img/listStar.png" alt="" class="star-img"/>'
-															
-															
-																+'</div>'
-																+'</td>'
+																+ "<td>"
+
+																+ '<td><div class="reviewStarRating">'
+																+ '<img src="/p5/img/listStar.png" alt="" class="star-img"/>'
+
+																+ '</div>'
+																+ '</td>'
 																+ '</tr>'
 																+ '<tr>'
 																+ '<td class="title">'
-																
+
 																+ item.name
-																
 
 																+ '</td>'
 																/* + '<td>'
@@ -781,21 +898,22 @@ width: 12px;
 																+ '<tr>'
 																+ '<td class="capacity">'
 																+ '&nbsp;인원: '
-																+ item.capacity+'명'
+																+ item.capacity
+																+ '명'
 																+ '&nbsp;'
-																+'&middot;'
+																+ '&middot;'
 																+ '방'
 																+ item.roomCount
-																+"개"
-																+'&middot;'
+																+ "개"
+																+ '&middot;'
 																+ ' 침대 '
 																+ item.bedCount
-																+"개"
-																+'&middot;'
+																+ "개"
+																+ '&middot;'
 																+ '욕실'
 																+ item.bathroomCount
-																+"개"
-																
+																+ "개"
+
 																+ '</td>'
 																+ '</tr>'
 																+ '<tr>'
@@ -932,8 +1050,7 @@ width: 12px;
 																					.css(
 																							"color",
 																							"red");
-																			
-																			
+
 																			marker
 																					.setMap(null);
 																			marker0
@@ -946,7 +1063,7 @@ width: 12px;
 																					.css(
 																							"color",
 																							"black");
-																		
+
 																			marker0
 																					.setMap(null);
 																			marker
@@ -995,7 +1112,7 @@ width: 12px;
 				$('.tip-info').css("visibility", "hidden");
 				$('#list').css("visibility", "hidden");
 				$('#info').css("visibility", "hidden");
-				
+
 			});
 			$('.close-btn').click(function(e) {
 				$('#mapWrapper').css("visibility", "hidden");
@@ -1006,7 +1123,7 @@ width: 12px;
 				$('#list').css("visibility", "visible");
 				$('#info').css("visibility", "visible");
 				$(window).resize(function() {
-					if ($(window).width() > 1024) { 
+					if ($(window).width() > 1024) {
 						$('#mapWrapper').css("visibility", "visible");
 						$('.buttonMap').css("visibility", "visible");
 						$('.toggleBG').css("visibility", "visible");
@@ -1015,13 +1132,12 @@ width: 12px;
 						$('#list').css("visibility", "visible");
 						$('#info').css("visibility", "visible");
 					}
-					
-					
+
 				});
 
 			});
 			$(window).resize(function() {
-				if ($(window).width() > 1024) { 
+				if ($(window).width() > 1024) {
 					$('#mapWrapper').css("visibility", "visible");
 					$('.buttonMap').css("visibility", "visible");
 					$('.toggleBG').css("visibility", "visible");
@@ -1029,11 +1145,10 @@ width: 12px;
 					$('.tip-info').css("visibility", "visible");
 					$('#list').css("visibility", "visible");
 					$('#info').css("visibility", "visible");
-				
+
 				}
-				
-				
-				if ($(window).width() <= 768) { 
+
+				if ($(window).width() <= 768) {
 					$('#mapWrapper').css("visibility", "hidden");
 					$('.buttonMap').css("visibility", "hidden");
 					$('.toggleBG').css("visibility", "hidden");
@@ -1042,7 +1157,7 @@ width: 12px;
 					$('#list').css("visibility", "visible");
 					$('#info').css("visibility", "visible");
 				}
-				
+
 			});
 			/* 			/*정보  */
 
@@ -1124,7 +1239,7 @@ width: 12px;
 		</script>
 
 
+	<jsp:include page="./footer.jsp"/>
 	</div>
-	<jsp:include page="./footer.jsp"></jsp:include>
 </body>
 </html>
