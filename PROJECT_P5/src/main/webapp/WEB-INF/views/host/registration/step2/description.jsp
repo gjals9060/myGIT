@@ -37,7 +37,7 @@
 				<div class="warning"></div>
 				<h1>정보를 추가하시겠어요? (선택사항)</h1>
 				<h3>자세한 내용을 공유하려면 아래 추가 필드를 사용하세요.</h3>
-				<textarea id="countEtc" name="descriptionEtc" rows="10" cols="50"></textarea>
+				<textarea id="countEtc" name="descriptionEtc" rows="10" cols="50" onkeyup="countEtc()"></textarea>
 				<span id="etcWord"></span>
 				<div class="etc-warning"></div>
 	<a href="./photo?hostId=${hostId }" class="previous-link click-to-save"><span class="previous">이전</span></a>
@@ -60,8 +60,8 @@ $( document ).ready(function() {
 	var someVarName = localStorage.getItem("someVarKey");
 	var someVarName2 = localStorage.getItem("someVarKey2");
 	$("#descriptionWord").html(someVarName );
-	alert(someVarName2);
-	$(".description").val(localStorage.getItem("someVarKey2"));
+
+	$(".description").text(localStorage.getItem("someVarKey2"));
 	$("#etcWord").html(1300 - content2.length);
 });
 	function check() {
@@ -114,7 +114,7 @@ $( document ).ready(function() {
 			$('#countEtc').css("outline-color", "#008489");
 		}
 
-		$("#etcWord").html(1300 - content.length);
+		$("#etcWord").html(1300 - content1.length);
 
 	}
 </script>
