@@ -14,7 +14,7 @@ params = {
 		async : false,
 		success : function(result) {
 			if(result){
-				alert("설정했어요~");
+		//		alert("설정했어요~");
 				refresh();
 			} else{
 				alert("차단일 설정 실패");
@@ -40,7 +40,7 @@ params = {
 		async : false,
 		success : function(result) {
 			if(result){
-				alert("해제했어요!!");
+		//		alert("해제했어요!!");
 				refresh();
 			} else{
 				alert("차단일 해제 실패");
@@ -75,7 +75,7 @@ function refresh(){
 						arrGuestBlocking.push(blocking.checkInDate);
 					}
 				}); // each-END
-				alert("호스트 차단: " + arrHostBlocking.length + "건, 게스트 차단: " + arrGuestBlocking.length + "건")
+		//		alert("호스트 차단: " + arrHostBlocking.length + "건, 게스트 차단: " + arrGuestBlocking.length + "건")
 				
 				
 				// 동작을 수행하는 페이지 - 초기화 되기 전 기록
@@ -106,7 +106,7 @@ function refresh(){
 				var nextCount = activePage*1 - defaultPage*1;
 				
 				if(!!nextCount){
-					alert(nextCount + "페이지 이동~");
+		//			alert(nextCount + "페이지 이동~");
 					for(i = 0; i < nextCount; i++){ // 이동할 수만큼 페이지 이동
 						$('a[data-handler=next]').trigger('click');
 					}
@@ -129,7 +129,7 @@ function manageMonth(){
 	
 	// 화면의 차단일 수
 	var count = $('td[data-month=' + month + '][class*="ui-state-highlight"]').length;
-	alert("화면의 차단일 수 : " + count);
+//	alert("화면의 차단일 수 : " + count);
   	if(!count){ // 차단된 게 없으면
   		blockMonth(); // 전체 차단
 	} else{ // 차단된 게 있으면
@@ -169,7 +169,7 @@ function blockMonth(){
 		async : false,
 		success : function(result) {
 			if (result) {
-				alert("전체 차단 성공!");
+//				alert("전체 차단 성공!");
 				refresh();
 			} else{
 				alert("전체 차단 실패....");				
@@ -201,7 +201,7 @@ function unblockMonth(){
 		async : false,
 		success : function(result) {
 			if (result) {
-				alert("전체 해제 성공!");
+//				alert("전체 해제 성공!");
 				refresh();
 			} else{
 				alert("전체 해제 실패....");				

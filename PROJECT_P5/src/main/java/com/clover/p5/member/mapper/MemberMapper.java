@@ -12,6 +12,10 @@ import com.clover.p5.member.dto.ProfilePhotoVO;
 
 public interface MemberMapper {
 	
+	// 이메일 중복 확인
+	int selectEmailCount(String email);
+	
+	
 	// 회원정보 저장
 	int insertMember(NewMemberDTO newHost);
 	// 회원정보 검색(이메일로)

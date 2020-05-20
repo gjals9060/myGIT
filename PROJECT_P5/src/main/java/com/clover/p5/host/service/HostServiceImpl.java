@@ -246,9 +246,9 @@ public class HostServiceImpl implements HostService {
 	@Override
 	public Host getHost(int hostId) {
 		Host host = hostMapper.selectHost(hostId);
-		System.out.println("=============== " + hostId + "번 호스트 ==============");
-		System.out.println(host);
-		System.out.println("===================================");
+//		System.out.println("=============== " + hostId + "번 호스트 ==============");
+//		System.out.println(host);
+//		System.out.println("===================================");
 		return host;
 	}
 

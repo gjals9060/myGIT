@@ -36,7 +36,7 @@
 					</div>
 					<div id="reservaion-value_${index}" class="reservaion-list-value">
 						<!-- 숙소 정보  -->
-						<div class="reservation-list-title">${hostList[index].name}</div>
+						<div class="reservation-list-title">${hostList[index].name} [예약번호 : ${booking.Id}]</div>
 						<br>
 						<div id="inDate_${index}" class="reservation-list-date">체크 인 : ${booking.getCheckInDate()}</div>
 						<div id="outDate_${index}" class="reservation-list-date">체크 아웃 : ${booking.getCheckOutDate()}</div>
@@ -49,7 +49,7 @@
 					<div class="reservation-list-refund">
 						
 						<button id="reply_${index}" class="reservation-list-refund-btn reply" onclick="">후기등록</button>
-						<button id="refund_${index}" class="reservation-list-refund-btn" onclick="return refund('${booking.id}','${booking.hostId}','${booking.checkInDate}','${booking.checkOutDate}','${booking.payment}');">예약취소</button>						
+						<button id="refund_${index}" class="reservation-list-refund-btn" onclick="return refund('${user.mobilePhone}','${booking.id}','${booking.hostId}','${booking.checkInDate}','${booking.checkOutDate}','${booking.payment}');">예약취소</button>						
 					</div>
 					<div class="reservation-list-refund" id="state_${index}"></div>
 					
@@ -165,7 +165,8 @@
 								
 								alert("후기 등록으로 이동");
 								
-								var userId = "${user.id}";	
+								var userId = "${user.id}";
+								
 								var bookingId = "${booking.id}";
 								var hostName = "${hostList[index].name}";
 								var checkInDate = "${booking.getCheckInDate()}";
@@ -271,9 +272,9 @@
 	
 }//end countState(); */
 
-function refund(sBookingId, hostId, checkInDate, checkOutDate, payment) {
+function refund(mobilePhone, sBookingId, hostId, checkInDate, checkOutDate, payment) {
 	
-	console.log("bookingId : " + sBookingId + ", hostId : " + hostId + ", checkInDate : " + checkInDate + ", checkOutDate : " + checkOutDate + ", payment : " + payment);
+	console.log("mobilePhone : " + mobilePhone + "bookingId : " + sBookingId + ", hostId : " + hostId + ", checkInDate : " + checkInDate + ", checkOutDate : " + checkOutDate + ", payment : " + payment);
 	var con_test = confirm("예약을 취소하고 환불하시겠습니까?");
 	
 	if(con_test == true){
@@ -285,7 +286,7 @@ function refund(sBookingId, hostId, checkInDate, checkOutDate, payment) {
 		$.ajax({
 			type : "POST",
 			url : "ajax/refund",
-			data : {"bookingId" : bookingId, "hostId" : hostId, "checkInDate" : checkInDate, "checkOutDate" : checkOutDate, "payment" : payment},
+			data : {"mobilePhone" : mobilePhone, "bookingId" : bookingId, "hostId" : hostId, "checkInDate" : checkInDate, "checkOutDate" : checkOutDate, "payment" : payment},
 			//data : JSON.stringify( bookingEntity ),
 			/* dataType : 'json',
 			contentType: "application/json", */
