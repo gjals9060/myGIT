@@ -36,7 +36,7 @@
 					</div>
 					<div id="reservaion-value_${index}" class="reservaion-list-value">
 						<!-- 숙소 정보  -->
-						<div class="reservation-list-title">${hostList[index].name} [예약번호 : ${booking.Id}]</div>
+						<div class="reservation-list-title">${hostList[index].name} [예약번호 : ${booking.id}]</div>
 						<br>
 						<div id="inDate_${index}" class="reservation-list-date">체크 인 : ${booking.getCheckInDate()}</div>
 						<div id="outDate_${index}" class="reservation-list-date">체크 아웃 : ${booking.getCheckOutDate()}</div>
