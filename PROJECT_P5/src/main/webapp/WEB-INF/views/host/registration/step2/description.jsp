@@ -28,29 +28,31 @@
 	</script>
 	<div id="wrap">
 		<div id="container">
-		
-				<h1>게스트에게 숙소에 대해 설명해주세요.</h1>
-				<h4>숙소에 대해 간략히 설명해주세요. 숙소와 주변 지역에 대한 정보에서 시작해 게스트와 어떻게 소통하고 싶은지 등의 내용을 적어주세요.</h4>
 
-				<textarea id="countDescription"  class="description"name="description" rows="10" cols="50" onkeyup="countWords()"></textarea>
-				<span id="descriptionWord"></span>
-				<div class="warning"></div>
-				<h1>정보를 추가하시겠어요? (선택사항)</h1>
-				<h3>자세한 내용을 공유하려면 아래 추가 필드를 사용하세요.</h3>
-				<textarea id="countEtc" name="descriptionEtc" rows="10" cols="50" onkeyup="countEtc()"></textarea>
-				<span id="etcWord"></span>
-				<div class="etc-warning"></div>
-	<div class="description-btn-group">
+			<h1>게스트에게 숙소에 대해 설명해주세요.</h1>
+			<h4>숙소에 대해 간략히 설명해주세요. 숙소와 주변 지역에 대한 정보에서 시작해 게스트와 어떻게 소통하고 싶은지
+				등의 내용을 적어주세요.</h4>
+
+			<textarea id="countDescription" class="description"
+				name="description" rows="10" cols="50" onkeyup="countWords()"></textarea>
+			<span id="descriptionWord"></span>
+			<div class="warning"></div>
+			<h1>정보를 추가하시겠어요? (선택사항)</h1>
+			<h3>자세한 내용을 공유하려면 아래 추가 필드를 사용하세요.</h3>
+			<textarea id="countEtc" name="descriptionEtc" rows="10" cols="50"onkeyup="countEtc()"></textarea>
+			<span id="etcWord"></span>
+			<div class="etc-warning"></div>
+			
+			<div class="description-btn-group">
 				<a href="./photo?hostId=${hostId }"class="previous-link click-to-save" id="prevBtn">이전</a>
 				<a onclick="check()" class="next-link click-to-save" id="nextBtn">다음</a>
 			</div>
-
-</div>
+		</div>
 		<div id="left"></div>
 	</div>
 
 
-	
+
 	<script src="/p5/js/host.js?v=<%=System.currentTimeMillis()%>"></script>
 	
 </body>
@@ -62,12 +64,13 @@ $( document ).ready(function() {
 	var someVarName = localStorage.getItem("someVarKey");
 	var someVarName2 = localStorage.getItem("someVarKey2");
 	$("#descriptionWord").html(someVarName );
-
-	$(".description").text(localStorage.getItem("someVarKey2"));
+	
+	$(".description").val(localStorage.getItem("someVarKey2"));
 	$("#etcWord").html(1300 - content2.length);
 });
 	function check() {
 		var content = $("#countDescription").val();
+		var content1= $("#countEtc").val();
 
 		if (content.length == 0) {
 			alert("설명을 입력해주세요");
@@ -77,7 +80,11 @@ $( document ).ready(function() {
 		if (content.length > 1300) {
 			$('#countDescription').focus();
 			return;
-		} else {
+		}else if(content1.length>1300){
+			$('#countEtc').focus();
+			return;
+		} 
+		else {
 			location.href="./name?hostId=${hostId }";
 		}
 
@@ -90,6 +97,7 @@ $( document ).ready(function() {
 			$('.warning').show();
 
 			$('#countDescription').css("outline-color", "red");
+	         $('#countDescription').val($('#countDescription').val().substr(0,1300));
 
 		} else {
 			$('.warning').hide();
@@ -110,6 +118,13 @@ $( document ).ready(function() {
 			$('.etc-warning').show();
 
 			$('#countEtc').css("outline-color", "red");
+			 
+	       
+	            $('#countEtc').val($('#countEtc').val().substr(0,1300));
+	       
+
+
+
 
 		} else {
 			$('.etc-warning').hide();

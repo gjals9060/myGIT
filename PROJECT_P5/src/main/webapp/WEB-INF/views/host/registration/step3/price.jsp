@@ -102,7 +102,17 @@
 		});
 
 	});
-	
+	//3자리 단위마다 콤마 생성
+	function addCommas(x) {
+	    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
+	 
+	//모든 콤마 제거
+	function removeCommas(x) {
+	    if(!x || x.length == 0) return "";
+	    else return x.split(",").join("");
+	}
+
 
 	function origin() {
 		$('#price').css("border-color", "#EEEEEE");
@@ -110,6 +120,9 @@
 	}
 		function completeStep3() {
 			var price = $('input[name="price"]').val();
+		
+			   price = removeCommas(price);
+			  
 			if (!price || price == 0) {
 				alert("가격을 입력해주세요.");
 				$('input[name="price"]').val("");
@@ -118,7 +131,7 @@
 			}
 			var params = {
 				hostId : $('#hostId').val(),
-				price : price
+				price :removeCommas(price),
 			}
 			$.ajax({
 				type : "POST",
@@ -136,6 +149,7 @@
 					alert("통신에 실패..");
 				}
 			}); // AJAX-END 
+			alert ($('#input').val());
 		}
 
 		function modifyPrice() {
@@ -170,17 +184,6 @@
 		}
 	</script>
 	<script>
-	//3자리 단위마다 콤마 생성
-	function addCommas(x) {
-	    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-	}
-	 
-	//모든 콤마 제거
-	function removeCommas(x) {
-	    if(!x || x.length == 0) return "";
-	    else return x.split(",").join("");
-	}
-
 
 	$("#input").on("focus", function() {
 		
