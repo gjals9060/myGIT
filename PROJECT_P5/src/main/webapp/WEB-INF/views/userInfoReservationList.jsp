@@ -89,7 +89,7 @@
 						
 							// 날짜 값 세팅
 							$('#reservaion-value_${index}').ready(function(){
-								var checkInDate = formatS1("${booking.checkInDate}");
+								var checkInDate = formatS1(/"${booking.checkInDate}");
 								var checkOutDate = formatS1("${booking.checkOutDate}");
 								var bookingDate = formatS2("${booking.bookingDate}");
 								
@@ -115,7 +115,7 @@
 								today = parse(sToday);
 								console.log("s체크아웃 : " + sCheckOutDate + "취소날짜 : " + sCancellationDate + "sToday : " + sToday);
 								
-								//var checkOutDate = parse("테스트 날짜!");
+								//var checkOutDate = parse("테스트날짜");
 								var checkOutDate = parse(sCheckOutDate);
 								
 								console.log("체크아웃 : " + checkOutDate + "오늘 날짜 : " + today);

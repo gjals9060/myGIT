@@ -34,7 +34,7 @@
 		onclick="sample5_execDaumPostcode()" placeholder="주소 검색하기" readonly><br>
 	<!-- <input type="button" onclick="sample5_execDaumPostcode()" value="주소 검색"> -->
 	<!--  <form action="facilities" method="post" name="formAddress"> -->
-	<input type="text" name="address" readonly="readonly" id="checkAddress" />
+	<input type="hidden" name="address" readonly="readonly" id="checkAddress" />
 	<input type="hidden" name="latitude" readonly="readonly" id="lat" />
 	<input type="hidden" name="longitude" readonly="readonly" id="lon"/>
 	<!-- </form> -->

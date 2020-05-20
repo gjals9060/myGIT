@@ -165,7 +165,7 @@
 					// set attribute(form)
 					newForm.attr("name","newForm");
 					newForm.attr("method","POST");
-					newForm.attr("action","userInfoReservationList");
+					newForm.attr("action","/p5/userInfoReservationList");
 					//newForm.attr("target","_blank");
 					newForm.attr("target","_self");
 					

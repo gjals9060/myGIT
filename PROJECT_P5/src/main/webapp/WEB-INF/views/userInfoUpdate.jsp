@@ -746,7 +746,7 @@
 					} else if(result == 1){
 						
 						alert("비밀번호 변경 완료.");
-						location.replace("userInfoUpdate");
+					//	location.replace("userInfoUpdate");
 						
 					} else{
 						
