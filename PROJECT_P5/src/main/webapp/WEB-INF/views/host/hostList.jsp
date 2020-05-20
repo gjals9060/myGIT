@@ -70,8 +70,8 @@ function refresh(){
 				+'<td>' + host.bathroomCount + '</td>	'
 				+'<td>' + host.address + '</td>	'
 				+'<th class="btn">	'
-				+'<button id="hostListModifyBtn" onclick="location.href=\'./hostingStatus?hostId=' + host.id + '\'">수정</button>	'
-				+'<button onclick="deleteHost(' + host.id + ')">삭제</button>	'
+				+'<button class="hosting-list-btn-group" "id="hostListModifyBtn" onclick="location.href=\'./hostingStatus?hostId=' + host.id + '\'">수정</button>	'
+				+'<button class="hosting-list-btn-group" onclick="deleteHost(' + host.id + ')">삭제</button>	'
 				+'</th>	'
 				+'</tr>	'
 				;

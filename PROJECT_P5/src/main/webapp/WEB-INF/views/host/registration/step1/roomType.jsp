@@ -51,15 +51,13 @@ value를 0부터 2까지 설정 0이면 전체 1이면 개인실 2이면 다인�
 			<!-- </form> -->
 			<!--페이지 넘어가기(임시방안)  -->
 			<!--페이지 넘어가기(임시방안)  -->
-			<button id="reset-info" class="registration">
-			❮이전
-			</button>
+		
 			<!-- The Modal -->
 			<div id="myModal" class="modal">
 	
 				<!-- Modal content -->
 				<div class="modal-content">
-					<span class="close registration">&times;</span>
+					<span class="close">&times;</span>
 					<p class="reset-title">입력하신 내용을 저장하세요</p>
 					<p>몇 가지 세부정보만 추가하시면 숙소 정보를 저장할 수 있습니다. 호스트 되기나 숙소 등록에 관해 궁금한 점이
 						있으시면 P5 도움말 센터를 방문하여 다 자세히 알아보시기 바랍니다.</p>
@@ -68,9 +66,16 @@ value를 0부터 2까지 설정 0이면 전체 1이면 개인실 2이면 다인�
 
 			</div>
 			<!--  <a class="registration" href="../hostingList">이전</a> -->
-			<a class="registration" onclick="check()" id="check"><span class="next">다음</span></a>
-			<a class="modification click-to-save" href="../hostingStatus?hostId=${hostId }">이전</a>
-			<a class="modification click-to-save" href="./roomCount?hostId=${hostId }">다음</a>
+			<div class="room-type-btn-group" >
+				<button id="reset-info" class="registration">
+					<span class="previous">이전</span>
+				</button>
+				<a class="registration" id="nextBtn" onclick="check()">다음</a>
+			</div >
+			<div class="room-type-btn-group">
+				<a class="modification click-to-save" id="reset-info" href="../hostingStatus?hostId=${hostId }">이전</a>
+				<a class="modification click-to-save" id="nextBtn" href="./roomCount?hostId=${hostId }">다음</a>
+			</div>
 		</div>
 	</div>
 
