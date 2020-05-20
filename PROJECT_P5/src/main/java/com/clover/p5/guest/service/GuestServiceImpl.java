@@ -1,5 +1,6 @@
 package com.clover.p5.guest.service;
 
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -487,14 +488,17 @@ public class GuestServiceImpl implements GuestService {
 
 		
 			
-			//========	문자전송	=========
+			//========	예약 문자전송	=========
 			if(flag) {
+				DecimalFormat dFormat = new DecimalFormat("###,###");
+
+				hostName = hostName.substring(0, 8) + "..";
 				
 				String content = 
-								" [P5]예약안내 \r\n"
-							+	"'가나다라마바사아..'" + "\r\n"
+								"[P5]예약안내 \r\n"
+							+	hostName + "\r\n"
 							+	checkInDate + " ~ " + checkOutDate + "\r\n"
-							+	booking.getPayment() + "원\r\n"
+							+	dFormat.format(booking.getPayment()) + "원\r\n"
 							+	booking.getGuestCount() + "명"
 							;
 				
@@ -538,6 +542,8 @@ public class GuestServiceImpl implements GuestService {
 		
 		List<HostInfoDTO> hostList = new ArrayList<>();
 		
+		List<String> reviewCheckList = guestMapper.selectReviewCheck(memberId);
+		
 		for(BookingEntity booking : bookingList) {
 			
 			HostPhotoDTO RepresentativePhoto = guestMapper.selectRepresentativePhoto(booking.getHostId()+"");
@@ -549,15 +555,14 @@ public class GuestServiceImpl implements GuestService {
 		}
 		
 		//System.out.println("날짜 확인 : " + bookingList.get(0).getCheckInDate());
-		System.out.println("잘왔니?");
+		//System.out.println("잘왔니?");
 		
 		mv.addObject("bookingList", bookingList);
 		mv.addObject("RepresentativePhotoList", RepresentativePhotoList);
 		mv.addObject("hostList", hostList);
+		mv.addObject("reviewCheckList", reviewCheckList);
 		
-		
-		//mv.addObject("hostList", hostList);
-		
+				
 		mv.setViewName("userInfoReservationList"); // 뷰의 이름
 		
 		return mv;
@@ -653,7 +658,9 @@ public class GuestServiceImpl implements GuestService {
 		
 		System.out.println(rate);
 		int refund = (int)(Integer.parseInt(sPayment) * rate);
-		System.out.println("환불금액 : " + refund + "원");
+		DecimalFormat dFormat = new DecimalFormat("###,###");
+		
+		System.out.println("환불금액 : " + dFormat.format(refund) + "원");
 		
 		
 		
@@ -685,22 +692,26 @@ public class GuestServiceImpl implements GuestService {
 		if(success1 == 0 || success2== 0) {
 			return false;
 		}else {
-/*			//========	문자전송	=========
-			if(flag) {
-				
-				String content = 
-								" [P5] 예약알림 \r\n"
-							+	"host : " + sBookingId + " 예약이 완료되었습니다. \r\n"
-							+	" 자세한 내용은 홈페이지를 참조해주세요."
-							;
-				
-				sendMobileCode(mobilePhone, content);
-				
-				System.out.println("문자 수신자 : " + mobilePhone + ", 문자내용 확인 : " + content);
-			}
+
+			//========	예약취소 문자전송	=========
+			
+			//hostName = hostName.substring(0, 8) + "..";
+			
+			String content = 
+							"[P5]예약취소안내 \r\n"
+						+	"예약번호:" + hostId + "\r\n"
+						+	checkInDate + "~" + checkOutDate + "\r\n"
+						+	"환불금액:" + dFormat.format(refund) + "원\r\n"
+						;
+			
+			//sendMobileCode(mobilePhone, content);	//문자 낭비를 막기위해 주석중.
+			
+			System.out.println("문자 수신자 : " + mobilePhone + ", 문자내용 확인 : " + content);
+		
 			
 			//===========================
-*/			return true;
+			
+			return true;
 		}
 	}
 

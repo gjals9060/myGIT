@@ -73,5 +73,7 @@ public interface GuestMapper {
 			@Param("checkOutDate")String checkOutDate
 			);
 	
+	List<String> selectReviewCheck(@Param("memberId")String memberId);
+	
 	
 }
