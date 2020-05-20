@@ -117,36 +117,34 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 }
 
 /* 이전 다음 버튼 */
-.stay-date-btn-group {
-	display: flex;
+.btn-group {
+    display: flex;
+    flex-direction: row;
     justify-content: space-between;
     flex-wrap: wrap;
-    width: 60%;
+    width: 90%;
+    margin-top: 80px;
     font-size: 20px;
-    margin-top: 25%;
 }
 
 /* 이전 버튼 */
 #prevBtn {
-	padding: 10px;
+	padding: 5px;
 }
 
 #prevBtn:visited {
 	color: #008489;
 }
 
-
-/* 다음버튼 */
+/* 다음 버튼 */
 #nextBtn {
-    display: inline;
+    text-decoration: none;
     width: 75px;
     background: #008489;
-    border-radius: 10px;
     color: white;
     text-align: center;
-    text-decoration: none;
-    padding: 10px 5px;
-    font-size: 20px;
+    padding: 5px;
+    border-radius: 10px;
     cursor: pointer;
 }
 

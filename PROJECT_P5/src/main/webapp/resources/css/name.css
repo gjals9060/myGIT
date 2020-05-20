@@ -112,19 +112,38 @@ font-weight:bold;
 color:red;
 }
 /* 이전다음 */
-.previous-link {
-    position: relative;
-    top: 355px;
-    background: url(../img/previousArrow.png) no-repeat;
-    background-size: 20px;
-    left: -50px;
+.btn-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 90%;
+    margin-top: 30px;
+    font-size: 20px;
 }
-span.previous {
-	position: relative;
+
+/* 이전 버튼 */
+#prevBtn {
+	padding: 5px;
+}
+
+#prevBtn:visited {
 	color: #008489;
-	margin-left: 30px;
 }
-.registration {
+
+/* 다음 버튼 */
+#nextBtn {
+    text-decoration: none;
+    width: 75px;
+    background: #008489;
+    color: white;
+    text-align: center;
+    padding: 5px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+/* .registration {
     position: relative;
     top: 345px;
     width: 80px;
@@ -135,7 +154,7 @@ span.previous {
     border-radius: 10px;
     border: 1px solid;
  
-}
+} */
 /*테블릿  */
 @media ( max-width : 768px) {
 #wrap {

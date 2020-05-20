@@ -43,7 +43,7 @@
 			<span id="etcWord"></span>
 			<div class="etc-warning"></div>
 			
-			<div class="description-btn-group">
+			<div class="btn-group">
 				<a href="./photo?hostId=${hostId }"class="previous-link click-to-save" id="prevBtn">이전</a>
 				<a onclick="check()" class="next-link click-to-save" id="nextBtn">다음</a>
 			</div>

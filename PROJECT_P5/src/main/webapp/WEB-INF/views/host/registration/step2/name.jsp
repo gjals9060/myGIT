@@ -41,7 +41,7 @@
 			<span id="descriptionWord">50</span>
 			<div class="warning"></div>
 			
-			<div class="name-btn-group">
+			<div class="btn-group">
 				<a href="./description?hostId=${hostId }" class="previous-link click-to-save" id="prevBtn">이전</a>
 				<a class="registration" onclick="completeStep2()" id="nextBtn">다음</a>
 				<a class="modification click-to-save" id="nextBtn" href="../hostingStatus?hostId=${hostId }">다음</a>

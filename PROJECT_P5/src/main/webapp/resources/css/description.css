@@ -109,40 +109,35 @@ textarea:focus{
 color:red;
 }
 /*이전 다음버튼  */
-.next-link{
-	    position: relative;
-    top: 285px;
-    width: 80px;
-    height: 45px;
-    background-color: #008489;
-    float: right;
-    color: white;
-    border-radius: 10px;
-    border: 1px solid;
-}
-
-.next{
-	position: relative;
-    top: 10px;
-    right: -20px;
-}
-.previous-link{
-
-    position: relative;
-    top: 110px;
-    background-size: 20px;
-    /* left: -450px; */
-    right: 70%;
-    border: none;
+.btn-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 90%;
+    margin-top: 30px;
     font-size: 20px;
-    color: #008489;
-
 }
-span.previous{
-	position: relative;
-    color: #008489;
-    margin-left: 30px;
 
+/* 이전 버튼 */
+#prevBtn {
+	padding: 5px;
+}
+
+#prevBtn:visited {
+	color: #008489;
+}
+
+/* 다음 버튼 */
+#nextBtn {
+    text-decoration: none;
+    width: 75px;
+    background: #008489;
+    color: white;
+    text-align: center;
+    padding: 5px;
+    border-radius: 10px;
+    cursor: pointer;
 }
 /*미디어 쿼리  */
 @media (max-width: 768px){
