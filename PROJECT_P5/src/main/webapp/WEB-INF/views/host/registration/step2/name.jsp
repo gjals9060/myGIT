@@ -73,7 +73,7 @@
 				data : params,
 				success : function(result) {
 					if (result) {
-						alert("호스트 등록 2단계 완료~");
+				//		alert("호스트 등록 2단계 완료~");
 						location.href = "../hostingStatus?hostId="
 								+ $('#hostId').val();
 					} else {

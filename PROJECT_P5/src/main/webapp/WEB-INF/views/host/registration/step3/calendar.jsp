@@ -18,7 +18,7 @@
 	display: none;
 }
 
-.step-tab{
+.step-tab {
 	height: auto !important;
 }
 </Style>
@@ -27,145 +27,138 @@
 	<input type="hidden" id="hostId" value="${hostId }" />
 	<%@include file="./hostHeaderStep3.jsp"%>
 	<div id="photoAjaxLoading">
-		<img src="/p5/img/photoLoading.gif" alt="사진 없음" />
-		<span>저장중...</span>
+		<img src="/p5/img/photoLoading.gif" alt="사진 없음" /> <span>저장중...</span>
 	</div>
-		
+
 	<script>
-	//	$('.hosting-step').empty(); // 없어도 됨
-	//	$('.hosting-step').text("3단계 : 예약 차단일을 설정하세요");
-		$('nav').css('grid-template-columns' ,'repeat(3, 1fr)');
+		//	$('.hosting-step').empty(); // 없어도 됨
+		//	$('.hosting-step').text("3단계 : 예약 차단일을 설정하세요");
+		$('nav').css('grid-template-columns', 'repeat(3, 1fr)');
 		$('#progressBar').val('50');
-		
-		$('#tabCalender').css('background','#bbb');
-	</script> 
-		<div id="wrap">
+
+		$('#tabCalender').css('background', '#bbb');
+	</script>
+	<div id="wrap">
 		<div class="info-container">
 			<i class="fa fa-lightbulb-o fa-3x" aria-hidden="true"></i><span
-				onclick="toggle()" class="close">X</span><br />게스트는 달력을 보고 예약 가능한 날짜에 예약 요청을 보냅니다. <hr /><br /> <img src="/p5/img/calendar-info.png" alt="" />호스팅을 원하는 날짜를 클릭하여 차단하세요.
+				onclick="toggle()" class="close">X</span><br />게스트는 달력을 보고 예약 가능한
+			날짜에 예약 요청을 보냅니다.
+			<hr />
+			<br /> <img src="/p5/img/calendar-info.png" alt="" />호스팅을 원하는 날짜를
+			클릭하여 차단하세요.
 		</div>
 		<button class="info">
 			<i class="fa fa-lightbulb-o fa-3x" aria-hidden="true"></i>
 		</button>
-		
-		<span class="tip">달력을 업데이트하세요.</span><br /><div class="description">예약을 차단하거나 차단 해제할 날짜를 선택하세요.</div>
-		
-	<button id="manageMonth" onclick="manageMonth();">전체 차단/해제</button>
-	<!-- <form action="price" method="post"> -->
-	<div id="mdp-demo"></div>
-	<input type="text" id="altField" value="" name="blockingDate" />
-<!-- 	<input type="button" value="전체해제" id="mdpAbled" class="disabled" />
-	<input type="button" value="전체차단" id="mdpDisabled" class="disabled" /> -->
 
-	<a href="./stayDate?hostId=${hostId }">이전</a>
-	<a href="./price?hostId=${hostId }">다음</a>
-	<!-- <input type="submit" value="다음" /> -->
-	
-</div>
-<script src="/p5/js/jquery-ui.min.js"></script>
-<script src="/p5/js/Calendar.js?v=<%=System.currentTimeMillis()%>"></script>
+		<span class="tip">달력을 업데이트하세요.</span><br />
+		<div class="description">예약을 차단하거나 차단 해제할 날짜를 선택하세요.</div>
+
+		<button id="manageMonth" onclick="manageMonth();">전체 차단/해제</button>
+		
+		<div id="mdp-demo"></div>
+
+
+		<div class="calendar-btn-group">
+			<a href="./stayDate?hostId=${hostId }" id="prevBtn">이전</a>
+			<a href="./price?hostId=${hostId }" id="nextBtn">다음</a>
+		</div>
+		<!-- <input type="submit" value="다음" /> -->
+
+	</div>
+	<script src="/p5/js/jquery-ui.min.js"></script>
+	<script src="/p5/js/Calendar.js?v=<%=System.currentTimeMillis()%>"></script>
 </body>
 <script>
+	$(document).ready(function() {
+		$(document).ajaxStart(function() {
+			$('#photoAjaxLoading').show();
+		});
+		$(document).ajaxStop(function() {
+			$('#photoAjaxLoading').fadeOut();
+		})
 
-$(document).ready(function(){
-	$(document).ajaxStart(function() {
-		$('#photoAjaxLoading').show();
 	});
-	$(document).ajaxStop(function() {
-		$('#photoAjaxLoading').fadeOut();
-	})
-	
-}); 
 
-$('#mdp-demo').multiDatesPicker({
-	dateFormat : "yy.mm.dd",
-//	altField : '#altField',
-	minDate : 0, // today
-	maxDate : "+2m" // +2 months from today
-});
+	$('#mdp-demo').multiDatesPicker({
+		dateFormat : "yy.mm.dd",
+		//	altField : '#altField',
+		minDate : 0, // today
+		maxDate : "+2m" // +2 months from today
+	});
 
-$(window).bind("pageshow", function(event) {
-	$.ajax({
-		type : "POST",
-		url : "/p5/ajax/isIdentified",
-		data : "hostId=" + hostId,
-		success : function(result) {
-			if (!result) {
-				alert("접근 권한이 없는 페이지입니다.");
-				location.replace("/p5"); // 홈으로 이동
-			} else{
-				refresh(); // 화면 갱신
+	$(window).bind("pageshow", function(event) {
+		$.ajax({
+			type : "POST",
+			url : "/p5/ajax/isIdentified",
+			data : "hostId=" + hostId,
+			success : function(result) {
+				if (!result) {
+					alert("접근 권한이 없는 페이지입니다.");
+					location.replace("/p5"); // 홈으로 이동
+				} else {
+					refresh(); // 화면 갱신
+				}
+			},
+			error : function() {
+				alert("접근 권한 확인에 실패..");
 			}
-		},
-		error : function() {
-			alert("접근 권한 확인에 실패..");
-		}
-	}); // AJAX-END
-});
+		}); // AJAX-END
+	});
 
-
-
-
-	
-	
-	
-	
-	
-		/* month = $('.ui-datepicker-title>span.ui-datepicker-month').text();
-		year = $('.ui-datepicker-title>span.ui-datepicker-year').text();
-		var m;
-		switch (month) {
-		case 'January':
-			m = 1;
-			break;
-		case 'February':
-			m = 2;
-			break;
-		case 'March':
-			m = 3;
-			break;
-		case 'April':
-			m = 4;
-			break;
-		case 'May':
-			m = 5;
-			break;
-		case 'June':
-			m = 6;
-			break;
-		case 'July':
-			m = 7;
-			break;
-		case 'Agust':
-			m = 8;
-			break;
-		case 'September':
-			m = 9;
-			break;
-		case 'Ocotber':
-			m = 10;
-			break;
-		case 'November':
-			m = 11;
-			break;
-		case 'December':
-			m = 12;
-			break;
-		}
-		alert(year + '.' + m);
-		alert($('#altField').val());
-		$('#mdp-demo').multiDatesPicker('resetDates', 'picked');
-		$('td').removeClass('ui-state-highlight');
-		$('a').removeClass('ui-state-active');
-		/* 	$('a').addClass('ui-state-default');  */
+	/* month = $('.ui-datepicker-title>span.ui-datepicker-month').text();
+	year = $('.ui-datepicker-title>span.ui-datepicker-year').text();
+	var m;
+	switch (month) {
+	case 'January':
+		m = 1;
+		break;
+	case 'February':
+		m = 2;
+		break;
+	case 'March':
+		m = 3;
+		break;
+	case 'April':
+		m = 4;
+		break;
+	case 'May':
+		m = 5;
+		break;
+	case 'June':
+		m = 6;
+		break;
+	case 'July':
+		m = 7;
+		break;
+	case 'Agust':
+		m = 8;
+		break;
+	case 'September':
+		m = 9;
+		break;
+	case 'Ocotber':
+		m = 10;
+		break;
+	case 'November':
+		m = 11;
+		break;
+	case 'December':
+		m = 12;
+		break;
+	}
+	alert(year + '.' + m);
+	alert($('#altField').val());
+	$('#mdp-demo').multiDatesPicker('resetDates', 'picked');
+	$('td').removeClass('ui-state-highlight');
+	$('a').removeClass('ui-state-active');
+	/* 	$('a').addClass('ui-state-default');  */
 	//	$('td').addClass('');
 	/* 	$('#mdpDisabled').show();
 		$('#mdpAbled').hide(); */
-//	}); */
+	//	}); */
 	/*전체차단  */
-	
-	
-		 
+
 	/*	year = $('.ui-datepicker-year').text();
 		m = $('.ui-datepicker-month').text();
 		
@@ -222,24 +215,24 @@ $(window).bind("pageshow", function(event) {
 
 		
 		alert(lastDate); */
-		/* for (i = 0; i < 31 - a.getDate(); i++) {
-			if(31 - a.getDate()<0){
-				break;
-			}
-		
-			if(i==0){
-				
-			arr.push(b.setDate(a.getDate()+1));
+	/* for (i = 0; i < 31 - a.getDate(); i++) {
+		if(31 - a.getDate()<0){
+			break;
+		}
+	
+		if(i==0){
+			
+		arr.push(b.setDate(a.getDate()+1));
+		alert(b.setDate(a.getDate()+1));
+		}
+		else{
+			arr.push(b.setDate(b.getDate()+1));
 			alert(b.setDate(a.getDate()+1));
-			}
-			else{
-				arr.push(b.setDate(b.getDate()+1));
-				alert(b.setDate(a.getDate()+1));
-			} 
-			console.log(arr[i]);
-		} */
-		
-		/*7월달  */
+		} 
+		console.log(arr[i]);
+	} */
+
+	/*7월달  */
 	/* 	if (7 == b.getMonth()) {
 			for (i = 0; i < maxDate.getDate(); i++) {
 
@@ -291,59 +284,52 @@ $(window).bind("pageshow", function(event) {
 		}
 
 		/*0인덱스에 31부터 시작하는 것을 1로 시작해 넣지않기로함  */
-		/* if (m == 7) {
-			for (i = 1; i < arr.length; i++) {
+	/* if (m == 7) {
+		for (i = 1; i < arr.length; i++) {
 
-				$('#mdp-demo').multiDatesPicker({
-					addDates : [ new Date(arr[i]) ]
+			$('#mdp-demo').multiDatesPicker({
+				addDates : [ new Date(arr[i]) ]
 
-				});
+			});
 
-				$('td').addClass('ui-state-highlight');
-				$('a').addClass('ui-state-active');
-			}
-
-			alert($('#altField').val());
-			$('#mdpDisabled').hide();
-			$('#mdpAbled').show();
-
-		} else {
-			for (i = 0; i < arr.length; i++) {
-
-				$('#mdp-demo').multiDatesPicker({
-					addDates : [ new Date(arr[i]) ]
-
-				});
-
-				$('td').addClass('ui-state-highlight');
-				$('a').addClass('ui-state-active');
-			}
-
-			alert($('#altField').val());
-
-			$('#mdpDisabled').hide();
-			$('#mdpAbled').show();
+			$('td').addClass('ui-state-highlight');
+			$('a').addClass('ui-state-active');
 		}
-	}); */
-	
-	
 
-	
+		alert($('#altField').val());
+		$('#mdpDisabled').hide();
+		$('#mdpAbled').show();
+
+	} else {
+		for (i = 0; i < arr.length; i++) {
+
+			$('#mdp-demo').multiDatesPicker({
+				addDates : [ new Date(arr[i]) ]
+
+			});
+
+			$('td').addClass('ui-state-highlight');
+			$('a').addClass('ui-state-active');
+		}
+
+		alert($('#altField').val());
+
+		$('#mdpDisabled').hide();
+		$('#mdpAbled').show();
+	}
+	}); */
 
 	$(function() {
 		$('.fa.fa-lightbulb-o.fa-3x').click(function(e) {
-$(".info").hide();
-$(".info-container").show();
+			$(".info").hide();
+			$(".info-container").show();
 
 		});
 	});
-	function toggle(){
+	function toggle() {
 		$(".info").show();
 		$(".info-container").hide();
 	}
-	
-	
-	
 </script>
 
 </html>

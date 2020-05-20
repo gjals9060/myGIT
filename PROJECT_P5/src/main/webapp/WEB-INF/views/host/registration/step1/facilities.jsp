@@ -54,13 +54,15 @@
 
 
 	
-	<!-- <input type="submit" value="다음" /> -->
-	<!-- </form> -->
-	<a class="registration click-to-save" href="./address"><span class="previous">이전</span></a>
-	<button class="registration" onclick="completeStep1()"><span class="next">다음</span></button>
-	<a class="modification click-to-save" href="./address?hostId=${hostId }">이전</a>
-	<a class="modification click-to-save" href="../hostingStatus?hostId=${hostId }">다음</a>
-
+	<div class="facilities-btn-group">
+		<a class="registration click-to-save" href="./address"><span class="previous">이전</span></a>
+		<button class="registration" onclick="completeStep1()"><span class="next">다음</span></button>
+	</div>
+	
+	<div class="facilities-btn-group">
+		<a class="modification click-to-save" href="./address?hostId=${hostId }">이전</a>
+		<a class="modification click-to-save" href="../hostingStatus?hostId=${hostId }">다음</a>
+	</div>
 
 </div>
 <div id="left">

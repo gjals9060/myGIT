@@ -61,25 +61,26 @@
 			<h6>이 요금이 기본 요금이 됩니다.</h6>
 			<br>
 			<div id="price">
-				<span class="won">\</span><input type="text" name="price"
-					onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"
-					onmouseout="origin()" />
+				<span class="won">&#8361;</span><input type="text" name="price"
+					
+					onmouseout="origin()" id="input"/>
 			</div>
 			<div class="suggestion">
-				제안요금:\20,455<i class="fa fa-question-circle-o" aria-hidden="true"
+				제안요금:&#8361;20,455<i class="fa fa-question-circle-o" aria-hidden="true"
 					onmouseleave="hide()"></i>
 				<p class="suggestion-info">제안 가격은 숙소의 퀄리티, 주변 숙소의 요금, 수요에 기반합니다.</p>
 			</div>
 			<!--  <input type="submit" value="다음" /> -->
 			<!-- </form> -->
-			<a href="./calendar?hostId=${hostId }" class="previous-link"><span
-				class="previous">이전</span></a>
-			<button class="registration" onclick="completeStep3()">
-				<span class="next">완료</span>
-			</button>
-			<button class="modification" onclick="modifyPrice()">완료</button>
-			<%-- <a href="finish?hostId=${hostId }">완료</a> --%>
+			<div class="price-btn-group">
+				<a href="./calendar?hostId=${hostId }" id="prevBtn" class="previous-link">이전</a>
+				<button class="registration" id="nextBtn" onclick="completeStep3()">완료</button>
+				<button class="modification" id="nextBtn" onclick="modifyPrice()">완료</button>
+			</div>
+			
 		</div>
+		
+		
 		<div id="left">
 			<div id="info">
 				<i class="fa fa-lightbulb-o fa-3x" aria-hidden="true"></i><br>낮은
@@ -125,7 +126,7 @@
 				data : params,
 				success : function(result) {
 					if (result) {
-						alert("호스트 등록 완료!");
+				//		alert("호스트 등록 완료!");
 						location.href = "finish?hostId=" + $('#hostId').val();
 					} else {
 						alert("완료 실패..");
@@ -168,6 +169,44 @@
 			}); // AJAX-END
 		}
 	</script>
+	<script>
+	//3자리 단위마다 콤마 생성
+	function addCommas(x) {
+	    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
+	 
+	//모든 콤마 제거
+	function removeCommas(x) {
+	    if(!x || x.length == 0) return "";
+	    else return x.split(",").join("");
+	}
+
+
+	$("#input").on("focus", function() {
+		
+	    var x = $(this).val();
+	    x = removeCommas(x);
+	    $(this).val(x);
+	}).on("focusout", function() {
+	    var x = $(this).val();
+	    if(x && x.length > 0) {
+	        if(!$.isNumeric(x)) {
+	            x = x.replace(/[^0-9]/g,"");
+	        }
+	        x = addCommas(x);
+	        $(this).val(x);
+	    }
+	}).on("keyup", function() {
+	    $(this).val($(this).val().replace(/[^0-9]/g,""));
+	});
+
+
+
+</script>
+
+
+
+
 </body>
 
 </html>

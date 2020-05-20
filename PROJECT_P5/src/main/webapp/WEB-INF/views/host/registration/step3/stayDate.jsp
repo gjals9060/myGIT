@@ -55,10 +55,11 @@
 					자주 받아야 합니다.
 				</p>
 			</div>
-			<a class="previous-link click-to-save" href="../hostingStatus?hostId=${hostId }"><span
-				class="previous">이전</span></a> <a onclick="check()" class="next-link click-to-save"><span
-				class="next">다음</span></a>
-			<!-- <a href="calendar">다음</a> -->
+			
+			<div class="stay-date-btn-group">
+				<a class="previous-link click-to-save" href="../hostingStatus?hostId=${hostId }" id="prevBtn">이전</a> 
+				<a onclick="check()" class="next-link click-to-save" id="nextBtn">다음</a>
+			</div>
 		</div>
 		<div id="left">
 

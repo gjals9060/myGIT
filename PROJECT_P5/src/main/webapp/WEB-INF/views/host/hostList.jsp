@@ -71,7 +71,6 @@ function refresh(){
 				+'<td>' + host.address + '</td>	'
 				+'<th class="btn">	'
 				+'<button class="hosting-list-btn-group" "id="hostListModifyBtn" onclick="location.href=\'./hostingStatus?hostId=' + host.id + '\'">수정</button>	'
-				+'<button class="hosting-list-btn-group" onclick="deleteHost(' + host.id + ')">삭제</button>	'
 				+'</th>	'
 				+'</tr>	'
 				;
@@ -79,25 +78,6 @@ function refresh(){
 			
 			$('.table-tr').remove();
 			$('.host-list-room-table').append(resultList);
-		},
-		error : function() {
-			alert("통신 실패..");
-		}
-	});
-}
-// 호스트 삭제 메소드
-function deleteHost(hostId){
-	$.ajax({
-		type : "POST",
-		url : "deleteHost",
-		data : "hostId=" + hostId,
-		success : function(result) {
-			if(result){ // 호스트 삭제 성공
-				alert("삭제 성공");
-				refresh(); // 화면 갱신
-			} else{
-				alert("호스트 삭제 실패..");
-			}
 		},
 		error : function() {
 			alert("통신 실패..");

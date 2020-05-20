@@ -48,8 +48,11 @@ public interface MemberService {
 	boolean updateUserName(HttpServletRequest req);
 	// 회원정보 수정 - 생년월일
 	boolean updateUserBirthDate(HttpServletRequest req, Date birthDate);
+	
+	// 현재 비밀번호 확인
+	boolean checkPresentPassword(HttpServletRequest req);
 	// 비밀번호 변경
-	int updateUserPassword(HttpServletRequest req);
+	boolean updateUserPassword(HttpServletRequest req);
 	
 
 	

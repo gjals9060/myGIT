@@ -12,11 +12,13 @@
 <!-- services와 clusterer, drawing 라이브러리 불러오기 -->
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6252091adcb28726fdb95ebdf0b78361&libraries=services"></script>
+	
 <style>
 .registration, .modification{
 	display: none;
 }
 </style>
+
 </head>
 <body>
 	<input type="hidden" id="hostId" value="${hostId }" />
@@ -29,17 +31,15 @@
 <div id="wrap">
 	<div id="container">
 <h1 class="location">숙소의 위치를 입력해주세요</h1> <div class="pin"><h1>핀이 놓인 위치가 정확한가요?</h1>필요한 경우 핀이 정확한 위치에 자리하도록 조정할 수 있어요. 도착 시 숙소를 찾을 수 있도록 예약이 확정된 게스트만 핀을 볼 수 있습니다.</div>
-	도로명/지번 :
+	<div class="vertInput">도로명/지번 : 
 	<input type="text" id="sample5_address"
-		onclick="sample5_execDaumPostcode()" placeholder="주소 검색하기" readonly><br>
+		onclick="sample5_execDaumPostcode()" placeholder="주소 검색하기" readonly></div>
 	<!-- <input type="button" onclick="sample5_execDaumPostcode()" value="주소 검색"> -->
 	<!--  <form action="facilities" method="post" name="formAddress"> -->
 	<input type="hidden" name="address" readonly="readonly" id="checkAddress" />
 	<input type="hidden" name="latitude" readonly="readonly" id="lat" />
 	<input type="hidden" name="longitude" readonly="readonly" id="lon"/>
 	<!-- </form> -->
-
-	<div id="addressInfo"></div>
 	<br>
 	<!-- <div id="map" style="width: 300px; height: 300px; margin-top: 10px; display: none"> -->
 	<div id="map" style="width: 300px; height: 300px; margin-top: 10px;">
@@ -54,14 +54,15 @@
 		
 -->	
 	</div>
+	<div class="mapSetButtons">
 	<button id="map-set-btn">조정하기</button>
 	<button id="map-save-btn">저장하기</button>
-	<div id="result"></div>
-
-
+	</div>
 	
-
-
+	<div id="result"></div>
+	
+	<div id="addressInfo"></div>
+		
 	<!--임시 이동  -->
 	<a class="registration click-to-save" href="./roomCount"><span class="previous">이전</span></a>
 	<a class="registration click-to-save" onclick="check()"><span class="next">다음</span></a>

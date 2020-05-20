@@ -175,8 +175,10 @@ button {
 }
 /* 리스트 */
 .list-img {
-	width: 300px;
+	width: 100px;
 	height: 200px;
+	   object-fit: contain;   
+	   background: black;
 }
 
 table {
@@ -190,7 +192,20 @@ th, td {
 hr {
 	width: 792px;
 }
+.type{
+color: #717171;
+}
 
+.title{
+font-size: 30px;
+}
+.capacity{
+color: #717171;
+}
+.star-img{
+height: 12px;
+width: 12px;
+}
 @media all and (max-width:768px) {
 	.map-btn {
 		display: block;
@@ -413,8 +428,8 @@ hr {
 		</div>
 
 
-<!-- 	
-	<span class="tip-info"> -->
+
+<!-- 	<span class="tip-info"> --> 
 		<!-- <h1>장기숙박</h1> -->
 		<!-- <span class="tip">여행 날짜와 게스트 인원수를 입력하면 1박당 총 요금을 확인할 수 있습니다.</span>
 		<hr />
@@ -442,7 +457,7 @@ hr {
 			</div>
 
 		</div>
-</span> -->
+</span> 
 
 
 		
@@ -732,21 +747,30 @@ hr {
 																+ '<tr>'
 																+ '<td rowspan="4" align = "center">'
 																+ '<img class="list-img" alt="' + item.originalName + '" src="' + item.path  + '"  style="width: 300px; height: 200px;"  >'
+														
 																+ '</td>'
 																+ '</tr>'
 																+ '<tr>'
-																+ '<td>'
-																+ 'TYPE : '
+																+ '<td class="type">'
+															
 																+ item.htName
 																+ '/ '
 																+ item.rtName
 																+ "</td>"
+																+"<td>"
+																
+																+'<td><div class="reviewStarRating">'
+																+'<img src="/p5/img/listStar.png" alt="" class="star-img"/>'
+															
+															
+																+'</div>'
+																+'</td>'
 																+ '</tr>'
 																+ '<tr>'
-																+ '<td>'
-																+ '<h3>'
+																+ '<td class="title">'
+																
 																+ item.name
-																+ '</h3>'
+																
 
 																+ '</td>'
 																/* + '<td>'
@@ -756,16 +780,22 @@ hr {
 																+ '</tr>'
 																+ '<tr>'
 																+ '<td class="capacity">'
-																+ '&nbsp;guests : '
-																+ item.capacity
+																+ '&nbsp;인원: '
+																+ item.capacity+'명'
 																+ '&nbsp;'
-																
-																+ ' room '
+																+'&middot;'
+																+ '방'
 																+ item.roomCount
-																+ ' bed '
+																+"개"
+																+'&middot;'
+																+ ' 침대 '
 																+ item.bedCount
-																+ ' bathroom '
+																+"개"
+																+'&middot;'
+																+ '욕실'
 																+ item.bathroomCount
+																+"개"
+																
 																+ '</td>'
 																+ '</tr>'
 																+ '<tr>'
@@ -902,6 +932,8 @@ hr {
 																					.css(
 																							"color",
 																							"red");
+																			
+																			
 																			marker
 																					.setMap(null);
 																			marker0
@@ -914,6 +946,7 @@ hr {
 																					.css(
 																							"color",
 																							"black");
+																		
 																			marker0
 																					.setMap(null);
 																			marker
