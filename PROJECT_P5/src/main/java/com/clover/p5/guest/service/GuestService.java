@@ -14,6 +14,10 @@ import com.clover.p5.guest.dto.SearchInputDTO;
 
 public interface GuestService {
 
+	// 예약완료(flag=true) or 예약취소(flag=false) 문자 전송
+	String sendMobileCode(String mobileNumber, String content);
+
+	
 	// postPage이동(id로 host 검색)
 	String selectHost(HttpServletRequest request, Model model);
 	

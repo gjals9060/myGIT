@@ -190,12 +190,7 @@ span.previous {
 		margin-left: 0px;
 		margin-right: 0px;
 	}
-	#container {
-		display: inline;
-    float: left;
-    width: 400px;
-    padding: 30px 140px 16px;
-	}
+	
 	#left {
 		display: none;
 	}
@@ -225,12 +220,7 @@ input[type="submit"] {
 #left {
 		display: none;
 	}
-	#container {
-    display: inline;
-    float: left;
-    width: 350px;
-    padding: 30px 30px 16px;
-}
+
 	input[type="submit"] {
  left: 300px;
 	}

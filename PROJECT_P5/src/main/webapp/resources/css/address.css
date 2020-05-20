@@ -1,18 +1,19 @@
 @charset "UTF-8";
 
-#wrap {
-	width: 90%;
-	max-width: 1100px;
+#wrap{
+	width:90%;
+	max-width:1100px;
 	display: inline;
-}
 
+}
 #container{
 display: inline;
     float: left;
     width: 60%;
     height: 710px;
   padding-bottom: 102px;
-  margin-left: 40px;
+  margin-left: 5%;
+  margin-top: 3%;
 }
 #left{
 	display:inline;
@@ -27,7 +28,9 @@ header img {
 	height: 30px;
 	vertical-align: middle;
 }
-
+.location{
+	margin-top: 5%;
+}
 h5 {
 	display: inline;
 	margin-left: 30px;
@@ -43,7 +46,7 @@ h2 {
 }
 /*주소 입력창  */
 #sample5_address {
-width: 300px;
+width: 289px;
     margin-left: 0px;
     height: 40px;
     margin-bottom: 10px;
@@ -157,7 +160,7 @@ progress::-webkit-progress-bar {
 /*이전 다음  */
 a[onclick="check()"] {
 	position: relative;
-	top: 310px;
+	top: 320px;
 	width: 80px;
 	height: 45px;
 	background-color: #008489;
@@ -174,11 +177,14 @@ a[onclick="check()"] {
 }
 
 a[href="./roomCount"]{
+
     position: relative;
     top: 335px;
-    background: url(../img/previousArrow.png) no-repeat;
     background-size: 20px;
-    left: -70px;
+    font-size: 20px;
+    color: #008489;
+
+   
     }
 
 span.previous {
@@ -194,19 +200,14 @@ span.previous {
 		margin-left: 0px;
 		margin-right: 0px;
 	}
-	#container {
-		display: inline;
-		float: left;
-		width: 550px;
-		padding: 30px 50px 16px;
-	}
+	
 	#left {
 		display: none;
 	}
 a[href="./roomCount"] {
 	position: relative;
-    top: 320px;
-    background: url(../img/previousArrow.png) no-repeat;
+    top: 350px;
+   
     background-size: 20px;
     left: -0px;
 }
@@ -235,6 +236,23 @@ a[href="./roomCount"] {
 
 } */
 }
+/* @media (max-width: 613px){
+		#wrap{
+	max-width:613px;
+	margin-left: 0px;
+	margin-right: 0px;
+
+}
+a[href="./roomType"] {
+    position: relative;
+    top: 170px;
+    background-size: 20px;
+    left: -280px;
+    left: -50%;
+    color: #008489;
+    font-size: 20px;
+}
+} */
 /*모바일  */
 @media ( max-width : 480px) {
 	#wrap {
@@ -243,7 +261,7 @@ a[href="./roomCount"] {
 		margin-right: 0px;
 	}
 	#sample5_address {
-		width: 250px;
+		width: 50%;
 		height: 50px;
 		margin-left: 0px;
 	}
@@ -252,11 +270,8 @@ a[href="./roomCount"] {
 		position: relative;
 		left: 180px;
 	}
-	#container {
-		display: inline;
-		float: left;
-		width: 330px;
-	padding: 30px 30px 16px;
+	#checkAddress{
+	width: 70%;
 	}
 	h1 {
 		font-size: 24px;
@@ -267,9 +282,10 @@ a[href="./roomCount"] {
 a[href="./roomCount"] {
 	position: relative;
     top: 50px;
-    background: url(../img/previousArrow.png) no-repeat;
+   color:#008489;
     background-size: 20px;
-    left: -30px
+    font-size: 20px;
+   
 }
 a[onclick="check()"] {
     position: relative;
@@ -281,7 +297,8 @@ a[onclick="check()"] {
     color: white;
     border-radius: 10px;
     border: 1px solid;
-    left: 50px;
+    right: 5%;
+  
 }
 }
 

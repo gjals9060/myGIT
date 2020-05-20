@@ -5,11 +5,15 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -25,12 +29,52 @@ import com.clover.p5.guest.dto.SearchInputDTO;
 import com.clover.p5.guest.mapper.GuestMapper;
 import com.clover.p5.member.dto.ProfilePhoto;
 
+import net.nurigo.java_sdk.api.Message;
+import net.nurigo.java_sdk.exceptions.CoolsmsException;
+
 @Service
 public class GuestServiceImpl implements GuestService {
 
 	
 	@Autowired
 	private GuestMapper guestMapper;
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+	
+	@Override
+	public String sendMobileCode(String mobileNumber, String content) {
+		
+		// 6자리 숫자 난수 생성(100000 ~ 999999)
+		String code = new Random().nextInt(900000) + 100000 + "";
+		//String content = "P5입니다^^ 예약완료되었습니다. - " + code;
+		String hashedCode = passwordEncoder.encode(code); // 인증번호 해싱
+		
+		String apiKey = "NCS9FLMUM2URIAA9";
+	    String apiSecret = "GOOZEG4YKEZFLWDTBCUPWCRTIGTREH3S";
+	    Message coolsms = new Message(apiKey, apiSecret);
+	
+	    // 4 params(to, from, type, text) are mandatory. must be filled
+	    HashMap<String, String> params = new HashMap<String, String>();
+	    params.put("to", mobileNumber); // 수신번호
+	    params.put("from", "01099641539"); // 발신번호
+	    params.put("type", "SMS"); // Message type ( SMS, LMS, MMS, ATA )
+	    params.put("text", content); // 문자내용    
+	    
+	    try {
+	      JSONObject obj = (JSONObject) coolsms.send(params);
+	      System.out.println(obj.toString());
+	      
+	      // 잔액 확인..
+	      obj = (JSONObject) coolsms.balance();
+	      System.out.println(obj.toString());
+	    } catch (CoolsmsException e) {
+	      System.out.println(e.getMessage());
+	      System.out.println(e.getCode());
+	      return "";
+	    }
+		return hashedCode;
+	}
 		
 	@Override
 	public String selectHost(HttpServletRequest request, Model model) {
@@ -225,7 +269,7 @@ public class GuestServiceImpl implements GuestService {
 
 		System.out.println("\n reservationPurchase 페이지 이동");
 
-		String checkInDatecheckOutDate = request.getParameter("checkInDatecheckOutDate");
+		String reservationDate = request.getParameter("reservationDate");
 		int guestCount = Integer.parseInt(request.getParameter("guestCount"));
 		int hostId = Integer.parseInt(request.getParameter("hostId"));
 		int memberId = Integer.parseInt(request.getParameter("userId"));
@@ -233,7 +277,8 @@ public class GuestServiceImpl implements GuestService {
 		int hostPrice = Integer.parseInt(request.getParameter("hostPrice"));
 		int dateCount = Integer.parseInt(request.getParameter("dateCnt"));
 		
-		String[] date = checkInDatecheckOutDate.split(" - ");
+		
+		String[] date = reservationDate.split(" - ");
 		
 //		Date checkInDate = null;
 //		Date checkOutDate = null;
@@ -258,7 +303,7 @@ public class GuestServiceImpl implements GuestService {
 		
 		int payment = dateCount * hostPrice;
 		
-		System.out.println("날짜 : " + checkInDatecheckOutDate);
+		System.out.println("날짜 : " + reservationDate);
 		System.out.println("인원 : " + guestCount);
 		System.out.println("호스트 id : " + hostId);
 		System.out.println("유저 id : " + memberId);
@@ -270,7 +315,7 @@ public class GuestServiceImpl implements GuestService {
 		
 		//model.addAttribute("personnel", guestCount);
 		//model.addAttribute("memberId", memberId);
-		model.addAttribute("checkInDatecheckOutDate", checkInDatecheckOutDate);
+		model.addAttribute("reservationDate", reservationDate);
 		//model.addAttribute("checkInDate", checkInDate);
 		//model.addAttribute("checkOutDate", checkOutDate);
 		model.addAttribute("hostPrice", hostPrice);
@@ -287,12 +332,15 @@ public class GuestServiceImpl implements GuestService {
 	@Transactional
 	@Override
 	public String reservationFinish(BookingEntity booking, HttpServletRequest request, Model model) {
-
+		
+		boolean flag = true;	// 문자전송 flag
 		System.out.println("\n reservationFinish 페이지 이동");
-				
-//		System.out.println("id : " + booking.getHostId());
-//		System.out.println("checkIn : " + booking.getCheckInDate());
-//		System.out.println("payment : " + booking.getPayment());
+		
+		String mobilePhone = request.getParameter("mobilePhone");
+		String hostName = request.getParameter("hostName");
+		
+		
+		
 //		SimpleDateFormat format0 = new SimpleDateFormat ( "MM/dd/yyyy");
 		SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy.MM.dd HH:mm:ss");
 		SimpleDateFormat format2 = new SimpleDateFormat ( "yyyy.MM.dd");
@@ -310,7 +358,8 @@ public class GuestServiceImpl implements GuestService {
 		booking.setBookingDate(bookingDate);
 		
 		System.out.println("booking : " + booking.toString());
-
+		
+		
 		if(guestMapper.insertBooking(booking) == 1) {
 			
 			System.out.println("DB booking insert 성공");
@@ -331,12 +380,16 @@ public class GuestServiceImpl implements GuestService {
 					listBlockingDate.add(sDay);
 				}//end - for
 				
+				checkInDate = format2.format(dCID);
+				checkOutDate = format2.format(dCOD);
+				
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
-
+			
 		}else {
 			System.out.println("DB booking insert 실패");
+			flag = false;
 		}
 		
 		
@@ -348,9 +401,30 @@ public class GuestServiceImpl implements GuestService {
 			System.out.println("DB blocking insert 성공");
 		}else {
 			System.out.println("DB blocking insert 실패");
+			flag = false;
 		}
 		
 		HostInfoDTO host = guestMapper.selectHost(booking.getHostId()+"");
+
+	
+		
+		//========	문자전송	=========
+		if(flag) {
+			
+			String content = 
+							" [P5] 예약완료 안내 \r\n"
+						+	"host : " + hostName + " 예약이 완료되었습니다. \r\n"
+						+	" 자세한 내용은 홈페이지를 참조해주세요."
+						;
+			
+			sendMobileCode(mobilePhone, content);
+			
+			System.out.println("문자 수신자 : " + mobilePhone + ", 문자내용 확인 : " + content);
+		}
+		
+		//===========================
+		
+		
 		
 		model.addAttribute("booking", booking);
 		model.addAttribute("host", host);
@@ -584,6 +658,8 @@ public class GuestServiceImpl implements GuestService {
 		request.setAttribute("memberId", memberId);
 		return "forward:userInfoReservationList";
 	}
+
+	
 	
 	
 

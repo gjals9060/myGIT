@@ -18,7 +18,7 @@
 		<h1>${hostName}</h1>
 	
 		<div class="date">
-			<span class="date">날짜 </span>${checkInDatecheckOutDate}
+			<span class="date">날짜 </span>${reservationDate}
 			<hr>
 		</div>
 		<div class="personnel">
@@ -61,6 +61,10 @@
 		<input type="hidden" id="checkOutDate" name="checkOutDate" value="${booking.checkOutDate}">
 		<input type="hidden" id="guestCount" name="guestCount" value="${booking.guestCount}">
 		<input type="hidden" id="payment" name="payment" value="${booking.payment}">
+		
+		<input type="hidden" id="mobilePhone" name="mobilePhone" value="${user.mobilePhone}">
+		<input type="hidden" id="hostName" name="hostName" value="${hostName}">
+		
 				
 		<input type="submit" value="예약요쳥하기"><i class="fa fa-lock fa-2x" aria-hidden="true"></i>
 	</form>
