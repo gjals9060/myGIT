@@ -175,15 +175,44 @@ button {
 	display: none;
 }
 
+/* 버튼관련 css */
+/* 
 #button1 {
 	vertical-align: middle;
 	text-align: right;
 	float: right;
-	/* top: 116px; */
+	top: 116px;
 	left: 300px;
 	z-index: 4;
 	position: relative;
+} */
+.button-bar {
+    position: relative;
+    right: 38%;
+    z-index: 10;
+    top: 35px;
+    text-align: right;
 }
+
+.toggleBG {
+	background: #53FF4C;
+	width: 70px;
+	height: 30px;
+	border: 1px solid #53FF4C;
+	border-radius: 15px;
+}
+
+.toggleFG {
+	background: #FFFFFF;
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 15px;
+    position: absolute;
+    left: 0px;
+    border: 1px solid;
+}
+
 /* 리스트 */
 .list-img {
 	width: 100px;
@@ -226,330 +255,15 @@ hr {
 	width: 230px;
 	height: 40px;
 	border-radius: 10px;
-}
-
-.toggleBG {
-	background: #53FF4C;
-	width: 70px;
-	height: 30px;
-	border: 1px solid #53FF4C;
-	border-radius: 15px;
-}
-
-.toggleFG {
-	background: #FFFFFF;
-	width: 30px;
-	height: 30px;
-	border: none;
-	border-radius: 15px;
-	position: relative;
-	left: 0px;
 }
 
 /* 지도관련 css */
 #map {
-    width: 100%;
-    height: 100%;
-    position: relative;
-}
-
-
-@media all and (max-width:768px) {
-	.map-btn {
-		display: block;
-	}
-	#mapWrapper {
-		visibility: hidden;
-		width: 100%;
-		height: 100%;
-		float: right;
-		width: 100%;
-		height: 100%;
-		position: fixed;
-		top: 110px;
-		right: 0px;
-		z-index: 3;
-		border: 2px solid;
-	}
-	.buttonMap {
-		visibility: hidden;
-		vertical-align: middle;
-		text-align: right;
-		float: right;
-		position: fixed;
-		top: 116px;
-		right: 25%;
-		z-index: 4;
-	}
-	.toggleBG {
-		visibility: hidden;
-		background: #53FF4C;
-		width: 70px;
-		height: 30px;
-		border: 1px solid #53FF4C;
-		border-radius: 15px;
-	}
-	.close-btn {
-		width: 10%;
-		height: 5%;
-		float: right;
-		position: fixed;
-		top: 10.5%;
-		z-index: 5;
-		display: inline-block;
-		right: 0;
-		visibility: hidden;
-	}
-}
-
-@media all and (max-width:480px) {
-	.map-btn {
-		display: block;
-	}
-	#mapWrapper {
-		visibility: hidden;
-		width: 100%;
-		height: 100%;
-		float: right;
-		width: 100%;
-		height: 100%;
-		position: fixed;
-		top: 110px;
-		right: 0px;
-		z-index: 3;
-		border: 2px solid;
-	}
-	button#button1.buttonMap {
-		visibility: hidden;
-		vertical-align: middle;
-		text-align: right;
-		float: right;
-		position: fixed;
-		top: 116px;
-		right: 25%;
-		z-index: 4;
-	}
-	.toggleBG {
-		visibility: hidden;
-		background: #53FF4C;
-		width: 70px;
-		height: 30px;
-		border: 1px solid #53FF4C;
-		border-radius: 15px;
-		right: 55%;
-	}
-	.close-btn {
-		visibility: hidden;
-		width: 10%;
-		height: 5%;
-		float: left;
-		position: fixed;
-		top: 10.5%;
-		z-index: 5;
-		display: inline-block;
-	}
+	width: 100%;
+	height: 100%;
+	position: relative;
 }
 </style>
-
-<!-- style>
-#wrap {
-	width: 100%;
-	/* display: flex;
-	flex-wrap: wrap;
-	justify-content: center; */
-}
-
-button {
-	display: inline;
-}
-
-.map-btn {
-	display: none;
-}
-
-#mapWrapper {
-	float: right;
-	width: 570px;
-	height: 570px;
-	top: 110px;
-	right: 0;
-	z-index: -15;
-	border: 2px solid;
-	visibility: visible;
-}
-
-.close-btn {
-	display: none;
-}
-
-#button1 {
-	vertical-align: middle;
-	text-align: right;
-	float: right;
-	/* top: 116px; */
-	left: 300px;
-	z-index: 4;
-	position: relative;
-}
-/* 리스트 */
-.list-img {
-	width: 100px;
-	height: 200px;
-	object-fit: contain;
-	background: black;
-}
-
-table {
-	border-collapse: collapse;
-}
-
-th, td {
-	padding: 0;
-}
-
-hr {
-	width: 792px;
-}
-
-.type {
-	color: #717171;
-}
-
-.title {
-	font-size: 30px;
-}
-
-.capacity {
-	color: #717171;
-}
-
-.star-img {
-	height: 12px;
-	width: 12px;
-}
-
-@media all and (max-width:768px) {
-	.map-btn {
-		display: block;
-	}
-	#mapWrapper {
-		visibility: hidden;
-		width: 100%;
-		height: 100%;
-		float: right;
-		width: 100%;
-		height: 100%;
-		position: fixed;
-		top: 110px;
-		right: 0px;
-		z-index: 3;
-		border: 2px solid;
-	}
-	.buttonMap {
-		visibility: hidden;
-		vertical-align: middle;
-		text-align: right;
-		float: right;
-		position: fixed;
-		top: 116px;
-		right: 25%;
-		z-index: 4;
-	}
-	.toggleBG {
-		visibility: hidden;
-		background: #53FF4C;
-		width: 70px;
-		height: 30px;
-		border: 1px solid #53FF4C;
-		border-radius: 15px;
-	}
-	.close-btn {
-		width: 10%;
-		height: 5%;
-		float: right;
-		position: fixed;
-		top: 10.5%;
-		z-index: 5;
-		display: inline-block;
-		right: 0;
-		visibility: hidden;
-	}
-}
-
-@media all and (max-width:480px) {
-	.map-btn {
-		display: block;
-	}
-	#mapWrapper {
-		visibility: hidden;
-		width: 100%;
-		height: 100%;
-		float: right;
-		width: 100%;
-		height: 100%;
-		position: fixed;
-		top: 110px;
-		right: 0px;
-		z-index: 3;
-		border: 2px solid;
-	}
-	button#button1.buttonMap {
-		visibility: hidden;
-		vertical-align: middle;
-		text-align: right;
-		float: right;
-		position: fixed;
-		top: 116px;
-		right: 25%;
-		z-index: 4;
-	}
-	.toggleBG {
-		visibility: hidden;
-		background: #53FF4C;
-		width: 70px;
-		height: 30px;
-		border: 1px solid #53FF4C;
-		border-radius: 15px;
-		right: 55%;
-	}
-	.close-btn {
-		visibility: hidden;
-		width: 10%;
-		height: 5%;
-		float: left;
-		position: fixed;
-		top: 10.5%;
-		z-index: 5;
-		display: inline-block;
-	}
-}
-</style> -->
-<!-- <style type="text/css">
-.buttonMap {
-	background: white;
-	width: 230px;
-	height: 40px;
-	border-radius: 10px;
-}
-
-.toggleBG {
-	background: #53FF4C;
-	width: 70px;
-	height: 30px;
-	border: 1px solid #53FF4C;
-	border-radius: 15px;
-}
-
-.toggleFG {
-	background: #FFFFFF;
-	width: 30px;
-	height: 30px;
-	border: none;
-	border-radius: 15px;
-	position: relative;
-	left: 0px;
-}
-</style> -->
 
 </head>
 <body>
@@ -561,24 +275,27 @@ hr {
 
 			<div id="map" style=""></div>
 		</div>
+		<!-- 반응형 시, 나타나는 버튼-->
 		<button class="close-btn">&times;</button>
 
-		<div id="button1" class='toggleBG' style="float: right; /* position: fixed; */ /* top: 120px; */ position: relative; left: 80px; z-index: 5; top: 5px;">
-			<button class='toggleFG'></button>
-		</div>
+
 
 		<div class="test1">
-			<button id="button1" class="buttonMap">
+			<div id="button1" class='toggleBG'>
+				<button class='toggleFG'></button>
+			</div>
+			<button id="button1" class="buttonMap button-bar">
 				<strong><font size="2"> 지도를 움직이며 검색 &nbsp; </font></strong>
 			</button>
 		</div>
 
-		<div class="test2">
-			<button id="button2" class="buttonMap"
-				style="vertical-align: middle; text-align: center; float: right; position: fixed; top: 116px; right: 300px; z-index: 4;">
+		<div class="test2" style="vertical-align: middle; text-align: center;  position: fixed; top: 116px; right: 300px; z-index: 4;">
+			<button id="button2" class="buttonMap">
 				<strong><font size="2"> 이 지역 검색 &nbsp; </font></strong>
 			</button>
-		</div>
+		</div> 
+		
+		
 
 		<div id="loading" class="buttonMap"
 			style="vertical-align: middle; text-align: center; float: right; position: fixed; top: 116px; right: 300px; z-index: 6;">
