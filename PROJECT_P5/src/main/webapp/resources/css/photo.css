@@ -319,6 +319,10 @@ left: 10%;
 .tip-description{
 	margin-bottom: 30px;
 	margin-top: 10px;
+	    margin-bottom: 30px;
+    margin-top: 10px;
+    width: 80%;
+	
 	}
 	.title{
 	color: #484848;
@@ -334,37 +338,41 @@ left: 10%;
 	color: #008489;
 	}
 /* 이전다음 */
-.previous-link {
-    position: relative;
-    top: 355px;
-    background: url(../img/previousArrow.png) no-repeat;
-    background-size: 20px;
-    left: 100px;
+.photo-btn-group {
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	width: 60%;
+	margin: auto;
+	font-size: 20px;
 }
-span.previous {
-	position: relative;
-	color: #008489;
-	margin-left: 30px;
-}
-.next-link {
-    position: relative;
-    top: 345px;
-    width: 80px;
-    height: 45px;
-    background-color: #008489;
-    float: right;
-    color: white;
-    border-radius: 10px;
-    border: 1px solid;
-   
-}
-span.next{
 
-    border-radius: 3px 0 0 3px;
-    position: relative;
-    left: 5px;
-    top: 10px;
+/* 이전 버튼 */
+#prevBtn {
+	padding: 10px;
 }
+
+#prevBtn:visited {
+	color: #008489;
+}
+
+
+/* 다음버튼 */
+#nextBtn {
+    display: inline;
+    width: 75px;
+    background: #008489;
+    border-radius: 10px;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    padding: 10px 5px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+
+
 
 /*테블릿  */
 @media ( max-width : 768px) {
