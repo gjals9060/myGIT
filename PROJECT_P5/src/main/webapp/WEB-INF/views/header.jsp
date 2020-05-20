@@ -762,10 +762,24 @@ $(document).ready(function(){
 
 	/// 임시 비밀번호 이메일로 보내기
 	function sendTemporaryPassword() { // 로딩이미지 들어가야됨
+		var email = $('#makeshiftInputEmail');
+		var reEmail = RegExp(/^[A-Za-z0-9]([-_\.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_\.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/i);
+		if(!email.val().trim()){
+			alert("이메일을 입력하세요.");
+			email.val("");
+			email.focus();
+			return;
+		}
+		if(!reEmail.test(email.val())){
+			alert("이메일을 확인해주세요.");
+			email.focus();
+			return;
+		}
+		
 		$.ajax({
 			type : "POST",
 			url : "/p5/ajax/sendTemporaryPassword",
-			data : 'userEmail=' + $('#makeshiftInputEmail').val(),
+			data : 'userEmail=' + email.val(),
 			/* async : false, */
 			success : function(data) {
 				if (!data) {
@@ -787,10 +801,17 @@ $(document).ready(function(){
 
 	// 임시 로그인
 	function temporaryLogIn() { // 로딩이미지 필요
+		
+		var inputTemporaryPassword = $('#inputTemporaryPassword');
+		if(!inputTemporaryPassword.val()){
+			alert("임시 비밀번호를 입력하세요.");
+			inputTemporaryPassword.focus();
+			return;
+		}
 		var params = {
 			userEmail : $('#makeshiftInputEmail').val(),
 			temporaryPassword : $('#temporaryPassword').val(),
-			inputTemporaryPassword : $('#inputTemporaryPassword').val()
+			inputTemporaryPassword : inputTemporaryPassword.val()
 		}
 
 		$.ajax({
@@ -804,7 +825,7 @@ $(document).ready(function(){
 					location.href = "/p5/userInfoUpdate?t=1"; // 비밀번호 변경을 위해 마이페이지로 보냄
 				} else { // 아니면
 					alert("비밀번호가 일치하지 않습니다. 발급받은 임시 비밀번호를 사용해주세요.");
-					$('#inputTemporaryPassword').focus();
+					inputTemporaryPassword.focus();
 				}
 			},
 			error : function() {
