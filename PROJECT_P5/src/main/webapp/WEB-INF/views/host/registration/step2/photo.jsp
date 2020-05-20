@@ -18,6 +18,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
+<div id="photoPageWrap">
 	<%@include file="./hostHeaderStep2.jsp"%>
 	<div id="photoAjaxLoading">
 		<img src="/p5/img/photoLoading.gif" alt="사진 없음" />
@@ -31,16 +32,16 @@
 
 		$('#tabPhoto').css('background', '#bbb');
 	</script>
+	
+	<div class="photoWrapTitle">
 	<p class="title">숙소 사진 올리기</p>
 
 	<button id="info">
 		<i class="fa fa-lightbulb-o fa-3x" aria-hidden="true"></i>숙소 사진을 잘 찍는
-		팁
+		팁 
 	</button>
 
 	<div id="infoContent" class="info-modal">
-
-	
 		<div class="info-content">
 			<span class="info-close">&times;</span>
 			<p class="info-tip">멋진 숙소 사진을 위한 팁</p>
@@ -56,11 +57,11 @@
 			<p class="info-last">숙소를 등록한 후에 전문 사진 촬영 서비스를 요청할 수도 있습니다.</p>
 			<button id="complete">완료</button>
 		</div>
-
-	</div>
+</div>
+	
 	<p class="tip-description">게스트가 사진을 보고 숙소의 느낌을 생생히 떠올려볼 수 있도록 해주세요.
 		우선 사진 1장을 업로드하고 숙소를 등록한 후에 추가할 수 있습니다.</p>
-
+</div>
 	<div id="wrap">
 
 		<div class="photoUpload">
@@ -93,7 +94,6 @@
 			<input type="file" id="photoFiles" name="photoFiles" multiple
 				accept="image/*" style="display: none" />
 		</form>
-
 
 		<div class="modalImgSlide">
 			<!-- 사진 데이터 입력 시 반목문으로  >  .modalImgSlide[0] 아래로 append
@@ -147,6 +147,7 @@
 	<!-- wrap end -->
 	<a href="../hostingStatus?hostId=${hostId }" class="previous-link"><span class="previous">이전</span></a>
 	<a href="./description?hostId=${hostId }" class="next-link"><span class="next">다음</span></a>
+	</div>
 </body>
 
 <script type="text/javascript">
@@ -157,6 +158,10 @@
 		$(document).ajaxStop(function() {
 			$('#photoAjaxLoading').fadeOut();
 		})
+		
+		 $(document).on("dragstart",function(e) {
+            return false;
+        });
 		
 	}); 
 
@@ -420,7 +425,7 @@
 			e.stopPropagation();
 			e.preventDefault();
 			// 드롭다운 영역 css
-			dropZone.css('background-color', '#E3F2FC');
+			dropZone.css('background-color', '#eee');
 		});
 		dropZone.on('dragleave', function(e) {
 			e.stopPropagation();
@@ -432,7 +437,7 @@
 			e.stopPropagation();
 			e.preventDefault();
 			// 드롭다운 영역 css
-			dropZone.css('background-color', '#E3F2FC');
+			dropZone.css('background-color', '#eee');
 		});
 		dropZone.on('drop', function(e) {
 			e.preventDefault();
@@ -493,7 +498,7 @@
 		});
 	}
 
-	// 사진 삭제
+	// 사진 삭제 
 	function deleteHostPhoto(photoId, photoOrder) {
 		var params = {
 			photoId : photoId,
@@ -561,10 +566,10 @@
 					showHostPhoto(); // 사진 갱신
 				} else {
 					alert("대표 이미지 바꾸기 실패..");
-				}
+				} 
 
 			},
-			error : function(e) {
+			error : function(e) { 
 				alert("통신 실패");
 			}
 		});
