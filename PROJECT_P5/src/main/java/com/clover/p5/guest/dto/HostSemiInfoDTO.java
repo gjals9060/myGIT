@@ -24,6 +24,10 @@ public class HostSemiInfoDTO {
 	private double latitude;
 	private double longitude;
 	
+	// 리뷰 
+	private String rateAvg;
+	private String reviewCount;
+	
 	// 호스트 타입
 	private String htName;
 	// 룸 타입
@@ -38,8 +42,9 @@ public class HostSemiInfoDTO {
 		return "HostSemiInfoDTO [id=" + id + ", MemberId=" + MemberId + ", name=" + name + ", description="
 				+ description + ", descriptionEtc=" + descriptionEtc + ", capacity=" + capacity + ", roomCount="
 				+ roomCount + ", bedCount=" + bedCount + ", bathroomCount=" + bathroomCount + ", address=" + address
-				+ ", latitude=" + latitude + ", longitude=" + longitude + ", htName=" + htName + ", rtName=" + rtName
-				+ ", path=" + path + ", originalName=" + originalName + "]";
+				+ ", latitude=" + latitude + ", longitude=" + longitude + ", rateAvg=" + rateAvg + ", reviewCount="
+				+ reviewCount + ", htName=" + htName + ", rtName=" + rtName + ", path=" + path + ", originalName="
+				+ originalName + "]";
 	}
 
 	public int getId() {
@@ -138,6 +143,22 @@ public class HostSemiInfoDTO {
 		this.longitude = longitude;
 	}
 
+	public String getRateAvg() {
+		return rateAvg;
+	}
+
+	public void setRateAvg(String rateAvg) {
+		this.rateAvg = rateAvg;
+	}
+
+	public String getReviewCount() {
+		return reviewCount;
+	}
+
+	public void setReviewCount(String reviewCount) {
+		this.reviewCount = reviewCount;
+	}
+
 	public String getHtName() {
 		return htName;
 	}
@@ -169,6 +190,7 @@ public class HostSemiInfoDTO {
 	public void setOriginalName(String originalName) {
 		this.originalName = originalName;
 	}
+	
 	
 	
 	

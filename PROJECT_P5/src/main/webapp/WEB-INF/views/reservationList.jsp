@@ -863,7 +863,18 @@ hr {
 													function(index, item) {
 
 														var ss = '';
-
+														
+														var review = '';
+														if(item.reviewCount != 0 && item.rateAvg != null){
+															
+															review = item.rateAvg + '(' + item.reviewCount + ')';
+														
+														}else{
+															
+															review = 'new';
+															
+														}
+														
 														ss += '<article onclick="gogo('
 																+ item.id
 																+ ')" id="place'
@@ -890,6 +901,7 @@ hr {
 																+ '<img src="/p5/img/listStar.png" alt="" class="star-img"/>'
 
 																+ '</div>'
+																+ review
 																+ '</td>'
 																+ '</tr>'
 																+ '<tr>'

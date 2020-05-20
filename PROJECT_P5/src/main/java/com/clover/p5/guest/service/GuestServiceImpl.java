@@ -299,7 +299,7 @@ public class GuestServiceImpl implements GuestService {
 		System.out.println("sEndDate : " + sEndDate);
 		
 		SearchHostDTO searchHostDto = new SearchHostDTO(sStartDate, sEndDate, swLatitude, neLatitude, swLongitude, neLongitude, guestCount);
-				
+		
 		return guestMapper.selectHostList(searchHostDto);
 	}
 
