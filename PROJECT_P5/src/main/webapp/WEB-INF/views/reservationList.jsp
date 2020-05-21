@@ -720,13 +720,9 @@ hr {
 														marker.setMap(map);
 
 														// 마커에 클릭이벤트를 등록합니다
-														kakao.maps.event
-																.addListener(
-																		marker,
-																		'click',
-																		function() {
-																			// 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
-																			infowindow
+														kakao.maps.event.addListener(marker,'click',function() {
+															// 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
+															infowindow
 																					.setContent('<div style="padding:6px;font-size:13px;">'
 																							+ item.name
 																							+ '</div>');
@@ -735,6 +731,8 @@ hr {
 																							map,
 																							marker);
 																		});
+														
+														
 														// 마커에 마우스 커서를 올리면 발생한다.
 														kakao.maps.event
 																.addListener(
@@ -773,33 +771,19 @@ hr {
 
 														$('#list').append(ss);
 
-														$('#place' + index)
-																.hover(
-																		function() {
-																			$(
-																					this)
-																					.css(
-																							"color",
-																							"red");
+														$('#place' + index).hover(function() {
+															$(this).css("color","red");
 
-																			marker
-																					.setMap(null);
-																			marker0
-																					.setMap(map);
+															marker.setMap(null);
+															marker0.setMap(map);
 
-																		},
-																		function() {
-																			$(
-																					this)
-																					.css(
-																							"color",
-																							"black");
+														},
+														function() {
+															$(this).css("color","black");
 
-																			marker0
-																					.setMap(null);
-																			marker
-																					.setMap(map);
-																		});
+															marker0.setMap(null);
+															marker.setMap(map);
+														});
 
 													});
 
