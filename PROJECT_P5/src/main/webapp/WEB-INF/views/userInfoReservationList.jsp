@@ -161,7 +161,7 @@
 											
 											$('#state_${index}').empty();
 											$('#state_${index}').append("예약<br>취소");
-											$('#cancleDate_${index}').append("취소일 : " + cancellationDate);
+											$('#cancleDate_${index}').append("취소일&nbsp;&nbsp;&nbsp;&nbsp;: " + cancellationDate);
 											
 											$('#cancleDate_${index}').css("display", "block");
 											$('#inDate_${index}').css("display", "none");
@@ -206,7 +206,7 @@
 									
 									$('#reply_${index}').on('click', function() {
 										
-										alert("후기 등록으로 이동");
+										//alert("후기 등록으로 이동");
 										
 										var userId = "${user.id}";
 										

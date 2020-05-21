@@ -80,7 +80,7 @@
 		    h.id, h.member_id, h.name, h.description, h.description_etc, h.capacity, 
 		    h.bed_count, h.bathroom_count, h.room_count, h.address, h.latitude, h.longitude,
 		    rt.name AS rt_name, ht.name AS ht_name, hp.original_name , hp.path, 
-		    hp.sort_order, avg(r.rating) AS rate_avg, count(r.rating) AS review_count
+		    hp.sort_order, round(avg(r.rating),2) AS rate_avg, count(r.rating) AS review_count
 		FROM 
 		    host_photo hp
 		        INNER JOIN host h

@@ -228,8 +228,8 @@
 		var rate = $("#starNum").text();
 		var commentReview = $("#commentReview").val();
 		
-		alert(rate);
-		alert(commentReview);
+		//alert(rate);
+		//alert(commentReview);
 		
 		alert("후기가 등록되었습니다.");
 		

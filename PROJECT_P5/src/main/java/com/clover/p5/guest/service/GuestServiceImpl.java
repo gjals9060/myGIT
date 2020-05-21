@@ -505,7 +505,7 @@ public class GuestServiceImpl implements GuestService {
 							+	booking.getGuestCount() + "명"
 							;
 				
-				//sendMobileCode(mobilePhone, content);	//문자 낭비를 막기위해 주석중.
+				sendMobileCode(mobilePhone, content);	//문자 낭비를 막기위해 주석중.
 				
 				System.out.println("문자 수신자 : " + mobilePhone + ", 문자내용 확인 : " + content);
 			}
@@ -573,7 +573,7 @@ public class GuestServiceImpl implements GuestService {
 	
 	@Transactional
 	@Override
-	public boolean refund(String mobilePhone,String sBookingId, String hostId, String sCheckInDate, String sCheckOutDate, String sPayment) {
+	public boolean refund(String mobilePhone, String sBookingId, String hostId, String sCheckInDate, String sCheckOutDate, String sPayment) {
 	//public boolean refund(BookingEntity bookingEntity) {
 				
 
@@ -703,11 +703,11 @@ public class GuestServiceImpl implements GuestService {
 			String content = 
 							"[P5]예약취소안내 \r\n"
 						+	"예약번호:" + hostId + "\r\n"
-						+	checkInDate + "~" + checkOutDate + "\r\n"
+						+	sCheckInDate + "~" + sCheckOutDate + "\r\n"
 						+	"환불금액:" + dFormat.format(refund) + "원\r\n"
 						;
 			
-			//sendMobileCode(mobilePhone, content);	//문자 낭비를 막기위해 주석중.
+			sendMobileCode(mobilePhone, content);	//문자 낭비를 막기위해 주석중.
 			
 			System.out.println("문자 수신자 : " + mobilePhone + ", 문자내용 확인 : " + content);
 		

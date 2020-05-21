@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+pre {
+	white-space: pre-line;
+	
+}
 #wrap {
 	width: 100%;
 	max-width: 1100px;

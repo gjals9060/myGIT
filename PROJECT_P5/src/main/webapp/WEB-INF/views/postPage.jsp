@@ -127,13 +127,13 @@
 						<hr>
 						<div class="contentExplain">
 							<div class="contentExplain Title">숙소 설명</div>
-							${host.description }
+							<pre>${host.description }</pre>
 						</div>
 						<hr>
 
 						<div class="contentEct">
 							<div class="contentEct Title">기타 사항</div>
-							${host.descriptionEtc }
+						<pre>	${host.descriptionEtc }</pre>
 						</div>
 						<hr>
 						<div class="contentMap">
@@ -225,7 +225,7 @@
 								<c:forEach var="review" items="${reviewList}">
 									<tr>
 										<td><img src="${review.path}" alt="${review.originalName}" /><div class="reviewFirstName">${review.firstName}</div><div class="reviewDate">${review.creationDate}</div></td>
-										<td><div class="reviewStarRating"><img src="/p5/img/star1.png" alt="" /> ${review.rating}</div>${review.content}</td>
+										<td><div class="reviewStarRating"><img src="/p5/img/star1.png" alt="" /> ${review.rating}</div><pre>${review.content}</pre></td>
 									</tr>
 								
 								</c:forEach>
