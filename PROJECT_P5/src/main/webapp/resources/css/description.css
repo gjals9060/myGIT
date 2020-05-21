@@ -108,6 +108,18 @@ textarea:focus{
 .warning{
 color:red;
 }
+/*남는 글자수 */
+#etcWord{
+    color: #008489;
+    position: relative;
+    top: 200px;
+    left: -30%;
+    font-size: 12px;
+    float: right;
+}
+.etc-warning{
+color:red;
+}
 /*이전 다음버튼  */
 .btn-group {
     display: flex;

@@ -104,7 +104,7 @@
 			$('.warning').show();
 			
 			$('#inputText').css("outline-color","red");
-			  $('#inputText').val($('#inputText').val().substr(0,1300));
+			  $('#inputText').val($('#inputText').val().substr(0,50));
 			
 		}else{
 			$('.warning').hide();
