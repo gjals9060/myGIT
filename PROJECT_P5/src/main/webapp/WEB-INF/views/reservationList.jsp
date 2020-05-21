@@ -723,7 +723,7 @@ hr {
 														$("img[src$='./img/markerRed.png']").css("display", "none");
 
 														// 마커에 클릭이벤트를 등록합니다
-														kakao.maps.event.addListener(marker,'click',function() {
+													/* 	kakao.maps.event.addListener(marker,'click',function() {
 															// 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
 															infowindow
 																					.setContent('<div style="padding:6px;font-size:13px;">'
@@ -733,15 +733,18 @@ hr {
 																					.open(
 																							map,
 																							marker);
-																		});
+																		}); */
 														
+																			const reulstList = document.getElementById('list');
 														
 														// 마커에 마우스 커서를 올리면 발생한다.
 														kakao.maps.event.addListener(marker, 'mouseover', function() {
 																			$('#place'+ index).css("color","red");
 																			marker.setMap(map);
 																			marker0.setMap(map);
-																			$('img[src$="./img/markerRed.png"])', this).css("display", "block"); 
+																			$('img[src$="./img/markerRed.png"])', this).css("display", "block");
+																			
+																			reulstList.scrollTo(0, (221.6 + 34) * index);
 																		});
 
 														// 마우스 커서가 마커에서 벗어나면 발생한다.
@@ -755,7 +758,7 @@ hr {
 														
 														kakao.maps.event
 																.addListener(
-																		marker0, 'mouseout', function() {
+																		marker0, 'mouseleave', function() {
 																			$('#place'+ index).css("color","black");
 																			marker.setMap(map);
 																			marker0.setMap(null);

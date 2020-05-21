@@ -208,10 +208,11 @@
 		    blocking 
 		<where>
 			host_id = #{hostId}
-			AND
-		    <foreach collection="dates" item="checkInDate" open="" close="" separator="OR">
-		        (check_in_date = TO_DATE(#{checkInDate},'YYYY.MM.DD'))
+			AND 
+		    <foreach collection="dates" item="checkInDate" separator="OR">
+		        check_in_date = TO_DATE(#{checkInDate},'YYYY.MM.DD')
 		    </foreach>
+		    
 	    </where>
 	</delete>
 	
