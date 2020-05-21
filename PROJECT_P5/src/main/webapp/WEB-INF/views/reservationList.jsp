@@ -184,26 +184,29 @@ button {
 }
 
 .toggleBG {
-    background: #53FF4C;
-    width: 70px;
-    height: 30px;
+	background: #53FF4C;
+    width: 62px;
+    height: 20px;
     border: 1px solid #53FF4C;
     border-radius: 15px;
     position: absolute;
-    top: 17.5%;
+    top: 17.9%;
     z-index: 5;
     left: 36px;
+    box-sizing: border-box;	
 }
 
 .toggleFG {
 	background: #FFFFFF;
-    width: 30px;
-    height: 30px;
+    width: 24px;
+    height: 24px;
     border: none;
     border-radius: 15px;
     position: absolute;
+    top: -1.5px;
     left: 0px;
-    border: 1px solid;
+    border: 1px solid #999;
+    box-shadow: 2px 0px 2px rgba(0,0,0,0.4);
 }
 
 #button2 {
@@ -249,10 +252,10 @@ hr {
 }
 
 .buttonMap {
-	background: white;
-	width: 230px;
-	height: 40px;
-	border-radius: 10px;
+	background: rgba(255,255,255,0.85);
+    width: 230px;
+    height: 40px;
+    border-radius: 10px;
 }
 
 /* 지도관련 css */
@@ -286,7 +289,7 @@ hr {
 
 		<div class="test1"> 
 			<div id="button1" class='toggleBG'>
-				<button class='toggleFG'></button>
+				<button class='toggleFG' style="left: -1px"></button>
 			</div>
 			<button id="button1" class="buttonMap button-bar">
 				<strong><font size="2"> 지도를 움직이며 검색 &nbsp; </font></strong>
@@ -297,7 +300,6 @@ hr {
 			<button id="button2" class="buttonMap button-bar">
 				<strong><font size="2"> 이 지역 검색 &nbsp; </font></strong>
 			</button>
-			<input type="hidden" value="n" />
 	<!-- 	</div> --> 
 		
 		
@@ -327,14 +329,14 @@ hr {
 				var toggleFG = $('.toggleBG').find('.toggleFG');
 				var left = toggleFG.css('left');
 
-				if (left == '0px') {
+				if (left == '-1px') {
 
 					toggleBG.css('background', '#CCCCCC');
 					toggleActionStart(toggleFG, 'TO_RIGHT');
 					console.log("스위치 꺼짐");
 					toggle = false;
 
-				} else if (left == '40px') {
+				} else if (left == '39px') {
 
 					toggleBG.css('background', '#53FF4C');
 					toggleActionStart(toggleFG, 'TO_LEFT');
@@ -350,7 +352,7 @@ hr {
 					// 버튼 이동
 					var left = parseInt(toggleBtn.css('left'));
 					left += (LR == 'TO_RIGHT') ? 5 : -5;
-					if (left >= 0 && left <= 40) {
+					if (left >= -1 && left <= 39) {
 						left += 'px';
 						toggleBtn.css('left', left);
 					}
