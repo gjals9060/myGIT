@@ -149,7 +149,7 @@
 					alert("통신에 실패..");
 				}
 			}); // AJAX-END 
-			alert ($('#input').val());
+		
 		}
 
 		function modifyPrice() {
