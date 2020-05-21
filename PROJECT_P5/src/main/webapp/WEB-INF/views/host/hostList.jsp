@@ -75,9 +75,9 @@ function refresh(){
 				+'<td>' + host.bedCount + '</td>	'
 				+'<td>' + host.bathroomCount + '</td>	'
 				+'<td>' + host.address + '</td>	'
-				+'<th class="btnSet">	'
+				+'<td class="btnSet" onclick="event.cancelBubble=true">	'
 				+'<button class="hosting-list-btn-group" "id="hostListModifyBtn" onclick="location.href=\'./hostingStatus?hostId=' + host.id + '\'">수정</button>	'
-				+'</th>	'
+				+'</td>	'
 				+'</tr>	'
 				;
 				

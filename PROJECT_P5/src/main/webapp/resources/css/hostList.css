@@ -17,6 +17,11 @@
 .table-tr {
 	border-bottom: 1px solid #bbb;
 	height: 80px;
+	cursor: pointer;
+}
+
+.table-tr:hover {
+	color:#E51E51;
 }
 
 td {
@@ -55,7 +60,8 @@ td {
 }
 
 .btnSet {
-	width: 20%;
+	width: 10%;
+	cursor: auto;
 }
 
 .host-room-div {
