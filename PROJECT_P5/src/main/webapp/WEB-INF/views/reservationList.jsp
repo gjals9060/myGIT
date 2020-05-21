@@ -375,9 +375,9 @@ hr {
 			};
 			
 			// 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
-			var infowindow = new kakao.maps.InfoWindow({
+			/* var infowindow = new kakao.maps.InfoWindow({
 				zIndex : 1
-			});
+			}); */
 
 			// 지도를 생성합니다    
 			var map = new kakao.maps.Map(mapContainer, mapOption);
@@ -457,7 +457,7 @@ hr {
 								position : new kakao.maps.LatLng(place.y,place.x)
 							});
 
-							// 마커에 클릭이벤트를 등록합니다
+							/* // 마커에 클릭이벤트를 등록합니다
 							kakao.maps.event.addListener(marker,'click',function() {
 								// 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
 								infowindow.setContent(
@@ -466,7 +466,7 @@ hr {
 									+ '</div>'
 								);
 								infowindow.open(map,marker);
-							});
+							}); */
 
 						}
 
@@ -720,22 +720,44 @@ hr {
 														// 마커가 지도 위에 표시되도록 설정합니다
 														marker.setMap(map);
 
-														// 마커에 클릭이벤트를 등록합니다
-														kakao.maps.event
-																.addListener(
-																		marker,
-																		'click',
-																		function() {
+														/* // 마커에 클릭이벤트를 등록합니다
+														kakao.maps.event.addListener(marker,'click',function() {
 																			// 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
-																			infowindow
-																					.setContent('<div style="padding:6px;font-size:13px;">'
+																			infowindow.setContent('<div style="padding:6px;font-size:13px;">'
 																							+ item.name
 																							+ '</div>');
-																			infowindow
-																					.open(
-																							map,
-																							marker);
-																		});
+																			infowindow.open(map,marker);
+																		}); */	// 이름만 뜨는것
+																		
+														var divId = "info_"+ index;				
+														var iwContent = '<div id="' + divId + '"><img src="' + item.path + '" class="map-img" style="width:150px; height:100%;"><br>' 
+														+ item.name + '</div>';
+														// ==============================야 ! 여기 이벤트넣어서 gogo() 하도록하자!
+												
+														// 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+														iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+			
+														// 인포윈도우를 생성합니다
+														var infowindow = new kakao.maps.InfoWindow({
+														    content : iwContent,
+														    removable : iwRemoveable
+														});
+														
+														// 마커에 클릭이벤트를 등록합니다
+														kakao.maps.event.addListener(marker, 'click', function() {
+														      // 마커 위에 인포윈도우를 표시합니다
+														     
+														      infowindow.open(map, marker);
+														      
+														});
+														
+														kakao.maps.event.addListener(marker0, 'click', function() {
+														      // 마커 위에 인포윈도우를 표시합니다
+														      //infowindow.close();
+														      infowindow.open(map, marker0);  
+														      //$('#'+divId).hide();
+														});
+														
 														// 마커에 마우스 커서를 올리면 발생한다.
 														kakao.maps.event
 																.addListener(
