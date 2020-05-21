@@ -42,6 +42,8 @@ $(function(){
 	refresh(); // 화면 갱신
 })
 
+
+
 // 화면 갱신 메소드
 function refresh(){
 	$.ajax({
@@ -53,6 +55,10 @@ function refresh(){
 
 			var resultList = '';
 		 	$.each(hostList,function(i, host) { // 그 외 host.capacity, host.creationDate ...
+
+		 	 	function sendPost (){
+		 			location.href = "/p5/postPage?id="+host.id;
+		 		}
 		 		var hostName;
 		 		if(!host.name){
 		 			hostName = "";
@@ -60,9 +66,9 @@ function refresh(){
 		 			hostName = host.name;
 		 		}
 		 		resultList +=
-		 		 '<tr class="table-tr">	'
-				+'<td>' + host.id + '</td>	'
-				+'<td><div class="host-room-div">	'
+		 		 '<tr class="table-tr" onclick="location.href ='+'/p5/postPage?id='+host.id+'">	'
+		 		+' <td>' + host.id + '</td>	'
+				+' <td><div class="host-room-div">	'
 				+'		<img class="host-img" src="' + host.coverPhotoPath + '" onError='+'"this.src='+"'/p5/img/defaultImg.jpg'"+'" />	' 
 				+'		<span>' + hostName + '</span>	'
 				+'	</div></td>	'
@@ -76,7 +82,10 @@ function refresh(){
 				+'</th>	'
 				+'</tr>	'
 				;
+				
+				/* var hostId= host.id; */
 			}); // each-END
+	
 			
 			$('.table-tr').remove();
 			$('.host-list-room-table').append(resultList);

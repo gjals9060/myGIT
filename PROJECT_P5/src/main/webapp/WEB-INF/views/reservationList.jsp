@@ -176,12 +176,12 @@ button {
 }
 
 .button-bar {
-    position: absolute;
+  	position: relative;
     z-index: 4;
-    top: 17%;
-    left: 1%;
+    top: 33px;
+    left: -575px;
     text-align: right;
-}
+   }
 
 .toggleBG {
 	background: #53FF4C;
