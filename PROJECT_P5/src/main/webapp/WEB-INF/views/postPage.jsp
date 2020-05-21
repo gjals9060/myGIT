@@ -133,7 +133,7 @@
 
 						<div class="contentEct">
 							<div class="contentEct Title">기타 사항</div>
-						<pre>	${host.descriptionEtc }</pre>
+							<pre>${host.descriptionEtc }</pre>
 						</div>
 						<hr>
 						<div class="contentMap">
