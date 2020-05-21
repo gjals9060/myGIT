@@ -184,16 +184,16 @@ button {
    }
 
 .toggleBG {
-	background: #53FF4C;
+    background: #53FF4C;
     width: 62px;
     height: 20px;
     border: 1px solid #53FF4C;
     border-radius: 15px;
-    position: absolute;
-    top: 17.9%;
+    position: relative;
+    top: 64px;
     z-index: 5;
     left: 36px;
-    box-sizing: border-box;	
+    box-sizing: border-box;
 }
 
 .toggleFG {
@@ -933,50 +933,7 @@ hr {
 
 			 }); */
 
-			// Get the modal
-			var modal = document.getElementById("infoContent");
-
-			// Get the button that opens the modal
-			var btn = document.getElementById("info");
-
-			// Get the <span> element that closes the modal
-			var span = document.getElementsByClassName("info-close")[0];
-			var btn2 = document.getElementById("complete")
-			var btn3 = document.getElementById("map")
-
-			// When the user clicks the button, open the modal 
-			btn.onclick = function() {
-				modal.style.display = "block";
-
-			}
-
-			// When the user clicks on <span> (x), close the modal
-			span.onclick = function() {
-				modal.style.display = "none";
-			}
-			btn2.onclick = function() {
-				modal.style.display = "none";
-			}
-
-			// When the user clicks anywhere outside of the modal, close it
-			window.onclick = function(event) {
-				if (event.target == modal) {
-					modal.style.display = "none";
-
-				}
-			}
-			$('.close').click(function(e) {
-
-				$('#map').css("visibility", "visible");
-				$('.buttonMap').css("visibility", "visible");
-
-			});
-			$('#info').click(function(e) {
-
-				$('#map').css("visibility", "visible");
-				$('.buttonMap').css("visibility", "visible");
-
-			});
+	
 			
 			
 		</script>
