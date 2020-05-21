@@ -716,85 +716,51 @@ hr {
 																	zIndex : 4
 
 																});
+																
 														// 마커가 지도 위에 표시되도록 설정합니다
 														marker.setMap(map);
+														marker0.setMap(null);
+														$("img[src$='./img/markerRed.png']").css("display", "none");
 
-														/* // 마커에 클릭이벤트를 등록합니다
+														// 마커에 클릭이벤트를 등록합니다
 														kakao.maps.event.addListener(marker,'click',function() {
-																			// 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
-																			infowindow.setContent('<div style="padding:6px;font-size:13px;">'
+															// 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
+															infowindow
+																					.setContent('<div style="padding:6px;font-size:13px;">'
 																							+ item.name
 																							+ '</div>');
-																			infowindow.open(map,marker);
-																		}); */	// 이름만 뜨는것
-																		
-														var divId = "info_"+ index;				
-														var iwContent = '<div id="' + divId + '"><img src="' + item.path + '" class="map-img" style="width:150px; height:100%;"><br>' 
-														+ item.name + '</div>';
-														// ==============================야 ! 여기 이벤트넣어서 gogo() 하도록하자!
-												
-														// 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-														iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
-			
-														// 인포윈도우를 생성합니다
-														var infowindow = new kakao.maps.InfoWindow({
-														    content : iwContent,
-														    removable : iwRemoveable
-														});
-														
-														// 마커에 클릭이벤트를 등록합니다
-														kakao.maps.event.addListener(marker, 'click', function() {
-														      // 마커 위에 인포윈도우를 표시합니다
-														     
-														      infowindow.open(map, marker);
-														      
-														});
-														
-														kakao.maps.event.addListener(marker0, 'click', function() {
-														      // 마커 위에 인포윈도우를 표시합니다
-														      //infowindow.close();
-														      infowindow.open(map, marker0);  
-														      //$('#'+divId).hide();
-														});
-														
+																			infowindow
+																					.open(
+																							map,
+																							marker);
+																		});
 														
 														
 														// 마커에 마우스 커서를 올리면 발생한다.
-														kakao.maps.event
-																.addListener(
-																		marker,
-																		'mouseover',
-																		function() {
-																			$(
-																					'#place'
-																							+ index)
-																					.css(
-																							"color",
-																							"red");
-																			marker
-																					.setMap(null);
-																			marker0
-																					.setMap(map);
+														kakao.maps.event.addListener(marker, 'mouseover', function() {
+																			$('#place'+ index).css("color","red");
+																			marker.setMap(map);
+																			marker0.setMap(map);
+																			$('img[src$="./img/markerRed.png"])', this).css("display", "block"); 
 																		});
 
 														// 마우스 커서가 마커에서 벗어나면 발생한다.
 														kakao.maps.event
 																.addListener(
-																		marker0,
-																		'mouseout',
-																		function() {
-																			$(
-																					'#place'
-																							+ index)
-																					.css(
-																							"color",
-																							"black");
-																			marker0
-																					.setMap(null);
-																			marker
-																					.setMap(map);
+																		marker0, 'mouseout', function() {
+																			$('#place'+ index).css("color","black");
+																			marker.setMap(map);
+																			marker0.setMap(null);
 																		});
-
+														
+														kakao.maps.event
+																.addListener(
+																		marker0, 'mouseout', function() {
+																			$('#place'+ index).css("color","black");
+																			marker.setMap(map);
+																			marker0.setMap(null);
+																		});
+														
 														$('#list').append(ss);
 
 														$('#place' + index).hover(function() {
