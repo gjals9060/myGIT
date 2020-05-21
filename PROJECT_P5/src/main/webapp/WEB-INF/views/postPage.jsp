@@ -127,13 +127,13 @@
 						<hr>
 						<div class="contentExplain">
 							<div class="contentExplain Title">숙소 설명</div>
-							${host.description }
+							<pre>${host.description }</pre>
 						</div>
 						<hr>
 
 						<div class="contentEct">
 							<div class="contentEct Title">기타 사항</div>
-							${host.descriptionEtc }
+							<pre>${host.descriptionEtc }</pre>
 						</div>
 						<hr>
 						<div class="contentMap">

@@ -34,12 +34,12 @@
 				등의 내용을 적어주세요.</h4>
 
 			<textarea id="countDescription" class="description"
-				name="description" rows="10" cols="50" onkeyup="countWords()"></textarea>
+				name="description" rows="10" cols="50" onkeyup="countWords()"style="overflow-x:hidden;overflow-y:auto"></textarea>
 			<span id="descriptionWord"></span>
 			<div class="warning"></div>
 			<h1>정보를 추가하시겠어요? (선택사항)</h1>
 			<h3>자세한 내용을 공유하려면 아래 추가 필드를 사용하세요.</h3>
-			<textarea id="countEtc" name="descriptionEtc" rows="10" cols="50"onkeyup="countEtc()"></textarea>
+			<textarea id="countEtc" name="descriptionEtc" rows="10" cols="50"onkeyup="countEtc()"style="overflow-x:hidden;overflow-y:auto"></textarea>
 			<span id="etcWord"></span>
 			<div class="etc-warning"></div>
 			
