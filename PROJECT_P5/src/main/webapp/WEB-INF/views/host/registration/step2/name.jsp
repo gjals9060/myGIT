@@ -37,8 +37,8 @@
 
 
 			<!--2단계마지막  -->
-			<input type="text" name="name" placeholder="숙소 이름" id="inputText" onkeyup="countWords()" />
-			<span id="descriptionWord">50</span>
+			<input type="text" name="name"  class="title"placeholder="숙소 이름" id="inputText" onkeyup="countWords()" />
+			<span id="descriptionWord"></span>
 			<div class="warning"></div>
 			
 			<div class="btn-group">
@@ -62,6 +62,17 @@
 	<script src="/p5/js/jquery-3.4.1.js"></script>
 	<script src="/p5/js/host.js?v=<%=System.currentTimeMillis()%>"></script>
 	<script>
+	$( document ).ready(function() {
+		var content1 = $("#inputText").val();
+	
+		
+		var someVarName3 = localStorage.getItem("someVarKey3");
+	
+		$("#descriptionWord").html(someVarName3 );
+		
+		$(".title").val(localStorage.getItem("someVarKey4"));
+		
+	});
 		function completeStep2() {
 			var name = $('input[name="name"]').val();
 			if (!name.trim()) {
@@ -110,6 +121,11 @@
 			$('.warning').hide();
 			$('#inputText').css("outline-color","#008489");
 		}
+		var someVarName3 = 50- content.length;
+		var someVarName4 =  $("#inputText").val();
+		localStorage.setItem("someVarKey3", someVarName3);
+		localStorage.setItem("someVarKey4",   $("#inputText").val());
+		
 
 			 $("#descriptionWord").html(50-content.length);
 
