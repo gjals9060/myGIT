@@ -470,7 +470,6 @@ hr {
 
 						}
 
-
 					}
 
 				}); //end-addressSearch
@@ -758,6 +757,8 @@ hr {
 														      //$('#'+divId).hide();
 														});
 														
+														
+														
 														// 마커에 마우스 커서를 올리면 발생한다.
 														kakao.maps.event
 																.addListener(
@@ -796,33 +797,19 @@ hr {
 
 														$('#list').append(ss);
 
-														$('#place' + index)
-																.hover(
-																		function() {
-																			$(
-																					this)
-																					.css(
-																							"color",
-																							"red");
+														$('#place' + index).hover(function() {
+															$(this).css("color","red");
 
-																			marker
-																					.setMap(null);
-																			marker0
-																					.setMap(map);
+															marker.setMap(null);
+															marker0.setMap(map);
 
-																		},
-																		function() {
-																			$(
-																					this)
-																					.css(
-																							"color",
-																							"black");
+														},
+														function() {
+															$(this).css("color","black");
 
-																			marker0
-																					.setMap(null);
-																			marker
-																					.setMap(map);
-																		});
+															marker0.setMap(null);
+															marker.setMap(map);
+														});
 
 													});
 
