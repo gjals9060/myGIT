@@ -56,9 +56,7 @@ function refresh(){
 			var resultList = '';
 		 	$.each(hostList,function(i, host) { // 그 외 host.capacity, host.creationDate ...
 
-		 	 	function sendPost (){
-		 			location.href = "/p5/postPage?id="+host.id;
-		 		}
+		 	 
 		 		var hostName;
 		 		if(!host.name){
 		 			hostName = "";
@@ -66,7 +64,7 @@ function refresh(){
 		 			hostName = host.name;
 		 		}
 		 		resultList +=
-		 		 '<tr class="table-tr" onclick="location.href ='+'/p5/postPage?id='+host.id+'">	'
+		 		 '<tr class="table-tr" onclick="location.href =\'../postPage?id='+host.id+'\'">	'
 		 		+' <td>' + host.id + '</td>	'
 				+' <td><div class="host-room-div">	'
 				+'		<img class="host-img" src="' + host.coverPhotoPath + '" onError='+'"this.src='+"'/p5/img/defaultImg.jpg'"+'" />	' 
