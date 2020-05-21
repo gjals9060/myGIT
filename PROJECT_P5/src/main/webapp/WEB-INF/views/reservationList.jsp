@@ -32,7 +32,7 @@ table {
 #list {
 	height: 574px;
 	overflow: auto;
-	width: 60%;
+	width: 50%;
 }
 
 .info-modal {
