@@ -56,7 +56,7 @@
 				</p>
 			</div>
 			
-			<div class="stay-date-btn-group">
+			<div class="btn-group">
 				<a class="previous-link click-to-save" href="../hostingStatus?hostId=${hostId }" id="prevBtn">이전</a> 
 				<a onclick="check()" class="next-link click-to-save" id="nextBtn">다음</a>
 			</div>

@@ -137,7 +137,7 @@ input {
 
 /* 이전 버튼 */
 #prevBtn {
-	padding: 5px;
+	padding: 10px;
 }
 
 #prevBtn:visited {
@@ -151,8 +151,9 @@ input {
     background: #008489;
     color: white;
     text-align: center;
-    padding: 5px;
+    padding: 10px;
     border-radius: 10px;
+    
 }
 
 

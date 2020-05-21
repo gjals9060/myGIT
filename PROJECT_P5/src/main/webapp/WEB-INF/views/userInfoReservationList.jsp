@@ -197,7 +197,7 @@
 												
 											}else{
 												$("#reply_${index}").text("등록완료");
-												$('reply_${index}').css("background", "#bbb");
+												$('#reply_${index}').css("background", "#bbb");
 												$("#reply_${index}").prop("disabled", true);
 											}
 										}

@@ -16,7 +16,6 @@
 
 .table-tr {
 	border-bottom: 1px solid #bbb;
-	cursor: pointer;
 	height: 80px;
 }
 
@@ -55,7 +54,7 @@ td {
 	width: 20%
 }
 
-.btn {
+.btnSet {
 	width: 20%;
 }
 
@@ -81,15 +80,18 @@ span {
 }
 
 .hosting-list-btn-group {
-    background: #E51E51;
+	background: #E51E51;
     border-radius: 5px;
     outline: none;
     font-size: 16px;
-    padding: 9px;
+    padding: 10px 15px;
     border: none;
     color: white;
     margin: 0px 9px;
+    cursor: pointer;
 }
+
+
 
 @media ( max-width :768px) and (min-width:450px) {
 	
@@ -117,7 +119,7 @@ span {
 	.address {
 		width: 20%
 	}
-	.btn {
+	.btnSet {
 		width: 10%;
 	}
 	.host-room-div {

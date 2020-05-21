@@ -175,42 +175,43 @@ button {
 	display: none;
 }
 
-/* 버튼관련 css */
-/* 
-#button1 {
-	vertical-align: middle;
-	text-align: right;
-	float: right;
-	top: 116px;
-	left: 300px;
-	z-index: 4;
-	position: relative;
-} */
 .button-bar {
-    position: relative;
-    right: 38%;
-    z-index: 10;
-    top: 35px;
+    position: absolute;
+    z-index: 4;
+    top: 17%;
+    left: 1%;
     text-align: right;
 }
 
 .toggleBG {
 	background: #53FF4C;
-	width: 70px;
-	height: 30px;
-	border: 1px solid #53FF4C;
-	border-radius: 15px;
+    width: 62px;
+    height: 20px;
+    border: 1px solid #53FF4C;
+    border-radius: 15px;
+    position: absolute;
+    top: 17.9%;
+    z-index: 5;
+    left: 36px;
+    box-sizing: border-box;	
 }
 
 .toggleFG {
 	background: #FFFFFF;
-    width: 30px;
-    height: 30px;
+    width: 24px;
+    height: 24px;
     border: none;
     border-radius: 15px;
     position: absolute;
+    top: -1.5px;
     left: 0px;
-    border: 1px solid;
+    border: 1px solid #999;
+    box-shadow: 2px 0px 2px rgba(0,0,0,0.4);
+}
+
+#button2 {
+	width: 100px;
+    text-align: center;
 }
 
 /* 리스트 */
@@ -251,10 +252,10 @@ hr {
 }
 
 .buttonMap {
-	background: white;
-	width: 230px;
-	height: 40px;
-	border-radius: 10px;
+	background: rgba(255,255,255,0.85);
+    width: 230px;
+    height: 40px;
+    border-radius: 10px;
 }
 
 /* 지도관련 css */
@@ -268,6 +269,12 @@ hr {
 </head>
 <body>
 	<jsp:include page="./header.jsp"></jsp:include>
+	
+	<script>
+	$(document).ready(function(){
+		$('footer').css('clear','both'); 
+	});
+	</script>
 
 	<div id="wrap">
 		<div class="list-map-block"></div>
@@ -280,20 +287,20 @@ hr {
 
 
 
-		<div class="test1">
+		<div class="test1"> 
 			<div id="button1" class='toggleBG'>
-				<button class='toggleFG'></button>
+				<button class='toggleFG' style="left: -1px"></button>
 			</div>
 			<button id="button1" class="buttonMap button-bar">
 				<strong><font size="2"> 지도를 움직이며 검색 &nbsp; </font></strong>
 			</button>
-		</div>
+		 </div> 
 
-		<div class="test2" style="vertical-align: middle; text-align: center;  position: fixed; top: 116px; right: 300px; z-index: 4;">
-			<button id="button2" class="buttonMap">
+		<!-- <div class="test2" style="vertical-align: middle; text-align: center;  position: fixed; top: 116px; right: 300px; z-index: 4;"> -->
+			<button id="button2" class="buttonMap button-bar">
 				<strong><font size="2"> 이 지역 검색 &nbsp; </font></strong>
 			</button>
-		</div> 
+	<!-- 	</div> --> 
 		
 		
 
@@ -322,14 +329,14 @@ hr {
 				var toggleFG = $('.toggleBG').find('.toggleFG');
 				var left = toggleFG.css('left');
 
-				if (left == '0px') {
+				if (left == '-1px') {
 
 					toggleBG.css('background', '#CCCCCC');
 					toggleActionStart(toggleFG, 'TO_RIGHT');
 					console.log("스위치 꺼짐");
 					toggle = false;
 
-				} else if (left == '40px') {
+				} else if (left == '39px') {
 
 					toggleBG.css('background', '#53FF4C');
 					toggleActionStart(toggleFG, 'TO_LEFT');
@@ -345,7 +352,7 @@ hr {
 					// 버튼 이동
 					var left = parseInt(toggleBtn.css('left'));
 					left += (LR == 'TO_RIGHT') ? 5 : -5;
-					if (left >= 0 && left <= 40) {
+					if (left >= -1 && left <= 39) {
 						left += 'px';
 						toggleBtn.css('left', left);
 					}
@@ -367,12 +374,10 @@ hr {
 			// 지도의 확대 레벨
 			};
 			
-			/* // 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
+			// 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
 			var infowindow = new kakao.maps.InfoWindow({
 				zIndex : 1
 			});
-			 */
-
 
 			// 지도를 생성합니다    
 			var map = new kakao.maps.Map(mapContainer, mapOption);
@@ -403,92 +408,72 @@ hr {
 				var geocoder = new kakao.maps.services.Geocoder();
 
 				// 주소로 좌표를 검색합니다
-				geocoder
-						.addressSearch(
-								keyword,
-								function(result, status) {
+				geocoder.addressSearch(keyword,function(result, status) {
 
-									// 정상적으로 검색이 완료됐으면 
-									if (status === kakao.maps.services.Status.OK) {
+					// 정상적으로 검색이 완료됐으면 
+					if (status === kakao.maps.services.Status.OK) {
 
-										var coords = new kakao.maps.LatLng(
-												result[0].y, result[0].x);
+						var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+						// 결과값으로 받은 위치를 마커로 표시합니다
+						var marker = new kakao.maps.Marker({map : map,position : coords});
 
-										// 결과값으로 받은 위치를 마커로 표시합니다
-										var marker = new kakao.maps.Marker({
-											map : map,
-											position : coords
-										});
+						// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+						map.setCenter(coords);
 
-										// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-										map.setCenter(coords);
+					}else { //주소검색 실패 => 키워드검색
 
-									} else { //주소검색 실패 => 키워드검색
+						// 장소 검색 객체를 생성합니다
+						var ps = new kakao.maps.services.Places();
 
-										// 장소 검색 객체를 생성합니다
-										var ps = new kakao.maps.services.Places();
+						// 키워드로 장소를 검색합니다
+						ps.keywordSearch(keyword,placesSearchCB);
 
-										// 키워드로 장소를 검색합니다
-										ps.keywordSearch(keyword,
-												placesSearchCB);
+						// 키워드 검색 완료 시 호출되는 콜백함수 입니다
+						function placesSearchCB(data, status,pagination) {
+							if (status === kakao.maps.services.Status.OK) {
+								// 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+								// LatLngBounds 객체에 좌표를 추가합니다
+								var bounds = new kakao.maps.LatLngBounds();
 
-										// 키워드 검색 완료 시 호출되는 콜백함수 입니다
-										function placesSearchCB(data, status,
-												pagination) {
-											if (status === kakao.maps.services.Status.OK) {
-
-												// 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-												// LatLngBounds 객체에 좌표를 추가합니다
-												var bounds = new kakao.maps.LatLngBounds();
-
-												for (var i = 0; i < data.length; i++) {
-													displayMarker(data[i]);
-													bounds
-															.extend(new kakao.maps.LatLng(
-																	data[i].y,
-																	data[i].x));
-												}
-
-												// 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-												map.setBounds(bounds);
-											}
-										}
-
-										// 지도에 마커를 표시하는 함수입니다
-										function displayMarker(place) {
-
-											// 마커를 생성하고 지도에 표시합니다
-											var marker = new kakao.maps.Marker(
-													{
-														map : map,
-														position : new kakao.maps.LatLng(
-																place.y,
-																place.x)
-													});
-
-											// 마커에 클릭이벤트를 등록합니다
-											/* kakao.maps.event
-													.addListener(
-															marker,
-															'click',
-															function() {
-																// 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
-																infowindow
-																		.setContent('<div style="padding:5px;font-size:12px;">'
-																				+ place.place_name
-																				+ '</div>');
-																infowindow
-																		.open(
-																				map,
-																				marker);
-															}); */
-											
-
-										}
-
+								for (var i = 0; i < data.length; i++) {
+									displayMarker(data[i]);
+									bounds.extend(
+										new kakao.maps.LatLng(
+											data[i].y,
+											data[i].x));
 									}
 
-								}); //end-addressSearch
+									// 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+									map.setBounds(bounds);
+								}
+						}
+
+						// 지도에 마커를 표시하는 함수입니다
+						function displayMarker(place) {
+
+							// 마커를 생성하고 지도에 표시합니다
+							var marker = new kakao.maps.Marker({
+								map : map,
+								position : new kakao.maps.LatLng(place.y,place.x)
+							});
+
+							// 마커에 클릭이벤트를 등록합니다
+							kakao.maps.event.addListener(marker,'click',function() {
+								// 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
+								infowindow.setContent(
+										'<div style="padding:5px;font-size:12px;">'
+									+ place.place_name
+									+ '</div>'
+								);
+								infowindow.open(map,marker);
+							});
+
+						}
+
+
+					}
+
+				}); //end-addressSearch
 
 			} //end-searchPlace
 
@@ -542,17 +527,19 @@ hr {
 				$('#info').append(message);
 				 */
 				if (!toggle) {
-					$('#button1').hide();
+					/* $('#button1').hide(); */
+					$('.test1').hide();
 					$('#button2').show();
 
+					/* 이 지역 검색을 눌렀을 때 */
 					$('#button2').on('click', function() {
-
 						console.log("button2 입력");
 						ajaxAction();
 
-						$('#button1').show();
+						$('.test1').show();
+						
 						$('#button2').hide();
-
+						
 					});
 				}
 
@@ -733,7 +720,7 @@ hr {
 														// 마커가 지도 위에 표시되도록 설정합니다
 														marker.setMap(map);
 
-														/* // 마커에 클릭이벤트를 등록합니다
+														// 마커에 클릭이벤트를 등록합니다
 														kakao.maps.event
 																.addListener(
 																		marker,
@@ -748,43 +735,23 @@ hr {
 																					.open(
 																							map,
 																							marker);
-																		}); */
-														var iwContent = '<img src="' + item.path + '" class="map-img" style="width:150px; height:100%;"><br>' 
-																	+ item.name; 
-															// ==============================야 ! 여기 이벤트넣어서 gogo() 하도록하자!
-															
-															// 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-														iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
-
-														// 인포윈도우를 생성합니다
-														var infowindow = new kakao.maps.InfoWindow({
-														    content : iwContent,
-														    removable : iwRemoveable
-														});
-														
-														// 마커에 클릭이벤트를 등록합니다
-														kakao.maps.event.addListener(marker, 'click', function() {
-														      // 마커 위에 인포윈도우를 표시합니다
-														      infowindow.open(map, marker);  
-														});
-														
-														kakao.maps.event.addListener(marker0, 'click', function() {
-														      // 마커 위에 인포윈도우를 표시합니다
-														      infowindow.open(map, marker0);  
-														});
-														
-														
-														
+																		});
 														// 마커에 마우스 커서를 올리면 발생한다.
 														kakao.maps.event
 																.addListener(
 																		marker,
 																		'mouseover',
 																		function() {
-																			$('#place'+ index).css("color","red");
-																			marker.setMap(null);
-																			marker0.setMap(map);
-																			$('#place'+ index).focus();
+																			$(
+																					'#place'
+																							+ index)
+																					.css(
+																							"color",
+																							"red");
+																			marker
+																					.setMap(null);
+																			marker0
+																					.setMap(map);
 																		});
 
 														// 마우스 커서가 마커에서 벗어나면 발생한다.
@@ -1001,10 +968,13 @@ hr {
 				$('.buttonMap').css("visibility", "visible");
 
 			});
+			
+			
 		</script>
 
 
-	<jsp:include page="./footer.jsp"/>
+	
+	<%@include file="./footer.jsp" %>
 	</div>
 </body>
 </html>

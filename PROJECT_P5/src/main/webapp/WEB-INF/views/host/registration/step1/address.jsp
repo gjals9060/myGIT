@@ -63,11 +63,15 @@
 	
 	<div id="addressInfo"></div>
 		
-	<!--임시 이동  -->
-	<a class="registration click-to-save" href="./roomCount"><span class="previous">이전</span></a>
-	<a class="registration click-to-save" onclick="check()"><span class="next">다음</span></a>
-	<a class="modification click-to-save" href="./roomCount?hostId=${hostId }">이전</a>
-	<a class="modification click-to-save" href="./facilities?hostId=${hostId }">다음</a>
+	<div class="btn-group">
+		<a class="registration click-to-save" id="prevBtn" href="./roomCount">이전</a>
+		<a class="registration click-to-save" id="nextBtn" onclick="check()">다음</a>
+	</div>
+	
+	<div class="btn-group">
+		<a class="modification click-to-save" id="prevBtn" href="./roomCount?hostId=${hostId }">이전</a>
+		<a class="modification click-to-save" id="nextBtn" href="./facilities?hostId=${hostId }">다음</a>
+	</div>
 	<!-- <button id="next" onclick="inputAddress();">다음</button> -->
 	 </div>
   <div id="left">
