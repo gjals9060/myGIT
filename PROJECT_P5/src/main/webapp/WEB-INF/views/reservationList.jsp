@@ -144,7 +144,8 @@ table {
 }
 
 #wrap {
-	width: 100%;
+	width: 80%;
+	margin: 0 auto;
 	/* display: flex;
 	flex-wrap: wrap;
 	justify-content: center; */
@@ -229,6 +230,9 @@ table {
 th, td {
 	padding: 0;
 }
+.img{
+width:320px;
+}
 
 hr {
 	width: 792px;
@@ -240,6 +244,7 @@ hr {
 
 .title {
 	font-size: 30px;
+	
 }
 
 .capacity {
@@ -594,8 +599,8 @@ hr {
 																+ '<div>'
 																+ '<table border="1">'
 																+ '<tr>'
-																+ '<td rowspan="4" align = "center">'
-																+ '<img class="list-img" alt="' + item.originalName + '" src="' + item.path  + '"  style="width: 300px; height: 200px;"  >'
+																+ '<td rowspan="4" align = "center" class="img">'
+																+ '<img class="list-img" alt="' + item.originalName + '" src="' + item.path  + '"  style="width: 300px; height: 200px; margin-left:10px;"  >'
 
 																+ '</td>'
 																+ '</tr>'
@@ -900,13 +905,13 @@ hr {
 			 }); */
 
 	
-			
+		
 			
 		</script>
 
-
+</div>
 	
 	<%@include file="./footer.jsp" %>
-	</div>
+	
 </body>
 </html>
