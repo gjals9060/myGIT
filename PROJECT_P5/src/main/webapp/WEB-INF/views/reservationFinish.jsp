@@ -39,7 +39,7 @@
 			<h1>예약 완료</h1>
 			<hr>
 			<div class="finishImg">
-				<img src="img/bedroom.jpg" alt="사진" />
+				<img src="${hostMainPhotoPath}" alt="${hostMainPhotoName}" />
 			</div>
 			<div class="description">
 			<div class="descHost">

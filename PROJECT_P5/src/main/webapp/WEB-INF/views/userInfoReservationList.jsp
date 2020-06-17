@@ -83,14 +83,14 @@
 									}
 									
 									function formatS1(str) {	// String(YYYY.MM.DD HH:mm:ss.sss) -> String (YYYY.MM.DD)
-										var y = str.substr(0, 4);
+										var y = Number(str.substr(0, 4))+1;
 									    var m = str.substr(5, 2);
 									    var d = str.substr(8, 2);
 										return y + "." + m-1 + "." + d;
 									}
 									
 									function formatS2(str) {	// String(YYYY MM DD HH:mm:ss.sss) -> String (YYYY.MM.DD(HH:mm:ss))
-										var y = str.substr(0, 4);
+										var y = Number(str.substr(0, 4))+1;
 									    var m = str.substr(5, 2);
 									    var d = str.substr(8, 2);
 									    var t = str.substr(11, 8);
@@ -109,10 +109,13 @@
 										}
 										return x1 + x2;
 									}
-								
+									
+									console.log("${booking.checkInDate}");
+									
 									// 날짜 값 세팅
 									$('#reservaion-value_${index}').ready(function(){
 										var checkInDate = formatS1("${booking.checkInDate}");
+										console.log("체크인 보자 : " + checkInDate);
 										var checkOutDate = formatS1("${booking.checkOutDate}");
 										var bookingDate = formatS2("${booking.bookingDate}");
 										var payment = addCommas("${booking.payment}");

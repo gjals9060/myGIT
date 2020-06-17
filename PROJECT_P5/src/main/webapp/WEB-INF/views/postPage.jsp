@@ -302,6 +302,8 @@
 							</tr>
 						</table>
 						<div id="dateCount"></div>
+						<input type="hidden" id="hostMainPhotoPath" name="hostMainPhotoPath" value="${hostPhoto[0].path}">
+						<input type="hidden" id="hostMainPhotoName" name="hostMainPhotoName" value="${hostPhoto[0].originalName}">
 						<input type="hidden" id="hostId" name="hostId" value="${host.id}">
 						<input type="hidden" id="hostName" name="hostName"
 							value="${host.name}"> <input type="hidden" id="hostPrice"

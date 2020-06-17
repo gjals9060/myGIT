@@ -352,6 +352,10 @@ public class GuestServiceImpl implements GuestService {
 		int hostPrice = Integer.parseInt(request.getParameter("hostPrice"));
 		int dateCount = Integer.parseInt(request.getParameter("dateCnt"));
 		
+		String hostMainPhotoPath = request.getParameter("hostMainPhotoPath");
+		String hostMainPhotoName = request.getParameter("hostMainPhotoName");
+		
+//		System.out.println("사진확인 : " + hostMainPhotoPath + "/" + hostMainPhotoName);
 		
 		String[] date = reservationDate.split(" - ");
 		
@@ -396,6 +400,9 @@ public class GuestServiceImpl implements GuestService {
 		model.addAttribute("hostPrice", hostPrice);
 		model.addAttribute("dateCount", dateCount);
 		model.addAttribute("hostName", hostName);
+		model.addAttribute("hostMainPhotoPath", hostMainPhotoPath);
+		model.addAttribute("hostMainPhotoName", hostMainPhotoName);
+		
 		//model.addAttribute("payment", payment);		
 		
 		BookingEntity booking = new BookingEntity(-1, hostId, memberId, checkInDate, checkOutDate, guestCount, payment, null, null, 0);
@@ -412,6 +419,8 @@ public class GuestServiceImpl implements GuestService {
 		
 		String mobilePhone = request.getParameter("mobilePhone");
 		String hostName = request.getParameter("hostName");
+		String hostMainPhotoPath = request.getParameter("hostMainPhotoPath");
+		String hostMainPhotoName = request.getParameter("hostMainPhotoName");
 		
 		
 		
@@ -505,7 +514,7 @@ public class GuestServiceImpl implements GuestService {
 							+	booking.getGuestCount() + "명"
 							;
 				
-				sendMobileCode(mobilePhone, content);	//문자 낭비를 막기위해 주석중.
+				//sendMobileCode(mobilePhone, content);	//문자 낭비를 막기위해 주석중.
 				
 				System.out.println("문자 수신자 : " + mobilePhone + ", 문자내용 확인 : " + content);
 			}
@@ -528,6 +537,9 @@ public class GuestServiceImpl implements GuestService {
 		model.addAttribute("booking", booking);
 		model.addAttribute("host", host);
 		
+		model.addAttribute("hostMainPhotoPath", hostMainPhotoPath);
+		model.addAttribute("hostMainPhotoName", hostMainPhotoName);
+				
 		model.addAttribute("reservationFlag", reservationFlag);
 		
 		return "reservationFinish";
@@ -596,6 +608,7 @@ public class GuestServiceImpl implements GuestService {
 		try {
 			checkInDate = format0.parse(sCheckInDate);
 			checkOutDate = format0.parse(sCheckOutDate);
+			
 			
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -698,16 +711,20 @@ public class GuestServiceImpl implements GuestService {
 
 			//========	예약취소 문자전송	=========
 			
+			String checkInDateSMS = format1.format(checkInDate);
+			String checkOutDateSMS = format1.format(checkOutDate);
+			
+			
 			//hostName = hostName.substring(0, 8) + "..";
 			
 			String content = 
 							"[P5]예약취소안내 \r\n"
 						+	"예약번호:" + hostId + "\r\n"
-						+	sCheckInDate + "~" + sCheckOutDate + "\r\n"
+						+	checkInDateSMS + "~" + checkOutDateSMS + "\r\n"
 						+	"환불금액:" + dFormat.format(refund) + "원\r\n"
 						;
 			
-			sendMobileCode(mobilePhone, content);	//문자 낭비를 막기위해 주석중.
+			//sendMobileCode(mobilePhone, content);	//문자 낭비를 막기위해 주석중.
 			
 			System.out.println("문자 수신자 : " + mobilePhone + ", 문자내용 확인 : " + content);
 		

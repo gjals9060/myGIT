@@ -392,6 +392,7 @@ $(document).ready(function(){
 	
 }); 
 
+//=================================== 검색필터-start =======================================
 
 
 	var flag = true; // 날짜 출력 여부
@@ -557,6 +558,14 @@ $(document).ready(function(){
 			}
 		});
 	});
+	
+//=================================== 검색필터-end =======================================
+
+	
+	
+	
+	
+	
 
 	var width_size = $(window).width();
 	var isURLmain = false;
@@ -568,6 +577,10 @@ $(document).ready(function(){
 
 	var mobileSwitch = false;
 	var headerHeight = $('header').innerHeight();
+	
+	
+	
+	
 	
 	function headerSizeView() {
 		headerHeight = $('header').innerHeight();

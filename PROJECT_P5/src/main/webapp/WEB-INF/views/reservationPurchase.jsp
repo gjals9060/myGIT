@@ -18,7 +18,7 @@
 	</div>
 	<div class="contents">
 		<hr>
-		<img src="img/bedroom.jpg" alt="이미지" /><br>
+		<img src="${hostMainPhotoPath}" alt="${hostMainPhotoName}" /><br>
 		<h1>${hostName}</h1>
 	
 		<div class="date">
@@ -66,6 +66,9 @@
 		
 		<input type="hidden" id="mobilePhone" name="mobilePhone" value="${user.mobilePhone}">
 		<input type="hidden" id="hostName" name="hostName" value="${hostName}">
+		
+		<input type="hidden" id="hostMainPhotoPath" name="hostMainPhotoPath" value="${hostMainPhotoPath}">
+		<input type="hidden" id="hostMainPhotoName" name="hostMainPhotoName" value="${hostMainPhotoName}">
 				
 		<input type="submit" value="예 약 요 청">
 	</form>
